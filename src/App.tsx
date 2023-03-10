@@ -1,26 +1,23 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { ErrorMassage } from "./components/ErrorMassage";
+import { Loader } from "./components/Loader";
+import { Order } from "./components/Order";
+import { useOrders } from "./hooks/orders";
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const {loading, error, orders} = useOrders()
+
+    return (
+        <>
+            {loading && <Loader />}
+            {error && <ErrorMassage error={error}/>}
+            <div className="container text-center">
+                <div className="row  g-2">
+                    {orders.map(order => <Order order={order} key={order.id} />)}
+                </div>
+            </div>
+        </>
+    );
 }
 
 export default App;
