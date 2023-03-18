@@ -13,7 +13,7 @@ export function useOrders(){
             setLoading(true)
             const response = await axios.get<IOrder[]>('http://192.168.3.9:8080/api/orders')
             setOrders(response.data)
-            console.log(setOrders)
+            //console.log(response)
             setLoading(false)
         } catch (e: unknown) {
             const error = e as AxiosError
