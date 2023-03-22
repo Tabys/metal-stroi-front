@@ -7,6 +7,10 @@ export function useOrders(){
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState('')
 
+    function addOrder(order: IOrder){
+        setOrders(prev => [...prev, order])
+    }
+
     async function fetchOrders() {
         try{
             setError('')
@@ -26,5 +30,5 @@ export function useOrders(){
         fetchOrders()
     }, [])
 
-    return { orders, error, loading}
+    return { orders, error, loading, addOrder}
 }

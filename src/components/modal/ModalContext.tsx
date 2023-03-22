@@ -1,18 +1,13 @@
 import React, {useState, useContext} from 'react'
 import { Modal } from '../../models'
 
-interface Props {
-  children: React.ReactNode;
-}
-
-
 const ModalContext = React.createContext<Modal>({})
 
 export const useModal = () => {
     return useContext(ModalContext)
 }
 
-export const ModalProvider = ({ children }: Props) => {
+export const ModalProvider = ({ children }: {children: React.ReactNode}) => {
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);

@@ -12,7 +12,11 @@ const orderData: IOrder = {
     published: true
 }
 
-export function CreateOrder(){
+interface CreateOrderProps {
+    onCreate: (order: IOrder) => void
+}
+
+export function CreateOrder({onCreate}: CreateOrderProps){
     const show = useModal()
 
     const [valueTitle, setValueTitle] = useState('')
@@ -39,7 +43,10 @@ export function CreateOrder(){
 
         const response = await axios.post<IOrder>('http://localhost:8080/api/orders/', orderData)
         
+        onCreate(response.data)
+
         {show.handleClose()}
+        
     }
 
     const changeHandlerTitle = (event: any) => {

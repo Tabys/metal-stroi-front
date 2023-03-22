@@ -16,7 +16,7 @@ export function Modals({children, title}: ModalProps) {
     return (
         <>
             <Button className='fixed' variant="primary" onClick={show.handleShow}>
-                Launch demo modal
+                Add new order
             </Button>
 
             <Modal show={show.visible} onHide={show.handleClose}>
