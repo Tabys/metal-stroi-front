@@ -1,7 +1,7 @@
-import {Route, Routes} from "react-router-dom";
-import { OrderPage } from "./pages/OrderPage";
-import { OrdersPage } from "./pages/OrdersPage";
-import { Page404 } from "./pages/Page404";
+import { Route, Routes} from "react-router-dom";
+import { OrderPage } from "./pages/OrderPage/index";
+import { OrdersPage } from "./pages/OrderList/index";
+import { Page404 } from "./pages/Page404/index";
 
 
 function App() {

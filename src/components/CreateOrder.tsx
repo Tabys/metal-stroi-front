@@ -1,67 +1,48 @@
 import axios from 'axios'
 import React from 'react'
-import Ract, {useState, KeyboardEvent, useContext} from 'react'
+import {useState} from 'react'
 import { IOrder } from '../models'
 import { ErrorMassage } from './ErrorMassage'
-import { useModal } from './modal/ModalContext'
 
 
 const orderData: IOrder = {
-    title: '',
-    description: '',
-    published: true
+    id: '',
 }
 
 interface CreateOrderProps {
     onCreate: (order: IOrder) => void
+    addItem: (order: IOrder) => void
 }
 
-export function CreateOrder({onCreate}: CreateOrderProps){
-    const show = useModal()
-
-    const [valueTitle, setValueTitle] = useState('')
-    
-    const [valueDes, setValueDes] = useState('')
-    
+export function CreateOrder({onCreate, addItem}: CreateOrderProps){
+   
+    const [valueID, setvalueID] = useState('')
+     
     const [error, setError] = useState('')
 
     const sumbitHandler = async (event: React.FormEvent) => {
         event.preventDefault()
         setError('')
 
-        if (valueTitle.trim().length === 0){
-            setError('Please enter valid title.')
-            return
-        }
-        if (valueDes.trim().length === 0){
-            setError('Please enter valid description.')
-            return
-        }
+        orderData.id = valueID
 
-        orderData.title = valueTitle
-        orderData.description = valueDes
-
-        const response = await axios.post<IOrder>('http://localhost:8080/api/orders/', orderData)
+        const response = await axios.post<IOrder>('http://localhost:8080/api/import/', orderData)
+        
         
         onCreate(response.data)
 
-        {show.handleClose()}
-        
+        addItem(response.data)
     }
 
-    const changeHandlerTitle = (event: any) => {
-        setValueTitle(event.target.value)
+    const changeHandlerID = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setvalueID(event.target.value)
     }
-    const changeHandlerDes = (event: any) => {
-        setValueDes(event.target.value)
-    }
+
 
     return (
         <form onSubmit={sumbitHandler}>
-            <label htmlFor="title" className="form-label">Title</label>
-            <input value={valueTitle} onChange={changeHandlerTitle} className="form-control" type="text" name="title" id="title" />
-            <label htmlFor="text" className="form-label mt-3">Description</label>
-            <textarea value={valueDes} className="form-control" onChange={changeHandlerDes} name="description" id="text"></textarea>
+            <label htmlFor="title" className="form-label">ID Deal or Lead</label>
+            <input value={valueID} onChange={changeHandlerID} className="form-control" type="text" name="id" id="id" />
             <button type="submit" className="btn btn-primary container-fluid mt-5">Create</button>
             { error && <ErrorMassage error={error} />}
         </form>

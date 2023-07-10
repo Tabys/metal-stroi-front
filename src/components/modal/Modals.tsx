@@ -1,25 +1,21 @@
 import React, {useState} from 'react'
-import Button from 'react-bootstrap/Button';
+
 import Modal from 'react-bootstrap/Modal';
-import { useModal } from './ModalContext';
 
 
 interface ModalProps{
     children: React.ReactNode
     title: string
+    visible: boolean,
+    onClose: () => void
 }
 
-export function Modals({children, title}: ModalProps) {
-    const show = useModal()
+export function Modals({children, title, visible, onClose}: ModalProps) {
 
     
     return (
         <>
-            <Button className='fixed' variant="primary" onClick={show.handleShow}>
-                Add new order
-            </Button>
-
-            <Modal show={show.visible} onHide={show.handleClose}>
+            <Modal show={visible} onHide={onClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>{ title }</Modal.Title>
                 </Modal.Header>
