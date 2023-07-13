@@ -1,17 +1,17 @@
 import axios from 'axios'
 import React from 'react'
 import {useState} from 'react'
-import { IOrder } from '../models'
+import { Order } from '../models'
 import { ErrorMassage } from './ErrorMassage'
 
 
-const orderData: IOrder = {
+const orderData: Order = {
     id: '',
 }
 
 interface CreateOrderProps {
-    onCreate: (order: IOrder) => void
-    addItem: (order: IOrder) => void
+    onCreate: (order: Order) => void
+    addItem: (order: Order) => void
 }
 
 export function CreateOrder({onCreate, addItem}: CreateOrderProps){
@@ -26,7 +26,7 @@ export function CreateOrder({onCreate, addItem}: CreateOrderProps){
 
         orderData.id = valueID
 
-        const response = await axios.post<IOrder>('http://localhost:8080/api/import/', orderData)
+        const response = await axios.post<Order>('http://localhost:8080/api/import/', orderData)
         
         
         onCreate(response.data)

@@ -3,7 +3,7 @@ import { CreateOrder } from "../../components/CreateOrder";
 import { ErrorMassage } from "../../components/ErrorMassage";
 import { Loader } from "../../components/Loader";
 import { Modals } from "../../components/modal/Modals";
-import { Order } from "../../components/Order";
+import { OrderProfile } from "../../components/Order";
 import { useOrders } from "../../hooks/orders";
 import Button from 'react-bootstrap/Button';
 
@@ -22,7 +22,7 @@ export function OrdersPage() {
             {error && <ErrorMassage error={error}/>}
             <div className="container">
                 <div className="row  g-2">
-                    {orders.map(order => <Order order={order} key={order.id} />).reverse()}
+                    {orders.map(order => <OrderProfile order={order} key={order.id} />).reverse()}
                 </div>
             </div>
     

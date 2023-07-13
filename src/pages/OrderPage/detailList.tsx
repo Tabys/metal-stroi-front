@@ -1,30 +1,59 @@
-import axios, { AxiosError } from "axios"
-import { useState, useEffect } from "react";
-import { useParams } from 'react-router-dom'
-import { IOrder } from "../../models";
-import { Badge, Table } from "react-bootstrap";
+import { Table } from "react-bootstrap";
+import { Detail, Order } from "../../models";
 
-export function detailList() {
-    // Display detail information
-    const [detail, setDetail] = useState<IOrder>()
-    const {id} = useParams();
-    
-    async function getDetails() {
-        try{
-            const response = await axios.get<IOrder>(`http://localhost:8080/api/orders/${id}`)
-            setDetail(response.data)
-            console.log(`Respons.Data -  ${response.data}`)
-        } catch (e: unknown) {
-            const error = e as AxiosError
-        }
-    }
-    
-    useEffect(() =>{
-        getDetails()
-        console.log('Details - ', {detail})
-    }, [])
+export function detailList(dataOrder: Order) {
+    const arrDetails: Detail[] = []
+    dataOrder?.setups?.forEach(element => {
+        element.details?.forEach((detail, index) => {
+            detail.material = element.material
+            detail.work_piece = element?.work_piece?.split('x')[2]
+            arrDetails.push(detail)
+        })
+    });
+    console.log(arrDetails)
 
-    
+    // It dont works
+    // const groupedArrDetails: Detail[] = [];
+    // for(let i = 0; i < arrDetails.length; i++){
+    //     const index = groupedArrDetails.findIndex(el => el.name === arrDetails[i].name);
+    //     if(index === -1){
+    //         groupedArrDetails.push(arrDetails[i]);
+    //     }else{
+    //         groupedArrDetails[index].quantity += arrDetails[i].quantity;
+    //     };
+    // };
+
+
+    // console.log(groupedArrDetails);
+
+
+
+    let tdDetail = arrDetails.map((item, index) =>{
+        return <tr key={item.id}>
+            <td>{index + 1}</td>
+            <td>{item.name}</td>
+            <td>{item.work_piece}</td>
+            <td>{item.material}</td>
+            <td>{item.quantity}</td>
+            <td>{item.cut_type}</td>
+            <td>{item.cut_type}</td>
+            <td>{item.cut_count}</td>
+            <td>{item.bends_count}</td>
+            <td>{item.polymer}</td>
+            <td>{item.rolling}</td>
+            <td>{item.mec_processing}</td>
+            <td>{item.weld_work}</td>
+            <td>{item.weld_hardware}</td>
+            <td>{item.weld_profit}</td>
+            <td>{item.weld_metal}</td>
+            <td>{item.weld_other}</td>
+            <td>{item.weld_painting}</td>
+            <td>{item.weld_install}</td>
+            <td>{item.weld_delivery}</td>
+            <td>{item.turning_works}</td>
+            <td>{item.forge}</td>
+        </tr>
+    })
     
     return (
         <Table striped bordered hover responsive>
@@ -57,6 +86,9 @@ export function detailList() {
                     <th>Доставка</th>
                 </tr>
             </thead>
+            <tbody>
+                { tdDetail }
+            </tbody>
         </Table>
     );
 }
