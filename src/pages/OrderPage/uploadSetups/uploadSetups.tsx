@@ -1,58 +1,43 @@
 import axios from 'axios'
-import React from 'react'
-import {useState} from 'react'
-import { ErrorMassage } from '../../../components/ErrorMassage'
-import { Setup } from '../../../models'
+import { Upload } from '../../../models'
+import { useForm, SubmitHandler } from "react-hook-form"
+import { Form } from 'react-bootstrap'
 
 
-const setupData = new FormData()
-
-interface uploadSetupsProps {
-    onCreate: (Setup: Setup) => void
-    orderId: string
+type uploadSetupsProps = {
+    onCreate: () => void
+    orderId: number
 }
 
-export function UploadSetups({onCreate, orderId}: uploadSetupsProps){
-   
-    const [valueFiles, setvalueFiles] = useState<File[]>([])
-     
-    const [error, setError] = useState('')
+export function UploadSetups({ onCreate, orderId }: uploadSetupsProps) {
+    const setupData = new FormData()
 
-    // Get value from input file multiple
-    const changeHandlerFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files){
-            const _files = Array.from(e.target.files)
-            setvalueFiles(_files)
-        }
-        
-    }
+    const {
+        register,
+        handleSubmit,
+        formState: { errors }
+    } = useForm<Upload>();
 
-    const sumbitHandler = async (event: React.FormEvent) => {
-        event.preventDefault()
-        setError('')
 
-        setupData.append('order_id', orderId)
-        for(let file of valueFiles){
+    const onSubmit: SubmitHandler<Upload> = async data => {
+        setupData.append('order_id', String(orderId))
+        for (let file of data.files) {
             setupData.append('files', file)
         }
-        
 
-        console.log(setupData)
-
-        const response = await axios.post<Setup>('http://localhost:8080/api/upload/', setupData)
-        
-        
-        onCreate(response.data)
+        await axios.post<Upload>('http://localhost:8080/api/upload/', setupData)
+        onCreate()
     }
-
 
 
     return (
-        <form onSubmit={sumbitHandler} encType="multipart/form-data">
+        <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
             <label htmlFor="title" className="form-label">Файлы</label>
-            <input  onChange={changeHandlerFiles} className="form-control" type="file" name="files" id="files" multiple/>
-            <button type="submit" className="btn btn-primary container-fluid mt-5">Create</button>
-            { error && <ErrorMassage error={error} />}
+            <input type="hidden" {...register("order_id")} defaultValue={orderId} />
+            <input {...register("files", { required: "Это поле обязательное" })} className={errors.files ? 'form-control is-invalid' : 'form-control'} type="file" id="files" multiple />
+            {errors.files && <Form.Text className="text-danger">{errors.files.message}</Form.Text>}
+            <button type="submit" className="btn btn-primary container-fluid mt-5">Загрузить</button>
+
         </form>
     )
 }

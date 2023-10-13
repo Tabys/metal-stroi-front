@@ -1,37 +1,30 @@
-import React, {useState, useEffect} from 'react'
+import { useState } from 'react'
 import { CreateOrder } from "../../components/CreateOrder";
-import { ErrorMassage } from "../../components/ErrorMassage";
-import { Loader } from "../../components/Loader";
 import { Modals } from "../../components/modal/Modals";
-import { OrderProfile } from "../../components/Order";
 import { useOrders } from "../../hooks/orders";
 import Button from 'react-bootstrap/Button';
+import { ItemListPagination } from './itemListPagination';
 
 
 export function OrdersPage() {
-    const {loading, error, orders, addOrder} = useOrders()
+    const { addOrder } = useOrders()
     const [showOrderModal, setShowOrderModal] = useState(false);
 
     const openModal = () => setShowOrderModal(true)
     const closeModal = () => setShowOrderModal(false)
-         
-    
+
+
     return (
         <>
-            {loading && <Loader />}
-            {error && <ErrorMassage error={error}/>}
-            <div className="container">
-                <div className="row  g-2">
-                    {orders.map(order => <OrderProfile order={order} key={order.id} />).reverse()}
-                </div>
-            </div>
-    
+
+            <ItemListPagination itemsPerPage={4} />
+
             <Button className='fixed' variant="primary" onClick={openModal}>
-                Add new order
+                Добавить заказ
             </Button>
 
-            <Modals title="Create new order" visible={showOrderModal} onClose={closeModal}>
-                <CreateOrder onCreate={closeModal} addItem={addOrder}/>
+            <Modals title="Добавить сделку" visible={showOrderModal} onClose={closeModal}>
+                <CreateOrder onCreate={closeModal} addItem={addOrder} />
             </Modals>
         </>
     );

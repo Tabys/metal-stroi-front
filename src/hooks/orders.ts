@@ -4,18 +4,18 @@ import { Order } from "../models"
 import { useNavigate } from "react-router-dom";
 
 
-export function useOrders(){
+export function useOrders() {
     const [orders, setOrders] = useState<Order[]>([])
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState('')
     const navigate = useNavigate();
 
-    function addOrder(order: Order){
+    function addOrder(order: Order) {
         navigate(`/order/${order.id}`);
     }
 
     async function fetchOrders() {
-        try{
+        try {
             setError('')
             setLoading(true)
             const response = await axios.get<Order[]>('http://localhost:8080/api/orders')
@@ -28,9 +28,8 @@ export function useOrders(){
         }
     }
 
-    useEffect(() =>{
+    useEffect(() => {
         fetchOrders()
     }, [])
-
-    return { orders, error, loading, addOrder}
+    return { orders, error, loading, addOrder }
 }

@@ -12,18 +12,18 @@ code {
     monospace;
 }
 
-#root{
-  margin-top: 20px;
-}
 
-#root .col{
+#root .col {
   border: 1px solid black;
   box-sizing: border-box;
   padding: 20px;
 }
 
+.navbar {
+  margin: 0 0 30px 0;
+}
 
-.modal .bg{
+.modal .bg {
   width: 100%;
   height: 100%;
   background-color: #000;
@@ -33,8 +33,45 @@ code {
   top: 0;
 }
 
-.btn.fixed{
+
+.btn.fixed {
   position: fixed;
   right: 20px;
   top: 20px;
+}
+
+.btn.fixed.right-175 {
+  right: 175px;
+}
+
+.alert-fixed {
+  position: fixed !important;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+  text-align: center;
+  z-index: 9999;
+}
+
+
+/* General table with DIV element */
+.table {
+  display: table;
+  border-collapse: collapse;
+  width: auto !important;
+}
+
+.table .row {
+  display: table-row;
+}
+
+.table .header {
+  font-weight: bold;
+}
+
+.table .row div {
+  display: table-cell;
+  border: 1px solid #ccc;
+  padding: 5px;
+  width: auto !important;
 }

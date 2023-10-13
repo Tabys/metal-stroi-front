@@ -2,10 +2,9 @@ import { type } from 'os'
 import React from 'react'
 
 export type Order = {
-    id: string
+    id: number
     title?: string
-    orderType?: string
-    dateCreate?: string // date 
+    date_сreate?: string // date 
     createdAt?: string // date
     updateAt?: string // date
     setups?: Setup[]
@@ -18,13 +17,12 @@ export type Setup = {
     min_work_piece?: string
     program_runs?: string
     table_number?: string
-    
     details?: Detail[]
 }
 
-export type Upload ={
-    files?: File[]
-    order_id?: string
+export type Upload = {
+    files: File[]
+    order_id: number
 }
 
 export type Detail = {
@@ -37,25 +35,23 @@ export type Detail = {
     cut_count: number
     name: string
     cut_type: string
-    hack_count?: number
+    chop_count?: number
     bends_count?: number
     polymer: boolean
+    food_steel: boolean
     rolling: string
-    mec_processing?: string
-    weld_work?: string
-    weld_hardware?: string
-    weld_profit?: string
-    weld_metal?: string
-    weld_other?: string
-    weld_painting?: string
-    weld_install?: string
-    weld_delivery?: string
-    turning_works?: string
-    forge?: string
     material?: string
-    work_piece?: string
+    thickness?: string
+    real_thickness?: number
     createdAt?: string
     updatedAt?: string
+    setup_id?: number
+    bend_cost?: number
+    chop_cost?: number
+    cut_cost?: number
+    inset_cost?: number
+    metal_cost?: number
+    markup: number
 }
 
 export type Modal = {
@@ -63,4 +59,60 @@ export type Modal = {
     visible?: boolean
     handleClose?: any
     handleShow?: any
+}
+
+export type Material = {
+    id: number
+    name?: string
+    abbreviation?: string
+}
+
+export type MetalType = {
+    id: number
+    name?: string
+    abbreviation?: string
+    price_metal_items?: PriceMetalItems[]
+}
+
+export type PriceMetalItems = {
+    id: number
+    thickness?: string
+    table_name?: string
+    gas: string
+    cost: number
+    add_cost: number
+    addid?: number
+    price_metal_category_id: number
+}
+
+export type FormValues = {
+    forEach(arg0: (element: any) => void): unknown
+    id: number,
+    cut_type?: string,
+    cut_count?: string,
+    bends_count?: string,
+    polymer?: boolean,
+    rolling?: string,
+    mec_processing?: string,
+    turning_works?: string,
+    forge?: string
+}
+
+export type PriceServiceCategory = {
+    id: number,
+    title: string,
+    short_title: string,
+    price_services_items?: PricesServiceItem[]
+}
+
+export type PricesServiceItem = {
+    id: number,
+    metal_thickness_min?: number,
+    metal_thickness_max?: number,
+    metal_length_min?: number,
+    metal_length_max?: number,
+    bend_count_min?: number,
+    bend_count_max?: number,
+    cost?: number,
+    cut_cost?: number
 }

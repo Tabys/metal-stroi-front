@@ -1,0 +1,15 @@
+.detail_list{
+    display: table;
+    border-collapse: collapse;
+}
+.detail_list .row{
+    display: table-row;
+}
+.detail_list .row div{
+    display: table-cell;
+    border: 1px solid #ccc;
+    padding: 5px;
+}
+.detail_list .row div input{
+    max-width: 70px;
+}
