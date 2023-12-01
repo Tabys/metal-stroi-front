@@ -4,7 +4,6 @@ import { useMaterialPrices } from '../../hooks/priceMaterials';
 import { PircesItems } from "./pricesItems";
 import Alert from 'react-bootstrap/Alert';
 import { useState } from 'react';
-import { MetalType } from '../../models';
 
 
 export function PricesWrapper() {
@@ -30,6 +29,7 @@ export function PricesWrapper() {
         }
     ))
 
+    console.log(clearPrice)
 
     return (
         <>

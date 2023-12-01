@@ -1,31 +1,50 @@
-import { useState } from 'react';
-import { useFormContext } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form'
 
 type SelectProps = {
-    arrOptions: any[]
-    selected: any
-    name: string
-    onSubmit: () => void
+	arrOptions: any[]
+	arrOptionsText?: any[]
+	selected: any
+	name: string
+	user_role?: string
+	onSubmit: () => void
 }
 
-export function FormSelect({ arrOptions, selected, name, onSubmit }: SelectProps) {
-    const { register, setValue } = useFormContext()
-    const [select, setSelect] = useState(selected);
+export function FormSelect({
+	arrOptions,
+	arrOptionsText,
+	selected,
+	name,
+	user_role,
+	onSubmit,
+}: SelectProps) {
+	const { register, setValue } = useFormContext()
 
-    const options = arrOptions.map((text, index) => {
-        return <option key={index}>{text}</option>;
-    });
+	const options = arrOptions.map((value, index) => {
+		let text = ''
+		if (arrOptionsText) {
+			text = arrOptionsText[index]
+		} else {
+			text = value
+		}
+		return (
+			<option key={index} value={value}>
+				{text}
+			</option>
+		)
+	})
 
-    return (
-        <select
-            {...register(name)}
-            defaultValue={select}
-            onChange={(e) => {
-                setValue(name, e.target.value)
-                onSubmit()
-            }}
-        >
-            {options}
-        </select>
-    )
+	return (
+		<select
+			{...register(name)}
+			defaultValue={selected}
+			onChange={e => {
+				setValue(name, e.target.value)
+				onSubmit()
+			}}
+			className='form-select'
+			disabled={user_role === 'ROLE_USER' ? true : false}
+		>
+			{options}
+		</select>
+	)
 }

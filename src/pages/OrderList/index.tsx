@@ -4,6 +4,7 @@ import { Modals } from "../../components/modal/Modals";
 import { useOrders } from "../../hooks/orders";
 import Button from 'react-bootstrap/Button';
 import { ItemListPagination } from './itemListPagination';
+import { SearchOrder } from './search';
 
 
 export function OrdersPage() {
@@ -13,11 +14,10 @@ export function OrdersPage() {
     const openModal = () => setShowOrderModal(true)
     const closeModal = () => setShowOrderModal(false)
 
-
     return (
         <>
 
-            <ItemListPagination itemsPerPage={4} />
+            <ItemListPagination itemsPerPage={20} />
 
             <Button className='fixed' variant="primary" onClick={openModal}>
                 Добавить заказ

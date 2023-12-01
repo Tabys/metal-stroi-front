@@ -1,27 +1,70 @@
-import { Route, Routes } from "react-router-dom";
-import { OrderPage } from "./pages/OrderPage/index";
-import { OrdersPage } from "./pages/OrderList/index";
-import { Page404 } from "./pages/Page404/index";
-import { PriceServices } from "./pages/PriceServices";
-import { PriceMaterials } from "./pages/PriceMaterials";
-import { DocClient } from "./pages/OrderPage/documents/client/docClient";
-import { Header } from "./components/Header";
-
+import { Route, Routes } from 'react-router-dom'
+import { OrderPage } from './pages/OrderPage/index'
+import { OrdersPage } from './pages/OrderList/index'
+import { Page404 } from './pages/Page404/index'
+import { PriceServices } from './pages/PriceServices'
+import { PriceMaterials } from './pages/PriceMaterials'
+import { DocClient } from './pages/OrderPage/documents/client/docClient'
+import { DocWorkhop } from './pages/OrderPage/documents/workshop/docWorkshop'
+import { DocOrder } from './pages/OrderPage/documents/order/docOrder'
+import { Header } from './components/Header'
+import { LogIn } from './components/auth/Login'
+import { AuthVerify } from './common/AuthVerify'
+import { UsersPage } from './pages/Users'
+import { useUser } from './hooks/curentUser'
 
 function App() {
-    return (
-        <>
-            <Header />
-            <Routes>
-                <Route path="/" element={<OrdersPage />} />
-                <Route path="/order/:id" element={<OrderPage />} />
-                <Route path="/order/:id/doc-client" element={<DocClient />} />
-                <Route path="/price-services/" element={<PriceServices />} />
-                <Route path="/price-materials/" element={<PriceMaterials />} />
-                <Route path="*" element={<Page404 />} />
-            </Routes>
-        </>
-    )
+	const { currentUser } = useUser()
+
+	return (
+		<>
+			<AuthVerify />
+			{currentUser ? (
+				<>
+					<Header />
+					<Routes>
+						<Route path='/' element={<OrdersPage />} />
+						<Route path='/order/:id' element={<OrderPage />} />
+						<Route
+							path='/order/:id/doc-client'
+							element={<DocClient />}
+						/>
+						<Route
+							path='/order/:id/doc-workshop'
+							element={<DocWorkhop />}
+						/>
+						<Route
+							path='/order/:id/doc-order'
+							element={<DocOrder />}
+						/>
+						{currentUser?.['roles'] !== 'ROLE_USER' ? (
+							<>
+								<Route
+									path='/price-services/'
+									element={<PriceServices />}
+								/>
+								<Route
+									path='/price-materials/'
+									element={<PriceMaterials />}
+								/>
+							</>
+						) : (
+							''
+						)}
+						<Route path='/users' element={<UsersPage />} />
+						<Route path='*' element={<Page404 />} />
+					</Routes>
+				</>
+			) : (
+				<>
+					<Routes>
+						<Route path='/' element={<LogIn />} />
+						<Route path='*' element={<Page404 />} />
+					</Routes>
+				</>
+			)}
+		</>
+	)
 }
 
-export default App;
+export default App

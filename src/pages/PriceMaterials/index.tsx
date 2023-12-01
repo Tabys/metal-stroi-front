@@ -9,7 +9,7 @@ export function PriceMaterials() {
         <>
             <div id="container" className="container">
                 <div className="row g-2 mb-3">
-                    <Link to={`/`}>На главную</Link>
+                    <Link to={`/`} className="back-link">На главную</Link>
                     <h1>Цены на материалы</h1>
                 </div>
                 <PricesWrapper />

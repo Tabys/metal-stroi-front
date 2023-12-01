@@ -24,6 +24,7 @@ export function FormCheckbox({ name, defaultChecked, disable, onSubmit }: CheckB
             disabled={disable ? disable : false}
             type="checkbox"
             defaultChecked={checked}
+            className="form-check-input"
         />
     )
 }

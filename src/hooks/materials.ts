@@ -1,38 +1,38 @@
-import axios, { AxiosError } from "axios"
-import { useEffect, useState } from 'react';
-import { Material } from "../models"
-
+import axios, { AxiosError } from 'axios'
+import { useEffect, useState } from 'react'
+import { Material } from '../models'
 
 export function useMateials() {
-    const [materials, setMateials] = useState<Material[]>([])
-    const [loading, setLoading] = useState(false)
-    const [error, setError] = useState('')
+	const [materials, setMateials] = useState<Material[]>([])
+	const [loading, setLoading] = useState(false)
+	const [error, setError] = useState('')
 
+	function updMaterial() {
+		fetchMateials()
+	}
 
-    function updMaterial() {
-        fetchMateials()
-    }
+	async function fetchMateials() {
+		try {
+			setError('')
+			setLoading(true)
+			const response = await axios.get<Material[]>(
+				process.env.REACT_APP_BACKEND_API_URL + 'materials'
+			)
+			setMateials(response.data)
+			setLoading(false)
+		} catch (e: unknown) {
+			const error = e as AxiosError
+			setLoading(false)
+			setError(error.message)
+		}
+	}
 
-    async function fetchMateials() {
-        try {
-            setError('')
-            setLoading(true)
-            const response = await axios.get<Material[]>('http://localhost:8080/api/materials')
-            setMateials(response.data)
-            setLoading(false)
-        } catch (e: unknown) {
-            const error = e as AxiosError
-            setLoading(false)
-            setError(error.message)
-        }
-    }
+	useEffect(() => {
+		fetchMateials()
+	}, [])
 
-    useEffect(() => {
-        fetchMateials()
-    }, [])
+	// SORT
+	materials.sort((a, b) => (a.id > b.id ? 1 : -1))
 
-    // SORT
-    materials.sort((a, b) => a.id > b.id ? 1 : -1);
-
-    return { materials, error, loading, updMaterial }
+	return { materials, error, loading, updMaterial }
 }

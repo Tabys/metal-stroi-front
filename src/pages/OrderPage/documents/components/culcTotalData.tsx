@@ -1,0 +1,59 @@
+import { DocTableDetail } from '../../../../models'
+
+export function CulcTotalData(details: DocTableDetail[] | undefined) {
+	let total_price = 0
+	let total_quantity = 0
+	let total_weight = 0
+	let total_chop = 0
+	let total_bend = 0
+	let total_choping = 0
+	let total_bending = 0
+	let total_metal = 0
+	let total_time = 0
+	let total_length = 0
+	let total_inset = 0
+	let total_cuting = 0
+	details?.map(detail => {
+		total_price +=
+			(Number(detail.bending) +
+				Number(detail.choping) +
+				Number(detail.cut_cost) +
+				Number(detail.metal)) *
+			Number(detail.quantity)
+		total_quantity += detail.quantity
+		total_weight += Number(detail.weight) * Number(detail.quantity)
+		total_chop += Number(detail.chop_count)
+		total_bend += Number(detail.bend_count)
+		total_choping += Number(detail.choping)
+		total_bending += Number(detail.bending)
+		total_metal += Number(detail.metal)
+		total_time += Number(detail.time)
+		total_length += Number(
+			detail.cut_type === 'plasma' && Number(detail.thickness) > 16
+				? Number(detail.length).toFixed(3)
+				: 0
+		)
+		total_inset += Number(
+			detail.cut_type === 'plasma' ? detail.cut_count : 0
+		)
+		total_cuting += Number(detail.cut_cost)
+		return true
+	})
+
+	const total_data = {
+		price: total_price,
+		quantity: total_quantity,
+		weight: total_weight,
+		chop: total_chop,
+		bend: total_bend,
+		choping: total_choping,
+		bending: total_bending,
+		metal: total_metal.toFixed(1),
+		time: total_time,
+		length: total_length,
+		inset: total_inset,
+		cuting: total_cuting.toFixed(1),
+	}
+
+	return total_data
+}

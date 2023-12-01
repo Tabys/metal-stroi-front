@@ -1,15 +1,36 @@
-.detail_list{
+/* .wrapper_table {
+    overflow-x: scroll;
+} */
+
+.detail_list {
     display: table;
     border-collapse: collapse;
+    font-size: 14px;
 }
-.detail_list .row{
+
+.detail_list .row {
     display: table-row;
 }
-.detail_list .row div{
+
+.detail_list .row div {
     display: table-cell;
     border: 1px solid #ccc;
     padding: 5px;
 }
-.detail_list .row div input{
-    max-width: 70px;
+
+.detail_list .row div input:not([type="radio"]):not([type="checkbox"]) {
+    min-width: 60px;
+    font-size: 14px;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+input[type='number'],
+input[type="number"]:hover,
+input[type="number"]:focus {
+    appearance: none;
+    -moz-appearance: textfield;
 }
