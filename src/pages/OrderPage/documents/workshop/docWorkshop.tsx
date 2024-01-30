@@ -16,6 +16,7 @@ export function DocWorkhop() {
 	const { id } = useParams()
 	const { orders } = useOrders(id ? id : '')
 
+	console.log(orders)
 	const arrDetails = orders ? CreateDetailGroupList(orders) : ''
 	const neededMetal = culcNeededMetal(orders)
 	const details: DocTableDetail[] | undefined = PrepArrDetils({
@@ -36,7 +37,9 @@ export function DocWorkhop() {
 						<div className={styles.doc_header}>
 							<div className={styles.order_inf}>
 								<p className={styles.order_number}>
-									<strong>Заявка в цех № {id}</strong>
+									<strong>
+										Заявка в цех № {orders?.order_number}
+									</strong>
 								</p>
 								<p>
 									<strong>Дата приема заказа:</strong>{' '}
@@ -55,7 +58,7 @@ export function DocWorkhop() {
 							</div>
 						</div>
 					</div>
-					<Table striped bordered hover>
+					<Table bordered hover>
 						<thead>
 							<tr>
 								<th>№ п/п</th>
@@ -103,7 +106,7 @@ export function DocWorkhop() {
 								<tbody>
 									<tr>
 										<td>общее время, ч</td>
-										<td>{total.time}</td>
+										<td>{(total.time / 60).toFixed(2)}</td>
 									</tr>
 									<tr>
 										<td>гибов</td>
@@ -122,7 +125,6 @@ export function DocWorkhop() {
 						</div>
 						<div className={styles.block}>
 							<Table
-								striped
 								bordered
 								hover
 								size='sm'

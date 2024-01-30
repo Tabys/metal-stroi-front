@@ -42,7 +42,7 @@ export function DocClient() {
 						<div className={styles.doc_header}>
 							<div className={styles.compony_inf}>
 								<div className={styles.logo}>
-									<img src='/logoMS.png' alt='logo' />
+									<img src='/images/logoMS.png' alt='logo' />
 								</div>
 								<div className={styles.contact_inf}>
 									<p>
@@ -59,7 +59,7 @@ export function DocClient() {
 									rel='noreferrer'
 									className={styles.order_number}
 								>
-									№ {id}
+									№ {orders?.order_number}
 								</a>
 								<p>
 									<strong>Дата приема заказа:</strong>{' '}
@@ -78,7 +78,7 @@ export function DocClient() {
 							</div>
 						</div>
 					</div>
-					<Table striped bordered hover>
+					<Table bordered hover>
 						<thead>
 							<tr>
 								<th>№ п/п</th>
@@ -127,13 +127,15 @@ export function DocClient() {
 
 					<div className={styles.invoice_header}>
 						<p>
-							<strong>Товарная накладная №{id}</strong>
+							<strong>
+								Товарная накладная №{orders?.order_number}
+							</strong>
 						</p>
 						<p>
 							<strong>Покупатель:</strong> {orders?.customer}
 						</p>
 					</div>
-					<Table striped bordered hover>
+					<Table bordered hover>
 						<thead>
 							<tr>
 								<th>№ п/п</th>

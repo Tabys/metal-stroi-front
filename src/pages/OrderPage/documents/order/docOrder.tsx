@@ -30,7 +30,7 @@ export function DocOrder() {
 	if (orders?.delivery === true) {
 		deliveryCost = Math.ceil(total.weight / 500) * 500
 	}
-
+	// console.log(details)
 	return (
 		<>
 			<div className='container'>
@@ -47,7 +47,7 @@ export function DocOrder() {
 									rel='noreferrer'
 									className={styles.order_number}
 								>
-									Заявка № {id}
+									Заявка № {orders?.order_number}
 								</a>
 								<p>
 									<strong>Дата приема заказа:</strong>{' '}
@@ -66,7 +66,7 @@ export function DocOrder() {
 							</div>
 						</div>
 					</div>
-					<Table striped bordered hover>
+					<Table bordered hover>
 						<thead>
 							<tr>
 								<th rowSpan={2}>№ п/п</th>
@@ -134,7 +134,7 @@ export function DocOrder() {
 								<td colSpan={3}>Итого стоимость по заказу</td>
 								<td>{total.quantity}</td>
 								<td></td>
-								<td>{total.time}</td>
+								<td>{total.time.toFixed(2)}</td>
 								<td>{total.length}</td>
 								<td></td>
 								<td>{total.inset}</td>
@@ -158,7 +158,7 @@ export function DocOrder() {
 						</tbody>
 					</Table>
 
-					<Table striped bordered hover className={styles.metal}>
+					<Table bordered hover className={styles.metal}>
 						<thead>
 							<tr>
 								<th colSpan={6}>Металл</th>

@@ -7,12 +7,7 @@ type SendPdfProps = {
 }
 
 export function SendPDFForm({ orderId }: SendPdfProps) {
-	const {
-		register,
-		handleSubmit,
-		setError,
-		formState: { errors },
-	} = useForm<SendPDF>()
+	const { register, handleSubmit, setError } = useForm<SendPDF>()
 
 	const onSubmit: SubmitHandler<SendPDF> = async data => {
 		await axios

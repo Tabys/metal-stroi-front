@@ -33,7 +33,6 @@ export async function UpdBandChop(dataDetail: Detail) {
 	const PRICES = await getPrices()
 
 	// SETUPS DATA
-	const LENGTH = SETUP?.work_piece?.split(' x ')[1]
 	const THICKNESS = SETUP?.work_piece?.split(' x ')[2]
 
 	// FIND SERVICE TYPE
@@ -45,35 +44,35 @@ export async function UpdBandChop(dataDetail: Detail) {
 	})
 
 	const bending = BEND?.price_services_items?.find(function (n) {
-		let bend_count = 0
-		if (dataDetail.bends_count !== undefined) {
-			bend_count = dataDetail.bends_count
-		}
 		return (
-			Number(n.metal_length_min) <= Number(LENGTH) &&
-			Number(n.metal_length_max) >= Number(LENGTH) &&
 			Number(n.metal_thickness_min) <= Number(THICKNESS) &&
-			Number(n.metal_thickness_max) >= Number(THICKNESS) &&
-			Number(n.bend_count_min) <= bend_count &&
-			Number(n.bend_count_max) >= bend_count
+			Number(n.metal_thickness_max) >= Number(THICKNESS)
 		)
 	})
 
 	const choping = CHOP?.price_services_items?.find(function (n) {
-		let chop_count = 0
-		if (dataDetail.chop_count !== undefined) {
-			chop_count = dataDetail.chop_count
-		}
 		return (
 			Number(n.metal_thickness_min) <= Number(THICKNESS) &&
-			Number(n.metal_thickness_max) >= Number(THICKNESS) &&
-			Number(n.bend_count_min) <= chop_count &&
-			Number(n.bend_count_max) >= chop_count
+			Number(n.metal_thickness_max) >= Number(THICKNESS)
 		)
 	})
 
-	dataDetail.chop_cost = choping ? choping.cost : 0
-	dataDetail.bend_cost = bending ? bending.cost : 0
+	if (
+		Number(dataDetail.chop_count) === 0 ||
+		dataDetail.chop_count === undefined
+	) {
+		dataDetail.chop_cost = 0
+	} else {
+		dataDetail.chop_cost = choping?.cost
+	}
 
+	if (
+		Number(dataDetail.bends_count) === 0 ||
+		dataDetail.bends_count === undefined
+	) {
+		dataDetail.bend_cost = 0
+	} else {
+		dataDetail.bend_cost = bending?.cost
+	}
 	return dataDetail
 }

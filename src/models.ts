@@ -1,5 +1,6 @@
 export type Order = {
 	id: number
+	order_number: number
 	implementer?: string
 	title?: string
 	date_сreate?: string // date
@@ -56,6 +57,7 @@ export type Detail = {
 	metal_cost?: number
 	markup: number
 	table_number: string
+	add_id?: string[]
 }
 
 export type Modal = {
@@ -94,8 +96,8 @@ export type FormValues = {
 	forEach(arg0: (element: any) => void): unknown
 	id: number
 	cut_type?: string
-	cut_count?: string
-	bends_count?: string
+	cut_count?: number
+	bends_count?: number
 	polymer?: boolean
 	rolling?: string
 	mec_processing?: string
@@ -114,10 +116,6 @@ export type PricesServiceItem = {
 	id: number
 	metal_thickness_min?: number
 	metal_thickness_max?: number
-	metal_length_min?: number
-	metal_length_max?: number
-	bend_count_min?: number
-	bend_count_max?: number
 	cost?: number
 	cut_cost?: number
 }
@@ -126,7 +124,7 @@ export type NeededMetal = {
 	material?: string
 	thickness?: string
 	metal_sheets: number
-	weight_metal: string
+	weight_metal: number
 	length: number
 	width: number
 	table_number?: string
@@ -168,4 +166,9 @@ export type Login = {
 
 export type SendPDF = {
 	id: number
+}
+
+export type ClearMetalCostForm = {
+	id: number[]
+	cost: number
 }

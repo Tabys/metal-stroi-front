@@ -13,6 +13,10 @@ export function useOrders(id?: string) {
 		navigate(`/order/${order.id}`)
 	}
 
+	function delOrder() {
+		fetchOrders()
+	}
+
 	async function fetchOrders() {
 		try {
 			setError('')
@@ -34,5 +38,5 @@ export function useOrders(id?: string) {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
-	return { orders, error, loading, addOrder }
+	return { orders, error, loading, addOrder, delOrder }
 }

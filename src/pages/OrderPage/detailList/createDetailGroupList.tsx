@@ -7,6 +7,7 @@ export function CreateDetailGroupList(dataOrder: Order) {
 	dataOrder?.setups?.forEach(element => {
 		element.details?.forEach((detail, index) => {
 			detail.material = element.material
+			detail.add_id = [detail.id]
 			arrDetails.push(detail)
 		})
 	})
@@ -21,8 +22,10 @@ export function CreateDetailGroupList(dataOrder: Order) {
 			groupedArrDetails.push({ ...arrDetails[i] })
 		} else {
 			groupedArrDetails[index].quantity += arrDetails[i].quantity
+			groupedArrDetails[index].add_id?.push(arrDetails[i].id)
 		}
 	}
-	groupedArrDetails.sort((a, b) => (a.id > b.id ? 1 : -1))
+	groupedArrDetails.sort((a, b) => (a.name > b.name ? 1 : -1))
+	// console.log(groupedArrDetails)
 	return groupedArrDetails
 }

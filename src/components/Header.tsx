@@ -3,6 +3,7 @@ import Button from 'react-bootstrap/Button'
 import Offcanvas from 'react-bootstrap/Offcanvas'
 import AuthService from '../services/auth.service'
 import { useUser } from '../hooks/curentUser'
+import { Link } from 'react-router-dom'
 
 export function Header() {
 	const { currentUser } = useUser()
@@ -38,15 +39,25 @@ export function Header() {
 						{currentUser?.['roles'] !== 'ROLE_USER' ? (
 							<>
 								<li>
-									<a href={`/price-services/`}>Цены услуг</a>
+									<Link
+										to={`/price-services/`}
+										onClick={handleClose}
+									>
+										Цены услуг
+									</Link>
 								</li>
 								<li>
-									<a href={`/price-materials/`}>
+									<Link
+										to={`/price-materials/`}
+										onClick={handleClose}
+									>
 										Цены материалов
-									</a>
+									</Link>
 								</li>
 								<li>
-									<a href={`/users/`}>Создать пользователя</a>
+									<Link to={`/users/`} onClick={handleClose}>
+										Создать пользователя
+									</Link>
 								</li>
 							</>
 						) : (

@@ -8,6 +8,7 @@ import {
 } from '../../../../models'
 
 export async function UpdCutInset(dataDetail: Detail) {
+	console.log(dataDetail)
 	async function getPrices() {
 		try {
 			const response = await axios.get<PriceServiceCategory[]>(
@@ -52,7 +53,7 @@ export async function UpdCutInset(dataDetail: Detail) {
 	const METAL_TYPE = await getMetalType()
 
 	// SETUPS DATA
-	const THICKNESS = SETUP?.work_piece?.split(' x ')[2]
+	const THICKNESS = dataDetail.thickness
 	const MATERIAL_NAME = SETUP?.material?.split('-')[0]
 	const TABLE_NAME = SETUP?.table_number
 
@@ -86,7 +87,9 @@ export async function UpdCutInset(dataDetail: Detail) {
 				Number(n.metal_thickness_max) >= Number(THICKNESS)
 			)
 		})
-		console.log('PLASMA')
+		// console.log('PLASMA')
+		// console.log(THICKNESS)
+		// console.log(PLASM_CUT)
 	} else {
 		if (GAS?.gas === 'oxygen') {
 			cuting = LASER_CUT_OXIGEN?.price_services_items?.find(function (n) {

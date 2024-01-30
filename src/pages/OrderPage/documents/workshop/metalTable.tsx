@@ -23,7 +23,7 @@ export function MetalTable({ metals }: NeededMetalProps) {
 			</td>
 			<td>{metals.width}</td>
 			<td>{metals.length}</td>
-			<td>{metals.metal_sheets}</td>
+			<td>{metals.metal_sheets.toFixed(3)}</td>
 		</tr>
 	)
 }

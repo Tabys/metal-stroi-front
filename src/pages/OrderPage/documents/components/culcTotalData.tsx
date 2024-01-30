@@ -15,15 +15,14 @@ export function CulcTotalData(details: DocTableDetail[] | undefined) {
 	let total_cuting = 0
 	details?.map(detail => {
 		total_price +=
-			(Number(detail.bending) +
-				Number(detail.choping) +
-				Number(detail.cut_cost) +
-				Number(detail.metal)) *
-			Number(detail.quantity)
+			Number(detail.bending) +
+			Number(detail.choping) +
+			Number(detail.cut_cost) +
+			Number(detail.metal)
 		total_quantity += detail.quantity
 		total_weight += Number(detail.weight) * Number(detail.quantity)
-		total_chop += Number(detail.chop_count)
-		total_bend += Number(detail.bend_count)
+		total_chop += Number(detail.chop_count) * Number(detail.quantity)
+		total_bend += Number(detail.bend_count) * Number(detail.quantity)
 		total_choping += Number(detail.choping)
 		total_bending += Number(detail.bending)
 		total_metal += Number(detail.metal)

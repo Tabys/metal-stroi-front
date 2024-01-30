@@ -1,28 +1,27 @@
-import { SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from 'react-hook-form'
 
 type Search = {
-    name: string
+	name: string
 }
 
-
 export function SearchOrder() {
-    const {
-        register,
-        handleSubmit,
-    } = useForm<Search>();
+	const { register, handleSubmit } = useForm<Search>()
 
-    const onSubmit: SubmitHandler<Search> = (data) => {
-        console.log(data)
-        function submit() {
-            return data
-        }
-    }
-    return (
-        <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="mb-3">
-                <label className="form-label">Поиск:</label>
-                <input  {...register("name", { onChange: handleSubmit(onSubmit) })} className='form-control' />
-            </div>
-        </form>
-    )
+	const onSubmit: SubmitHandler<Search> = data => {
+		// console.log(data)
+		function submit() {
+			return data
+		}
+	}
+	return (
+		<form onSubmit={handleSubmit(onSubmit)}>
+			<div className='mb-3'>
+				<label className='form-label'>Поиск:</label>
+				<input
+					{...register('name', { onChange: handleSubmit(onSubmit) })}
+					className='form-control'
+				/>
+			</div>
+		</form>
+	)
 }

@@ -199,6 +199,8 @@ code {
 	border: 1px solid #cbcbcb;
 	box-sizing: border-box;
 	width: max-content;
+	display: flex;
+	align-items: center;
 }
 
 .controllers form {
@@ -221,6 +223,13 @@ code {
 	width: auto;
 }
 
+.controllers form button {
+	margin: 0 0 0 10px;
+}
+
+.mr-1 {
+	margin-right: 10px;
+}
 @media print {
 	#root {
 		margin: 0;

@@ -17,7 +17,7 @@ type Search = {
 export function ItemListPagination({ itemsPerPage }: ItemListProp) {
 	const { register, handleSubmit } = useForm<Search>()
 
-	const { loading, error, orders } = useOrders()
+	const { loading, error, orders, delOrder } = useOrders()
 
 	const onSubmit: SubmitHandler<Search> = data => {
 		const filteredItems = orders.filter(({ title }) =>
@@ -64,9 +64,15 @@ export function ItemListPagination({ itemsPerPage }: ItemListProp) {
 				{error && <ErrorMassage error={error} />}
 				<div className='row  g-2'>
 					{currentItems &&
-						currentItems.map(order => (
-							<OrderProfile order={order} key={order.id} />
-						))}
+						currentItems
+							.map(order => (
+								<OrderProfile
+									order={order}
+									key={order.id}
+									update={delOrder}
+								/>
+							))
+							.reverse()}
 				</div>
 				{orders.length > itemsPerPage ? (
 					<ReactPaginate

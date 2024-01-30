@@ -65,7 +65,7 @@ export function AuthVerify() {
 		} else {
 			return console.log('Пользователь не существует')
 		}
-	}, [location])
+	}, [location, navigate])
 
 	return <></>
 }

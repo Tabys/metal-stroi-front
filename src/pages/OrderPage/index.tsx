@@ -1,17 +1,17 @@
 import axios, { AxiosError } from 'axios'
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { Order } from '../../models'
 import { Badge } from 'react-bootstrap'
 import { DetailList } from './detailList/detailList'
 import { UploadSetupModal } from '../../components/modal/UploadSetupModal'
 import { DeleteSetups } from './deleteSetups/deleteSetups'
-import { AddDetailModal } from '../../components/modal/AddDetailModal'
+// import { AddDetailModal } from '../../components/modal/AddDetailModal'
 import { TransformDate } from '../../components/TransformDate'
 import { FormOrderController } from './orderController/formOrderController'
 import ListGroup from 'react-bootstrap/ListGroup'
 import { SendPDFForm } from '../../components/sendPDF'
+import { FaFileLines } from 'react-icons/fa6'
 
 export function EmptySetup() {
 	return <p>Элементов нет</p>
@@ -22,19 +22,16 @@ export function OrderPage() {
 	const [order, setOrder] = useState<Order | null>(null)
 	const { id } = useParams()
 
-	const updateOrders = () => {
-		setTimeout(() => {
-			getOrder(Number(id))
-		}, 500)
+	const updateOrders = async () => {
+		await getOrder(Number(id))
 	}
 
 	async function getOrder(id: number) {
 		try {
-			const response = await axios.get<Order>(
+			let response = await axios.get<Order>(
 				process.env.REACT_APP_BACKEND_API_URL + `orders/${id}`
 			)
-			setOrder(response.data)
-			// console.log(response.data)
+			await setOrder(response.data)
 		} catch (e: unknown) {
 			const error = e as AxiosError
 			console.log({ error })
@@ -49,7 +46,7 @@ export function OrderPage() {
 
 	return (
 		<>
-			<div className='container'>
+			<div className='container mb-5'>
 				<div className='row  g-2'>
 					<Link to={`/`} className='back-link'>
 						Вернуться назад
@@ -80,17 +77,17 @@ export function OrderPage() {
 							<ListGroup horizontal>
 								<ListGroup.Item variant='light'>
 									<Link relative='path' to={`doc-client`}>
-										Документ "Клиенту"
+										<FaFileLines /> Клиенту
 									</Link>
 								</ListGroup.Item>
 								<ListGroup.Item variant='light'>
 									<Link relative='path' to={`doc-workshop`}>
-										Документ "В цех"
+										<FaFileLines /> В цех
 									</Link>
 								</ListGroup.Item>
 								<ListGroup.Item variant='light'>
 									<Link relative='path' to={`doc-order`}>
-										Документ "Заказ"
+										<FaFileLines /> Заказ
 									</Link>
 								</ListGroup.Item>
 							</ListGroup>

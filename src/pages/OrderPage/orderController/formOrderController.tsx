@@ -5,6 +5,7 @@ import Form from 'react-bootstrap/Form'
 import { FormCheckbox } from '../detailList/formElements/formCheckbox'
 import { FormSelect } from '../detailList/formElements/formSelect'
 import { Role } from '../../../components/auth/role'
+import { ClearMetalCost } from './clearMetalCost'
 
 type formOCProps = {
 	orderData: Order
@@ -22,6 +23,12 @@ export function FormOrderController({ orderData, updated }: formOCProps) {
 		)
 		updated()
 	}
+	const detailsId: number[] = []
+	orderData?.setups?.map(setup => {
+		setup?.details?.map(detail => {
+			return detailsId?.push(Number(detail.id))
+		})
+	})
 
 	return (
 		<div className='controllers'>
@@ -52,6 +59,7 @@ export function FormOrderController({ orderData, updated }: formOCProps) {
 					</Form.Group>
 				</form>
 			</FormProvider>
+			<ClearMetalCost details={detailsId} update={updated} />
 		</div>
 	)
 }

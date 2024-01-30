@@ -30,24 +30,26 @@ export function culcNeededMetal(orders: Order | undefined) {
 		}
 
 		let used_metal =
-			(used_metal_length * used_metal_width) /
-			(Number(full_metal_length) * Number(full_metal_width))
+			((used_metal_length * used_metal_width) /
+				(Number(full_metal_length) * Number(full_metal_width))) *
+			Number(element.program_runs)
 
 		let details_weight = 0
 		element?.details?.map(detail => {
 			details_weight += Number(detail.weight) * Number(detail.quantity)
+			return true
 		})
 
 		const thickness = element?.details?.find(function (items) {
-			return Number(items.table_number) === Number(element.table_number)
+			return String(items.table_number) === String(element.table_number)
 		})
 
 		return {
-			material: element?.details?.[0].material,
+			material: element?.material,
 			table_number: element.table_number,
 			thickness: thickness?.thickness,
 			metal_sheets: used_metal,
-			weight_metal: details_weight.toFixed(3),
+			weight_metal: details_weight,
 			length: used_metal_length,
 			width: used_metal_width,
 		}
@@ -64,9 +66,11 @@ export function culcNeededMetal(orders: Order | undefined) {
 			} else {
 				groupedNeededMetal[index].metal_sheets +=
 					neededMetal[i].metal_sheets
+				groupedNeededMetal[index].weight_metal += Number(
+					neededMetal[i].weight_metal
+				)
 			}
 		}
 	}
-
 	return groupedNeededMetal
 }

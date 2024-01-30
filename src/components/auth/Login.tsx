@@ -1,4 +1,4 @@
-import { useForm, SubmitHandler, FormProvider } from 'react-hook-form'
+import { useForm, SubmitHandler } from 'react-hook-form'
 import { Login } from '../../models'
 import { Form } from 'react-bootstrap'
 import styles from './style.module.css'
@@ -12,7 +12,7 @@ export function LogIn() {
 		setError,
 		formState: { errors },
 	} = useForm<Login>()
-
+	console.log(process.env.REACT_APP_BACKEND_API_URL + 'auth/signin')
 	const onSubmitLogIn: SubmitHandler<Login> = async data => {
 		await axios
 			.post<Login>(
