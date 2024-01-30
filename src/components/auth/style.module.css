@@ -1,0 +1,24 @@
+.auth_wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: calc(100vh - 160px);
+}
+
+.auth {
+    width: 440px;
+    box-sizing: border-box;
+    padding: 30px 40px 40px;
+    box-shadow: 0 0 20px -10px #6c6c6c;
+    border-radius: 20px;
+}
+
+.auth .logo {
+    display: flex;
+    justify-content: center;
+}
+
+.auth .logo img {
+    max-width: 100px;
+}

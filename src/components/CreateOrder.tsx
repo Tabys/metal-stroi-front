@@ -1,69 +1,73 @@
 import axios from 'axios'
-import React from 'react'
-import Ract, {useState, KeyboardEvent, useContext} from 'react'
-import { IOrder } from '../models'
-import { ErrorMassage } from './ErrorMassage'
-import { useModal } from './modal/ModalContext'
+import { Order } from '../models'
+import { useForm, SubmitHandler } from 'react-hook-form'
+import { Form } from 'react-bootstrap'
 
-
-const orderData: IOrder = {
-    title: '',
-    description: '',
-    published: true
+type CreateOrderProps = {
+	onCreate: () => void
+	addItem: (order: Order) => void
 }
 
-interface CreateOrderProps {
-    onCreate: (order: IOrder) => void
-}
+export function CreateOrder({ onCreate, addItem }: CreateOrderProps) {
+	const {
+		register,
+		handleSubmit,
+		setError,
+		formState: { errors },
+	} = useForm<Order>()
 
-export function CreateOrder({onCreate}: CreateOrderProps){
-    const show = useModal()
+	const onSubmit: SubmitHandler<Order> = async data => {
+		await axios
+			.post<Order>(
+				process.env.REACT_APP_BACKEND_API_URL + 'import/',
+				data
+			)
+			.then(result => {
+				onCreate()
+				addItem(data)
+			})
+			.catch(err => {
+				console.log(err.response)
+				if (err.response.status > 200) {
+					setError('root.serverError', {
+						type: err.response.status,
+						message: err.response.data.message,
+					})
+				}
+			})
+	}
 
-    const [valueTitle, setValueTitle] = useState('')
-    
-    const [valueDes, setValueDes] = useState('')
-    
-    const [error, setError] = useState('')
-
-    const sumbitHandler = async (event: React.FormEvent) => {
-        event.preventDefault()
-        setError('')
-
-        if (valueTitle.trim().length === 0){
-            setError('Please enter valid title.')
-            return
-        }
-        if (valueDes.trim().length === 0){
-            setError('Please enter valid description.')
-            return
-        }
-
-        orderData.title = valueTitle
-        orderData.description = valueDes
-
-        const response = await axios.post<IOrder>('http://localhost:8080/api/orders/', orderData)
-        
-        onCreate(response.data)
-
-        {show.handleClose()}
-        
-    }
-
-    const changeHandlerTitle = (event: any) => {
-        setValueTitle(event.target.value)
-    }
-    const changeHandlerDes = (event: any) => {
-        setValueDes(event.target.value)
-    }
-
-    return (
-        <form onSubmit={sumbitHandler}>
-            <label htmlFor="title" className="form-label">Title</label>
-            <input value={valueTitle} onChange={changeHandlerTitle} className="form-control" type="text" name="title" id="title" />
-            <label htmlFor="text" className="form-label mt-3">Description</label>
-            <textarea value={valueDes} className="form-control" onChange={changeHandlerDes} name="description" id="text"></textarea>
-            <button type="submit" className="btn btn-primary container-fluid mt-5">Create</button>
-            { error && <ErrorMassage error={error} />}
-        </form>
-    )
+	return (
+		<form onSubmit={handleSubmit(onSubmit)}>
+			<label htmlFor='title' className='form-label'>
+				ID сделки
+			</label>
+			<input
+				{...register('id', { required: 'Это поле обязательное' })}
+				className={
+					errors.id || errors.root
+						? 'form-control is-invalid'
+						: 'form-control'
+				}
+				type='numer'
+				id='id'
+			/>
+			{errors.id && (
+				<Form.Text className='text-danger'>
+					{errors.id.message}
+				</Form.Text>
+			)}
+			{errors.root?.serverError.type === 400 && (
+				<Form.Text className='text-danger'>
+					{errors?.root?.serverError.message}
+				</Form.Text>
+			)}
+			<button
+				type='submit'
+				className='btn btn-primary container-fluid mt-5'
+			>
+				Добавить
+			</button>
+		</form>
+	)
 }
