@@ -10,7 +10,19 @@ export type Order = {
 	production_time?: number
 	createdAt?: string // date
 	updateAt?: string // date
+	metals?: Metal[]
 	setups?: Setup[]
+}
+
+export type Metal = {
+	id: number
+	material: string
+	table_number: number
+	thickness: number
+	metal_sheets: number
+	weight_metal: number
+	length: number
+	width: number
 }
 
 export type Setup = {
@@ -171,4 +183,8 @@ export type SendPDF = {
 export type ClearMetalCostForm = {
 	id: number[]
 	cost: number
+}
+
+export type UpdMetalCostForm = {
+	id: number
 }

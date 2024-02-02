@@ -12,6 +12,7 @@ import { FormOrderController } from './orderController/formOrderController'
 import ListGroup from 'react-bootstrap/ListGroup'
 import { SendPDFForm } from '../../components/sendPDF'
 import { FaFileLines } from 'react-icons/fa6'
+import { MetalList } from './metalList/metalList'
 
 export function EmptySetup() {
 	return <p>Элементов нет</p>
@@ -44,6 +45,7 @@ export function OrderPage() {
 		}
 	}, [id])
 
+	// console.log(order)
 	return (
 		<>
 			<div className='container mb-5'>
@@ -52,7 +54,8 @@ export function OrderPage() {
 						Вернуться назад
 					</Link>
 					<h1>
-						{order?.title} <Badge bg='success'>Сделка</Badge>
+						№{order?.id} {order?.customer}{' '}
+						<Badge bg='success'>Сделка</Badge>
 					</h1>
 					<div className='d-flex flex-row'>
 						<div className='alert alert-primary p-2' role='alert'>
@@ -96,12 +99,16 @@ export function OrderPage() {
 								updated={updateOrders}
 							/>
 						</div>
+
+						<DetailList dataOrder={order} />
+
+						{order.metals ? <MetalList metal={order.metals} /> : ''}
+
+						{/* FIXED INTERFACE ELEMENTS */}
 						<DeleteSetups
 							orderId={Number(id)}
 							onDel={updateOrders}
 						></DeleteSetups>
-						<DetailList dataOrder={order} />
-
 						<SendPDFForm orderId={Number(id)} />
 						{/* <AddDetailModal onAdd={updateOrders} setups={order.setups} /> */}
 					</>

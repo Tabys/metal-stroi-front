@@ -6,6 +6,7 @@ import { FormCheckbox } from '../detailList/formElements/formCheckbox'
 import { FormSelect } from '../detailList/formElements/formSelect'
 import { Role } from '../../../components/auth/role'
 import { ClearMetalCost } from './clearMetalCost'
+import { UpdMetalCost } from './updMetalCost'
 
 type formOCProps = {
 	orderData: Order
@@ -59,6 +60,7 @@ export function FormOrderController({ orderData, updated }: formOCProps) {
 					</Form.Group>
 				</form>
 			</FormProvider>
+			<UpdMetalCost orderId={orderData.id} update={updated} />
 			<ClearMetalCost details={detailsId} update={updated} />
 		</div>
 	)

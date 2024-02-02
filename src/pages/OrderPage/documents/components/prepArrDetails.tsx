@@ -2,18 +2,13 @@ import { Detail, NeededMetal, Order } from '../../../../models'
 
 type PrepArrDetilsProp = {
 	arrDetails: '' | Detail[]
-	neededMetal: NeededMetal[]
 	orders: Order | undefined
 }
 
-export function PrepArrDetils({
-	arrDetails,
-	neededMetal,
-	orders,
-}: PrepArrDetilsProp) {
+export function PrepArrDetils({ arrDetails, orders }: PrepArrDetilsProp) {
 	const prepArrDetails = arrDetails
 		? arrDetails.map((detail, index) => {
-				const metal = neededMetal.find(function (items) {
+				const metal = orders?.metals?.find(function (items) {
 					return (
 						String(items.table_number) ===
 						String(detail.table_number)

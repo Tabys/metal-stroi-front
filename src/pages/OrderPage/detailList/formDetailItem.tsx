@@ -318,7 +318,8 @@ export function FormDetailItem({
 							onBlur: methods.handleSubmit(onSubmitPriceMetal),
 						})}
 						defaultValue={
-							DetailItem.metal_cost === null
+							DetailItem.metal_cost === null ||
+							DetailItem.metal_cost == 0
 								? 0
 								: Math.round(
 										Number(DetailItem.metal_cost) +

@@ -16,11 +16,10 @@ export function DocWorkhop() {
 	const { id } = useParams()
 	const { orders } = useOrders(id ? id : '')
 
-	console.log(orders)
+	// console.log(orders)
 	const arrDetails = orders ? CreateDetailGroupList(orders) : ''
 	const neededMetal = culcNeededMetal(orders)
 	const details: DocTableDetail[] | undefined = PrepArrDetils({
-		neededMetal,
 		arrDetails,
 		orders,
 	})
@@ -142,7 +141,7 @@ export function DocWorkhop() {
 									</tr>
 								</thead>
 								<tbody>
-									{neededMetal?.map((metal, index) => (
+									{orders?.metals?.map((metal, index) => (
 										<MetalTable
 											key={index}
 											metals={metal}

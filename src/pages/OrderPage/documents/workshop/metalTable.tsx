@@ -1,7 +1,7 @@
-import { NeededMetal } from '../../../../models'
+import { Metal } from '../../../../models'
 
 type NeededMetalProps = {
-	metals: NeededMetal
+	metals: Metal
 }
 export function MetalTable({ metals }: NeededMetalProps) {
 	let material = ''
@@ -23,7 +23,7 @@ export function MetalTable({ metals }: NeededMetalProps) {
 			</td>
 			<td>{metals.width}</td>
 			<td>{metals.length}</td>
-			<td>{metals.metal_sheets.toFixed(3)}</td>
+			<td>{Number(metals.metal_sheets).toFixed(3)}</td>
 		</tr>
 	)
 }
