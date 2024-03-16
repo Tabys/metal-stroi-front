@@ -1,46 +1,32 @@
 import { DocTableDetail } from '../../../../models'
 
 type OrderTableProps = {
-	details: DocTableDetail
+	detail: DocTableDetail
 	index: number
 }
 
-export function OrderTable({ details, index }: OrderTableProps) {
-	const total_price = (
-		Number(details.bending) +
-		Number(details.choping) +
-		Number(details.cut_cost) +
-		Number(details.metal)
-	).toFixed(1)
+export function OrderTable({ detail, index }: OrderTableProps) {
 	return (
 		<tr>
 			<td>{index + 1}</td>
-			<td>{details.name}</td>
-			<td>{details.thickness}</td>
-			<td>{details.quantity}</td>
-			<td>{details.cut_type === 'laser' ? 'Лазер' : 'Плазма'}</td>
-			<td>{details.time ? details.time : 0}</td>
+			<td>{detail.name}</td>
+			<td>{detail.thickness}</td>
+			<td>{detail.quantity}</td>
+			<td>{detail.time ? detail.time : 0}</td>
 			<td>
-				{details.cut_type === 'plasma' && Number(details.thickness) > 16
-					? Number(details.length).toFixed(3)
+				{detail.cut_type === 'plasma'
+					? Number(detail.length).toFixed(2)
 					: 0}
 			</td>
-			<td>{details.cut_price}</td>
-			<td>{details.cut_type === 'plasma' ? details.cut_count : 0}</td>
-			<td>{details.cut_type === 'plasma' ? details.inset_cost : 0}</td>
-			<td>{details.cut_cost}</td>
+			<td>{detail.cut_type === 'plasma' ? detail.inset_cost : 0}</td>
 			<td>
-				{details.chop_count ? details.chop_count * details.quantity : 0}
+				{detail.chop_count ? detail.chop_count * detail.quantity : 0}
 			</td>
-			<td>{details.chop_cost ? details.chop_cost : 0}</td>
-			<td>{details.choping}</td>
 			<td>
-				{details.bend_count ? details.bend_count * details.quantity : 0}
+				{detail.bend_count ? detail.bend_count * detail.quantity : 0}
 			</td>
-			<td>{details.bend_cost ? details.bend_cost : 0}</td>
-			<td>{details.bending}</td>
-			<td>{details.metal}</td>
-			<td>{total_price}</td>
+			<td>-</td>
+			<td>{detail.weight}</td>
 		</tr>
 	)
 }

@@ -8,7 +8,7 @@ import {
 } from '../../../../models'
 
 export async function UpdCutInset(dataDetail: Detail) {
-	console.log(dataDetail)
+	// console.log(dataDetail)
 	async function getPrices() {
 		try {
 			const response = await axios.get<PriceServiceCategory[]>(

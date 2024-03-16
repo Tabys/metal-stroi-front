@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom'
 import { useParams } from 'react-router-dom'
 import { useOrders } from '../../../../hooks/prepareDataList'
 import { CreateDetailGroupList } from '../../detailList/createDetailGroupList'
-import { culcNeededMetal } from '../components/culcNeededMetal'
 import { PrepArrDetils } from '../components/prepArrDetails'
 import { ClientTable } from './clientTable'
 import { DocTableDetail } from '../../../../models'
@@ -10,21 +9,22 @@ import styles from '../style.module.css'
 import Table from 'react-bootstrap/Table'
 import { TransformDate } from '../../../../components/TransformDate'
 import { CulcTotalData } from '../components/culcTotalData'
+import { ClientTableProducts } from './clientTableProducts'
+import { PrepArrProducts } from '../components/prepArrProducts'
 
 export function DocClient() {
 	const { id } = useParams()
 	const { orders } = useOrders(id ? id : '')
 	const linkBX = process.env.REACT_APP_BX24_URL + `crm/deal/details/${id}/`
 
-	const arrDetails = orders ? CreateDetailGroupList(orders) : ''
-	const neededMetal = culcNeededMetal(orders)
+	const arrDetails = orders ? CreateDetailGroupList(orders) : undefined
 	const details: DocTableDetail[] | undefined = PrepArrDetils({
-		neededMetal,
 		arrDetails,
 		orders,
 	})
+	const products = PrepArrProducts(orders)
 	const total = CulcTotalData(details)
-	// console.log(details)
+	console.log(products)
 
 	let deliveryCost: number | null = null
 	if (orders?.delivery === true) {
@@ -91,9 +91,17 @@ export function DocClient() {
 						<tbody>
 							{details?.map((detail, index) => (
 								<ClientTable
-									key={index}
-									details={detail}
+									key={detail.id}
+									detail={detail}
 									index={index}
+								/>
+							))}
+							{products?.map((product, index) => (
+								<ClientTableProducts
+									key={product.id}
+									index={index}
+									product={product}
+									startIndex={details?.length}
 								/>
 							))}
 							{orders?.delivery === true ? (
@@ -147,12 +155,25 @@ export function DocClient() {
 						</thead>
 						<tbody>
 							{details?.map((detail, index) => (
-								<tr key={index}>
+								<tr key={detail.id}>
 									<td>{index + 1}</td>
 									<td>{detail.name}</td>
 									<td>{detail.thickness}</td>
 									<td>шт.</td>
 									<td>{detail.quantity}</td>
+								</tr>
+							))}
+							{orders?.products?.map((product, index) => (
+								<tr key={product.id}>
+									<td>
+										{details?.length
+											? index + 1 + details.length
+											: 0}
+									</td>
+									<td>{product.name}</td>
+									<td>-</td>
+									<td>шт.</td>
+									<td>{product.quantity}</td>
 								</tr>
 							))}
 							<tr>

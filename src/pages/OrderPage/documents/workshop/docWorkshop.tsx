@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom'
 import { useParams } from 'react-router-dom'
 import { useOrders } from '../../../../hooks/prepareDataList'
 import { CreateDetailGroupList } from '../../detailList/createDetailGroupList'
-import { culcNeededMetal } from '../components/culcNeededMetal'
 import { PrepArrDetils } from '../components/prepArrDetails'
 import { DocTableDetail } from '../../../../models'
 import styles from '../style.module.css'
@@ -15,14 +14,14 @@ import { CulcTotalData } from '../components/culcTotalData'
 export function DocWorkhop() {
 	const { id } = useParams()
 	const { orders } = useOrders(id ? id : '')
+	const full = true
 
-	console.log(orders)
-	const arrDetails = orders ? CreateDetailGroupList(orders) : ''
-	const neededMetal = culcNeededMetal(orders)
+	// console.log(orders)
+	const arrDetails = orders ? CreateDetailGroupList(orders) : undefined
 	const details: DocTableDetail[] | undefined = PrepArrDetils({
-		neededMetal,
 		arrDetails,
 		orders,
+		full,
 	})
 	const total = CulcTotalData(details)
 
@@ -142,7 +141,7 @@ export function DocWorkhop() {
 									</tr>
 								</thead>
 								<tbody>
-									{neededMetal?.map((metal, index) => (
+									{orders?.metals?.map((metal, index) => (
 										<MetalTable
 											key={index}
 											metals={metal}

@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom'
 import { useParams } from 'react-router-dom'
 import { useOrders } from '../../../../hooks/prepareDataList'
 import { CreateDetailGroupList } from '../../detailList/createDetailGroupList'
-import { culcNeededMetal } from '../components/culcNeededMetal'
 import { PrepArrDetils } from '../components/prepArrDetails'
 import { OrderTable } from './orderTable'
 import { DocTableDetail } from '../../../../models'
@@ -16,20 +15,16 @@ export function DocOrder() {
 	const { id } = useParams()
 	const { orders } = useOrders(id ? id : '')
 	const linkBX = process.env.REACT_APP_BX24_URL + `crm/deal/details/${id}/`
+	const full = true
 
-	const arrDetails = orders ? CreateDetailGroupList(orders) : ''
-	const neededMetal = culcNeededMetal(orders)
+	const arrDetails = orders ? CreateDetailGroupList(orders) : undefined
 	const details: DocTableDetail[] | undefined = PrepArrDetils({
-		neededMetal,
 		arrDetails,
 		orders,
+		full,
 	})
 	const total = CulcTotalData(details)
 
-	let deliveryCost: number | null = null
-	if (orders?.delivery === true) {
-		deliveryCost = Math.ceil(total.weight / 500) * 500
-	}
 	// console.log(details)
 	return (
 		<>
@@ -73,87 +68,37 @@ export function DocOrder() {
 								<th rowSpan={2}>Наименование изделия</th>
 								<th rowSpan={2}>Толщина металла, мм</th>
 								<th rowSpan={2}>Кол-во, шт</th>
-								<th colSpan={7}>Резка</th>
-								<th colSpan={3}>Рубка</th>
-								<th colSpan={3}>Гибка</th>
-								<th rowSpan={2}>Металл</th>
-								<th rowSpan={2}>Стоимость, руб.</th>
+								<th rowSpan={2}>Лазер (время резки)</th>
+								<th colSpan={2}>Плазма</th>
+								<th rowSpan={2}>Рубка (кол-во рубов)</th>
+								<th rowSpan={2}>Гибка (кол-во гибов)</th>
+								<th rowSpan={2}>Вальцы</th>
+								<th rowSpan={2}>Веc детали</th>
 							</tr>
 							<tr>
-								<th>тип</th>
-								<th>t, мин</th>
 								<th>длина м</th>
-								<th>цена</th>
 								<th>кол-во врез.</th>
-								<th>цена врезки</th>
-								<th>Ст-ть, руб</th>
-								<th>кол-во рубов</th>
-								<th>цена, руб/руб</th>
-								<th>Ст-ть, руб</th>
-								<th>кол-во гибов</th>
-								<th>цена, руб/гиб</th>
-								<th>Ст-ть, руб</th>
 							</tr>
 						</thead>
 						<tbody>
 							{details?.map((detail, index) => (
 								<OrderTable
 									key={index}
-									details={detail}
+									detail={detail}
 									index={index}
 								/>
 							))}
-							{orders?.delivery === true ? (
-								<tr>
-									<td colSpan={3}>
-										<strong>Доставка</strong>
-									</td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td>
-										<strong>{deliveryCost}</strong>
-									</td>
-								</tr>
-							) : (
-								<></>
-							)}
+
 							<tr className={styles.footer}>
-								<td colSpan={3}>Итого стоимость по заказу</td>
+								<td colSpan={3}>Итого</td>
 								<td>{total.quantity}</td>
-								<td></td>
 								<td>{total.time.toFixed(2)}</td>
 								<td>{total.length}</td>
-								<td></td>
 								<td>{total.inset}</td>
-								<td></td>
-								<td>{total.cuting}</td>
 								<td>{total.chop}</td>
-								<td></td>
-								<td>{total.choping}</td>
 								<td>{total.bend}</td>
-								<td></td>
-								<td>{total.bending}</td>
-								<td>{total.metal}</td>
-								<td>
-									{deliveryCost
-										? (total.price + deliveryCost).toFixed(
-												1
-										  )
-										: total.price.toFixed(1)}
-								</td>
+								<td>-</td>
+								<td>{total.weight.toFixed(2)}</td>
 							</tr>
 						</tbody>
 					</Table>
@@ -171,7 +116,7 @@ export function DocOrder() {
 							</tr>
 						</thead>
 						<tbody>
-							{neededMetal?.map((metal, index) => (
+							{orders?.metals?.map((metal, index) => (
 								<MetalTable key={index} metals={metal} />
 							))}
 						</tbody>

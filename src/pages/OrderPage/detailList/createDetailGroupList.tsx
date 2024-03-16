@@ -13,19 +13,6 @@ export function CreateDetailGroupList(dataOrder: Order) {
 	})
 	// console.log(arrDetails)
 
-	const groupedArrDetails: Detail[] = []
-	for (let i = 0; i < arrDetails.length; i++) {
-		const index = groupedArrDetails.findIndex(
-			el => el.name === arrDetails[i].name
-		)
-		if (index === -1) {
-			groupedArrDetails.push({ ...arrDetails[i] })
-		} else {
-			groupedArrDetails[index].quantity += arrDetails[i].quantity
-			groupedArrDetails[index].add_id?.push(arrDetails[i].id)
-		}
-	}
-	groupedArrDetails.sort((a, b) => (a.name > b.name ? 1 : -1))
-	// console.log(groupedArrDetails)
-	return groupedArrDetails
+	arrDetails.sort((a, b) => (a.name > b.name ? 1 : -1))
+	return arrDetails
 }

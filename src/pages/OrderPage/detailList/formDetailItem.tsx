@@ -243,14 +243,47 @@ export function FormDetailItem({
 							)
 						}
 						step='0.1'
+						min='0'
 						className='form-control'
 					/>
 				</div>
 				<div>
-					<FormCheckbox
-						name='polymer'
-						defaultChecked={DetailItem.polymer}
-						onSubmit={methods.handleSubmit(onSubmitPrice)}
+					<input
+						{...methods.register('polymer', {
+							onBlur: methods.handleSubmit(onSubmitPrice),
+						})}
+						defaultValue={
+							DetailItem.polymer === null
+								? ''
+								: DetailItem.polymer
+						}
+						type='text'
+						className='form-control'
+					/>
+				</div>
+				<div>
+					<input
+						{...methods.register('polymer_price', {
+							onBlur: methods.handleSubmit(onSubmitPrice),
+						})}
+						defaultValue={
+							DetailItem.polymer_price === null
+								? 0
+								: DetailItem.polymer_price
+						}
+						type='number'
+						onFocus={e =>
+							e.target.addEventListener(
+								'wheel',
+								function (e) {
+									e.preventDefault()
+								},
+								{ passive: false }
+							)
+						}
+						step='0.1'
+						min='0'
+						className='form-control'
 					/>
 				</div>
 				<div>
@@ -259,6 +292,31 @@ export function FormDetailItem({
 						selected={DetailItem.rolling}
 						arrOptions={['-', 'Прокат', 'Конус']}
 						onSubmit={methods.handleSubmit(onSubmitCutInset)}
+					/>
+				</div>
+				<div>
+					<input
+						{...methods.register('drowing', {
+							onBlur: methods.handleSubmit(onSubmitPrice),
+						})}
+						defaultValue={
+							DetailItem.drowing === null || ''
+								? 0
+								: DetailItem.drowing
+						}
+						type='number'
+						onFocus={e =>
+							e.target.addEventListener(
+								'wheel',
+								function (e) {
+									e.preventDefault()
+								},
+								{ passive: false }
+							)
+						}
+						step='0.1'
+						min='0'
+						className='form-control'
 					/>
 				</div>
 				<div>
@@ -282,6 +340,7 @@ export function FormDetailItem({
 							)
 						}
 						step='0.1'
+						min='0'
 						className='form-control'
 					/>
 				</div>
@@ -306,6 +365,7 @@ export function FormDetailItem({
 							)
 						}
 						step='0.1'
+						min='0'
 						disabled={
 							DetailItem.cut_type === 'laser' ? true : false
 						}
@@ -318,7 +378,8 @@ export function FormDetailItem({
 							onBlur: methods.handleSubmit(onSubmitPriceMetal),
 						})}
 						defaultValue={
-							DetailItem.metal_cost === null
+							DetailItem.metal_cost === null ||
+							DetailItem.metal_cost == 0
 								? 0
 								: Math.round(
 										Number(DetailItem.metal_cost) +
@@ -339,6 +400,7 @@ export function FormDetailItem({
 							)
 						}
 						step='0.1'
+						min='0'
 						className='form-control'
 					/>
 				</div>

@@ -16,7 +16,7 @@ export function OrderProfile({ order, update }: OrderProps) {
 					to={`/order/${order.id}`}
 					className='text-start text-decoration-none text-muted'
 				>
-					{order.title}
+					№{order?.id} {order?.customer}
 				</Link>
 				<div className='d-flex align-items-center'>
 					<p className='mb-0 mr-1'>

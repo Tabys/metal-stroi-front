@@ -136,10 +136,24 @@ code {
 	width: 100%;
 }
 
-.sendPdf {
-	position: fixed;
-	right: 185px;
-	top: 20px;
+.group-controll .list-group-item {
+	padding: 0;
+}
+.group-controll .list-group-item a {
+	padding: 5px 15px;
+	display: block;
+}
+.group-controll .list-group-item button {
+	padding: 5px 7px;
+}
+.group-controll .list-group-item button svg {
+	width: 20px;
+	height: 20px;
+}
+
+.custom-btn {
+	border: none;
+	background-color: initial;
 }
 
 /* General table with DIV element */

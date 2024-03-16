@@ -2,7 +2,7 @@ import { useForm, SubmitHandler } from 'react-hook-form'
 import { ClearMetalCostForm } from '../../../models'
 import axios from 'axios'
 import Tooltip from '../../../components/Tooltip'
-import { FaMoneyBill1Wave } from 'react-icons/fa6'
+import { FaMoneyBill1Wave, FaMoneyBillWave } from 'react-icons/fa6'
 
 type ClearMetalCostProps = {
 	details: number[]
@@ -35,7 +35,7 @@ export function ClearMetalCost({ details, update }: ClearMetalCostProps) {
 			<input {...register('cost')} type='hidden' defaultValue='0' />
 			<Tooltip conditions={true} text='Очистить все цены на металл'>
 				<button type='submit' className='btn btn-primary'>
-					<FaMoneyBill1Wave />
+					<FaMoneyBillWave />
 				</button>
 			</Tooltip>
 		</form>

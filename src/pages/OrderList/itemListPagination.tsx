@@ -20,8 +20,10 @@ export function ItemListPagination({ itemsPerPage }: ItemListProp) {
 	const { loading, error, orders, delOrder } = useOrders()
 
 	const onSubmit: SubmitHandler<Search> = data => {
-		const filteredItems = orders.filter(({ title }) =>
-			title?.toLowerCase().includes(data.name.toLowerCase())
+		const filteredItems = orders.filter(
+			({ id, customer }) =>
+				String(id).includes(data.name) ||
+				customer?.toLowerCase().includes(data.name.toLowerCase())
 		)
 		const endOffset = itemOffset + itemsPerPage
 		setCurrentItems(filteredItems.slice(itemOffset, endOffset))
