@@ -13,6 +13,8 @@ import ListGroup from 'react-bootstrap/ListGroup'
 import { SendPDFForm } from '../../components/sendPDF'
 import { FaFileLines } from 'react-icons/fa6'
 import { MetalList } from './metalList/metalList'
+import { AddProductModal } from '../../components/modal/AddProductModal'
+import { ProductList } from './productList/productList'
 
 export function EmptySetup() {
 	return <p>Элементов нет</p>
@@ -93,6 +95,9 @@ export function OrderPage() {
 										<FaFileLines /> Заказ
 									</Link>
 								</ListGroup.Item>
+								<ListGroup.Item variant='light'>
+									<SendPDFForm orderId={Number(id)} />
+								</ListGroup.Item>
 							</ListGroup>
 							<FormOrderController
 								orderData={order}
@@ -104,12 +109,18 @@ export function OrderPage() {
 
 						{order.metals ? <MetalList metal={order.metals} /> : ''}
 
+						<ProductList
+							dataOrder={order}
+							delProduct={updateOrders}
+						/>
+
 						{/* FIXED INTERFACE ELEMENTS */}
+
 						<DeleteSetups
 							orderId={Number(id)}
 							onDel={updateOrders}
 						></DeleteSetups>
-						<SendPDFForm orderId={Number(id)} />
+						<AddProductModal order={order} onAdd={updateOrders} />
 						{/* <AddDetailModal onAdd={updateOrders} setups={order.setups} /> */}
 					</>
 				) : (

@@ -13,12 +13,17 @@ export function CulcTotalData(details: DocTableDetail[] | undefined) {
 	let total_length = 0
 	let total_inset = 0
 	let total_cuting = 0
+	let total_cuting_laser = 0
+	let total_cuting_plasma = 0
+	let total_painting = 0
 	details?.map(detail => {
 		total_price +=
 			Number(detail.bending) +
 			Number(detail.choping) +
 			Number(detail.cut_cost) +
-			Number(detail.metal)
+			Number(detail.metal) +
+			Number(detail.painting) +
+			Number(detail.drowing)
 		total_quantity += detail.quantity
 		total_weight += Number(detail.weight) * Number(detail.quantity)
 		total_chop += Number(detail.chop_count) * Number(detail.quantity)
@@ -36,6 +41,11 @@ export function CulcTotalData(details: DocTableDetail[] | undefined) {
 			detail.cut_type === 'plasma' ? detail.cut_count : 0
 		)
 		total_cuting += Number(detail.cut_cost)
+		total_cuting_laser +=
+			detail.cut_type === 'laser' ? Number(detail.cut_cost) : 0
+		total_cuting_plasma +=
+			detail.cut_type === 'plasma' ? Number(detail.cut_cost) : 0
+		total_painting += Number(detail.painting)
 		return true
 	})
 
@@ -52,6 +62,9 @@ export function CulcTotalData(details: DocTableDetail[] | undefined) {
 		length: total_length,
 		inset: total_inset,
 		cuting: total_cuting.toFixed(1),
+		cuting_laser: total_cuting_laser.toFixed(1),
+		cuting_plasma: total_cuting_plasma.toFixed(1),
+		painting: total_painting.toFixed(3),
 	}
 
 	return total_data

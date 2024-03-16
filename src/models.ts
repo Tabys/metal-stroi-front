@@ -12,17 +12,7 @@ export type Order = {
 	updateAt?: string // date
 	metals?: Metal[]
 	setups?: Setup[]
-}
-
-export type Metal = {
-	id: number
-	material: string
-	table_number: number
-	thickness: number
-	metal_sheets: number
-	weight_metal: number
-	length: number
-	width: number
+	products?: Product[]
 }
 
 export type Setup = {
@@ -34,11 +24,6 @@ export type Setup = {
 	table_number?: string
 	metal_cost?: number
 	details?: Detail[]
-}
-
-export type Upload = {
-	files: File[]
-	order_id: number
 }
 
 export type Detail = {
@@ -53,7 +38,8 @@ export type Detail = {
 	cut_type: string
 	chop_count?: number
 	bends_count?: number
-	polymer: boolean
+	polymer: string
+	polymer_price: number
 	food_steel: boolean
 	rolling: string
 	material?: string
@@ -70,6 +56,69 @@ export type Detail = {
 	markup: number
 	table_number: string
 	add_id?: string[]
+	drowing?: number
+	product_detail?: ProductsDetails
+	products?: Product[]
+}
+
+export type Product = {
+	id: number
+	name: string
+	quantity: number
+	welding_work: number
+	welding_fixings: number
+	welding_profit: number
+	welding_tax: number
+	welding_rolling: number
+	welding_painting: number
+	welding_delivery: number
+	welding_install: number
+	welding_allowance: number
+	painting_color: string
+	painting_price: number
+	painting_cost: number
+	smithy: number
+	turning_works: number
+	design_department: number
+
+	order_id: number
+	details?: Detail[]
+	product_detail?: ProductsDetails
+}
+
+export type ProductsDetails = {
+	detail_id: number
+	product_id: number
+	count: number
+}
+
+export type AddProduct = {
+	name: string
+	quantity: number
+	order_id: number
+	details: AddProductDetail[]
+}
+
+export type AddProductDetail = {
+	id: number
+	count: number
+	name?: string
+}
+
+export type Metal = {
+	id: number
+	material: string
+	table_number: number
+	thickness: number
+	metal_sheets: number
+	weight_metal: number
+	length: number
+	width: number
+}
+
+export type Upload = {
+	files: File[]
+	order_id: number
 }
 
 export type Modal = {
@@ -143,6 +192,7 @@ export type NeededMetal = {
 }
 
 export type DocTableDetail = {
+	id: string
 	thickness?: string
 	time: string
 	name: string
@@ -162,6 +212,17 @@ export type DocTableDetail = {
 	inset_cost?: number
 	cut_price?: number
 	table_number?: string
+	drowing?: number
+	painting?: number
+	product_detail?: ProductsDetails[]
+	products?: Product[]
+}
+
+export type DocTableProduct = {
+	id: number
+	name: string
+	quantity: number
+	totalPrice: number
 }
 
 export type User = {

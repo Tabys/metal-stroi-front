@@ -1,6 +1,8 @@
 import axios from 'axios'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { SendPDF } from '../models'
+import { MdIosShare } from 'react-icons/md'
+import Tooltip from '../components/Tooltip'
 
 type SendPdfProps = {
 	orderId: number
@@ -27,12 +29,13 @@ export function SendPDFForm({ orderId }: SendPdfProps) {
 	}
 
 	return (
-		<form onSubmit={handleSubmit(onSubmit)} className='sendPdf'>
+		<form onSubmit={handleSubmit(onSubmit)}>
 			<input {...register('id')} type='hidden' defaultValue={orderId} />
-
-			<button type='submit' className='btn btn-primary'>
-				Отправить документы
-			</button>
+			<Tooltip conditions={true} text='Отправить документы в Битрикс'>
+				<button type='submit' className='custom-btn'>
+					<MdIosShare />
+				</button>
+			</Tooltip>
 		</form>
 	)
 }

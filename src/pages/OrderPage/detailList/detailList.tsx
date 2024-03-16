@@ -24,8 +24,10 @@ export function DetailList({ dataOrder }: detailListProps) {
 					<div>Цена рубки</div>
 					<div>Кол-во гибов</div>
 					<div>Цена гибки</div>
-					<div>Полимерка (опция)</div>
+					<div>Цвет ПП</div>
+					<div>Цена за м²</div>
 					<div>Вальцовка</div>
+					<div>Чертеж</div>
 					<div>Цена резки</div>
 					<div>Цена врезания</div>
 					<div>Цена металла</div>

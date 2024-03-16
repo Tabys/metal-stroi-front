@@ -23,7 +23,7 @@ export function PircesItems({ price, allPrices, update }: PricesProps) {
 	const { register, handleSubmit } = useForm<PriceMetalItems>()
 
 	const onUpdate: SubmitHandler<PriceMetalItems> = async data => {
-		console.log(data)
+		// console.log(data)
 		await axios.put<PriceMetalItems>(
 			process.env.REACT_APP_BACKEND_API_URL + 'price-metal-item',
 			data

@@ -1,24 +1,26 @@
 import { DocTableDetail } from '../../../../models'
 
 type ClientTableProps = {
-	details: DocTableDetail
+	detail: DocTableDetail
 	index: number
 }
 
-export function ClientTable({ details, index }: ClientTableProps) {
+export function ClientTable({ detail, index }: ClientTableProps) {
 	const total_price = (
-		Number(details.bending) +
-		Number(details.choping) +
-		Number(details.cut_cost) +
-		Number(details.metal)
+		Number(detail.bending) +
+		Number(detail.choping) +
+		Number(detail.cut_cost) +
+		Number(detail.metal) +
+		Number(detail.painting) +
+		(detail.drowing ? detail.drowing : 0)
 	).toFixed(1)
-
+	// console.log(detail.drowing)
 	return (
 		<tr>
 			<td>{index + 1}</td>
-			<td>{details.name}</td>
-			<td>{details.thickness}</td>
-			<td>{details.quantity}</td>
+			<td>{detail.name}</td>
+			<td>{detail.thickness}</td>
+			<td>{detail.quantity}</td>
 			<td>{total_price}</td>
 		</tr>
 	)

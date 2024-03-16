@@ -8,9 +8,9 @@ type metalListProps = {
 
 export function MetalList({ metal }: metalListProps) {
 	return (
-		<div className={styles.wrapper_table}>
+		<div className={styles.wrapper_table + ' ' + styles.metal_table}>
+			<h2>Металл</h2>
 			<div className={styles.detail_list}>
-				<div className={styles.theader}>Металл</div>
 				<div className={styles.row + ' ' + styles.header}>
 					<div>Толщина</div>
 					<div>Ширина</div>

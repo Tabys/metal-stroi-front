@@ -1,0 +1,44 @@
+.details {
+	height: 300px;
+	overflow-y: scroll;
+	margin: 20px 0;
+	padding: 10px;
+	border: 1px solid #ced4da;
+	box-sizing: border-box;
+	scrollbar-width: thin;
+	scrollbar-color: #ced4da #fff;
+}
+.details .group {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 2px 0;
+	transition: 0.3;
+}
+.details .group:hover {
+	background-color: #f3f3f3;
+}
+.details .group input {
+	width: 40px;
+	padding: 1px 5px;
+	text-align: center;
+	font-size: 14px;
+	margin-left: 10px;
+}
+.details .group p {
+	font-size: 12px;
+	margin: 0 0 0 10px;
+}
+.details .group .control {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+.details::-webkit-scrollbar {
+	width: 4px;
+	background: #eaeaea;
+}
+.details::-webkit-scrollbar-thumb {
+	width: 4px;
+	background: #aa0f37;
+}

@@ -1,7 +1,7 @@
 /* .wrapper_table {
     overflow-x: scroll;
 } */
-.metal_table {
+.product_table {
 	margin-top: 50px;
 }
 .detail_list {
@@ -10,17 +10,6 @@
 	font-size: 14px;
 	opacity: 1;
 	transition: 0.3;
-	width: 100%;
-}
-.detail_list .theader {
-	display: table-caption;
-	border: 1px solid #ccc;
-	border-bottom: none;
-	padding: 5px;
-	background-color: #f3f3f3;
-	font-weight: bold;
-	text-align: center;
-	column-span: all;
 }
 .detail_list:hover .row:first-child {
 	opacity: 1;
@@ -28,10 +17,6 @@
 .detail_list .row {
 	display: table-row;
 	transition: 0.1s;
-}
-.detail_list .row.header {
-	background-color: #f3f3f3;
-	font-weight: bold;
 }
 .detail_list .row:hover {
 	background-color: #f3f3f3;
@@ -45,10 +30,27 @@
 	border: 1px solid #ccc;
 	padding: 5px;
 }
+.detail_list table {
+	display: contents;
+}
+.detail_list tr {
+	background-color: #f3f3f3;
+}
+.detail_list td {
+	border: 1px solid #ccc;
+	padding: 5px;
+	text-align: center;
+	vertical-align: middle;
+	font-weight: bold;
+}
 
 .detail_list .row div input:not([type='radio']):not([type='checkbox']) {
 	min-width: 60px;
 	font-size: 14px;
+}
+
+.detail_list .row .welding {
+	column-span: 7;
 }
 
 input[type='number']::-webkit-outer-spin-button,
