@@ -116,6 +116,7 @@ export function PrepArrDetils({
 					surface: detail.serface,
 					cut_type: detail.cut_type,
 					quantity: availableDetail,
+					polymer: detail.polymer,
 					drowing: detail.drowing,
 					painting: detail.polymer_price
 						? detail.polymer_price *

@@ -12,6 +12,7 @@ import { LogIn } from './components/auth/Login'
 import { AuthVerify } from './common/AuthVerify'
 import { UsersPage } from './pages/Users'
 import { useUser } from './hooks/curentUser'
+import { DocPainting } from './pages/OrderPage/documents/painting/docPainting'
 
 function App() {
 	const { currentUser } = useUser()
@@ -36,6 +37,10 @@ function App() {
 						<Route
 							path='/order/:id/doc-order'
 							element={<DocOrder />}
+						/>
+						<Route
+							path='/order/:id/doc-painting'
+							element={<DocPainting />}
 						/>
 						{currentUser?.['roles'] !== 'ROLE_USER' ? (
 							<>

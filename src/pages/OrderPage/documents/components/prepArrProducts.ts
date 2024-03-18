@@ -6,6 +6,7 @@ export function PrepArrProducts(orders: Order | undefined) {
 		const arrDetails = product.details
 		const poroductCount = product.quantity
 		let totalPrice = 0
+		let value = 0
 
 		const details = PrepArrDetils({
 			arrDetails,
@@ -21,8 +22,10 @@ export function PrepArrProducts(orders: Order | undefined) {
 				Number(detail.metal) +
 				(detail.drowing ? detail.drowing : 0)
 			totalPrice += cost
+			value += (Number(detail.surface) / 1000000) * 2 * detail.quantity
 			return totalPrice
 		})
+
 		totalPrice +=
 			(Number(product.welding_allowance) +
 				Number(product.welding_delivery) +
@@ -44,6 +47,9 @@ export function PrepArrProducts(orders: Order | undefined) {
 			name: product.name,
 			quantity: product.quantity,
 			totalPrice: totalPrice,
+			painting_color: product.painting_color,
+			value: value,
+			painting_cost: product.painting_cost * product.quantity,
 		}
 	})
 

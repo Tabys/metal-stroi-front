@@ -50,7 +50,7 @@ export function OrderPage() {
 	// console.log(order)
 	return (
 		<>
-			<div className='container mb-5'>
+			<div className='container-flued px-5 mb-5'>
 				<div className='row  g-2'>
 					<Link to={`/`} className='back-link'>
 						Вернуться назад
@@ -93,6 +93,11 @@ export function OrderPage() {
 								<ListGroup.Item variant='light'>
 									<Link relative='path' to={`doc-order`}>
 										<FaFileLines /> Заказ
+									</Link>
+								</ListGroup.Item>
+								<ListGroup.Item variant='light'>
+									<Link relative='path' to={`doc-painting`}>
+										<FaFileLines /> Полимерка
 									</Link>
 								</ListGroup.Item>
 								<ListGroup.Item variant='light'>

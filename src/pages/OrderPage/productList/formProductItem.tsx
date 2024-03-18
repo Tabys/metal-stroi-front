@@ -57,15 +57,11 @@ export function FormProductItem({
 		await axios
 			.put<Product>(
 				process.env.REACT_APP_BACKEND_API_URL + 'products/quantity/',
-				CulcPaintingCost({ data, productItem })
+				data
 			)
 			.then(async result => {
 				await setError(undefined)
 				await updProduct()
-				await methods.setValue(
-					'painting_cost',
-					Number(data.painting_cost.toFixed(2))
-				)
 			})
 			.catch(async err => {
 				console.log(err.response)
