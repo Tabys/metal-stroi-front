@@ -214,6 +214,9 @@ export type DocTableDetail = {
 	table_number?: string
 	drowing?: number
 	painting?: number
+	polymer?: string
+	polymer_price?: number
+	surface?: string
 	product_detail?: ProductsDetails[]
 	products?: Product[]
 }
@@ -223,6 +226,9 @@ export type DocTableProduct = {
 	name: string
 	quantity: number
 	totalPrice: number
+	painting_color?: string
+	painting_cost?: number
+	value?: number
 }
 
 export type User = {

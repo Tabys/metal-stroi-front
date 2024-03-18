@@ -24,7 +24,7 @@ export function DocClient() {
 	})
 	const products = PrepArrProducts(orders)
 	const total = CulcTotalData(details)
-	console.log(products)
+	// console.log(products)
 
 	let deliveryCost: number | null = null
 	if (orders?.delivery === true) {
