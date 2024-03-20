@@ -17,6 +17,7 @@ export function WorkshopTable({ details, index }: WHTableProps) {
 			<td>{details.cut_type === 'laser' ? 'Лазер' : 'Плазма'}</td>
 			<td>{details.chop_count ? details.chop_count : 0}</td>
 			<td>{details.bend_count ? details.bend_count : 0}</td>
+			<td>{details.rolling ? '✓' : '𐄂'}</td>
 		</tr>
 	)
 }

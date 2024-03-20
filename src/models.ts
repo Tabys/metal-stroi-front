@@ -213,6 +213,7 @@ export type DocTableDetail = {
 	cut_price?: number
 	table_number?: string
 	drowing?: number
+	rolling?: number
 	painting?: number
 	polymer?: string
 	polymer_price?: number

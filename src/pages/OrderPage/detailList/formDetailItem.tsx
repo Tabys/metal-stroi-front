@@ -287,11 +287,26 @@ export function FormDetailItem({
 					/>
 				</div>
 				<div>
-					<FormSelect
-						name='rolling'
-						selected={DetailItem.rolling}
-						arrOptions={['-', 'Прокат', 'Конус']}
-						onSubmit={methods.handleSubmit(onSubmitCutInset)}
+					<input
+						{...methods.register('rolling', {
+							onBlur: methods.handleSubmit(onSubmitPrice),
+						})}
+						defaultValue={
+							DetailItem.rolling === null ? 0 : DetailItem.rolling
+						}
+						type='number'
+						onFocus={e =>
+							e.target.addEventListener(
+								'wheel',
+								function (e) {
+									e.preventDefault()
+								},
+								{ passive: false }
+							)
+						}
+						step='0.1'
+						min='0'
+						className='form-control'
 					/>
 				</div>
 				<div>
