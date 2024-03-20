@@ -20,6 +20,7 @@ export function PrepArrProducts(orders: Order | undefined) {
 				Number(detail.choping) +
 				Number(detail.cut_cost) +
 				Number(detail.metal) +
+				Number(detail.rolling) +
 				(detail.drowing ? detail.drowing : 0)
 			totalPrice += cost
 			value += (Number(detail.surface) / 1000000) * 2 * detail.quantity

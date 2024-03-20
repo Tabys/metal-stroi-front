@@ -67,6 +67,7 @@ export function DocWorkhop() {
 								<th>Вид резки</th>
 								<th>Рубка</th>
 								<th>Гибка</th>
+								<th>Вальцовка</th>
 							</tr>
 						</thead>
 						<tbody>

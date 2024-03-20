@@ -12,6 +12,7 @@ export function ClientTable({ detail, index }: ClientTableProps) {
 		Number(detail.cut_cost) +
 		Number(detail.metal) +
 		Number(detail.painting) +
+		Number(detail.rolling) +
 		(detail.drowing ? detail.drowing : 0)
 	).toFixed(1)
 	// console.log(detail.drowing)
