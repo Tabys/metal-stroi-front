@@ -10,6 +10,9 @@ import { FormRadio } from './formElements/formRadio'
 import { FormSelect } from './formElements/formSelect'
 import { useEffect } from 'react'
 import Tooltip from '../../../components/Tooltip'
+import { extraPrice } from './updPrices/extraPriceMetal'
+import { listMetalName } from './listMetalName'
+import { FormSelectMultiple } from './formElements/formSelectMultiple'
 
 type FormDetailItemProps = {
 	orderData: Order
@@ -26,27 +29,15 @@ export function FormDetailItem({
 }: FormDetailItemProps) {
 	const methods = useForm<Detail>()
 
+	const extraPriceMetal = extraPrice(orderData)
+
+	const arrNameMetal = listMetalName(DetailItem.material)
+
 	// Change METAL COST input value during change METAL MARKAP
 	useEffect(() => {
 		methods.reset()
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [orderData])
-
-	let extraPriceMetal: number = 0
-	switch (orderData.markup) {
-		case 0:
-			extraPriceMetal = 0
-			break
-		case 2:
-			extraPriceMetal = 0
-			break
-		case 7:
-			extraPriceMetal = 100
-			break
-		case 10:
-			extraPriceMetal = 150
-			break
-	}
 
 	const onSubmitBendChop: SubmitHandler<Detail> = async data => {
 		delete data.metal_cost
@@ -133,12 +124,22 @@ export function FormDetailItem({
 					type='hidden'
 					defaultValue={DetailItem.add_id}
 				/>
-				<div>{index + 1} </div>
-				<div>{DetailItem.name}</div>
-				<div>{DetailItem.thickness}</div>
-				<div>{DetailItem.material}</div>
-				<div>{DetailItem.quantity}</div>
-				<div>
+				<div className={styles.line}>{index + 1} </div>
+				<div className={styles.line}>{DetailItem.name}</div>
+				<div className={styles.line}>{DetailItem.thickness}</div>
+				<div className={styles.line}>
+					{DetailItem.material}
+					<FormSelectMultiple
+						arrOptions={arrNameMetal}
+						selected={
+							DetailItem.metal_title ? DetailItem.metal_title : ''
+						}
+						name='metal_title'
+						onSubmit={methods.handleSubmit(onSubmitPrice)}
+					/>
+				</div>
+				<div className={styles.line}>{DetailItem.quantity}</div>
+				<div className={styles.line}>
 					{DetailItem.cut_count === null ? 0 : DetailItem.cut_count}
 				</div>
 				<FormRadio
@@ -147,7 +148,7 @@ export function FormDetailItem({
 					data={DetailItem}
 					onSubmit={methods.handleSubmit(onSubmitCutInset)}
 				/>
-				<div>
+				<div className={styles.line}>
 					<Tooltip
 						conditions={
 							Number(DetailItem.thickness) > 5 ? true : false
@@ -173,7 +174,7 @@ export function FormDetailItem({
 						/>
 					</Tooltip>
 				</div>
-				<div>
+				<div className={styles.line}>
 					<input
 						{...methods.register('chop_cost', {
 							onBlur: methods.handleSubmit(onSubmitPrice),
@@ -197,7 +198,7 @@ export function FormDetailItem({
 						className='form-control'
 					/>
 				</div>
-				<div>
+				<div className={styles.line}>
 					<input
 						{...methods.register('bends_count', {
 							onBlur: methods.handleSubmit(onSubmitBendChop),
@@ -222,7 +223,7 @@ export function FormDetailItem({
 						required
 					/>
 				</div>
-				<div>
+				<div className={styles.line}>
 					<input
 						{...methods.register('bend_cost', {
 							onBlur: methods.handleSubmit(onSubmitPrice),
@@ -247,7 +248,7 @@ export function FormDetailItem({
 						className='form-control'
 					/>
 				</div>
-				<div>
+				<div className={styles.line}>
 					<input
 						{...methods.register('polymer', {
 							onBlur: methods.handleSubmit(onSubmitPrice),
@@ -261,7 +262,7 @@ export function FormDetailItem({
 						className='form-control'
 					/>
 				</div>
-				<div>
+				<div className={styles.line}>
 					<input
 						{...methods.register('polymer_price', {
 							onBlur: methods.handleSubmit(onSubmitPrice),
@@ -286,7 +287,7 @@ export function FormDetailItem({
 						className='form-control'
 					/>
 				</div>
-				<div>
+				<div className={styles.line}>
 					<input
 						{...methods.register('rolling', {
 							onBlur: methods.handleSubmit(onSubmitPrice),
@@ -309,7 +310,7 @@ export function FormDetailItem({
 						className='form-control'
 					/>
 				</div>
-				<div>
+				<div className={styles.line}>
 					<input
 						{...methods.register('drowing', {
 							onBlur: methods.handleSubmit(onSubmitPrice),
@@ -334,7 +335,7 @@ export function FormDetailItem({
 						className='form-control'
 					/>
 				</div>
-				<div>
+				<div className={styles.line}>
 					<input
 						{...methods.register('cut_cost', {
 							onBlur: methods.handleSubmit(onSubmitPrice),
@@ -359,7 +360,7 @@ export function FormDetailItem({
 						className='form-control'
 					/>
 				</div>
-				<div>
+				<div className={styles.line}>
 					<input
 						{...methods.register('inset_cost', {
 							onBlur: methods.handleSubmit(onSubmitPrice),
@@ -387,7 +388,7 @@ export function FormDetailItem({
 						className='form-control'
 					/>
 				</div>
-				<div>
+				<div className={styles.line}>
 					<input
 						{...methods.register('metal_cost', {
 							onBlur: methods.handleSubmit(onSubmitPriceMetal),
@@ -419,7 +420,7 @@ export function FormDetailItem({
 						className='form-control'
 					/>
 				</div>
-				<div>
+				<div className={styles.line}>
 					<FormCheckbox
 						name='food_steel'
 						defaultChecked={DetailItem.food_steel}

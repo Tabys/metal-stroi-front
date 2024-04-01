@@ -119,6 +119,7 @@ export function PrepArrDetils({
 					polymer: detail.polymer,
 					rolling: Number(detail.rolling) * availableDetail,
 					drowing: detail.drowing,
+					metal_title: detail.metal_title,
 					painting: detail.polymer_price
 						? detail.polymer_price *
 						  (Number(detail.serface) / 1000000) *

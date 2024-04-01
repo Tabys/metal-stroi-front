@@ -2,6 +2,7 @@ import axios from 'axios'
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form'
 import { Metal } from '../../../models'
 import styles from './style.module.css'
+import { getMetalNameSuffix } from './getMetalNameSuffix'
 
 type FormMetalDetailProps = {
 	metal: Metal
@@ -9,6 +10,8 @@ type FormMetalDetailProps = {
 }
 
 export function FormMetalDetail({ metal, updMetal }: FormMetalDetailProps) {
+	const metalName = getMetalNameSuffix(metal.material)
+
 	const methods = useForm<Metal>()
 
 	const onSubmit: SubmitHandler<Metal> = async data => {
@@ -57,7 +60,9 @@ export function FormMetalDetail({ metal, updMetal }: FormMetalDetailProps) {
 					type='hidden'
 					defaultValue={metal.width}
 				/>
-				<div>{metal.thickness}</div>
+				<div>
+					{metal.thickness} {metalName}
+				</div>
 				<div>{metal.width}</div>
 				<div>{metal.length}</div>
 				<div>
