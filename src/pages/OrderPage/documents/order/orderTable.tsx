@@ -25,7 +25,7 @@ export function OrderTable({ detail, index }: OrderTableProps) {
 			<td>
 				{detail.bend_count ? detail.bend_count * detail.quantity : 0}
 			</td>
-			<td>-</td>
+			<td>{detail.rolling ? '✓' : '𐄂'}</td>
 			<td>{detail.weight}</td>
 		</tr>
 	)
