@@ -231,6 +231,7 @@ export type DocTableProduct = {
 	totalPrice: number
 	painting_color?: string
 	painting_cost?: number
+	weight?: number
 	value?: number
 }
 

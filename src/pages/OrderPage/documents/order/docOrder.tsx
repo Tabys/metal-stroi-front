@@ -23,7 +23,7 @@ export function DocOrder() {
 		orders,
 		full,
 	})
-	const total = CulcTotalData(details)
+	const total = CulcTotalData({ details })
 
 	// console.log(details)
 	return (
