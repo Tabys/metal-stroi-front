@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { Detail } from '../../../../models'
+import styles from '../style.module.css'
 
 type RadioProps = {
 	name: string
@@ -15,7 +16,7 @@ export function FormRadio({ name, defaultValue, data, onSubmit }: RadioProps) {
 
 	return (
 		<>
-			<div>
+			<div className={styles.line}>
 				<input
 					{...register(name)}
 					onChange={e => {
@@ -30,7 +31,7 @@ export function FormRadio({ name, defaultValue, data, onSubmit }: RadioProps) {
 					className='form-check-input'
 				/>
 			</div>
-			<div>
+			<div className={styles.line}>
 				<input
 					{...register(name)}
 					onChange={e => {

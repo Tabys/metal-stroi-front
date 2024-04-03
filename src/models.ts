@@ -57,6 +57,7 @@ export type Detail = {
 	table_number: string
 	add_id?: string[]
 	drowing?: number
+	metal_title?: string[]
 	product_detail?: ProductsDetails
 	products?: Product[]
 }
@@ -218,6 +219,7 @@ export type DocTableDetail = {
 	polymer?: string
 	polymer_price?: number
 	surface?: string
+	metal_title?: string[]
 	product_detail?: ProductsDetails[]
 	products?: Product[]
 }
@@ -229,6 +231,7 @@ export type DocTableProduct = {
 	totalPrice: number
 	painting_color?: string
 	painting_cost?: number
+	weight?: number
 	value?: number
 }
 

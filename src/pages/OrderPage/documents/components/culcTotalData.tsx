@@ -1,6 +1,9 @@
-import { DocTableDetail } from '../../../../models'
-
-export function CulcTotalData(details: DocTableDetail[] | undefined) {
+import { DocTableDetail, DocTableProduct, Product } from '../../../../models'
+type CulcTotalDataProps = {
+	details: DocTableDetail[] | undefined
+	products?: DocTableProduct[] | undefined
+}
+export function CulcTotalData({ details, products }: CulcTotalDataProps) {
 	let total_price = 0
 	let total_quantity = 0
 	let total_weight = 0
@@ -16,7 +19,7 @@ export function CulcTotalData(details: DocTableDetail[] | undefined) {
 	let total_cuting_laser = 0
 	let total_cuting_plasma = 0
 	let total_painting = 0
-	details?.map(detail => {
+	details?.forEach(detail => {
 		total_price +=
 			Number(detail.bending) +
 			Number(detail.choping) +
@@ -46,7 +49,11 @@ export function CulcTotalData(details: DocTableDetail[] | undefined) {
 		total_cuting_plasma +=
 			detail.cut_type === 'plasma' ? Number(detail.cut_cost) : 0
 		total_painting += Number(detail.painting)
-		return true
+	})
+	products?.forEach(product => {
+		total_price += product.totalPrice
+		total_quantity += product.quantity
+		total_weight += product.weight ? product.weight : 0
 	})
 
 	const total_data = {

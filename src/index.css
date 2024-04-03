@@ -48,6 +48,7 @@ code {
 	position: fixed;
 	left: 20px;
 	top: 20px;
+	z-index: 100;
 }
 
 #root .back-link {
@@ -99,7 +100,7 @@ code {
 }
 
 .alert-fixed {
-	position: fixed !important;
+	position: fixed;
 	bottom: 0px;
 	left: 0px;
 	width: 100%;
@@ -244,6 +245,30 @@ code {
 .mr-1 {
 	margin-right: 10px;
 }
+.multi_select_container {
+	max-width: 75px;
+}
+.multi_select__control {
+	cursor: pointer !important;
+}
+.multi_select__indicators {
+	display: none !important;
+}
+.multi_select__value-container {
+	padding: 2px !important;
+}
+.multi_select__multi-value__label {
+	padding: 3px !important;
+	font-size: 80% !important;
+}
+.multi_select__value-container input {
+	height: 1px;
+}
+.multi_select__menu,
+.multi_select__placeholder {
+	font-size: 11px;
+}
+
 @media print {
 	#root {
 		margin: 0;

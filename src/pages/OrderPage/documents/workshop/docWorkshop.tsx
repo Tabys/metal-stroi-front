@@ -23,7 +23,7 @@ export function DocWorkhop() {
 		orders,
 		full,
 	})
-	const total = CulcTotalData(details)
+	const total = CulcTotalData({ details })
 
 	return (
 		<>

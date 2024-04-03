@@ -12,26 +12,26 @@ export function DetailList({ dataOrder }: detailListProps) {
 		<div className={styles.wrapper_table}>
 			<div className={styles.detail_list}>
 				<div className={styles.row}>
-					<div>№</div>
-					<div>Наименование изделия</div>
-					<div>Толщина металла, мм</div>
-					<div>Металл</div>
-					<div>Кол-во изделий, шт</div>
-					<div>Кол-во врезаний</div>
-					<div>Лазер (опция)</div>
-					<div>Плазма (опция)</div>
-					<div>Кол-во рубов</div>
-					<div>Цена рубки</div>
-					<div>Кол-во гибов</div>
-					<div>Цена гибки</div>
-					<div>Цвет ПП</div>
-					<div>Цена за м²</div>
-					<div>Вальцовка</div>
-					<div>Чертеж</div>
-					<div>Цена резки</div>
-					<div>Цена врезания</div>
-					<div>Цена металла</div>
-					<div>Пищевая сталь</div>
+					<div className={styles.line}>№</div>
+					<div className={styles.line}>Наименование изделия</div>
+					<div className={styles.line}>Толщина металла, мм</div>
+					<div className={styles.line}>Металл</div>
+					<div className={styles.line}>Кол-во изделий, шт</div>
+					<div className={styles.line}>Кол-во врезаний</div>
+					<div className={styles.line}>Лазер (опция)</div>
+					<div className={styles.line}>Плазма (опция)</div>
+					<div className={styles.line}>Кол-во рубов</div>
+					<div className={styles.line}>Цена рубки</div>
+					<div className={styles.line}>Кол-во гибов</div>
+					<div className={styles.line}>Цена гибки</div>
+					<div className={styles.line}>Цвет ПП</div>
+					<div className={styles.line}>Цена за м²</div>
+					<div className={styles.line}>Вальцовка</div>
+					<div className={styles.line}>Чертеж</div>
+					<div className={styles.line}>Цена резки</div>
+					<div className={styles.line}>Цена врезания</div>
+					<div className={styles.line}>Цена металла</div>
+					<div className={styles.line}>Пищевая сталь</div>
 				</div>
 
 				<FormDetailList

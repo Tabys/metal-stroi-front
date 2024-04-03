@@ -7,6 +7,7 @@ export function PrepArrProducts(orders: Order | undefined) {
 		const poroductCount = product.quantity
 		let totalPrice = 0
 		let value = 0
+		let totalWeight = 0
 
 		const details = PrepArrDetils({
 			arrDetails,
@@ -14,7 +15,7 @@ export function PrepArrProducts(orders: Order | undefined) {
 			poroductCount,
 		})
 
-		details?.map(detail => {
+		details?.forEach(detail => {
 			const cost =
 				Number(detail.bending) +
 				Number(detail.choping) +
@@ -24,7 +25,7 @@ export function PrepArrProducts(orders: Order | undefined) {
 				(detail.drowing ? detail.drowing : 0)
 			totalPrice += cost
 			value += (Number(detail.surface) / 1000000) * 2 * detail.quantity
-			return totalPrice
+			totalWeight += Number(detail.weight) * detail.quantity
 		})
 
 		totalPrice +=
@@ -51,6 +52,7 @@ export function PrepArrProducts(orders: Order | undefined) {
 			painting_color: product.painting_color,
 			value: value,
 			painting_cost: product.painting_cost * product.quantity,
+			weight: totalWeight,
 		}
 	})
 
