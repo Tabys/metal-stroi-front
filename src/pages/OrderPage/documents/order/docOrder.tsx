@@ -97,7 +97,7 @@ export function DocOrder() {
 								<td>{total.inset}</td>
 								<td>{total.chop}</td>
 								<td>{total.bend}</td>
-								<td>-</td>
+								<td></td>
 								<td>{total.weight.toFixed(2)}</td>
 							</tr>
 						</tbody>
