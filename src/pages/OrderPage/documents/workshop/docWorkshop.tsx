@@ -10,18 +10,22 @@ import { TransformDate } from '../../../../components/TransformDate'
 import { WorkshopTable } from './workshopTable'
 import { MetalTable } from './metalTable'
 import { CulcTotalData } from '../components/culcTotalData'
+import { useMaterials } from '../../../../hooks/materials'
+import { prepMetalData } from './prepMetalData'
 
 export function DocWorkhop() {
 	const { id } = useParams()
 	const { orders } = useOrders(id ? id : '')
-	const full = true
+	const { materials } = useMaterials()
+	const setups = prepMetalData({ setups: orders?.setups, materials })
 
-	// console.log(orders)
+	// console.log(setups)
+
 	const arrDetails = orders ? CreateDetailGroupList(orders) : undefined
 	const details: DocTableDetail[] | undefined = PrepArrDetils({
 		arrDetails,
 		orders,
-		full,
+		full: true,
 	})
 	const total = CulcTotalData({ details })
 
@@ -142,7 +146,7 @@ export function DocWorkhop() {
 									</tr>
 								</thead>
 								<tbody>
-									{orders?.metals?.map((metal, index) => (
+									{setups?.map((metal, index) => (
 										<MetalTable
 											key={index}
 											metals={metal}
