@@ -131,8 +131,12 @@ export type Modal = {
 
 export type Material = {
 	id: number
-	name?: string
-	abbreviation?: string
+	thickness: number
+	table_name: string
+	gas: string
+	cost: number
+	add_cost: number
+	title: string
 }
 
 export type MetalType = {
@@ -190,6 +194,15 @@ export type NeededMetal = {
 	length: number
 	width: number
 	table_number?: string
+}
+
+export type WorkshopMetal = {
+	material?: string
+	table_number?: string
+	thickness: number
+	metal_sheets: number
+	length: number
+	width: number
 }
 
 export type DocTableDetail = {

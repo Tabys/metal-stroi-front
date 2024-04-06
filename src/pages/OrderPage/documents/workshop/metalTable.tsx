@@ -1,7 +1,7 @@
-import { Metal } from '../../../../models'
+import { WorkshopMetal } from '../../../../models'
 
 type NeededMetalProps = {
-	metals: Metal
+	metals: WorkshopMetal
 }
 export function MetalTable({ metals }: NeededMetalProps) {
 	let material = ''
