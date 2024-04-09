@@ -38,8 +38,10 @@ export function UploadSetups({
 			)
 			.then(async response => {
 				if (response) {
-					await setLoad(false)
-					await onCreate()
+					await setTimeout(() => {
+						setLoad(false)
+						onCreate()
+					}, 300)
 				}
 			})
 	}

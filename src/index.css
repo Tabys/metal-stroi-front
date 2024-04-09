@@ -89,14 +89,15 @@ code {
 	top: 0;
 }
 
-.btn.fixed {
+.fixed-element {
 	position: fixed;
 	right: 20px;
 	top: 20px;
+	display: flex;
+	align-items: center;
 }
-
-.btn.fixed.right-175 {
-	right: 175px;
+.fixed-element .btn:not(:last-of-type) {
+	margin-right: 12px;
 }
 
 .alert-fixed {
@@ -267,6 +268,10 @@ code {
 .multi_select__menu,
 .multi_select__placeholder {
 	font-size: 11px;
+}
+
+.width600 {
+	max-width: 600px;
 }
 
 @media print {

@@ -19,7 +19,7 @@ export function MetalTable({ metals }: NeededMetalProps) {
 	return (
 		<tr>
 			<td>
-				{metals.thickness} {material}
+				{metals.thickness} {material} {metals.suffixes}
 			</td>
 			<td>{metals.width}</td>
 			<td>{metals.length}</td>

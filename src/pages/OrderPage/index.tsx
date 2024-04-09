@@ -15,6 +15,7 @@ import { FaFileLines } from 'react-icons/fa6'
 import { MetalList } from './metalList/metalList'
 import { AddProductModal } from '../../components/modal/AddProductModal'
 import { ProductList } from './productList/productList'
+import { AddSuffixModal } from '../../components/modal/AddSuffixModal'
 
 export function EmptySetup() {
 	return <p>Элементов нет</p>
@@ -26,7 +27,7 @@ export function OrderPage() {
 	const { id } = useParams()
 
 	const updateOrders = async () => {
-		await getOrder(Number(id))
+		getOrder(Number(id))
 	}
 
 	async function getOrder(id: number) {
@@ -120,19 +121,29 @@ export function OrderPage() {
 						/>
 
 						{/* FIXED INTERFACE ELEMENTS */}
-
-						<DeleteSetups
-							orderId={Number(id)}
-							onDel={updateOrders}
-						></DeleteSetups>
-						<AddProductModal order={order} onAdd={updateOrders} />
+						<div className='fixed-element'>
+							<AddSuffixModal
+								onAdd={updateOrders}
+								order={order}
+							/>
+							<AddProductModal
+								order={order}
+								onAdd={updateOrders}
+							/>
+							<DeleteSetups
+								orderId={Number(id)}
+								onDel={updateOrders}
+							></DeleteSetups>
+						</div>
 						{/* <AddDetailModal onAdd={updateOrders} setups={order.setups} /> */}
 					</>
 				) : (
-					<UploadSetupModal
-						onCreate={updateOrders}
-						orderId={Number(id)}
-					/>
+					<div className='fixed-element'>
+						<UploadSetupModal
+							onCreate={updateOrders}
+							orderId={Number(id)}
+						/>
+					</div>
 				)}
 			</div>
 		</>

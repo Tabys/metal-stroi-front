@@ -7,12 +7,9 @@ import { UpdBandChop } from './updPrices/updBendChop'
 import { UpdFoodSteel } from './updPrices/updFoodSteel'
 import { FormCheckbox } from './formElements/formCheckbox'
 import { FormRadio } from './formElements/formRadio'
-import { FormSelect } from './formElements/formSelect'
 import { useEffect } from 'react'
 import Tooltip from '../../../components/Tooltip'
 import { extraPrice } from './updPrices/extraPriceMetal'
-import { listMetalName } from './listMetalName'
-import { FormSelectMultiple } from './formElements/formSelectMultiple'
 
 type FormDetailItemProps = {
 	orderData: Order
@@ -30,8 +27,6 @@ export function FormDetailItem({
 	const methods = useForm<Detail>()
 
 	const extraPriceMetal = extraPrice(orderData)
-
-	const arrNameMetal = listMetalName(DetailItem.material)
 
 	// Change METAL COST input value during change METAL MARKAP
 	useEffect(() => {
@@ -127,17 +122,7 @@ export function FormDetailItem({
 				<div className={styles.line}>{index + 1} </div>
 				<div className={styles.line}>{DetailItem.name}</div>
 				<div className={styles.line}>{DetailItem.thickness}</div>
-				<div className={styles.line}>
-					{DetailItem.material}
-					<FormSelectMultiple
-						arrOptions={arrNameMetal}
-						selected={
-							DetailItem.metal_title ? DetailItem.metal_title : ''
-						}
-						name='metal_title'
-						onSubmit={methods.handleSubmit(onSubmitPrice)}
-					/>
-				</div>
+				<div className={styles.line}>{DetailItem.material}</div>
 				<div className={styles.line}>{DetailItem.quantity}</div>
 				<div className={styles.line}>
 					{DetailItem.cut_count === null ? 0 : DetailItem.cut_count}

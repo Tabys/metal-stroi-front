@@ -13,7 +13,7 @@ export function WorkshopTable({ details, index }: WHTableProps) {
 			<td>{index + 1}</td>
 			<td>{details.name}</td>
 			<td>
-				{details.thickness} {details.metal_title?.join(' ')}
+				{details.thickness} {details.suffixes}
 			</td>
 			<td>{details.quantity}</td>
 			<td>{details.cut_type === 'laser' ? 'Лазер' : 'Плазма'}</td>

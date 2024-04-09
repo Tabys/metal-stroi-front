@@ -1,6 +1,8 @@
 import axios from 'axios'
 import Button from 'react-bootstrap/Button'
 import { Order } from '../../../models'
+import { FaRegTrashCan } from 'react-icons/fa6'
+import Tooltip from '../../../components/Tooltip'
 
 interface deleteSetupsProps {
 	onDel: (Order: Order) => void
@@ -20,9 +22,11 @@ export function DeleteSetups({ onDel, orderId }: deleteSetupsProps) {
 
 	return (
 		<>
-			<Button className='fixed' variant='primary' onClick={sumbitHandler}>
-				Удалить сетапы
-			</Button>
+			<Tooltip conditions={true} text='Удалить сетапы'>
+				<Button variant='primary' onClick={sumbitHandler}>
+					<FaRegTrashCan />
+				</Button>
+			</Tooltip>
 		</>
 	)
 }

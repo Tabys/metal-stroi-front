@@ -10,7 +10,9 @@ export function OrderTable({ detail, index }: OrderTableProps) {
 		<tr>
 			<td>{index + 1}</td>
 			<td>{detail.name}</td>
-			<td>{detail.thickness}</td>
+			<td>
+				{detail.thickness} {detail.suffixes}
+			</td>
 			<td>{detail.quantity}</td>
 			<td>{detail.time ? detail.time : 0}</td>
 			<td>

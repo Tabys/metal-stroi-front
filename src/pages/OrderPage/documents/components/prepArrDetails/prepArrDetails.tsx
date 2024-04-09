@@ -1,5 +1,7 @@
-import { Detail, Order } from '../../../../models'
-import { AvailableDetail } from '../../addProduct/availableDatail'
+import { Detail, Order } from '../../../../../models'
+import { AvailableDetail } from '../../../addProduct/availableDatail'
+import { getExtraPriceMetal } from './getExtraPriceMetal'
+import { getSuffixes } from './getSuffixes'
 
 type PrepArrDetilsProp = {
 	arrDetails: Detail[] | undefined
@@ -54,21 +56,8 @@ export function PrepArrDetils({
 					}
 				}
 
-				let extraPriceMetal: number = 0
-				switch (orders?.markup) {
-					case 0:
-						extraPriceMetal = 0
-						break
-					case 2:
-						extraPriceMetal = 0
-						break
-					case 7:
-						extraPriceMetal = 100
-						break
-					case 10:
-						extraPriceMetal = 150
-						break
-				}
+				const extraPriceMetal = getExtraPriceMetal(orders)
+				const suffixes = getSuffixes({ order: orders, detail })
 
 				return {
 					id: detail.id,
@@ -119,7 +108,8 @@ export function PrepArrDetils({
 					polymer: detail.polymer,
 					rolling: Number(detail.rolling) * availableDetail,
 					drowing: detail.drowing,
-					metal_title: detail.metal_title,
+					additional_setups: detail.additional_setups,
+					suffixes: suffixes,
 					painting: detail.polymer_price
 						? detail.polymer_price *
 						  (Number(detail.serface) / 1000000) *
