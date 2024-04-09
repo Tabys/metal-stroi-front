@@ -4,6 +4,7 @@ import Offcanvas from 'react-bootstrap/Offcanvas'
 import AuthService from '../services/auth.service'
 import { useUser } from '../hooks/curentUser'
 import { Link } from 'react-router-dom'
+import { FaBars } from 'react-icons/fa6'
 
 export function Header() {
 	const { currentUser } = useUser()
@@ -23,7 +24,7 @@ export function Header() {
 				onClick={handleShow}
 				className='menu-button'
 			>
-				Меню
+				<FaBars />
 			</Button>
 			<Offcanvas show={show} onHide={handleClose}>
 				<Offcanvas.Header closeButton>

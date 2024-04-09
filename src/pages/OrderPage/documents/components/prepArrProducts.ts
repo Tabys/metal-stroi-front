@@ -1,5 +1,5 @@
 import { Order } from '../../../../models'
-import { PrepArrDetils } from './prepArrDetails'
+import { PrepArrDetils } from './prepArrDetails/prepArrDetails'
 
 export function PrepArrProducts(orders: Order | undefined) {
 	const prepArrProducts = orders?.products?.map(product => {

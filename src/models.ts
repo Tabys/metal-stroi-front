@@ -23,6 +23,8 @@ export type Setup = {
 	program_runs?: string
 	table_number?: string
 	metal_cost?: number
+	order_index?: number
+	suffixes?: JSON[]
 	details?: Detail[]
 }
 
@@ -57,7 +59,7 @@ export type Detail = {
 	table_number: string
 	add_id?: string[]
 	drowing?: number
-	metal_title?: string[]
+	additional_setups?: string
 	product_detail?: ProductsDetails
 	products?: Product[]
 }
@@ -104,6 +106,11 @@ export type AddProductDetail = {
 	id: number
 	count: number
 	name?: string
+}
+
+export type AddSuffix = {
+	id: number
+	suffixes: JSON[] | undefined
 }
 
 export type Metal = {
@@ -203,6 +210,7 @@ export type WorkshopMetal = {
 	metal_sheets: number
 	length: number
 	width: number
+	suffixes: string
 }
 
 export type DocTableDetail = {
@@ -229,6 +237,7 @@ export type DocTableDetail = {
 	drowing?: number
 	rolling?: number
 	painting?: number
+	suffixes?: string
 	polymer?: string
 	polymer_price?: number
 	surface?: string

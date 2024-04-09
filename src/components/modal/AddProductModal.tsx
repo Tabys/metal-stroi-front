@@ -3,6 +3,8 @@ import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 import { Order } from '../../models'
 import { AddProducts } from '../../pages/OrderPage/addProduct/addProduct'
+import Tooltip from '../Tooltip'
+import { FaCube } from 'react-icons/fa6'
 
 type ModalProps = {
 	onAdd: () => void
@@ -16,13 +18,11 @@ export function AddProductModal({ onAdd, order }: ModalProps) {
 
 	return (
 		<>
-			<Button
-				className='fixed right-175'
-				variant='primary'
-				onClick={openModal}
-			>
-				Добавить изделие
-			</Button>
+			<Tooltip conditions={true} text='Добавить изделие'>
+				<Button variant='primary' onClick={openModal}>
+					<FaCube />
+				</Button>
+			</Tooltip>
 
 			<Modal show={showSetupModal} onHide={closeModal}>
 				<Modal.Header closeButton>

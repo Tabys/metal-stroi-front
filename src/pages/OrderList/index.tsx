@@ -15,18 +15,19 @@ export function OrdersPage() {
 	return (
 		<>
 			<ItemListPagination itemsPerPage={20} />
+			<div className='fixed-element'>
+				<Button variant='primary' onClick={openModal}>
+					Добавить заказ
+				</Button>
 
-			<Button className='fixed' variant='primary' onClick={openModal}>
-				Добавить заказ
-			</Button>
-
-			<Modals
-				title='Добавить сделку'
-				visible={showOrderModal}
-				onClose={closeModal}
-			>
-				<CreateOrder onCreate={closeModal} addItem={addOrder} />
-			</Modals>
+				<Modals
+					title='Добавить сделку'
+					visible={showOrderModal}
+					onClose={closeModal}
+				>
+					<CreateOrder onCreate={closeModal} addItem={addOrder} />
+				</Modals>
+			</div>
 		</>
 	)
 }

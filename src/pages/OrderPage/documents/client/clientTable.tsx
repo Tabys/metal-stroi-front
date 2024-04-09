@@ -20,7 +20,9 @@ export function ClientTable({ detail, index }: ClientTableProps) {
 		<tr>
 			<td>{index + 1}</td>
 			<td>{detail.name}</td>
-			<td>{detail.thickness}</td>
+			<td>
+				{detail.thickness} {detail.suffixes}
+			</td>
 			<td>{detail.quantity}</td>
 			<td>{total_price}</td>
 		</tr>

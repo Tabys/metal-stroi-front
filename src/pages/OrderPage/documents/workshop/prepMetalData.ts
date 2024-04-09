@@ -1,4 +1,4 @@
-import { Material, Metal, Setup } from '../../../../models'
+import { Material, Setup } from '../../../../models'
 
 type prepMetalDataProps = {
 	setups: Setup[] | undefined
@@ -44,6 +44,15 @@ export function prepMetalData({ setups, materials }: prepMetalDataProps) {
 			return String(items.table_name) === String(setup.table_number)
 		})
 
+		let suffixes: string[] = []
+		setup.suffixes?.forEach(suffix => {
+			const stringSuffix = JSON.stringify(suffix)
+			const objectSuffix = JSON.parse(stringSuffix)
+			suffixes.push(objectSuffix.value)
+			suffixes.sort((a, b) => a.localeCompare(b))
+		})
+		const strSuffixes = suffixes.join(', ')
+
 		return {
 			material: setup?.material,
 			table_number: setup.table_number,
@@ -51,6 +60,7 @@ export function prepMetalData({ setups, materials }: prepMetalDataProps) {
 			metal_sheets: used_metal,
 			length: used_metal_length,
 			width: used_metal_width,
+			suffixes: strSuffixes,
 		}
 	})
 
@@ -61,7 +71,8 @@ export function prepMetalData({ setups, materials }: prepMetalDataProps) {
 				el =>
 					el.table_number === metalData[i].table_number &&
 					el.length === metalData[i].length &&
-					el.width === metalData[i].width
+					el.width === metalData[i].width &&
+					el.suffixes === metalData[i].suffixes
 			)
 			if (index === -1) {
 				groupedNeededMetal.push({ ...metalData[i] })
@@ -79,6 +90,5 @@ export function prepMetalData({ setups, materials }: prepMetalDataProps) {
 			a.length - b.length
 		)
 	})
-
 	return groupedNeededMetal
 }

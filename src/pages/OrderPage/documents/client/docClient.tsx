@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { useParams } from 'react-router-dom'
 import { useOrders } from '../../../../hooks/prepareDataList'
 import { CreateDetailGroupList } from '../../detailList/createDetailGroupList'
-import { PrepArrDetils } from '../components/prepArrDetails'
+import { PrepArrDetils } from '../components/prepArrDetails/prepArrDetails'
 import { ClientTable } from './clientTable'
 import { DocTableDetail, Product } from '../../../../models'
 import styles from '../style.module.css'
@@ -158,7 +158,9 @@ export function DocClient() {
 								<tr key={detail.id}>
 									<td>{index + 1}</td>
 									<td>{detail.name}</td>
-									<td>{detail.thickness}</td>
+									<td>
+										{detail.thickness} {detail.suffixes}
+									</td>
 									<td>шт.</td>
 									<td>{detail.quantity}</td>
 								</tr>
