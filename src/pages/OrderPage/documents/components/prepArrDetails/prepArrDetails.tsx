@@ -1,6 +1,7 @@
 import { Detail, Order } from '../../../../../models'
 import { AvailableDetail } from '../../../addProduct/availableDatail'
 import { getExtraPriceMetal } from './getExtraPriceMetal'
+import { getMaterialName } from './getMaterialName'
 import { getSuffixes } from './getSuffixes'
 
 type PrepArrDetilsProp = {
@@ -56,12 +57,14 @@ export function PrepArrDetils({
 					}
 				}
 
+				const material = getMaterialName(detail.material)
 				const extraPriceMetal = getExtraPriceMetal(orders)
 				const suffixes = getSuffixes({ order: orders, detail })
 
 				return {
 					id: detail.id,
 					thickness: detail.thickness,
+					material: material,
 					name: detail.name,
 					cut_price: detail.cut_cost,
 					cut_cost: cut_cost,

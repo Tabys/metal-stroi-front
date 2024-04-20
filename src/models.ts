@@ -216,6 +216,7 @@ export type WorkshopMetal = {
 export type DocTableDetail = {
 	id: string
 	thickness?: string
+	material?: string
 	time: string
 	name: string
 	cut_cost: string
@@ -280,4 +281,9 @@ export type ClearMetalCostForm = {
 
 export type UpdMetalCostForm = {
 	id: number
+}
+
+export type CopyOrder = {
+	id: number
+	copied_order: number
 }

@@ -273,6 +273,14 @@ code {
 .width600 {
 	max-width: 600px;
 }
+.custom_close {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.custom_close .btn-close {
+	background-size: 10px;
+}
 
 @media print {
 	#root {

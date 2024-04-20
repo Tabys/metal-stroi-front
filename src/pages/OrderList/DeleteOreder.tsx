@@ -28,7 +28,9 @@ export function DeleteOrder({ order, update }: DeleteOrderProps) {
 
 	return (
 		<Tooltip conditions={true} text='Удалить сделку'>
-			<CloseButton onClick={handleSubmit(onSubmit)} />
+			<div className='custom_close'>
+				<CloseButton onClick={handleSubmit(onSubmit)} />
+			</div>
 		</Tooltip>
 	)
 }
