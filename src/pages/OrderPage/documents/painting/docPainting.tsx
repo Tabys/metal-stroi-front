@@ -21,6 +21,7 @@ export function DocPainting() {
 		arrDetails,
 		orders,
 	})
+	const filteredDetails = details?.filter(detail => detail.painting)
 	const products = PrepArrProducts(orders)
 	const productIndex = culcProductIndex(details)
 
@@ -62,17 +63,13 @@ export function DocPainting() {
 							</tr>
 						</thead>
 						<tbody>
-							{details?.map((detail, index) =>
-								detail.painting ? (
-									<PaintingTable
-										key={detail.id}
-										detail={detail}
-										index={index}
-									/>
-								) : (
-									''
-								)
-							)}
+							{filteredDetails?.map((detail, index) => (
+								<PaintingTable
+									key={detail.id}
+									detail={detail}
+									index={index}
+								/>
+							))}
 							{products?.map((product, index) =>
 								product.painting_cost ? (
 									<PaintingTableProducts

@@ -102,6 +102,7 @@ export function FormProductItem({
 					<input
 						{...methods.register('quantity', {
 							onBlur: methods.handleSubmit(onSubmitQuantity),
+							valueAsNumber: true,
 						})}
 						defaultValue={
 							productItem.quantity === null
@@ -116,6 +117,7 @@ export function FormProductItem({
 					<input
 						{...methods.register('welding_work', {
 							onBlur: methods.handleSubmit(onSubmit),
+							valueAsNumber: true,
 						})}
 						defaultValue={
 							productItem.welding_work === null
@@ -130,6 +132,7 @@ export function FormProductItem({
 					<input
 						{...methods.register('welding_fixings', {
 							onBlur: methods.handleSubmit(onSubmit),
+							valueAsNumber: true,
 						})}
 						defaultValue={
 							productItem.welding_fixings === null
@@ -144,6 +147,7 @@ export function FormProductItem({
 					<input
 						{...methods.register('welding_profit', {
 							onBlur: methods.handleSubmit(onSubmit),
+							valueAsNumber: true,
 						})}
 						defaultValue={
 							productItem.welding_profit === null
@@ -158,6 +162,7 @@ export function FormProductItem({
 					<input
 						{...methods.register('welding_tax', {
 							onBlur: methods.handleSubmit(onSubmit),
+							valueAsNumber: true,
 						})}
 						defaultValue={
 							productItem.welding_tax === null
@@ -172,6 +177,7 @@ export function FormProductItem({
 					<input
 						{...methods.register('welding_rolling', {
 							onBlur: methods.handleSubmit(onSubmit),
+							valueAsNumber: true,
 						})}
 						defaultValue={
 							productItem.welding_rolling === null
@@ -186,6 +192,7 @@ export function FormProductItem({
 					<input
 						{...methods.register('welding_painting', {
 							onBlur: methods.handleSubmit(onSubmit),
+							valueAsNumber: true,
 						})}
 						defaultValue={
 							productItem.welding_painting === null
@@ -200,6 +207,7 @@ export function FormProductItem({
 					<input
 						{...methods.register('welding_delivery', {
 							onBlur: methods.handleSubmit(onSubmit),
+							valueAsNumber: true,
 						})}
 						defaultValue={
 							productItem.welding_delivery === null
@@ -214,6 +222,7 @@ export function FormProductItem({
 					<input
 						{...methods.register('welding_install', {
 							onBlur: methods.handleSubmit(onSubmit),
+							valueAsNumber: true,
 						})}
 						defaultValue={
 							productItem.welding_install === null
@@ -228,6 +237,7 @@ export function FormProductItem({
 					<input
 						{...methods.register('welding_allowance', {
 							onBlur: methods.handleSubmit(onSubmit),
+							valueAsNumber: true,
 						})}
 						defaultValue={
 							productItem.welding_allowance === null
@@ -256,6 +266,7 @@ export function FormProductItem({
 					<input
 						{...methods.register('painting_price', {
 							onBlur: methods.handleSubmit(onSubmitPainting),
+							valueAsNumber: true,
 						})}
 						defaultValue={
 							productItem.painting_price === null
@@ -270,6 +281,7 @@ export function FormProductItem({
 					<input
 						{...methods.register('painting_cost', {
 							onBlur: methods.handleSubmit(onSubmit),
+							valueAsNumber: true,
 						})}
 						defaultValue={
 							productItem.painting_cost === null
@@ -284,6 +296,7 @@ export function FormProductItem({
 					<input
 						{...methods.register('smithy', {
 							onBlur: methods.handleSubmit(onSubmit),
+							valueAsNumber: true,
 						})}
 						defaultValue={
 							productItem.smithy === null ? 0 : productItem.smithy
@@ -296,6 +309,7 @@ export function FormProductItem({
 					<input
 						{...methods.register('turning_works', {
 							onBlur: methods.handleSubmit(onSubmit),
+							valueAsNumber: true,
 						})}
 						defaultValue={
 							productItem.turning_works === null
@@ -310,6 +324,7 @@ export function FormProductItem({
 					<input
 						{...methods.register('design_department', {
 							onBlur: methods.handleSubmit(onSubmit),
+							valueAsNumber: true,
 						})}
 						defaultValue={
 							productItem.design_department === null

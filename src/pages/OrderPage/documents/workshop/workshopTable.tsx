@@ -13,13 +13,13 @@ export function WorkshopTable({ details, index }: WHTableProps) {
 			<td>{index + 1}</td>
 			<td>{details.name}</td>
 			<td>
-				{details.thickness} {details.suffixes}
+				{details.thickness} {details.material} {details.suffixes}
 			</td>
 			<td>{details.quantity}</td>
 			<td>{details.cut_type === 'laser' ? 'Лазер' : 'Плазма'}</td>
 			<td>{details.chop_count ? details.chop_count : 0}</td>
 			<td>{details.bend_count ? details.bend_count : 0}</td>
-			<td>{details.rolling ? '✓' : '𐄂'}</td>
+			<td>{details.rolling ? '✓' : ' '}</td>
 		</tr>
 	)
 }

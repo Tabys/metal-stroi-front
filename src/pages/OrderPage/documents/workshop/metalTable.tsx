@@ -7,13 +7,13 @@ export function MetalTable({ metals }: NeededMetalProps) {
 	let material = ''
 	switch (metals.material) {
 		case 'St37':
-			material = '(чер.)'
+			material = ' '
 			break
 		case '1.4301':
-			material = '(нерж.)'
+			material = 'нерж '
 			break
 		case 'AlMg3':
-			material = '(цвет.)'
+			material = 'ал '
 			break
 	}
 	return (

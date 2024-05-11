@@ -16,6 +16,8 @@ import { MetalList } from './metalList/metalList'
 import { AddProductModal } from '../../components/modal/AddProductModal'
 import { ProductList } from './productList/productList'
 import { AddSuffixModal } from '../../components/modal/AddSuffixModal'
+import { CopyOrderData } from './orderController/copyOrderData'
+import { CopyOrderModal } from '../../components/modal/CopyOrderModal'
 
 export function EmptySetup() {
 	return <p>Элементов нет</p>
@@ -122,6 +124,7 @@ export function OrderPage() {
 
 						{/* FIXED INTERFACE ELEMENTS */}
 						<div className='fixed-element'>
+							<CopyOrderModal order={order} />
 							<AddSuffixModal
 								onAdd={updateOrders}
 								order={order}

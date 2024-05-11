@@ -143,6 +143,7 @@ export function FormDetailItem({
 						<input
 							{...methods.register('chop_count', {
 								onBlur: methods.handleSubmit(onSubmitBendChop),
+								valueAsNumber: true,
 							})}
 							defaultValue={
 								DetailItem.chop_count === null
@@ -163,6 +164,7 @@ export function FormDetailItem({
 					<input
 						{...methods.register('chop_cost', {
 							onBlur: methods.handleSubmit(onSubmitPrice),
+							valueAsNumber: true,
 						})}
 						defaultValue={
 							DetailItem.chop_cost === null
@@ -187,6 +189,7 @@ export function FormDetailItem({
 					<input
 						{...methods.register('bends_count', {
 							onBlur: methods.handleSubmit(onSubmitBendChop),
+							valueAsNumber: true,
 						})}
 						defaultValue={
 							DetailItem.bends_count === null
@@ -212,6 +215,7 @@ export function FormDetailItem({
 					<input
 						{...methods.register('bend_cost', {
 							onBlur: methods.handleSubmit(onSubmitPrice),
+							valueAsNumber: true,
 						})}
 						defaultValue={
 							DetailItem.bend_cost === null
@@ -251,6 +255,7 @@ export function FormDetailItem({
 					<input
 						{...methods.register('polymer_price', {
 							onBlur: methods.handleSubmit(onSubmitPrice),
+							valueAsNumber: true,
 						})}
 						defaultValue={
 							DetailItem.polymer_price === null
@@ -276,6 +281,7 @@ export function FormDetailItem({
 					<input
 						{...methods.register('rolling', {
 							onBlur: methods.handleSubmit(onSubmitPrice),
+							valueAsNumber: true,
 						})}
 						defaultValue={
 							DetailItem.rolling === null ? 0 : DetailItem.rolling
@@ -299,6 +305,7 @@ export function FormDetailItem({
 					<input
 						{...methods.register('drowing', {
 							onBlur: methods.handleSubmit(onSubmitPrice),
+							valueAsNumber: true,
 						})}
 						defaultValue={
 							DetailItem.drowing === null || ''
@@ -324,6 +331,7 @@ export function FormDetailItem({
 					<input
 						{...methods.register('cut_cost', {
 							onBlur: methods.handleSubmit(onSubmitPrice),
+							valueAsNumber: true,
 						})}
 						defaultValue={
 							DetailItem.cut_cost === null
@@ -349,6 +357,7 @@ export function FormDetailItem({
 					<input
 						{...methods.register('inset_cost', {
 							onBlur: methods.handleSubmit(onSubmitPrice),
+							valueAsNumber: true,
 						})}
 						defaultValue={
 							DetailItem.inset_cost === null
@@ -377,6 +386,7 @@ export function FormDetailItem({
 					<input
 						{...methods.register('metal_cost', {
 							onBlur: methods.handleSubmit(onSubmitPriceMetal),
+							valueAsNumber: true,
 						})}
 						defaultValue={
 							DetailItem.metal_cost === null ||

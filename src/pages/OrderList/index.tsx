@@ -4,6 +4,8 @@ import { Modals } from '../../components/modal/Modals'
 import { useOrders } from '../../hooks/orders'
 import Button from 'react-bootstrap/Button'
 import { ItemListPagination } from './itemListPagination'
+import { FaPlus } from 'react-icons/fa6'
+import Tooltip from '../../components/Tooltip'
 
 export function OrdersPage() {
 	const { addOrder } = useOrders()
@@ -16,9 +18,11 @@ export function OrdersPage() {
 		<>
 			<ItemListPagination itemsPerPage={20} />
 			<div className='fixed-element'>
-				<Button variant='primary' onClick={openModal}>
-					Добавить заказ
-				</Button>
+				<Tooltip conditions={true} text='Добавить сделку'>
+					<Button variant='primary' onClick={openModal}>
+						<FaPlus />
+					</Button>
+				</Tooltip>
 
 				<Modals
 					title='Добавить сделку'
