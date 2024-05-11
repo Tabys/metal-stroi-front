@@ -25,7 +25,7 @@ export function DocOrder() {
 	})
 	const total = CulcTotalData({ details })
 
-	// console.log(details)
+	// console.log(total.cuting_plasma)
 	return (
 		<>
 			<div className='container'>
@@ -69,16 +69,32 @@ export function DocOrder() {
 								<th rowSpan={2}>Толщина металла, мм</th>
 								<th rowSpan={2}>Кол-во, шт</th>
 								<th rowSpan={2}>Лазер (время резки)</th>
-								<th colSpan={2}>Плазма</th>
-								<th rowSpan={2}>Рубка (кол-во рубов)</th>
-								<th rowSpan={2}>Гибка (кол-во гибов)</th>
+								{Number(total.cuting_plasma) > 0 ? (
+									<th colSpan={2}>Плазма</th>
+								) : (
+									''
+								)}
+								{total.chop > 0 ? (
+									<th rowSpan={2}>Рубка (кол-во рубов)</th>
+								) : (
+									''
+								)}
+								{total.bend > 0 ? (
+									<th rowSpan={2}>Гибка (кол-во гибов)</th>
+								) : (
+									''
+								)}
 								<th rowSpan={2}>Вальцы</th>
 								<th rowSpan={2}>Веc детали</th>
 							</tr>
-							<tr>
-								<th>длина м</th>
-								<th>кол-во врез.</th>
-							</tr>
+							{Number(total.cuting_plasma) > 0 ? (
+								<tr>
+									<th>длина м</th>
+									<th>кол-во врез.</th>
+								</tr>
+							) : (
+								''
+							)}
 						</thead>
 						<tbody>
 							{details?.map((detail, index) => (
@@ -86,6 +102,7 @@ export function DocOrder() {
 									key={index}
 									detail={detail}
 									index={index}
+									total={total}
 								/>
 							))}
 
@@ -93,10 +110,16 @@ export function DocOrder() {
 								<td colSpan={3}>Итого</td>
 								<td>{total.quantity}</td>
 								<td>{total.time.toFixed(2)}</td>
-								<td>{total.length}</td>
-								<td>{total.inset}</td>
-								<td>{total.chop}</td>
-								<td>{total.bend}</td>
+								{Number(total.cuting_plasma) > 0 ? (
+									<>
+										<td>{total.length}</td>
+										<td>{total.inset}</td>
+									</>
+								) : (
+									''
+								)}
+								{total.chop > 0 ? <td>{total.chop}</td> : ''}
+								{total.bend > 0 ? <td>{total.bend}</td> : ''}
 								<td></td>
 								<td>{total.weight.toFixed(2)}</td>
 							</tr>

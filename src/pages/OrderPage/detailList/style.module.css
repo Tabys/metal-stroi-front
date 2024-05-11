@@ -16,6 +16,11 @@
 	display: table-row;
 	transition: 0.1s;
 }
+.detail_list div.row {
+	position: sticky;
+	top: 0;
+	z-index: 1;
+}
 .detail_list .row:hover {
 	background-color: #f3f3f3;
 }

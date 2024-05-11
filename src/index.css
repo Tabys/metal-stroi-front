@@ -46,7 +46,7 @@ code {
 
 #root .menu-button {
 	position: fixed;
-	left: 20px;
+	right: 18px;
 	top: 20px;
 	z-index: 100;
 }
@@ -91,13 +91,14 @@ code {
 
 .fixed-element {
 	position: fixed;
-	right: 20px;
-	top: 20px;
+	right: 18px;
+	top: 70px;
 	display: flex;
 	align-items: center;
+	flex-direction: column;
 }
 .fixed-element .btn:not(:last-of-type) {
-	margin-right: 12px;
+	margin-bottom: 12px;
 }
 
 .alert-fixed {
@@ -281,15 +282,23 @@ code {
 .custom_close .btn-close {
 	background-size: 10px;
 }
+.container-flued {
+	margin-right: 2em;
+}
 
 @media print {
 	#root {
-		margin: 0;
+		margin: 0 !important;
+		width: 100% !important;
 	}
 
 	.container {
 		width: 100% !important;
 		margin: 0 !important;
+		max-width: 100%;
+	}
+	.container div {
+		width: 100% !important;
 	}
 
 	.menu-button,

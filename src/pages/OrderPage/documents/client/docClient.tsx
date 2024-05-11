@@ -4,7 +4,7 @@ import { useOrders } from '../../../../hooks/prepareDataList'
 import { CreateDetailGroupList } from '../../detailList/createDetailGroupList'
 import { PrepArrDetils } from '../components/prepArrDetails/prepArrDetails'
 import { ClientTable } from './clientTable'
-import { DocTableDetail, Product } from '../../../../models'
+import { DocTableDetail } from '../../../../models'
 import styles from '../style.module.css'
 import Table from 'react-bootstrap/Table'
 import { TransformDate } from '../../../../components/TransformDate'
@@ -24,7 +24,7 @@ export function DocClient() {
 	})
 	const products = PrepArrProducts(orders)
 	const total = CulcTotalData({ details, products })
-	// console.log(products)
+	// console.log(details?.length)
 
 	let deliveryCost: number | null = null
 	if (orders?.delivery === true) {

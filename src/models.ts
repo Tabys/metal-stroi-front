@@ -287,3 +287,21 @@ export type CopyOrder = {
 	id: number
 	copied_order: number
 }
+
+export type TotalData = {
+	price: number
+	quantity: number
+	weight: number
+	chop: number
+	bend: number
+	choping: number
+	bending: number
+	metal: string
+	time: number
+	length: number
+	inset: number
+	cuting: string
+	cuting_laser: string
+	cuting_plasma: string
+	painting: string
+}

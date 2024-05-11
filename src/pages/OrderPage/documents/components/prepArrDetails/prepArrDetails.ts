@@ -123,5 +123,7 @@ export function PrepArrDetils({
 		  })
 		: ''
 
-	return prepArrDetails ? prepArrDetails : undefined
+	return prepArrDetails
+		? prepArrDetails.filter(item => item.quantity > 0)
+		: undefined
 }

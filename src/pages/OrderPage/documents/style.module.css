@@ -27,6 +27,7 @@
 
 .compony_inf {
 	display: flex;
+	justify-content: space-between;
 	gap: 40px;
 }
 
@@ -158,5 +159,6 @@
 		box-shadow: none;
 		width: 100%;
 		margin: 0;
+		max-width: 1200px;
 	}
 }

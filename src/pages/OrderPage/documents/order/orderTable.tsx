@@ -1,11 +1,12 @@
-import { DocTableDetail } from '../../../../models'
+import { DocTableDetail, TotalData } from '../../../../models'
 
 type OrderTableProps = {
 	detail: DocTableDetail
 	index: number
+	total: TotalData
 }
 
-export function OrderTable({ detail, index }: OrderTableProps) {
+export function OrderTable({ detail, index, total }: OrderTableProps) {
 	return (
 		<tr>
 			<td>{index + 1}</td>
@@ -15,19 +16,40 @@ export function OrderTable({ detail, index }: OrderTableProps) {
 			</td>
 			<td>{detail.quantity}</td>
 			<td>{detail.time ? detail.time : 0}</td>
-			<td>
-				{detail.cut_type === 'plasma'
-					? Number(detail.length).toFixed(2)
-					: 0}
-			</td>
-			<td>{detail.cut_type === 'plasma' ? detail.inset_cost : 0}</td>
-			<td>
-				{detail.chop_count ? detail.chop_count * detail.quantity : 0}
-			</td>
-			<td>
-				{detail.bend_count ? detail.bend_count * detail.quantity : 0}
-			</td>
-			<td>{detail.rolling ? '✓' : '𐄂'}</td>
+			{Number(total.cuting_plasma) > 0 ? (
+				<>
+					<td>
+						{detail.cut_type === 'plasma'
+							? Number(detail.length).toFixed(2)
+							: 0}
+					</td>
+					<td>
+						{detail.cut_type === 'plasma' ? detail.cut_count : 0}
+					</td>
+				</>
+			) : (
+				''
+			)}
+			{total.chop > 0 ? (
+				<td>
+					{detail.chop_count
+						? detail.chop_count * detail.quantity
+						: 0}
+				</td>
+			) : (
+				''
+			)}
+			{total.bend > 0 ? (
+				<td>
+					{detail.bend_count
+						? detail.bend_count * detail.quantity
+						: 0}
+				</td>
+			) : (
+				''
+			)}
+
+			<td>{detail.rolling ? '✓' : ' '}</td>
 			<td>{detail.weight}</td>
 		</tr>
 	)

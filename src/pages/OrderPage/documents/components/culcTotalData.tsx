@@ -36,9 +36,7 @@ export function CulcTotalData({ details, products }: CulcTotalDataProps) {
 		total_metal += Number(detail.metal)
 		total_time += Number(detail.time)
 		total_length += Number(
-			detail.cut_type === 'plasma' && Number(detail.thickness) > 16
-				? Number(detail.length).toFixed(3)
-				: 0
+			detail.cut_type === 'plasma' ? Number(detail.length).toFixed(2) : 0
 		)
 		total_inset += Number(
 			detail.cut_type === 'plasma' ? detail.cut_count : 0

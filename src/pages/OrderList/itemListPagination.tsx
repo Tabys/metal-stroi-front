@@ -47,7 +47,7 @@ export function ItemListPagination({ itemsPerPage }: ItemListProp) {
 
 	return (
 		<>
-			<div id='container' className='container'>
+			<div id='container' className='container-flued px-5 mb-5'>
 				<div className='search mb-5'>
 					<form onSubmit={handleSubmit(onSubmit)}>
 						<div className='mb-3'>
