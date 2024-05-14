@@ -304,4 +304,5 @@ export type TotalData = {
 	cuting_laser: string
 	cuting_plasma: string
 	painting: string
+	rolling: number
 }

@@ -123,10 +123,8 @@ export function DocClient() {
 								<td>
 									<strong>
 										{deliveryCost
-											? (
-													total.price + deliveryCost
-											  ).toFixed(1)
-											: total.price.toFixed(1)}
+											? total.price + deliveryCost
+											: total.price}
 									</strong>
 								</td>
 							</tr>
@@ -214,10 +212,8 @@ export function DocClient() {
 								<td colSpan={2}>
 									<strong>
 										{deliveryCost
-											? (
-													total.price + deliveryCost
-											  ).toFixed(1)
-											: total.price.toFixed(1)}{' '}
+											? total.price + deliveryCost
+											: total.price}{' '}
 										руб
 									</strong>
 								</td>

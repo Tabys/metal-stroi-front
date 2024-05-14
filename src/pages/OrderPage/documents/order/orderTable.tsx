@@ -48,8 +48,8 @@ export function OrderTable({ detail, index, total }: OrderTableProps) {
 			) : (
 				''
 			)}
+			{total.rolling > 0 ? <td>{detail.rolling ? '✓' : ' '}</td> : ''}
 
-			<td>{detail.rolling ? '✓' : ' '}</td>
 			<td>{detail.weight}</td>
 		</tr>
 	)
