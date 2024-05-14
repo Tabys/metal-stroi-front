@@ -66,7 +66,7 @@ export function Header() {
 						)}
 						<li>
 							<a href={`/`} onClick={logOut}>
-								Выйт
+								Выйти
 							</a>
 						</li>
 					</ul>

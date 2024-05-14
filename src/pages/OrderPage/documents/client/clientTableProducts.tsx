@@ -24,7 +24,7 @@ export function ClientTableProducts({
 			<td>{product.name}</td>
 			<td>-</td>
 			<td>{product.quantity}</td>
-			<td>{product.totalPrice.toFixed(1)}</td>
+			<td>{Math.ceil(product.totalPrice)}</td>
 		</tr>
 	)
 }

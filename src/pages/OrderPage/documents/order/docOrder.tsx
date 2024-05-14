@@ -84,7 +84,12 @@ export function DocOrder() {
 								) : (
 									''
 								)}
-								<th rowSpan={2}>Вальцы</th>
+								{total.rolling > 0 ? (
+									<th rowSpan={2}>Вальцы</th>
+								) : (
+									''
+								)}
+
 								<th rowSpan={2}>Веc детали</th>
 							</tr>
 							{Number(total.cuting_plasma) > 0 ? (
@@ -120,7 +125,7 @@ export function DocOrder() {
 								)}
 								{total.chop > 0 ? <td>{total.chop}</td> : ''}
 								{total.bend > 0 ? <td>{total.bend}</td> : ''}
-								<td></td>
+								{total.rolling > 0 ? <td></td> : ''}
 								<td>{total.weight.toFixed(2)}</td>
 							</tr>
 						</tbody>

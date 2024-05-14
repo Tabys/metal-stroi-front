@@ -24,7 +24,7 @@ export function ClientTable({ detail, index }: ClientTableProps) {
 				{detail.thickness} {detail.suffixes}
 			</td>
 			<td>{detail.quantity}</td>
-			<td>{total_price}</td>
+			<td>{Math.ceil(Number(total_price))}</td>
 		</tr>
 	)
 }

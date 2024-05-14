@@ -19,14 +19,16 @@ export function CulcTotalData({ details, products }: CulcTotalDataProps) {
 	let total_cuting_laser = 0
 	let total_cuting_plasma = 0
 	let total_painting = 0
+	let total_rolling = 0
 	details?.forEach(detail => {
-		total_price +=
+		total_price += Math.ceil(
 			Number(detail.bending) +
-			Number(detail.choping) +
-			Number(detail.cut_cost) +
-			Number(detail.metal) +
-			Number(detail.painting) +
-			Number(detail.drowing)
+				Number(detail.choping) +
+				Number(detail.cut_cost) +
+				Number(detail.metal) +
+				Number(detail.painting) +
+				Number(detail.drowing)
+		)
 		total_quantity += detail.quantity
 		total_weight += Number(detail.weight) * Number(detail.quantity)
 		total_chop += Number(detail.chop_count) * Number(detail.quantity)
@@ -47,9 +49,10 @@ export function CulcTotalData({ details, products }: CulcTotalDataProps) {
 		total_cuting_plasma +=
 			detail.cut_type === 'plasma' ? Number(detail.cut_cost) : 0
 		total_painting += Number(detail.painting)
+		total_rolling += detail.rolling ? 1 : 0
 	})
 	products?.forEach(product => {
-		total_price += product.totalPrice
+		total_price += Math.ceil(product.totalPrice)
 		total_quantity += product.quantity
 		total_weight += product.weight ? product.weight : 0
 	})
@@ -70,6 +73,7 @@ export function CulcTotalData({ details, products }: CulcTotalDataProps) {
 		cuting_laser: total_cuting_laser.toFixed(1),
 		cuting_plasma: total_cuting_plasma.toFixed(1),
 		painting: total_painting.toFixed(3),
+		rolling: total_rolling,
 	}
 
 	return total_data
