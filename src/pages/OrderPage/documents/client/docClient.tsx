@@ -27,8 +27,8 @@ export function DocClient() {
 	// console.log(details?.length)
 
 	let deliveryCost: number | null = null
-	if (orders?.delivery === true) {
-		deliveryCost = Math.ceil(total.weight / 500) * 500
+	if (orders?.delivery! && orders?.delivery > 0) {
+		deliveryCost = orders?.delivery + Math.ceil(total.weight / 500) * 500
 	}
 
 	return (
@@ -104,7 +104,7 @@ export function DocClient() {
 									startIndex={details?.length}
 								/>
 							))}
-							{orders?.delivery === true ? (
+							{orders?.delivery! && orders?.delivery > 0 ? (
 								<tr>
 									<td colSpan={4}>
 										<strong>Доставка</strong>
@@ -185,7 +185,7 @@ export function DocClient() {
 									<strong>{total.quantity}</strong>
 								</td>
 							</tr>
-							{orders?.delivery === true ? (
+							{orders?.delivery! && orders?.delivery > 0 ? (
 								<tr>
 									<td colSpan={3}>
 										<strong>Доставка</strong>

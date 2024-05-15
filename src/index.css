@@ -286,6 +286,10 @@ code {
 	margin-right: 2em;
 }
 
+.form-control.delivery {
+	max-width: 100px;
+}
+
 @media print {
 	#root {
 		margin: 0 !important;

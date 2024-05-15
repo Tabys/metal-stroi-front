@@ -4,7 +4,7 @@ export type Order = {
 	implementer?: string
 	title?: string
 	date_сreate?: string // date
-	delivery: boolean
+	delivery: number
 	markup: number
 	customer?: string
 	production_time?: number
