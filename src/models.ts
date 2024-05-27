@@ -24,6 +24,7 @@ export type Setup = {
 	table_number?: string
 	metal_cost?: number
 	order_index?: number
+	order_id?: number
 	suffixes?: JSON[]
 	details?: Detail[]
 }
@@ -116,12 +117,13 @@ export type AddSuffix = {
 export type Metal = {
 	id: number
 	material: string
-	table_number: number
+	table_number: string
 	thickness: number
 	metal_sheets: number
 	weight_metal: number
 	length: number
 	width: number
+	thickness_title?: string
 }
 
 export type Upload = {
@@ -211,6 +213,7 @@ export type WorkshopMetal = {
 	length: number
 	width: number
 	suffixes: string
+	thickness_title?: string
 }
 
 export type DocTableDetail = {
@@ -305,4 +308,11 @@ export type TotalData = {
 	cuting_plasma: string
 	painting: string
 	rolling: number
+}
+
+export type MetalChange = {
+	id: number
+	abbreviation: string
+	thickness: number
+	order_id: number
 }

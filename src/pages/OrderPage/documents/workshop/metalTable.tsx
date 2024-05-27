@@ -1,25 +1,15 @@
 import { WorkshopMetal } from '../../../../models'
+import { getMetalNameSuffix } from '../../metalList/getMetalNameSuffix'
 
 type NeededMetalProps = {
 	metals: WorkshopMetal
 }
 export function MetalTable({ metals }: NeededMetalProps) {
-	let material = ''
-	switch (metals.material) {
-		case 'St37':
-			material = ' '
-			break
-		case '1.4301':
-			material = 'нерж '
-			break
-		case 'AlMg3':
-			material = 'ал '
-			break
-	}
+	const material = getMetalNameSuffix(metals.material ? metals.material : '')
 	return (
 		<tr>
 			<td>
-				{metals.thickness} {material} {metals.suffixes}
+				{metals.thickness_title} {material} {metals.suffixes}
 			</td>
 			<td>{metals.width}</td>
 			<td>{metals.length}</td>

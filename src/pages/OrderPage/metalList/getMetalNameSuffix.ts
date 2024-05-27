@@ -10,6 +10,9 @@ export function getMetalNameSuffix(metal: string) {
 		case '1.4301':
 			metalName = 'нерж'
 			break
+		case '09Г2С':
+			metalName = 'ГС'
+			break
 	}
 
 	return metalName

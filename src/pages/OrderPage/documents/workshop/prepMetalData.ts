@@ -61,6 +61,7 @@ export function prepMetalData({ setups, materials }: prepMetalDataProps) {
 			length: used_metal_length,
 			width: used_metal_width,
 			suffixes: strSuffixes,
+			thickness_title: thickness?.title,
 		}
 	})
 
