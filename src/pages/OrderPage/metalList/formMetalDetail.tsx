@@ -61,7 +61,7 @@ export function FormMetalDetail({ metal, updMetal }: FormMetalDetailProps) {
 					defaultValue={metal.width}
 				/>
 				<div>
-					{metal.thickness} {metalName}
+					{metal.thickness_title} {metalName}
 				</div>
 				<div>{metal.width}</div>
 				<div>{metal.length}</div>

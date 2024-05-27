@@ -272,7 +272,7 @@ code {
 }
 
 .width600 {
-	max-width: 600px;
+	max-width: 700px;
 }
 .custom_close {
 	display: flex;
@@ -284,6 +284,10 @@ code {
 }
 .container-flued {
 	margin-right: 2em;
+}
+
+.form-control.delivery {
+	max-width: 100px;
 }
 
 @media print {

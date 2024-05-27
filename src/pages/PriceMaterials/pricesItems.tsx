@@ -40,12 +40,7 @@ export function PircesItems({ price, allPrices, update }: PricesProps) {
 				{...register('addid')}
 			/>
 			<div className='p-2'>{price.title}</div>
-			<div className='p-2'>
-				{price.table_name}
-				{currentItem?.table_name
-					? ' | ' + currentItem.table_name
-					: null}
-			</div>
+			<div className='p-2'>{price.table_name}</div>
 			<div className='p-2'>
 				<input
 					type='number'

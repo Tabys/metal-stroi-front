@@ -2,7 +2,6 @@ import axios from 'axios'
 import { Order } from '../../../models'
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form'
 import Form from 'react-bootstrap/Form'
-import { FormCheckbox } from '../detailList/formElements/formCheckbox'
 import { FormSelect } from '../detailList/formElements/formSelect'
 import { Role } from '../../../components/auth/role'
 import { ClearMetalCost } from './clearMetalCost'
@@ -42,10 +41,13 @@ export function FormOrderController({ orderData, updated }: formOCProps) {
 					/>
 					<Form.Group>
 						<Form.Label>Доставка:</Form.Label>
-						<FormCheckbox
-							name='delivery'
-							defaultChecked={orderData.delivery}
-							onSubmit={methods.handleSubmit(onSubmit)}
+						<input
+							{...methods.register('delivery', {
+								onBlur: methods.handleSubmit(onSubmit),
+								valueAsNumber: true,
+							})}
+							defaultValue={orderData.delivery}
+							className='form-control delivery'
 						/>
 					</Form.Group>
 					<Form.Group>

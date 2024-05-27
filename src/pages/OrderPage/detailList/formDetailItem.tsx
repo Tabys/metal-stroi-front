@@ -27,13 +27,16 @@ export function FormDetailItem({
 	const methods = useForm<Detail>()
 
 	const extraPriceMetal = extraPrice(orderData)
-
+	const material = orderData.metals?.filter(
+		metal => metal.table_number === DetailItem.table_number
+	)
+	console.log(DetailItem.table_number)
 	// Change METAL COST input value during change METAL MARKAP
 	useEffect(() => {
 		methods.reset()
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [orderData])
-
+	console.log(orderData)
 	const onSubmitBendChop: SubmitHandler<Detail> = async data => {
 		delete data.metal_cost
 		await axios.put<Detail>(
