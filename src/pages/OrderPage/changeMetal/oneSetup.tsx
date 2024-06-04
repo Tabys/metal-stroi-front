@@ -8,10 +8,16 @@ import { useForm, SubmitHandler, FormProvider } from 'react-hook-form'
 type OneSetupProps = {
 	setup: Setup
 	arrDetails: Detail[]
+	openAlert: () => void
 	onChange: () => void
 }
 
-export function OneSetup({ onChange, setup, arrDetails }: OneSetupProps) {
+export function OneSetup({
+	onChange,
+	openAlert,
+	setup,
+	arrDetails,
+}: OneSetupProps) {
 	const methods = useForm<MetalChange>()
 
 	const onSubmit: SubmitHandler<MetalChange> = async data => {
@@ -20,8 +26,8 @@ export function OneSetup({ onChange, setup, arrDetails }: OneSetupProps) {
 			data
 		)
 		await onChange()
+		await openAlert()
 	}
-
 	const addDetails = arrDetails.filter(detail => {
 		const setupIndexes = detail.additional_setups?.split(' ')
 		const result = setupIndexes?.filter(index => {
@@ -36,7 +42,7 @@ export function OneSetup({ onChange, setup, arrDetails }: OneSetupProps) {
 				<div className={style.title}>
 					<div className={style.top}>
 						<p>
-							<strong>{setup.material}</strong>
+							<strong>{setup.material} </strong>
 						</p>
 						<p>
 							Таблица: <strong>{setup.table_number}</strong>
@@ -56,7 +62,7 @@ export function OneSetup({ onChange, setup, arrDetails }: OneSetupProps) {
 					{setup.details?.map(detail => (
 						<OneDetail key={detail.id} detail={detail} />
 					))}
-					{addDetails.map(detail => (
+					{addDetails?.map(detail => (
 						<OneDetail key={detail.id} detail={detail} />
 					))}
 					<div className={style.detail + ' ' + style.empty}></div>
@@ -76,8 +82,12 @@ export function OneSetup({ onChange, setup, arrDetails }: OneSetupProps) {
 					type='hidden'
 					defaultValue={
 						setup.details
-							? setup.details[0].thickness
-							: addDetails[0].thickness
+							? setup.details?.length > 0
+								? setup.details[0]?.thickness
+								: addDetails.length > 0
+								? addDetails[0]?.thickness
+								: setup.work_piece?.split(' x ')[2]
+							: setup.work_piece?.split(' x ')[2]
 					}
 				/>
 				<FormSelect

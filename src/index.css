@@ -107,7 +107,7 @@ code {
 	left: 0px;
 	width: 100%;
 	text-align: center;
-	z-index: 9999;
+	z-index: 100000;
 }
 
 .offcanvas .menu {
@@ -271,8 +271,11 @@ code {
 	font-size: 11px;
 }
 
-.width600 {
+.width700 {
 	max-width: 700px;
+}
+.width600 {
+	max-width: 600px;
 }
 .custom_close {
 	display: flex;
@@ -288,6 +291,9 @@ code {
 
 .form-control.delivery {
 	max-width: 100px;
+}
+.modal-dialog .form-label {
+	font-weight: 500;
 }
 
 @media print {

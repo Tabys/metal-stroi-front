@@ -26,7 +26,7 @@ export function CopyOrderModal({ order }: ModalProps) {
 			<Modal
 				show={showModal}
 				onHide={closeModal}
-				dialogClassName='width600'
+				dialogClassName='width700'
 			>
 				<Modal.Header closeButton>
 					<Modal.Title>Клонирование сделки</Modal.Title>
