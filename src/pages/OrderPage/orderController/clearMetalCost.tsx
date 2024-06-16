@@ -7,9 +7,14 @@ import { FaMoneyBill1Wave, FaMoneyBillWave } from 'react-icons/fa6'
 type ClearMetalCostProps = {
 	details: number[]
 	update: () => void
+	openAlert: () => void
 }
 
-export function ClearMetalCost({ details, update }: ClearMetalCostProps) {
+export function ClearMetalCost({
+	details,
+	openAlert,
+	update,
+}: ClearMetalCostProps) {
 	const { register, handleSubmit } = useForm<ClearMetalCostForm>()
 
 	const onSubmit: SubmitHandler<ClearMetalCostForm> = async data => {
@@ -28,6 +33,7 @@ export function ClearMetalCost({ details, update }: ClearMetalCostProps) {
 			.catch(err => {
 				console.log(err.response)
 			})
+		await openAlert()
 	}
 
 	return (

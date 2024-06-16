@@ -31,7 +31,7 @@ export function DetailList({ dataOrder }: detailListProps) {
 					<div className={styles.line}>Цена резки</div>
 					<div className={styles.line}>Цена врезания</div>
 					<div className={styles.line}>Цена металла</div>
-					<div className={styles.line}>Пищевая сталь</div>
+					{/* <div className={styles.line}>Пищевая сталь</div> */}
 				</div>
 
 				<FormDetailList

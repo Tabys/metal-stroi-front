@@ -12,12 +12,12 @@ import { useState } from 'react'
 import { listMetalName } from '../detailList/listMetalName'
 import Select from 'react-select'
 import style from './style.module.css'
-import { FaRegTrashCan } from 'react-icons/fa6'
+import { FaMinus, FaPlus, FaRegTrashCan } from 'react-icons/fa6'
 
 type addSetupProps = {
 	onCreate: () => void
 	onClose: () => void
-	order_id: number
+	order_id?: number
 }
 
 export function AddSetup({ onCreate, onClose, order_id }: addSetupProps) {
@@ -285,6 +285,7 @@ export function AddSetup({ onCreate, onClose, order_id }: addSetupProps) {
 			</div>
 
 			<div className={style.details}>
+				<p className={style.title}>Детали:</p>
 				{fields.map((item, index) => {
 					return (
 						<div key={item.id} className={style.detail}>
@@ -395,7 +396,7 @@ export function AddSetup({ onCreate, onClose, order_id }: addSetupProps) {
 								onClick={() => remove(index)}
 								className='btn btn-primary'
 							>
-								<FaRegTrashCan />
+								<FaMinus />
 							</button>
 						</div>
 					)
@@ -415,7 +416,7 @@ export function AddSetup({ onCreate, onClose, order_id }: addSetupProps) {
 					}}
 					className={style.detail_btn + ' btn btn-primary'}
 				>
-					Добавить деталь
+					<FaPlus />
 				</button>
 				<button
 					type='button'
@@ -426,7 +427,7 @@ export function AddSetup({ onCreate, onClose, order_id }: addSetupProps) {
 					}
 					className={style.detail_btn + ' btn btn-primary'}
 				>
-					Удалить все детали
+					<FaRegTrashCan />
 				</button>
 			</section>
 			<button type='submit' className='btn btn-primary container-fluid'>

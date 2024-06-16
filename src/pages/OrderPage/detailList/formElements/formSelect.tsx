@@ -27,7 +27,11 @@ export function FormSelect({
 			text = value
 		}
 		return (
-			<option key={index} value={value}>
+			<option
+				key={index}
+				value={value}
+				selected={selected === value ? true : false}
+			>
 				{text}
 			</option>
 		)

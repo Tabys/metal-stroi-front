@@ -6,11 +6,12 @@ import { Setup } from '../../models'
 import { FaRegSquarePlus } from 'react-icons/fa6'
 import { Tab, Tabs } from 'react-bootstrap'
 import { AddSetup } from '../../pages/OrderPage/addSetup/addSetup'
+import Tooltip from '../Tooltip'
 
 type ModalProps = {
 	onAdd: () => void
-	setups: Setup[]
-	order_id: number
+	setups?: Setup[]
+	order_id?: number
 }
 
 export function AddDetailSetupModal({ onAdd, setups, order_id }: ModalProps) {
@@ -20,13 +21,15 @@ export function AddDetailSetupModal({ onAdd, setups, order_id }: ModalProps) {
 
 	return (
 		<>
-			<Button
-				className='fixed right-175'
-				variant='primary'
-				onClick={openModal}
-			>
-				<FaRegSquarePlus />
-			</Button>
+			<Tooltip conditions={true} text='Добавить сетап с деталями'>
+				<Button
+					className='fixed right-175'
+					variant='primary'
+					onClick={openModal}
+				>
+					<FaRegSquarePlus />
+				</Button>
+			</Tooltip>
 
 			<Modal
 				show={showSetupModal}

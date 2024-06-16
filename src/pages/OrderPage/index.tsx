@@ -123,6 +123,11 @@ export function OrderPage() {
 
 						{/* FIXED INTERFACE ELEMENTS */}
 						<div className='fixed-element'>
+							<AddDetailSetupModal
+								onAdd={updateOrders}
+								setups={order.setups}
+								order_id={order.id}
+							/>
 							<CopyOrderModal order={order} />
 							<AddSuffixModal
 								onAdd={updateOrders}
@@ -136,11 +141,6 @@ export function OrderPage() {
 								orderId={Number(id)}
 								onDel={updateOrders}
 							></DeleteSetups>
-							<AddDetailSetupModal
-								onAdd={updateOrders}
-								setups={order.setups}
-								order_id={order.id}
-							/>
 						</div>
 					</>
 				) : (
@@ -148,6 +148,11 @@ export function OrderPage() {
 						<UploadSetupModal
 							onCreate={updateOrders}
 							orderId={Number(id)}
+						/>
+						<AddDetailSetupModal
+							onAdd={updateOrders}
+							setups={order?.setups}
+							order_id={order?.id}
 						/>
 					</div>
 				)}

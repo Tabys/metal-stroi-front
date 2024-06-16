@@ -417,7 +417,7 @@ export function FormDetailItem({
 						className='form-control'
 					/>
 				</div>
-				<div className={styles.line}>
+				{/* <div className={styles.line}>
 					<FormCheckbox
 						name='food_steel'
 						defaultChecked={DetailItem.food_steel}
@@ -426,7 +426,7 @@ export function FormDetailItem({
 						}
 						onSubmit={methods.handleSubmit(onSubmitFoodSteel)}
 					/>
-				</div>
+				</div> */}
 			</form>
 		</FormProvider>
 	)

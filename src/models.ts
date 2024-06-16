@@ -153,6 +153,8 @@ export type MetalType = {
 	name?: string
 	abbreviation?: string
 	price_metal_items?: PriceMetalItems[]
+	density?: number
+	price?: number
 }
 
 export type PriceMetalItems = {

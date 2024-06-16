@@ -4,6 +4,8 @@ import { FormSelect } from '../detailList/formElements/formSelect'
 import { OneDetail } from './oneDetail'
 import style from './style.module.css'
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form'
+import { getOption } from './getOption'
+import { useState } from 'react'
 
 type OneSetupProps = {
 	setup: Setup
@@ -18,13 +20,17 @@ export function OneSetup({
 	setup,
 	arrDetails,
 }: OneSetupProps) {
+	const options = getOption(setup)
+
 	const methods = useForm<MetalChange>()
+	const [defValue, setDefValue] = useState(setup.material)
 
 	const onSubmit: SubmitHandler<MetalChange> = async data => {
 		await axios.put<MetalChange>(
 			process.env.REACT_APP_BACKEND_API_URL + 'setup/metal-types',
 			data
 		)
+		await setDefValue(data.abbreviation)
 		await onChange()
 		await openAlert()
 	}
@@ -91,9 +97,9 @@ export function OneSetup({
 					}
 				/>
 				<FormSelect
-					arrOptions={['St37', '1.4301', '09Г2С']}
-					arrOptionsText={['Ст37', 'Нерж', '09Г2С']}
-					selected={setup.material}
+					arrOptions={options.value}
+					arrOptionsText={options.text}
+					selected={defValue}
 					name='abbreviation'
 					onSubmit={methods.handleSubmit(onSubmit)}
 				/>
