@@ -19,7 +19,7 @@ export function DocWorkhop() {
 	const { materials } = useMaterials()
 	const setups = prepMetalData({ setups: orders?.setups, materials })
 
-	// console.log(setups)
+	console.log(setups)
 
 	const arrDetails = orders ? CreateDetailGroupList(orders) : undefined
 	const details: DocTableDetail[] | undefined = PrepArrDetils({

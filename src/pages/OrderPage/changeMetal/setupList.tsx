@@ -5,10 +5,11 @@ import style from './style.module.css'
 
 type SetupListProp = {
 	onChange: () => void
+	openAlert: () => void
 	order: Order
 }
 
-export function SetupList({ onChange, order }: SetupListProp) {
+export function SetupList({ onChange, openAlert, order }: SetupListProp) {
 	const arrDetails = groupDetails(order)
 	order.setups?.sort((a, b) => (a.id > b.id ? 1 : -1))
 	return (
@@ -17,6 +18,7 @@ export function SetupList({ onChange, order }: SetupListProp) {
 				<OneSetup
 					key={setup.id}
 					setup={setup}
+					openAlert={openAlert}
 					arrDetails={arrDetails}
 					onChange={onChange}
 				/>

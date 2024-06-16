@@ -153,6 +153,8 @@ export type MetalType = {
 	name?: string
 	abbreviation?: string
 	price_metal_items?: PriceMetalItems[]
+	density?: number
+	price?: number
 }
 
 export type PriceMetalItems = {
@@ -315,4 +317,34 @@ export type MetalChange = {
 	abbreviation: string
 	thickness: number
 	order_id: number
+}
+
+export type AddDetail = {
+	name: string
+	thickness?: number
+	quantity: number
+	l_size?: number
+	w_size?: number
+	cut_type?: string
+	table_number?: string
+	chop_count?: number
+	bends_count?: number
+	metal_cost?: number
+}
+
+export type AddSetups = {
+	id: string
+	material?: string
+	length: number
+	width: number
+	min_length: number
+	min_width: number
+	thickness: number
+	thicknessTitle: string
+	program_runs?: string
+	table_number?: string
+	order_index?: number
+	order_id?: number
+	suffixes?: JSON[]
+	details?: AddDetail[]
 }

@@ -27,16 +27,15 @@ export function FormDetailItem({
 	const methods = useForm<Detail>()
 
 	const extraPriceMetal = extraPrice(orderData)
-	const material = orderData.metals?.filter(
-		metal => metal.table_number === DetailItem.table_number
-	)
-	console.log(DetailItem.table_number)
+
 	// Change METAL COST input value during change METAL MARKAP
 	useEffect(() => {
 		methods.reset()
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [orderData])
-	console.log(orderData)
+
+	// console.log(orderData)
+
 	const onSubmitBendChop: SubmitHandler<Detail> = async data => {
 		delete data.metal_cost
 		await axios.put<Detail>(
@@ -127,9 +126,9 @@ export function FormDetailItem({
 				<div className={styles.line}>{DetailItem.thickness}</div>
 				<div className={styles.line}>{DetailItem.material}</div>
 				<div className={styles.line}>{DetailItem.quantity}</div>
-				<div className={styles.line}>
+				{/* <div className={styles.line}>
 					{DetailItem.cut_count === null ? 0 : DetailItem.cut_count}
-				</div>
+				</div> */}
 				<FormRadio
 					name='cut_type'
 					defaultValue={DetailItem.cut_type}
@@ -418,7 +417,7 @@ export function FormDetailItem({
 						className='form-control'
 					/>
 				</div>
-				<div className={styles.line}>
+				{/* <div className={styles.line}>
 					<FormCheckbox
 						name='food_steel'
 						defaultChecked={DetailItem.food_steel}
@@ -427,7 +426,7 @@ export function FormDetailItem({
 						}
 						onSubmit={methods.handleSubmit(onSubmitFoodSteel)}
 					/>
-				</div>
+				</div> */}
 			</form>
 		</FormProvider>
 	)

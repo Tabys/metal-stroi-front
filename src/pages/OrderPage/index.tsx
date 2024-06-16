@@ -6,7 +6,6 @@ import { Badge } from 'react-bootstrap'
 import { DetailList } from './detailList/detailList'
 import { UploadSetupModal } from '../../components/modal/UploadSetupModal'
 import { DeleteSetups } from './deleteSetups/deleteSetups'
-// import { AddDetailModal } from '../../components/modal/AddDetailModal'
 import { TransformDate } from '../../components/TransformDate'
 import { FormOrderController } from './orderController/formOrderController'
 import ListGroup from 'react-bootstrap/ListGroup'
@@ -16,8 +15,8 @@ import { MetalList } from './metalList/metalList'
 import { AddProductModal } from '../../components/modal/AddProductModal'
 import { ProductList } from './productList/productList'
 import { AddSuffixModal } from '../../components/modal/AddSuffixModal'
-import { CopyOrderData } from './orderController/copyOrderData'
 import { CopyOrderModal } from '../../components/modal/CopyOrderModal'
+import { AddDetailSetupModal } from '../../components/modal/AddDetailSetupModal'
 
 export function EmptySetup() {
 	return <p>Элементов нет</p>
@@ -124,6 +123,11 @@ export function OrderPage() {
 
 						{/* FIXED INTERFACE ELEMENTS */}
 						<div className='fixed-element'>
+							<AddDetailSetupModal
+								onAdd={updateOrders}
+								setups={order.setups}
+								order_id={order.id}
+							/>
 							<CopyOrderModal order={order} />
 							<AddSuffixModal
 								onAdd={updateOrders}
@@ -138,13 +142,17 @@ export function OrderPage() {
 								onDel={updateOrders}
 							></DeleteSetups>
 						</div>
-						{/* <AddDetailModal onAdd={updateOrders} setups={order.setups} /> */}
 					</>
 				) : (
 					<div className='fixed-element'>
 						<UploadSetupModal
 							onCreate={updateOrders}
 							orderId={Number(id)}
+						/>
+						<AddDetailSetupModal
+							onAdd={updateOrders}
+							setups={order?.setups}
+							order_id={order?.id}
 						/>
 					</div>
 				)}

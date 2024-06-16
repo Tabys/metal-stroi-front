@@ -7,9 +7,14 @@ import { FaMoneyBill1Wave } from 'react-icons/fa6'
 type UpdMetalCostProps = {
 	orderId: number
 	update: () => void
+	openAlert: () => void
 }
 
-export function UpdMetalCost({ orderId, update }: UpdMetalCostProps) {
+export function UpdMetalCost({
+	orderId,
+	openAlert,
+	update,
+}: UpdMetalCostProps) {
 	const { register, handleSubmit } = useForm<UpdMetalCostForm>()
 
 	const onSubmit: SubmitHandler<UpdMetalCostForm> = async data => {
@@ -27,6 +32,7 @@ export function UpdMetalCost({ orderId, update }: UpdMetalCostProps) {
 			.catch(err => {
 				console.log(err.response)
 			})
+		await openAlert()
 	}
 
 	return (

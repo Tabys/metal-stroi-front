@@ -8,6 +8,7 @@ import { AddSuffixes } from '../../pages/OrderPage/addSuffix/addSuffix'
 import Tab from 'react-bootstrap/Tab'
 import Tabs from 'react-bootstrap/Tabs'
 import { ChangeMetal } from '../../pages/OrderPage/changeMetal/changeMetal'
+import { Alert } from 'react-bootstrap'
 
 type ModalProps = {
 	onAdd: () => void
@@ -18,6 +19,15 @@ export function AddSuffixModal({ onAdd, order }: ModalProps) {
 	const [showModal, setShowModal] = useState(false)
 	const openModal = () => setShowModal(true)
 	const closeModal = () => setShowModal(false)
+
+	const [alertShow, setAlertShow] = useState(false)
+
+	const openAlert = () => {
+		setAlertShow(true)
+		setTimeout(() => {
+			setAlertShow(false)
+		}, 1000)
+	}
 
 	return (
 		<>
@@ -53,10 +63,21 @@ export function AddSuffixModal({ onAdd, order }: ModalProps) {
 							eventKey='metalType'
 							title='Изменение типа металла'
 						>
-							<ChangeMetal onChange={onAdd} order={order} />
+							<ChangeMetal
+								onChange={onAdd}
+								openAlert={openAlert}
+								order={order}
+							/>
 						</Tab>
 					</Tabs>
 				</Modal.Body>
+				<Alert
+					className='alert-fixed'
+					show={alertShow}
+					variant='success'
+				>
+					Изменения сохранены
+				</Alert>
 			</Modal>
 		</>
 	)

@@ -17,7 +17,7 @@ export function DetailList({ dataOrder }: detailListProps) {
 					<div className={styles.line}>Толщина металла, мм</div>
 					<div className={styles.line}>Металл</div>
 					<div className={styles.line}>Кол-во изделий, шт</div>
-					<div className={styles.line}>Кол-во врезаний</div>
+					{/* <div className={styles.line}>Кол-во врезаний</div> */}
 					<div className={styles.line}>Лазер (опция)</div>
 					<div className={styles.line}>Плазма (опция)</div>
 					<div className={styles.line}>Кол-во рубов</div>
@@ -31,7 +31,7 @@ export function DetailList({ dataOrder }: detailListProps) {
 					<div className={styles.line}>Цена резки</div>
 					<div className={styles.line}>Цена врезания</div>
 					<div className={styles.line}>Цена металла</div>
-					<div className={styles.line}>Пищевая сталь</div>
+					{/* <div className={styles.line}>Пищевая сталь</div> */}
 				</div>
 
 				<FormDetailList
