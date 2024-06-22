@@ -53,6 +53,21 @@ export function PrepArrProducts(orders: Order | undefined) {
 			value: value,
 			painting_cost: product.painting_cost * product.quantity,
 			weight: totalWeight,
+			welding:
+				Number(product.welding_allowance) +
+				Number(product.welding_delivery) +
+				Number(product.welding_fixings) +
+				Number(product.welding_install) +
+				Number(product.welding_painting) +
+				Number(product.welding_profit) +
+				Number(product.welding_rolling) +
+				Number(product.welding_tax) +
+				Number(product.welding_work),
+			turning_works: product.turning_works ? product.turning_works : 0,
+			smithy: product.smithy ? product.smithy : 0,
+			design_department: product.design_department
+				? product.design_department
+				: 0,
 		}
 	})
 

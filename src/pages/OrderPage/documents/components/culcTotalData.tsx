@@ -1,7 +1,7 @@
-import { DocTableDetail, DocTableProduct, Product } from '../../../../models'
+import { DocTableDetail, DocTableProductSpec } from '../../../../models'
 type CulcTotalDataProps = {
 	details: DocTableDetail[] | undefined
-	products?: DocTableProduct[] | undefined
+	products?: DocTableProductSpec[] | undefined
 }
 export function CulcTotalData({ details, products }: CulcTotalDataProps) {
 	let total_price = 0
@@ -20,6 +20,17 @@ export function CulcTotalData({ details, products }: CulcTotalDataProps) {
 	let total_cuting_plasma = 0
 	let total_painting = 0
 	let total_rolling = 0
+	let total_drowing = 0
+
+	// Only Products
+	let total_prod_painting = 0
+	let total_prod_turning_works = 0
+	let total_prod_smithy = 0
+	let total_prod_welding = 0
+	let total_prod_design_department = 0
+	let total_prod_price = 0
+	let total_prod_quantity = 0
+
 	details?.forEach(detail => {
 		total_price += Math.ceil(
 			Number(detail.bending) +
@@ -50,11 +61,31 @@ export function CulcTotalData({ details, products }: CulcTotalDataProps) {
 			detail.cut_type === 'plasma' ? Number(detail.cut_cost) : 0
 		total_painting += Number(detail.painting)
 		total_rolling += detail.rolling ? 1 : 0
+		total_drowing += detail.drowing ? detail.drowing : 0
 	})
 	products?.forEach(product => {
 		total_price += Math.ceil(product.totalPrice)
 		total_quantity += product.quantity
 		total_weight += product.weight ? product.weight : 0
+
+		// Only Products
+		total_prod_quantity += Number(product.quantity)
+		total_prod_price += Math.ceil(product.totalPrice)
+		total_prod_painting += product.painting_cost
+			? Number(product.painting_cost) * Number(product.quantity)
+			: 0
+		total_prod_turning_works += product.turning_works
+			? Number(product.turning_works) * Number(product.quantity)
+			: 0
+		total_prod_smithy += product.smithy
+			? Number(product.smithy) * Number(product.quantity)
+			: 0
+		total_prod_welding += product.welding
+			? Number(product.welding) * Number(product.quantity)
+			: 0
+		total_prod_design_department += product.design_department
+			? Number(product.design_department) * Number(product.quantity)
+			: 0
 	})
 
 	const total_data = {
@@ -74,6 +105,15 @@ export function CulcTotalData({ details, products }: CulcTotalDataProps) {
 		cuting_plasma: total_cuting_plasma.toFixed(1),
 		painting: total_painting.toFixed(3),
 		rolling: total_rolling,
+		drowing: total_drowing,
+
+		prod_painting: total_prod_painting,
+		prod_turning_works: total_prod_turning_works,
+		prod_smithy: total_prod_smithy,
+		prod_welding: total_prod_welding,
+		prod_design_department: total_prod_design_department,
+		prod_price: total_prod_price,
+		prod_quantity: total_prod_quantity,
 	}
 
 	return total_data

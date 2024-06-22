@@ -310,6 +310,14 @@ export type TotalData = {
 	cuting_plasma: string
 	painting: string
 	rolling: number
+	drowing: number
+	prod_painting: number
+	prod_turning_works: number
+	prod_smithy: number
+	prod_welding: number
+	prod_design_department: number
+	prod_price: number
+	prod_quantity: number
 }
 
 export type MetalChange = {
@@ -347,4 +355,19 @@ export type AddSetups = {
 	order_id?: number
 	suffixes?: JSON[]
 	details?: AddDetail[]
+}
+
+export type DocTableProductSpec = {
+	id: number
+	name: string
+	quantity: number
+	totalPrice: number
+	painting_color?: string
+	painting_cost?: number
+	weight?: number
+	value?: number
+	welding?: number
+	turning_works?: number
+	smithy?: number
+	design_department?: number
 }
