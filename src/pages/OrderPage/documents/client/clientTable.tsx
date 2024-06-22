@@ -21,7 +21,7 @@ export function ClientTable({ detail, index }: ClientTableProps) {
 			<td>{index + 1}</td>
 			<td>{detail.name}</td>
 			<td>
-				{detail.thickness} {detail.suffixes}
+				{detail.thickness} {detail.material} {detail.suffixes}
 			</td>
 			<td>{detail.quantity}</td>
 			<td>{Math.ceil(Number(total_price))}</td>

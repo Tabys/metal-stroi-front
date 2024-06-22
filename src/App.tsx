@@ -13,6 +13,7 @@ import { AuthVerify } from './common/AuthVerify'
 import { UsersPage } from './pages/Users'
 import { useUser } from './hooks/curentUser'
 import { DocPainting } from './pages/OrderPage/documents/painting/docPainting'
+import { DocSpecialization } from './pages/OrderPage/documents/specialization/docSpecialization'
 
 function App() {
 	const { currentUser } = useUser()
@@ -41,6 +42,10 @@ function App() {
 						<Route
 							path='/order/:id/doc-painting'
 							element={<DocPainting />}
+						/>
+						<Route
+							path='/order/:id/doc-specialization'
+							element={<DocSpecialization />}
 						/>
 						{currentUser?.['roles'] !== 'ROLE_USER' ? (
 							<>

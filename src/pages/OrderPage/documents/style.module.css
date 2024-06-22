@@ -1,3 +1,6 @@
+h2 {
+	margin-bottom: 20px;
+}
 .doc {
 	display: flex;
 	flex-direction: column;
@@ -48,7 +51,10 @@
 .order_inf .order_number:hover {
 	color: #0d6efd;
 }
-
+.mini_header {
+	font-weight: bold;
+	font-size: 18px;
+}
 .invoice_header {
 	display: flex;
 	margin: 50px 0 0;
@@ -151,6 +157,13 @@
 	bottom: 5px;
 	left: 0;
 	background-color: #000;
+}
+.total {
+	text-align: right;
+}
+.total p {
+	margin: 0;
+	font-size: 18px;
 }
 
 @media print {
