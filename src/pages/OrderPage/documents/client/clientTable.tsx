@@ -3,9 +3,10 @@ import { DocTableDetail } from '../../../../models'
 type ClientTableProps = {
 	detail: DocTableDetail
 	index: number
+	delivery: number
 }
 
-export function ClientTable({ detail, index }: ClientTableProps) {
+export function ClientTable({ detail, index, delivery }: ClientTableProps) {
 	const total_price = (
 		Number(detail.bending) +
 		Number(detail.choping) +
@@ -13,9 +14,9 @@ export function ClientTable({ detail, index }: ClientTableProps) {
 		Number(detail.metal) +
 		Number(detail.painting) +
 		Number(detail.rolling) +
-		(detail.drowing ? detail.drowing : 0)
+		(detail.drowing ? detail.drowing : 0) +
+		delivery * Number(detail.weight) * detail.quantity
 	).toFixed(1)
-	// console.log(detail.drowing)
 	return (
 		<tr>
 			<td>{index + 1}</td>

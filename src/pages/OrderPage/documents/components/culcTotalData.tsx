@@ -66,7 +66,7 @@ export function CulcTotalData({ details, products }: CulcTotalDataProps) {
 	products?.forEach(product => {
 		total_price += Math.ceil(product.totalPrice)
 		total_quantity += product.quantity
-		total_weight += product.weight ? product.weight : 0
+		total_weight += product.weight ? product.weight * product.quantity : 0
 
 		// Only Products
 		total_prod_quantity += Number(product.quantity)

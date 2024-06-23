@@ -27,8 +27,10 @@ export function DocClient() {
 	// console.log(details?.length)
 
 	let deliveryCost: number | null = null
+	let oneKgDelivery: number = 0
 	if (orders?.delivery! && orders?.delivery > 0) {
 		deliveryCost = orders?.delivery + Math.ceil(total.weight / 500) * 500
+		oneKgDelivery = Number(deliveryCost) / total.weight
 	}
 
 	return (
@@ -94,6 +96,7 @@ export function DocClient() {
 									key={detail.id}
 									detail={detail}
 									index={index}
+									delivery={oneKgDelivery}
 								/>
 							))}
 							{products?.map((product, index) => (
@@ -101,21 +104,10 @@ export function DocClient() {
 									key={product.id}
 									index={index}
 									product={product}
+									delivery={oneKgDelivery}
 									startIndex={details?.length}
 								/>
 							))}
-							{orders?.delivery! && orders?.delivery > 0 ? (
-								<tr>
-									<td colSpan={4}>
-										<strong>Доставка</strong>
-									</td>
-									<td>
-										<strong>{deliveryCost}</strong>
-									</td>
-								</tr>
-							) : (
-								<></>
-							)}
 							<tr>
 								<td colSpan={4}>
 									<strong>Итого стоимость по заказу</strong>
@@ -185,18 +177,6 @@ export function DocClient() {
 									<strong>{total.quantity}</strong>
 								</td>
 							</tr>
-							{orders?.delivery! && orders?.delivery > 0 ? (
-								<tr>
-									<td colSpan={3}>
-										<strong>Доставка</strong>
-									</td>
-									<td colSpan={2}>
-										<strong>{deliveryCost} руб</strong>
-									</td>
-								</tr>
-							) : (
-								<></>
-							)}
 							<tr>
 								<td>
 									<strong>Общий вес:</strong>
