@@ -45,6 +45,42 @@ export function AddUserForm() {
 	return (
 		<form onSubmit={handleSubmit(onSubmit)} encType='multipart/form-data'>
 			<div className='mb-3'>
+				<label className='form-label'>Имя</label>
+				<input
+					{...register('first_name', {
+						required: 'Это поле обязательное',
+					})}
+					className={
+						errors.first_name
+							? 'form-control is-invalid'
+							: 'form-control'
+					}
+				/>
+				{errors.first_name && (
+					<Form.Text className='text-danger'>
+						{errors.first_name.message}
+					</Form.Text>
+				)}
+			</div>
+			<div className='mb-3'>
+				<label className='form-label'>Фамилия</label>
+				<input
+					{...register('last_name', {
+						required: 'Это поле обязательное',
+					})}
+					className={
+						errors.last_name
+							? 'form-control is-invalid'
+							: 'form-control'
+					}
+				/>
+				{errors.last_name && (
+					<Form.Text className='text-danger'>
+						{errors.last_name.message}
+					</Form.Text>
+				)}
+			</div>
+			<div className='mb-3'>
 				<label className='form-label'>Логин</label>
 				<input
 					{...register('username', {

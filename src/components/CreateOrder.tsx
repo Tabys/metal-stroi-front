@@ -2,6 +2,8 @@ import axios from 'axios'
 import { Order } from '../models'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { Form } from 'react-bootstrap'
+import { useUser } from '../hooks/curentUser'
+import { fireEvent } from '@testing-library/react'
 
 type CreateOrderProps = {
 	onCreate: () => void
@@ -9,6 +11,8 @@ type CreateOrderProps = {
 }
 
 export function CreateOrder({ onCreate, addItem }: CreateOrderProps) {
+	const { currentUser } = useUser()
+
 	const {
 		register,
 		handleSubmit,
@@ -17,6 +21,9 @@ export function CreateOrder({ onCreate, addItem }: CreateOrderProps) {
 	} = useForm<Order>()
 
 	const onSubmit: SubmitHandler<Order> = async data => {
+		data.implementer =
+			currentUser?.last_name + ' ' + currentUser?.first_name
+		console.log(data)
 		await axios
 			.post<Order>(
 				process.env.REACT_APP_BACKEND_API_URL + 'import/',
@@ -39,6 +46,11 @@ export function CreateOrder({ onCreate, addItem }: CreateOrderProps) {
 
 	return (
 		<form onSubmit={handleSubmit(onSubmit)}>
+			{/* <input
+				type='hidden'
+				{...register('implementer')}
+				defaultValue={''}
+			/> */}
 			<label htmlFor='title' className='form-label'>
 				ID сделки
 			</label>

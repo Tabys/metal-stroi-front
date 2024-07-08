@@ -264,9 +264,22 @@ export type DocTableProduct = {
 }
 
 export type User = {
+	first_name: string
+	last_name: string
 	username: string
 	password: string
 	role_id: string
+}
+
+export type UserData = {
+	id: number
+	username: string
+	email: string
+	first_name: string
+	last_name: string
+	roles: string
+	accessToken: string
+	refreshToken: string
 }
 
 export type Login = {

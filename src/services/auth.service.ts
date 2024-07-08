@@ -2,6 +2,8 @@ import api from './api'
 import TokenService from './token.service'
 
 type RegisterProps = {
+	first_name: string
+	last_name: string
 	username: string
 	email: string
 	password: string
@@ -12,8 +14,17 @@ type LoginProps = {
 	password: string
 }
 
-const register = ({ username, email, password, role_id }: RegisterProps) => {
+const register = ({
+	first_name,
+	last_name,
+	username,
+	email,
+	password,
+	role_id,
+}: RegisterProps) => {
 	return api.post('/auth/signup', {
+		first_name,
+		last_name,
 		username,
 		email,
 		password,
