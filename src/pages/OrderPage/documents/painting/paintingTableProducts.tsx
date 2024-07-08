@@ -12,7 +12,7 @@ export function PaintingTableProducts({
 	startIndex,
 }: PaintingTableProductsProps) {
 	return (
-		<tr>
+		<tr className={index === 0 ? 'borderBold' : ''}>
 			<td>{startIndex ? startIndex + index + 1 : 0}</td>
 			<td>{product.name}</td>
 			<td>{product.quantity}</td>

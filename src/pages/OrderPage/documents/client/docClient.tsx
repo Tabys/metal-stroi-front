@@ -156,7 +156,10 @@ export function DocClient() {
 								</tr>
 							))}
 							{orders?.products?.map((product, index) => (
-								<tr key={product.id}>
+								<tr
+									className={index === 0 ? 'borderBold' : ''}
+									key={product.id}
+								>
 									<td>
 										{details?.length
 											? index + 1 + details.length

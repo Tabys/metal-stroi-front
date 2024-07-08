@@ -296,6 +296,18 @@ code {
 	font-weight: 500;
 }
 
+.borderBold {
+	position: relative;
+}
+.borderBold::after {
+	content: '';
+	position: absolute;
+	width: 100%;
+	height: 2px;
+	background-color: #dee2e6;
+	top: 0;
+	left: 0;
+}
 .scrollTop {
 	background-color: #0d6efd;
 	right: 18px;

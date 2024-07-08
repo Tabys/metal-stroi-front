@@ -20,7 +20,7 @@ export function ClientTableProducts({
 	// 	Number(product.metal)
 	// ).toFixed(1)
 	return (
-		<tr>
+		<tr className={index === 0 ? 'borderBold' : ''}>
 			<td>{startIndex ? startIndex + index + 1 : 0}</td>
 			<td>{product.name}</td>
 			<td>-</td>
