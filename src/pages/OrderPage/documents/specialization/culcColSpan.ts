@@ -28,7 +28,7 @@ export function CulcColSpan(total: TotalData) {
 		count -= 1
 	}
 
-	if (Number(total.inset) > 0) {
+	if (Number(total.rolling) > 0) {
 	} else {
 		count -= 1
 	}

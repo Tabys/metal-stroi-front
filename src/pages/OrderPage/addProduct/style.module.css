@@ -19,9 +19,9 @@
 	background-color: #f3f3f3;
 }
 .details .group input {
-	width: 40px;
-	padding: 1px 5px;
-	text-align: center;
+	width: 60px;
+	padding: 1px 1px 1px 7px;
+	text-align: left;
 	font-size: 14px;
 	margin-left: 10px;
 }
