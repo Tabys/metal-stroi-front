@@ -17,6 +17,7 @@ import { ProductList } from './productList/productList'
 import { AddSuffixModal } from '../../components/modal/AddSuffixModal'
 import { CopyOrderModal } from '../../components/modal/CopyOrderModal'
 import { AddDetailSetupModal } from '../../components/modal/AddDetailSetupModal'
+import { ScrollTop } from '../../components/ScrollTop'
 
 export function EmptySetup() {
 	return <p>Элементов нет</p>
@@ -150,6 +151,8 @@ export function OrderPage() {
 								onDel={updateOrders}
 							></DeleteSetups>
 						</div>
+
+						<ScrollTop></ScrollTop>
 					</>
 				) : (
 					<div className='fixed-element'>

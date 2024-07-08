@@ -54,7 +54,7 @@ export function SendPDFForm({ orderId }: SendPdfProps) {
 				</Tooltip>
 			</form>
 			<Alert className='alert-fixed' show={alertShow} variant='success'>
-				Документы и толщины металлов отправлены в BX24
+				Документы и информация отправлены в BX24
 			</Alert>
 		</>
 	)

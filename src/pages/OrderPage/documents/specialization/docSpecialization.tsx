@@ -24,7 +24,6 @@ export function DocSpecialization() {
 	const products = PrepArrProducts(orders)
 	const total = CulcTotalData({ details, products })
 	const colSpan = CulcColSpan(total)
-
 	let deliveryCost: number | null = null
 	if (orders?.delivery! && orders?.delivery > 0) {
 		deliveryCost = orders?.delivery + Math.ceil(total.weight / 500) * 500
@@ -80,7 +79,11 @@ export function DocSpecialization() {
 								)}
 								{Number(total.painting) > 0 ? <th>п/п</th> : ''}
 
-								{Number(total.inset) > 0 ? <th>вальцы</th> : ''}
+								{Number(total.rolling) > 0 ? (
+									<th>вальцы</th>
+								) : (
+									''
+								)}
 
 								{Number(total.drowing) > 0 ? (
 									<th>чертёж</th>
@@ -131,7 +134,7 @@ export function DocSpecialization() {
 									''
 								)}
 
-								{Number(total.inset) > 0 ? (
+								{Number(total.rolling) > 0 ? (
 									<td>{total.inset}</td>
 								) : (
 									''

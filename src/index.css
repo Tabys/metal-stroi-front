@@ -296,6 +296,20 @@ code {
 	font-weight: 500;
 }
 
+.scrollTop {
+	background-color: #0d6efd;
+	right: 18px;
+	bottom: 40px;
+	position: fixed;
+	z-index: 2;
+	cursor: pointer;
+	border-radius: 7px;
+	width: 42px;
+	height: 40px;
+	border: none;
+	color: white;
+}
+
 @media print {
 	#root {
 		margin: 0 !important;
