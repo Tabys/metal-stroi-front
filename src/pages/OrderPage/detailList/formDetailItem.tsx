@@ -152,6 +152,7 @@ export function FormDetailItem({
 									? 0
 									: DetailItem.chop_count
 							}
+							tabIndex={1}
 							type='number'
 							className='form-control'
 							disabled={
@@ -173,6 +174,7 @@ export function FormDetailItem({
 								? 0
 								: DetailItem.chop_cost
 						}
+						tabIndex={2}
 						type='number'
 						step='0.1'
 						onFocus={e =>
@@ -198,6 +200,7 @@ export function FormDetailItem({
 								? 0
 								: DetailItem.bends_count
 						}
+						tabIndex={3}
 						type='number'
 						onFocus={e =>
 							e.target.addEventListener(
@@ -224,6 +227,7 @@ export function FormDetailItem({
 								? 0
 								: DetailItem.bend_cost
 						}
+						tabIndex={4}
 						type='number'
 						onFocus={e =>
 							e.target.addEventListener(
@@ -249,6 +253,7 @@ export function FormDetailItem({
 								? ''
 								: DetailItem.polymer
 						}
+						tabIndex={5}
 						type='text'
 						className='form-control'
 					/>
@@ -264,6 +269,7 @@ export function FormDetailItem({
 								? 0
 								: DetailItem.polymer_price
 						}
+						tabIndex={6}
 						type='number'
 						onFocus={e =>
 							e.target.addEventListener(
@@ -288,6 +294,7 @@ export function FormDetailItem({
 						defaultValue={
 							DetailItem.rolling === null ? 0 : DetailItem.rolling
 						}
+						tabIndex={7}
 						type='number'
 						onFocus={e =>
 							e.target.addEventListener(
@@ -314,6 +321,7 @@ export function FormDetailItem({
 								? 0
 								: DetailItem.drowing
 						}
+						tabIndex={8}
 						type='number'
 						onFocus={e =>
 							e.target.addEventListener(
@@ -340,6 +348,7 @@ export function FormDetailItem({
 								? 0
 								: DetailItem.cut_cost
 						}
+						tabIndex={9}
 						type='number'
 						onFocus={e =>
 							e.target.addEventListener(
