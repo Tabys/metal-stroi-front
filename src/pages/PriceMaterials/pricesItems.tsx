@@ -3,17 +3,29 @@ import axios from 'axios'
 import { MetalType, PriceMetalItems } from '../../models'
 
 type PricesProps = {
-	price: MetalType
+	price: PriceMetalItems
+	allPrices: MetalType[]
 	update: () => void
 }
 
-export function PircesItems({ price, update }: PricesProps) {
-	const { register, handleSubmit } = useForm<MetalType>()
+export function PircesItems({ price, allPrices, update }: PricesProps) {
+	const currentParent = allPrices.find(function (parent) {
+		return parent.id === price.price_metal_category_id
+	})
+	const currentItem = currentParent?.price_metal_items?.find(function (item) {
+		return (
+			item.thickness === price.thickness &&
+			item.gas === 'azote' &&
+			item.table_name !== price.table_name
+		)
+	})
 
-	const onUpdate: SubmitHandler<MetalType> = async data => {
+	const { register, handleSubmit } = useForm<PriceMetalItems>()
+
+	const onUpdate: SubmitHandler<PriceMetalItems> = async data => {
 		// console.log(data)
-		await axios.put<MetalType>(
-			process.env.REACT_APP_BACKEND_API_URL + 'price-metal-category',
+		await axios.put<PriceMetalItems>(
+			process.env.REACT_APP_BACKEND_API_URL + 'price-metal-item',
 			data
 		)
 		update()
@@ -22,14 +34,23 @@ export function PircesItems({ price, update }: PricesProps) {
 	return (
 		<form className='row'>
 			<input type='hidden' defaultValue={price.id} {...register('id')} />
-
-			<div className='p-2'>{price.abbreviation}</div>
-			<div className='p-2'>{price.name}</div>
+			<input
+				type='hidden'
+				defaultValue={currentItem?.id ? currentItem.id : 0}
+				{...register('addid')}
+			/>
+			<div className='p-2'>{price.title}</div>
+			<div className='p-2'>
+				{price.table_name}
+				{currentItem?.table_name
+					? ' | ' + currentItem.table_name
+					: null}
+			</div>
 			<div className='p-2'>
 				<input
 					type='number'
-					defaultValue={price.price}
-					{...register('price', { onBlur: handleSubmit(onUpdate) })}
+					defaultValue={price.cost}
+					{...register('cost', { onBlur: handleSubmit(onUpdate) })}
 					className='form-control'
 				/>
 			</div>
