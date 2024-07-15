@@ -5,9 +5,10 @@ export function PrepArrProducts(orders: Order | undefined) {
 	const prepArrProducts = orders?.products?.map(product => {
 		const arrDetails = product.details
 		const poroductCount = product.quantity
-		let totalPrice = 0
 		let value = 0
+		let totalPrice = 0
 		let totalWeight = 0
+		let detailsWeight = 0
 
 		const details = PrepArrDetils({
 			arrDetails,
@@ -26,6 +27,7 @@ export function PrepArrProducts(orders: Order | undefined) {
 			totalPrice += cost
 			value += (Number(detail.surface) / 1000000) * 2 * detail.quantity
 			totalWeight += Number(detail.weight) * detail.quantity
+			detailsWeight += Number(detail.weight)
 		})
 
 		totalPrice +=
@@ -53,6 +55,7 @@ export function PrepArrProducts(orders: Order | undefined) {
 			value: value,
 			painting_cost: product.painting_cost * product.quantity,
 			weight: totalWeight,
+			detailsWeight: detailsWeight,
 			welding:
 				Number(product.welding_allowance) +
 				Number(product.welding_delivery) +

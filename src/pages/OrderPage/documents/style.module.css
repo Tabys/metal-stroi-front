@@ -51,6 +51,10 @@ h2 {
 .order_inf .order_number:hover {
 	color: #0d6efd;
 }
+.order_inf button {
+	font-size: 12px;
+	margin-bottom: 20px;
+}
 .mini_header {
 	font-weight: bold;
 	font-size: 18px;
@@ -165,6 +169,9 @@ h2 {
 	margin: 0;
 	font-size: 18px;
 }
+.hideTable {
+	display: none;
+}
 
 @media print {
 	.doc,
@@ -173,5 +180,8 @@ h2 {
 		width: 100%;
 		margin: 0;
 		max-width: 1200px;
+	}
+	.order_inf button {
+		display: none;
 	}
 }

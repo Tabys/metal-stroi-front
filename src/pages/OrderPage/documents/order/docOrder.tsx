@@ -10,8 +10,11 @@ import Table from 'react-bootstrap/Table'
 import { TransformDate } from '../../../../components/TransformDate'
 import { CulcTotalData } from '../components/culcTotalData'
 import { MetalTable } from './metalTable'
+import { useState } from 'react'
 
 export function DocOrder() {
+	const [showTable, setShowTable] = useState(true)
+
 	const { id } = useParams()
 	const { orders } = useOrders(id ? id : '')
 	const linkBX = process.env.REACT_APP_BX24_URL + `crm/deal/details/${id}/`
@@ -58,6 +61,14 @@ export function DocOrder() {
 									<strong>Срок изготовления заказа:</strong>{' '}
 									{orders?.production_time} рабочих дней
 								</p>
+								<button
+									className='btn btn-primary'
+									onClick={e => setShowTable(!showTable)}
+								>
+									{showTable === true
+										? 'Скрыть изделия'
+										: 'Показать изделия'}
+								</button>
 							</div>
 						</div>
 					</div>
@@ -101,7 +112,11 @@ export function DocOrder() {
 								''
 							)}
 						</thead>
-						<tbody>
+						<tbody
+							className={
+								showTable === true ? '' : styles.hideTable
+							}
+						>
 							{details?.map((detail, index) => (
 								<OrderTable
 									key={index}
@@ -110,7 +125,8 @@ export function DocOrder() {
 									total={total}
 								/>
 							))}
-
+						</tbody>
+						<tfoot>
 							<tr className={styles.footer}>
 								<td colSpan={3}>Итого</td>
 								<td>{total.quantity}</td>
@@ -128,7 +144,7 @@ export function DocOrder() {
 								{total.rolling > 0 ? <td></td> : ''}
 								<td>{total.weight.toFixed(2)}</td>
 							</tr>
-						</tbody>
+						</tfoot>
 					</Table>
 
 					<Table bordered hover className={styles.metal}>

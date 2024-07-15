@@ -189,6 +189,7 @@ export function DocSpecialization() {
 									)}
 
 									<th>Итого за ед, руб.</th>
+									<th>Вес деталей</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -230,6 +231,7 @@ export function DocSpecialization() {
 										''
 									)}
 									<td>{total.prod_price}</td>
+									<td></td>
 								</tr>
 							</tbody>
 						</Table>
