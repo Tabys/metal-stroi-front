@@ -55,6 +55,7 @@ export function DocSpecialization() {
 								<th colSpan={colSpan}>Стоимость ед., руб</th>
 								<th rowSpan={2}>Итого за ед, руб.</th>
 								<th rowSpan={2}>Кол-во дет, шт</th>
+								<th rowSpan={2}>Вес детали</th>
 							</tr>
 							<tr>
 								{Number(total.cuting_plasma) > 0 ? (
@@ -148,6 +149,7 @@ export function DocSpecialization() {
 								<td>{total.metal}</td>
 								<td>{total.price - total.prod_price}</td>
 								<td>{total.quantity - total.prod_quantity}</td>
+								<td></td>
 							</tr>
 						</tbody>
 					</Table>
