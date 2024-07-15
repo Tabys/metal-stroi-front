@@ -40,6 +40,7 @@ export function SpecProductTable({
 				''
 			)}
 			<td>{(product.totalPrice / product.quantity).toFixed(1)}</td>
+			<td>{Number(product.detailsWeight).toFixed(3)}</td>
 		</tr>
 	)
 }
