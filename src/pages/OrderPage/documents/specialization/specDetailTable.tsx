@@ -76,6 +76,7 @@ export function SpecDetailTable({
 			<td>{(Number(detail.metal) / detail.quantity).toFixed(1)}</td>
 			<td>{(total_price / detail.quantity).toFixed(1)}</td>
 			<td>{detail.quantity}</td>
+			<td>{detail.weight}</td>
 		</tr>
 	)
 }
