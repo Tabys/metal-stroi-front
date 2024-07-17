@@ -23,15 +23,8 @@ export function DocClient() {
 		orders,
 	})
 	const products = PrepArrProducts(orders)
-	const total = CulcTotalData({ details, products })
+	const total = CulcTotalData({ details, products, orders })
 	// console.log(details?.length)
-
-	let deliveryCost: number | null = null
-	let oneKgDelivery: number = 0
-	if (orders?.delivery! && orders?.delivery > 0) {
-		deliveryCost = orders?.delivery + Math.ceil(total.weight / 500) * 500
-		oneKgDelivery = Number(deliveryCost) / total.weight
-	}
 
 	return (
 		<>
@@ -96,7 +89,7 @@ export function DocClient() {
 									key={detail.id}
 									detail={detail}
 									index={index}
-									delivery={oneKgDelivery}
+									delivery={total.oneKgDelivery}
 								/>
 							))}
 							{products?.map((product, index) => (
@@ -104,8 +97,8 @@ export function DocClient() {
 									key={product.id}
 									index={index}
 									product={product}
-									delivery={oneKgDelivery}
 									startIndex={details?.length}
+									delivery={total.oneKgDelivery}
 								/>
 							))}
 							<tr>
@@ -113,11 +106,7 @@ export function DocClient() {
 									<strong>Итого стоимость по заказу</strong>
 								</td>
 								<td>
-									<strong>
-										{deliveryCost
-											? total.price + deliveryCost
-											: total.price}
-									</strong>
+									<strong>{total.price}</strong>
 								</td>
 							</tr>
 						</tbody>
@@ -193,12 +182,7 @@ export function DocClient() {
 									<strong>Сумма:</strong>
 								</td>
 								<td colSpan={2}>
-									<strong>
-										{deliveryCost
-											? total.price + deliveryCost
-											: total.price}{' '}
-										руб
-									</strong>
+									<strong>{total.price} руб</strong>
 								</td>
 							</tr>
 						</tbody>

@@ -22,12 +22,8 @@ export function DocSpecialization() {
 		orders,
 	})
 	const products = PrepArrProducts(orders)
-	const total = CulcTotalData({ details, products })
+	const total = CulcTotalData({ details, products, orders })
 	const colSpan = CulcColSpan(total)
-	let deliveryCost: number | null = null
-	if (orders?.delivery! && orders?.delivery > 0) {
-		deliveryCost = orders?.delivery + Math.ceil(total.weight / 500) * 500
-	}
 
 	return (
 		<>
@@ -102,6 +98,7 @@ export function DocSpecialization() {
 									detail={detail}
 									index={index}
 									total={total}
+									delivery={total.oneKgDelivery}
 								/>
 							))}
 
@@ -110,44 +107,44 @@ export function DocSpecialization() {
 								<td></td>
 								<td></td>
 								{Number(total.cuting_plasma) > 0 ? (
-									<td>{total.cuting_plasma}</td>
+									<td>{total.cuting_plasma.toFixed(2)}</td>
 								) : (
 									''
 								)}
 								{Number(total.cuting_laser) > 0 ? (
-									<td>{total.cuting_laser}</td>
+									<td>{total.cuting_laser.toFixed(2)}</td>
 								) : (
 									''
 								)}
 								{Number(total.choping) > 0 ? (
-									<td>{total.choping}</td>
+									<td>{total.choping.toFixed(2)}</td>
 								) : (
 									''
 								)}
 								{Number(total.bending) > 0 ? (
-									<td>{total.bending}</td>
+									<td>{total.bending.toFixed(2)}</td>
 								) : (
 									''
 								)}
 								{Number(total.painting) > 0 ? (
-									<td>{total.painting}</td>
+									<td>{total.painting.toFixed(2)}</td>
 								) : (
 									''
 								)}
 
 								{Number(total.rolling) > 0 ? (
-									<td>{total.inset}</td>
+									<td>{total.inset.toFixed(2)}</td>
 								) : (
 									''
 								)}
 
 								{Number(total.drowing) > 0 ? (
-									<td>{total.drowing}</td>
+									<td>{total.drowing.toFixed(2)}</td>
 								) : (
 									''
 								)}
-								<td>{total.metal}</td>
-								<td>{total.price - total.prod_price}</td>
+								<td>{total.metal.toFixed(2)}</td>
+								<td></td>
 								<td>{total.quantity - total.prod_quantity}</td>
 								<td></td>
 							</tr>
@@ -199,6 +196,7 @@ export function DocSpecialization() {
 										product={product}
 										total={total}
 										index={index}
+										delivery={total.oneKgDelivery}
 									/>
 								))}
 								<tr className={styles.footer}>
@@ -206,31 +204,41 @@ export function DocSpecialization() {
 									<td></td>
 									<td>{total.prod_quantity}</td>
 									{total.prod_welding > 0 ? (
-										<td>{total.prod_welding}</td>
+										<td>{total.prod_welding.toFixed(2)}</td>
 									) : (
 										''
 									)}
 									{total.prod_painting > 0 ? (
-										<td>{total.prod_painting}</td>
+										<td>
+											{total.prod_painting.toFixed(2)}
+										</td>
 									) : (
 										''
 									)}
 									{total.prod_turning_works > 0 ? (
-										<td>{total.prod_turning_works}</td>
+										<td>
+											{total.prod_turning_works.toFixed(
+												2
+											)}
+										</td>
 									) : (
 										''
 									)}
 									{total.prod_smithy > 0 ? (
-										<td>{total.prod_smithy}</td>
+										<td>{total.prod_smithy.toFixed(2)}</td>
 									) : (
 										''
 									)}
 									{total.prod_design_department > 0 ? (
-										<td>{total.prod_design_department}</td>
+										<td>
+											{total.prod_design_department.toFixed(
+												2
+											)}
+										</td>
 									) : (
 										''
 									)}
-									<td>{total.prod_price}</td>
+									<td></td>
 									<td></td>
 								</tr>
 							</tbody>
@@ -240,15 +248,7 @@ export function DocSpecialization() {
 					)}
 					<div className={styles.total}>
 						<p>
-							Стоимость доставки:{' '}
-							<strong>
-								{deliveryCost
-									? deliveryCost?.toFixed(2)
-									: '0.00'}
-							</strong>
-						</p>
-						<p>
-							Итого: <strong>{total.price.toFixed(2)}</strong>
+							Итого: <strong>{total.price}</strong>
 						</p>
 					</div>
 				</div>

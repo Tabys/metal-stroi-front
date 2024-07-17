@@ -314,14 +314,14 @@ export type TotalData = {
 	bend: number
 	choping: number
 	bending: number
-	metal: string
+	metal: number
 	time: number
 	length: number
 	inset: number
-	cuting: string
-	cuting_laser: string
-	cuting_plasma: string
-	painting: string
+	cuting: number
+	cuting_laser: number
+	cuting_plasma: number
+	painting: number
 	rolling: number
 	drowing: number
 	prod_painting: number
