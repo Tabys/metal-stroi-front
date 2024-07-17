@@ -4,12 +4,14 @@ type SpecProductTableProps = {
 	product: DocTableProductSpec
 	total: TotalData
 	index: number
+	delivery: number
 }
 
 export function SpecProductTable({
 	product,
 	total,
 	index,
+	delivery,
 }: SpecProductTableProps) {
 	// const total_price =
 	// 	Number(detail.bending) +
@@ -25,21 +27,38 @@ export function SpecProductTable({
 			<td>{index + 1}</td>
 			<td>{product.name}</td>
 			<td>{product.quantity}</td>
-			{total.prod_welding > 0 ? <td>{product.welding}</td> : ''}
-			{total.prod_painting > 0 ? <td>{product.painting_cost}</td> : ''}
+			{total.prod_welding > 0 ? (
+				<td>{Number(product.welding).toFixed(2)}</td>
+			) : (
+				''
+			)}
+			{total.prod_painting > 0 ? (
+				<td>{Number(product.painting_cost).toFixed(2)}</td>
+			) : (
+				''
+			)}
 			{total.prod_turning_works > 0 ? (
-				<td>{product.turning_works}</td>
+				<td>{Number(product.turning_works).toFixed(2)}</td>
 			) : (
 				''
 			)}
 
-			{total.prod_smithy > 0 ? <td>{product.smithy}</td> : ''}
-			{total.prod_design_department > 0 ? (
-				<td>{product.design_department}</td>
+			{total.prod_smithy > 0 ? (
+				<td>{Number(product.smithy).toFixed(2)}</td>
 			) : (
 				''
 			)}
-			<td>{(product.totalPrice / product.quantity).toFixed(1)}</td>
+			{total.prod_design_department > 0 ? (
+				<td>{Number(product.design_department).toFixed(2)}</td>
+			) : (
+				''
+			)}
+			<td>
+				{(
+					product.totalPrice / product.quantity +
+					delivery * Number(product.detailsWeight)
+				).toFixed(2)}
+			</td>
 			<td>{Number(product.detailsWeight).toFixed(3)}</td>
 		</tr>
 	)

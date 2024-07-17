@@ -7,7 +7,7 @@ type ClientTableProps = {
 }
 
 export function ClientTable({ detail, index, delivery }: ClientTableProps) {
-	const total_price = (
+	const total_price =
 		Number(detail.bending) +
 		Number(detail.choping) +
 		Number(detail.cut_cost) +
@@ -16,7 +16,7 @@ export function ClientTable({ detail, index, delivery }: ClientTableProps) {
 		Number(detail.rolling) +
 		(detail.drowing ? detail.drowing : 0) +
 		delivery * Number(detail.weight) * detail.quantity
-	).toFixed(1)
+
 	return (
 		<tr>
 			<td>{index + 1}</td>

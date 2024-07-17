@@ -1,9 +1,14 @@
-import { DocTableDetail, DocTableProductSpec } from '../../../../models'
+import { DocTableDetail, DocTableProductSpec, Order } from '../../../../models'
 type CulcTotalDataProps = {
 	details: DocTableDetail[] | undefined
 	products?: DocTableProductSpec[] | undefined
+	orders?: Order
 }
-export function CulcTotalData({ details, products }: CulcTotalDataProps) {
+export function CulcTotalData({
+	details,
+	products,
+	orders,
+}: CulcTotalDataProps) {
 	let total_price = 0
 	let total_quantity = 0
 	let total_weight = 0
@@ -31,6 +36,23 @@ export function CulcTotalData({ details, products }: CulcTotalDataProps) {
 	let total_prod_price = 0
 	let total_prod_quantity = 0
 
+	// Total Weight
+	details?.forEach(detail => {
+		total_weight += Number(detail.weight) * Number(detail.quantity)
+	})
+	products?.forEach(product => {
+		total_weight += product.weight ? product.weight * product.quantity : 0
+	})
+
+	// Delivery
+	let deliveryCost: number | null = null
+	let oneKgDelivery: number = 0
+
+	if (orders?.delivery! && orders?.delivery > 0) {
+		deliveryCost = orders?.delivery + Math.ceil(total_weight / 500) * 500
+		oneKgDelivery = Number(deliveryCost) / total_weight
+	}
+
 	details?.forEach(detail => {
 		total_price += Math.ceil(
 			Number(detail.bending) +
@@ -38,10 +60,13 @@ export function CulcTotalData({ details, products }: CulcTotalDataProps) {
 				Number(detail.cut_cost) +
 				Number(detail.metal) +
 				Number(detail.painting) +
-				Number(detail.drowing)
+				Number(detail.rolling) +
+				Number(detail.drowing) +
+				oneKgDelivery * Number(detail.weight) * detail.quantity
 		)
+
 		total_quantity += detail.quantity
-		total_weight += Number(detail.weight) * Number(detail.quantity)
+		// total_weight += Number(detail.weight) * Number(detail.quantity)
 		total_chop += Number(detail.chop_count) * Number(detail.quantity)
 		total_bend += Number(detail.bend_count) * Number(detail.quantity)
 		total_choping += Number(detail.choping)
@@ -64,13 +89,23 @@ export function CulcTotalData({ details, products }: CulcTotalDataProps) {
 		total_drowing += detail.drowing ? detail.drowing : 0
 	})
 	products?.forEach(product => {
-		total_price += Math.ceil(product.totalPrice)
+		total_price += Math.ceil(
+			product.totalPrice +
+				oneKgDelivery *
+					Number(product.weight) *
+					Number(product.quantity)
+		)
 		total_quantity += product.quantity
-		total_weight += product.weight ? product.weight * product.quantity : 0
+		// total_weight += product.weight ? product.weight * product.quantity : 0
 
 		// Only Products
 		total_prod_quantity += Number(product.quantity)
-		total_prod_price += Math.ceil(product.totalPrice)
+		total_prod_price += Math.ceil(
+			product.totalPrice +
+				oneKgDelivery *
+					Number(product.weight) *
+					Number(product.quantity)
+		)
 		total_prod_painting += product.painting_cost
 			? Number(product.painting_cost) * Number(product.quantity)
 			: 0
@@ -96,14 +131,14 @@ export function CulcTotalData({ details, products }: CulcTotalDataProps) {
 		bend: total_bend,
 		choping: total_choping,
 		bending: total_bending,
-		metal: total_metal.toFixed(1),
+		metal: total_metal,
 		time: total_time,
 		length: total_length,
 		inset: total_inset,
-		cuting: total_cuting.toFixed(1),
-		cuting_laser: total_cuting_laser.toFixed(1),
-		cuting_plasma: total_cuting_plasma.toFixed(1),
-		painting: total_painting.toFixed(3),
+		cuting: total_cuting,
+		cuting_laser: total_cuting_laser,
+		cuting_plasma: total_cuting_plasma,
+		painting: total_painting,
 		rolling: total_rolling,
 		drowing: total_drowing,
 
@@ -114,6 +149,8 @@ export function CulcTotalData({ details, products }: CulcTotalDataProps) {
 		prod_design_department: total_prod_design_department,
 		prod_price: total_prod_price,
 		prod_quantity: total_prod_quantity,
+
+		oneKgDelivery: oneKgDelivery,
 	}
 
 	return total_data
