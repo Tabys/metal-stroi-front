@@ -1,26 +1,43 @@
 import { useFormContext } from 'react-hook-form'
+import { Detail } from '../../../../models'
 
 type SelectProps = {
-	arrOptions: any[]
-	arrOptionsText?: any[]
+	detailData: Detail
 	selected: any
 	name: string
 	disabled?: boolean
 	onSubmit: () => void
 }
 
-export function FormSelect({
-	arrOptions,
-	arrOptionsText,
+export function FormSelectRoll({
+	detailData,
 	selected,
 	name,
 	disabled,
 	onSubmit,
 }: SelectProps) {
 	const { register, setValue } = useFormContext()
+	let arrOptions: string[] = []
+	let arrOptionsText: string[] = []
+	switch (detailData.material) {
+		case 'St37':
+		case '09Г2С':
+			arrOptions = ['', 'rolling_roll', 'rolling_cone']
+			arrOptionsText = ['', 'Прокат', 'Конус']
+			break
+		case 'AlMg3':
+			arrOptions = ['', 'rolling_roll']
+			arrOptionsText = ['', 'Прокат']
+			break
+		case '1.4301':
+		case 'aisi430':
+			arrOptions = ['', 'rolling_roll']
+			arrOptionsText = ['', 'Прокат']
+			break
+	}
 
 	const options = arrOptions.map((value, index) => {
-		let text = ''
+		let text: string = ''
 		if (arrOptionsText) {
 			text = arrOptionsText[index]
 		} else {

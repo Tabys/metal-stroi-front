@@ -4,30 +4,31 @@ import { Detail, Order } from '../../../models'
 import styles from './style.module.css'
 import { UpdCutInset } from './updPrices/updCutInset'
 import { UpdBandChop } from './updPrices/updBendChop'
-import { UpdFoodSteel } from './updPrices/updFoodSteel'
-import { FormCheckbox } from './formElements/formCheckbox'
 import { FormRadio } from './formElements/formRadio'
 import { useEffect } from 'react'
 import Tooltip from '../../../components/Tooltip'
 import { extraPrice } from './updPrices/extraPriceMetal'
+import { UpdRollings } from './updPrices/updRollings'
+import { FormSelectRoll } from './formElements/formSelectRoll'
 
 type FormDetailItemProps = {
 	orderData: Order
 	DetailItem: Detail
 	index: number
 	updDetail: () => void
+	rollAlert: () => void
 }
 
 export function FormDetailItem({
 	DetailItem,
 	orderData,
 	index,
+	rollAlert,
 	updDetail,
 }: FormDetailItemProps) {
 	const methods = useForm<Detail>()
 
 	const extraPriceMetal = extraPrice(orderData)
-
 	// Change METAL COST input value during change METAL MARKAP
 	useEffect(() => {
 		methods.reset()
@@ -59,20 +60,20 @@ export function FormDetailItem({
 		await updDetail()
 	}
 
-	const onSubmitFoodSteel: SubmitHandler<Detail> = async data => {
+	const onSubmitRolling: SubmitHandler<Detail> = async data => {
 		delete data.metal_cost
-		data.markup = orderData.markup
 		await axios.put<Detail>(
 			process.env.REACT_APP_BACKEND_API_URL + 'detail/',
-			await UpdFoodSteel(data)
+			await UpdRollings(data)
 		)
-		await methods.setValue(
-			'metal_cost',
-			Math.round(
-				Number(data.metal_cost) +
-					(Number(data.metal_cost) * orderData.markup) / 100
-			)
-		)
+
+		await methods.setValue('rolling', data.rolling)
+		if (
+			data.rolling_type === 'rolling_cone' &&
+			Number(DetailItem.thickness) === 2
+		) {
+			await rollAlert()
+		}
 		await updDetail()
 	}
 
@@ -286,11 +287,25 @@ export function FormDetailItem({
 					/>
 				</div>
 				<div className={styles.line}>
+					<FormSelectRoll
+						detailData={DetailItem}
+						selected={DetailItem.rolling_type}
+						name='rolling_type'
+						disabled={
+							Number(DetailItem.thickness) > 5 ? true : false
+						}
+						onSubmit={methods.handleSubmit(onSubmitRolling)}
+					/>
+				</div>
+				<div className={styles.line}>
 					<input
 						{...methods.register('rolling', {
 							onBlur: methods.handleSubmit(onSubmitPrice),
 							valueAsNumber: true,
 						})}
+						disabled={
+							Number(DetailItem.thickness) > 5 ? true : false
+						}
 						defaultValue={
 							DetailItem.rolling === null ? 0 : DetailItem.rolling
 						}

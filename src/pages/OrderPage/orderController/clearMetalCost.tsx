@@ -27,7 +27,7 @@ export function ClearMetalCost({
 				}
 			)
 			.then(result => {
-				console.log(result)
+				// console.log(result)
 				update()
 			})
 			.catch(err => {
