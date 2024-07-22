@@ -45,6 +45,7 @@ export type Detail = {
 	polymer_price: number
 	food_steel: boolean
 	rolling: string
+	rolling_type?: string
 	material?: string
 	thickness?: string
 	real_thickness: number
@@ -187,6 +188,7 @@ export type PriceServiceCategory = {
 	title: string
 	short_title: string
 	price_services_items?: PricesServiceItem[]
+	price_services_rollings?: PricesServiceRolling[]
 }
 
 export type PricesServiceItem = {
@@ -195,6 +197,14 @@ export type PricesServiceItem = {
 	metal_thickness_max?: number
 	cost?: number
 	cut_cost?: number
+}
+
+export type PricesServiceRolling = {
+	id: number
+	type_metal?: string
+	metal_thickness?: number
+	cost?: number
+	min_cost?: number
 }
 
 export type NeededMetal = {

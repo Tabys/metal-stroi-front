@@ -87,9 +87,6 @@ export async function UpdCutInset(dataDetail: Detail) {
 				Number(n.metal_thickness_max) >= Number(THICKNESS)
 			)
 		})
-		// console.log('PLASMA')
-		// console.log(THICKNESS)
-		// console.log(PLASM_CUT)
 	} else {
 		if (GAS?.gas === 'oxygen') {
 			cuting = LASER_CUT_OXIGEN?.price_services_items?.find(function (n) {
@@ -98,7 +95,7 @@ export async function UpdCutInset(dataDetail: Detail) {
 					Number(n.metal_thickness_max) >= Number(THICKNESS)
 				)
 			})
-			console.log('OXYGEN')
+			// console.log('OXYGEN')
 		} else {
 			cuting = LASER_CUT_AZOTE?.price_services_items?.find(function (n) {
 				return (
@@ -106,7 +103,7 @@ export async function UpdCutInset(dataDetail: Detail) {
 					Number(n.metal_thickness_max) >= Number(THICKNESS)
 				)
 			})
-			console.log('AZOTE')
+			// console.log('AZOTE')
 		}
 	}
 

@@ -70,7 +70,7 @@ export function FormOrderController({ orderData, updated }: formOCProps) {
 								selected={orderData.markup}
 								arrOptions={[0, 2, 7, 10]}
 								onSubmit={methods.handleSubmit(onSubmit)}
-								user_role={Role()}
+								disabled={Role() === 'ROLE_USER' ? true : false}
 							/>
 						</Form.Group>
 					</form>

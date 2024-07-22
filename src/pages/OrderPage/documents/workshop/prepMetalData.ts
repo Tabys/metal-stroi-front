@@ -53,7 +53,6 @@ export function prepMetalData({ setups, materials }: prepMetalDataProps) {
 			suffixes.sort((a, b) => a.localeCompare(b))
 		})
 		const strSuffixes = suffixes.join(', ')
-		console.log(suffixes)
 		return {
 			material: setup?.material,
 			table_number: setup.table_number,

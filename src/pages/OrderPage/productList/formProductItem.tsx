@@ -24,7 +24,6 @@ export function FormProductItem({
 	setError,
 }: FormProductItemProps) {
 	const methods = useForm<Product>()
-	console.log(productItem)
 	// Change METAL COST input value during change METAL MARKAP
 	useEffect(() => {
 		methods.reset()
