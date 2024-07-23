@@ -160,7 +160,7 @@ export type MetalType = {
 
 export type PriceMetalItems = {
 	id: number
-	thickness?: string
+	thickness: string
 	title?: string
 	table_name?: string
 	gas: string

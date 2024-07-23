@@ -24,6 +24,11 @@ export function PricesWrapper() {
 			return item.gas !== 'azote'
 		}),
 	}))
+	clearPrice.forEach(prices => {
+		prices.price_metal_items?.sort((a, b) =>
+			Number(a.thickness) > Number(b.thickness) ? 1 : -1
+		)
+	})
 	// console.log(clearPrice)
 
 	return (
