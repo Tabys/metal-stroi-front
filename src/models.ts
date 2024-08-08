@@ -5,6 +5,7 @@ export type Order = {
 	title?: string
 	date_сreate?: string // date
 	delivery: number
+	pallets: number
 	markup: number
 	customer?: string
 	production_time?: number
