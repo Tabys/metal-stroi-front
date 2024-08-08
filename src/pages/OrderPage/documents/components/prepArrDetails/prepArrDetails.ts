@@ -60,6 +60,26 @@ export function PrepArrDetils({
 				const material = getMaterialName(detail.material)
 				const extraPriceMetal = getExtraPriceMetal(orders)
 				const suffixes = getSuffixes({ order: orders, detail })
+				const metal_cost =
+					Number(detail.metal_cost) !== 0
+						? (
+								(availableDetail *
+									Number(detail.weight) *
+									(Number(metal?.metal_sheets) *
+										Number(
+											Math.round(
+												Number(detail.metal_cost) +
+													extraPriceMetal +
+													(Number(detail.metal_cost) *
+														Number(
+															orders?.markup
+														)) /
+														100
+											)
+										))) /
+								Number(metal?.weight_metal)
+						  ).toFixed(2)
+						: '0'
 
 				return {
 					id: detail.id,
@@ -89,21 +109,7 @@ export function PrepArrDetils({
 						Number(detail.bend_cost) *
 						Number(availableDetail)
 					).toFixed(1),
-					metal: (
-						(availableDetail *
-							Number(detail.weight) *
-							(Number(metal?.metal_sheets) *
-								Number(
-									Math.round(
-										Number(detail.metal_cost) +
-											extraPriceMetal +
-											(Number(detail.metal_cost) *
-												Number(orders?.markup)) /
-												100
-									)
-								))) /
-						Number(metal?.weight_metal)
-					).toFixed(2),
+					metal: metal_cost,
 					weight: detail.weight,
 					surface: detail.serface,
 					cut_type: detail.cut_type,
