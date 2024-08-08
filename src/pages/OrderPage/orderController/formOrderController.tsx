@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Order } from '../../../models'
+import { DocTableDetail, Order } from '../../../models'
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form'
 import Form from 'react-bootstrap/Form'
 import { FormSelect } from '../detailList/formElements/formSelect'
@@ -8,6 +8,9 @@ import { ClearMetalCost } from './clearMetalCost'
 import { UpdMetalCost } from './updMetalCost'
 import { useState } from 'react'
 import { Alert } from 'react-bootstrap'
+import { CreateDetailGroupList } from '../detailList/createDetailGroupList'
+import { PrepArrDetils } from '../documents/components/prepArrDetails/prepArrDetails'
+import { CulcTotalData } from '../documents/components/culcTotalData'
 
 type formOCProps = {
 	orderData: Order
@@ -26,8 +29,32 @@ export function FormOrderController({ orderData, updated }: formOCProps) {
 
 	const methods = useForm<Order>()
 
+	const onSubmitDelivery: SubmitHandler<Order> = async data => {
+		if (data.delivery !== 0) {
+			const arrDetails = orderData
+				? CreateDetailGroupList(orderData)
+				: undefined
+			const details: DocTableDetail[] | undefined = PrepArrDetils({
+				arrDetails,
+				orders: orderData,
+				full: true,
+			})
+			const total = CulcTotalData({ details })
+			data.pallets = Math.ceil(total.weight / 500)
+		} else {
+			data.pallets = 0
+		}
+
+		await axios.put<Order>(
+			process.env.REACT_APP_BACKEND_API_URL + 'orders/',
+			data
+		)
+		methods.setValue('pallets', data.pallets)
+		updated()
+		openAlert()
+	}
+
 	const onSubmit: SubmitHandler<Order> = async data => {
-		// console.log(data)
 		await axios.put<Order>(
 			process.env.REACT_APP_BACKEND_API_URL + 'orders/',
 			data
@@ -56,10 +83,23 @@ export function FormOrderController({ orderData, updated }: formOCProps) {
 							<Form.Label>Доставка:</Form.Label>
 							<input
 								{...methods.register('delivery', {
-									onBlur: methods.handleSubmit(onSubmit),
+									onBlur: methods.handleSubmit(
+										onSubmitDelivery
+									),
 									valueAsNumber: true,
 								})}
 								defaultValue={orderData.delivery}
+								className='form-control delivery'
+							/>
+						</Form.Group>
+						<Form.Group>
+							<Form.Label>Поддоны:</Form.Label>
+							<input
+								{...methods.register('pallets', {
+									onBlur: methods.handleSubmit(onSubmit),
+									valueAsNumber: true,
+								})}
+								defaultValue={orderData.pallets}
 								className='form-control delivery'
 							/>
 						</Form.Group>

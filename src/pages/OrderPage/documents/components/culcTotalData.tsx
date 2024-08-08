@@ -49,7 +49,7 @@ export function CulcTotalData({
 	let oneKgDelivery: number = 0
 
 	if (orders?.delivery! && orders?.delivery > 0) {
-		deliveryCost = orders?.delivery + Math.ceil(total_weight / 500) * 500
+		deliveryCost = orders?.delivery + orders?.pallets * 500
 		oneKgDelivery = Number(deliveryCost) / total_weight
 	}
 
