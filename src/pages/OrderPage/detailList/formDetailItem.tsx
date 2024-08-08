@@ -17,6 +17,7 @@ type FormDetailItemProps = {
 	index: number
 	updDetail: () => void
 	rollAlert: () => void
+	metalCostAlert: () => void
 }
 
 export function FormDetailItem({
@@ -25,6 +26,7 @@ export function FormDetailItem({
 	index,
 	rollAlert,
 	updDetail,
+	metalCostAlert,
 }: FormDetailItemProps) {
 	const methods = useForm<Detail>()
 
@@ -88,15 +90,25 @@ export function FormDetailItem({
 	}
 
 	const onSubmitPriceMetal: SubmitHandler<Detail> = async data => {
-		// console.log(data)
-		await axios.put<Detail>(
-			process.env.REACT_APP_BACKEND_API_URL + 'detail/',
-			{
-				id: data.id,
-				metal_cost: data.metal_cost,
-			}
+		const old_metal_cost = Math.round(
+			Number(DetailItem.metal_cost) +
+				extraPriceMetal +
+				(Number(DetailItem.metal_cost) * orderData.markup) / 100
 		)
-		await updDetail()
+		if (old_metal_cost < Number(data.metal_cost)) {
+			// console.log(data)
+			await axios.put<Detail>(
+				process.env.REACT_APP_BACKEND_API_URL + 'detail/',
+				{
+					id: data.id,
+					metal_cost: data.metal_cost,
+				}
+			)
+			await updDetail()
+		} else {
+			await metalCostAlert()
+			await methods.setValue('metal_cost', old_metal_cost)
+		}
 	}
 
 	return (

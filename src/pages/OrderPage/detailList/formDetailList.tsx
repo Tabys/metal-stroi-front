@@ -11,19 +11,27 @@ interface FormProps {
 export function FormDetailList({ details, orderData }: FormProps) {
 	const [alertShow, setAlertShow] = useState(false)
 	const [rollAlertShow, setRollAlertShow] = useState(false)
+	const [metalAlertShow, setMetalAlertShow] = useState(false)
 
-	const openRollAlert = (roll?: boolean) => {
+	const openRollAlert = () => {
 		setRollAlertShow(true)
 		setTimeout(() => {
 			setRollAlertShow(false)
 		}, 2000)
 	}
 
-	const openAlert = (roll?: boolean) => {
+	const openAlert = () => {
 		setAlertShow(true)
 		setTimeout(() => {
 			setAlertShow(false)
 		}, 1000)
+	}
+
+	const openMetalAlert = () => {
+		setMetalAlertShow(true)
+		setTimeout(() => {
+			setMetalAlertShow(false)
+		}, 2000)
 	}
 
 	return (
@@ -32,6 +40,7 @@ export function FormDetailList({ details, orderData }: FormProps) {
 				<FormDetailItem
 					updDetail={openAlert}
 					rollAlert={openRollAlert}
+					metalCostAlert={openMetalAlert}
 					orderData={orderData}
 					DetailItem={item}
 					index={index}
@@ -47,6 +56,13 @@ export function FormDetailList({ details, orderData }: FormProps) {
 				variant='warning'
 			>
 				Уточните техническую возможность вальцевания!
+			</Alert>
+			<Alert
+				className='alert-fixed'
+				show={metalAlertShow}
+				variant='danger'
+			>
+				Стоимость металла не должна быть меньше установленной!
 			</Alert>
 		</>
 	)
