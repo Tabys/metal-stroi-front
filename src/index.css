@@ -309,17 +309,17 @@ code {
 	left: 0;
 }
 .scrollTop {
-	background-color: #0d6efd;
-	right: 18px;
-	bottom: 40px;
-	position: fixed;
-	z-index: 2;
-	cursor: pointer;
-	border-radius: 7px;
-	width: 42px;
-	height: 40px;
-	border: none;
-	color: white;
+	background-color: #0d6efd !important;
+	right: 18px !important;
+	bottom: 40px !important;
+	position: fixed !important;
+	z-index: 2 !important;
+	cursor: pointer !important;
+	border-radius: 7px !important;
+	width: 42px !important;
+	height: 40px !important;
+	border: none !important;
+	color: white !important;
 }
 
 @media print {
