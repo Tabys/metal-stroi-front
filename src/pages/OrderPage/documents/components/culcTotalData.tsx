@@ -84,7 +84,7 @@ export function CulcTotalData({
 		total_cuting_plasma +=
 			detail.cut_type === 'plasma' ? Number(detail.cut_cost) : 0
 		total_painting += Number(detail.painting)
-		total_rolling += detail.rolling ? 1 : 0
+		total_rolling += detail.rolling ? detail.rolling : 0
 		total_drowing += detail.drowing ? detail.drowing : 0
 	})
 	products?.forEach(product => {

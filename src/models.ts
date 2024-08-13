@@ -44,6 +44,8 @@ export type Detail = {
 	bends_count?: number
 	polymer: string
 	polymer_price: number
+	polymer_base_price: number
+	polymer_options: JSON[]
 	food_steel: boolean
 	rolling: string
 	rolling_type?: string
@@ -190,6 +192,7 @@ export type PriceServiceCategory = {
 	short_title: string
 	price_services_items?: PricesServiceItem[]
 	price_services_rollings?: PricesServiceRolling[]
+	price_services_paintings?: PricesServicePainting[]
 }
 
 export type PricesServiceItem = {
@@ -206,6 +209,11 @@ export type PricesServiceRolling = {
 	metal_thickness?: number
 	cost?: number
 	min_cost?: number
+}
+export type PricesServicePainting = {
+	id: number
+	series: string
+	cost: number
 }
 
 export type NeededMetal = {

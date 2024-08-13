@@ -38,6 +38,7 @@ export function useServicePrices() {
 	prices.forEach(item => {
 		item?.price_services_items?.sort((a, b) => (a.id > b.id ? 1 : -1))
 		item?.price_services_rollings?.sort((a, b) => (a.id > b.id ? 1 : -1))
+		item?.price_services_paintings?.sort((a, b) => (a.id > b.id ? 1 : -1))
 	})
 
 	return { prices, error, loading, addPrice }
