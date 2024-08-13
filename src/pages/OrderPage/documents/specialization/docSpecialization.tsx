@@ -133,7 +133,7 @@ export function DocSpecialization() {
 								)}
 
 								{Number(total.rolling) > 0 ? (
-									<td>{total.inset.toFixed(2)}</td>
+									<td>{total.rolling.toFixed(2)}</td>
 								) : (
 									''
 								)}

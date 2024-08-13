@@ -1,15 +1,23 @@
 import axios from 'axios'
-import { useForm, SubmitHandler, FormProvider } from 'react-hook-form'
+import {
+	useForm,
+	SubmitHandler,
+	FormProvider,
+	Controller,
+} from 'react-hook-form'
 import { Detail, Order } from '../../../models'
 import styles from './style.module.css'
 import { UpdCutInset } from './updPrices/updCutInset'
 import { UpdBandChop } from './updPrices/updBendChop'
 import { FormRadio } from './formElements/formRadio'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Tooltip from '../../../components/Tooltip'
 import { extraPrice } from './updPrices/extraPriceMetal'
 import { UpdRollings } from './updPrices/updRollings'
 import { FormSelectRoll } from './formElements/formSelectRoll'
+import { UpdPainting } from './updPrices/updPainting'
+import Select from 'react-select'
+import { UpdPaintingOption } from './updPrices/updPaintingOption'
 
 type FormDetailItemProps = {
 	orderData: Order
@@ -30,14 +38,24 @@ export function FormDetailItem({
 }: FormDetailItemProps) {
 	const methods = useForm<Detail>()
 
+	const [isDisabled, setIsDisabled] = useState(
+		DetailItem.polymer_price === null || DetailItem.polymer_price == 0
+			? true
+			: false
+	)
+	const options: any[] = [
+		{ value: 'shagreen', label: 'Шагрень' },
+		{ value: 'matte', label: 'Матовые' },
+		{ value: 'lacquer', label: 'Лак' },
+		{ value: 'big', label: 'Габаритные изделия' },
+	]
+
 	const extraPriceMetal = extraPrice(orderData)
 	// Change METAL COST input value during change METAL MARKAP
 	useEffect(() => {
 		methods.reset()
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [orderData])
-
-	// console.log(orderData)
 
 	const onSubmitBendChop: SubmitHandler<Detail> = async data => {
 		delete data.metal_cost
@@ -76,6 +94,53 @@ export function FormDetailItem({
 		) {
 			await rollAlert()
 		}
+		await updDetail()
+	}
+
+	const onSubmitPainting: SubmitHandler<Detail> = async data => {
+		delete data.metal_cost
+		await axios.put<Detail>(
+			process.env.REACT_APP_BACKEND_API_URL + 'detail/',
+			await UpdPainting(data)
+		)
+		await methods.setValue(
+			'polymer_price',
+			Number.isNaN(data.polymer_price) ? 0 : data.polymer_price
+		)
+		await methods.setValue(
+			'polymer_base_price',
+			Number.isNaN(data.polymer_base_price) ? 0 : data.polymer_base_price
+		)
+		await setIsDisabled(data.polymer_price !== 0 ? false : true)
+		await updDetail()
+	}
+
+	const onSubmitOptionPainting: SubmitHandler<Detail> = async data => {
+		delete data.metal_cost
+		await axios.put<Detail>(
+			process.env.REACT_APP_BACKEND_API_URL + 'detail/',
+			await UpdPaintingOption(data)
+		)
+		await methods.setValue(
+			'polymer_price',
+			Number.isNaN(data.polymer_price) ? 0 : data.polymer_price
+		)
+		await updDetail()
+	}
+
+	const onSubmitPolymerPrice: SubmitHandler<Detail> = async data => {
+		data.polymer_base_price = data.polymer_price
+		data.polymer_options = []
+		console.log(data)
+		delete data.metal_cost
+		// console.log(data)
+		await axios.put<Detail>(
+			process.env.REACT_APP_BACKEND_API_URL + 'detail/',
+			data
+		)
+		await methods.setValue('polymer_options', [])
+		await methods.setValue('polymer_base_price', data.polymer_price)
+		await setIsDisabled(data.polymer_price !== 0 ? false : true)
 		await updDetail()
 	}
 
@@ -259,7 +324,7 @@ export function FormDetailItem({
 				<div className={styles.line}>
 					<input
 						{...methods.register('polymer', {
-							onBlur: methods.handleSubmit(onSubmitPrice),
+							onBlur: methods.handleSubmit(onSubmitPainting),
 						})}
 						defaultValue={
 							DetailItem.polymer === null
@@ -272,9 +337,48 @@ export function FormDetailItem({
 					/>
 				</div>
 				<div className={styles.line}>
+					<Controller
+						control={methods.control}
+						name={'polymer_options'}
+						defaultValue={DetailItem.polymer_options}
+						render={({
+							field: { onChange, onBlur, value, ref },
+						}) => (
+							<Select
+								classNamePrefix='polymer-select'
+								closeMenuOnSelect={false}
+								isSearchable={false}
+								value={options.filter(c =>
+									value?.includes(c.value)
+								)}
+								onChange={val => {
+									onChange(val.map(c => c.value))
+								}}
+								onBlur={methods.handleSubmit(
+									onSubmitOptionPainting
+								)}
+								isDisabled={isDisabled}
+								options={options}
+								isMulti
+								placeholder='Нажми'
+							/>
+						)}
+					/>
+				</div>
+				<div className={styles.line}>
+					<input
+						{...methods.register('polymer_base_price')}
+						defaultValue={
+							DetailItem.polymer_base_price === null
+								? 0
+								: DetailItem.polymer_base_price
+						}
+						tabIndex={6}
+						type='hidden'
+					/>
 					<input
 						{...methods.register('polymer_price', {
-							onBlur: methods.handleSubmit(onSubmitPrice),
+							onBlur: methods.handleSubmit(onSubmitPolymerPrice),
 							valueAsNumber: true,
 						})}
 						defaultValue={

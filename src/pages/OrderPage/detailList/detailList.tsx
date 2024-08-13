@@ -25,6 +25,7 @@ export function DetailList({ dataOrder }: detailListProps) {
 					<div className={styles.line}>Кол-во гибов</div>
 					<div className={styles.line}>Цена гибки</div>
 					<div className={styles.line}>Цвет ПП</div>
+					<div className={styles.line}>Опции ПП</div>
 					<div className={styles.line}>Цена за м²</div>
 					<div className={styles.line}>Вид вальц.</div>
 					<div className={styles.line}>Вальцовка</div>

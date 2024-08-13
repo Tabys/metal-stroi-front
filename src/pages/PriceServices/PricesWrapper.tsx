@@ -5,6 +5,7 @@ import { PircesItems } from './pricesItems'
 import Alert from 'react-bootstrap/Alert'
 import { useState } from 'react'
 import { PircesRolling } from './PricesRolling'
+import { PircesPainting } from './PricePainitng'
 
 export function PricesWrapper() {
 	const { prices } = useServicePrices()
@@ -25,6 +26,7 @@ export function PricesWrapper() {
 		5: ['Толщина металла (мм)', 'Цена за 1 м.п.', 'Цена за 1 врез'],
 		6: ['Тип металл', 'Толщина металла (мм)', 'Цена', 'Мин. цена'],
 		7: ['Тип металл', 'Толщина металла (мм)', 'Цена', 'Мин. цена'],
+		8: ['Серия RAL', 'Цена'],
 	}
 	// console.log(prices)
 	return (
@@ -67,6 +69,17 @@ export function PricesWrapper() {
 									? category.price_services_rollings?.map(
 											price => (
 												<PircesRolling
+													price={price}
+													key={price.id}
+													update={openAlert}
+												/>
+											)
+									  )
+									: ''}
+								{category.price_services_paintings
+									? category.price_services_paintings?.map(
+											price => (
+												<PircesPainting
 													price={price}
 													key={price.id}
 													update={openAlert}

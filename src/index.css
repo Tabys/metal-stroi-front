@@ -322,6 +322,29 @@ code {
 	color: white !important;
 }
 
+.polymer-select__value-container {
+	padding: 2px 5px !important;
+}
+.polymer-select__control {
+	min-height: 35px !important;
+	border-radius: 0.375rem;
+}
+.polymer-select__option {
+	padding: 5px !important;
+	font-size: 11px !important;
+}
+.polymer-select__placeholder {
+	font-size: 11px !important;
+}
+.polymer-select__dropdown-indicator,
+.polymer-select__indicator-separator {
+	display: none !important;
+}
+.css-mohuvp-dummyInput-DummyInput {
+	height: 0;
+	padding: 0 !important;
+}
+
 @media print {
 	#root {
 		margin: 0 !important;
