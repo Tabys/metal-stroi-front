@@ -18,6 +18,7 @@ import { FormSelectRoll } from './formElements/formSelectRoll'
 import { UpdPainting } from './updPrices/updPainting'
 import Select from 'react-select'
 import { UpdPaintingOption } from './updPrices/updPaintingOption'
+import { useUser } from '../../../hooks/curentUser'
 
 type FormDetailItemProps = {
 	orderData: Order
@@ -36,6 +37,8 @@ export function FormDetailItem({
 	updDetail,
 	metalCostAlert,
 }: FormDetailItemProps) {
+	const { currentUser } = useUser()
+
 	const methods = useForm<Detail>()
 
 	const [isDisabled, setIsDisabled] = useState(
@@ -155,25 +158,15 @@ export function FormDetailItem({
 	}
 
 	const onSubmitPriceMetal: SubmitHandler<Detail> = async data => {
-		const old_metal_cost = Math.round(
-			Number(DetailItem.metal_cost) +
-				extraPriceMetal +
-				(Number(DetailItem.metal_cost) * orderData.markup) / 100
+		// console.log(data)
+		await axios.put<Detail>(
+			process.env.REACT_APP_BACKEND_API_URL + 'detail/',
+			{
+				id: data.id,
+				add_id: data.add_id,
+				metal_cost: data.metal_cost,
+			}
 		)
-		if (old_metal_cost < Number(data.metal_cost)) {
-			// console.log(data)
-			await axios.put<Detail>(
-				process.env.REACT_APP_BACKEND_API_URL + 'detail/',
-				{
-					id: data.id,
-					metal_cost: data.metal_cost,
-				}
-			)
-			await updDetail()
-		} else {
-			await metalCostAlert()
-			await methods.setValue('metal_cost', old_metal_cost)
-		}
 	}
 
 	return (
@@ -554,6 +547,7 @@ export function FormDetailItem({
 						}
 						step='0.1'
 						min='0'
+						disabled={true}
 						className='form-control'
 					/>
 				</div>
