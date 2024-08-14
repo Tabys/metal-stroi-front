@@ -108,7 +108,7 @@ export function FormOrderController({ orderData, updated }: formOCProps) {
 							<FormSelect
 								name='markup'
 								selected={orderData.markup}
-								arrOptions={[0, 2, 7, 10]}
+								arrOptions={[2, 3, 4, 5, 6, 7, 8, 9, 10]}
 								onSubmit={methods.handleSubmit(onSubmit)}
 								disabled={Role() === 'ROLE_USER' ? true : false}
 							/>
