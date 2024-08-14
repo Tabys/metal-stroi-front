@@ -83,6 +83,48 @@ export function DocWorkhop() {
 						</tbody>
 					</Table>
 
+					<Table bordered>
+						<tbody>
+							<tr>
+								<td>
+									<strong>гибов</strong>
+								</td>
+								<td>{total.bend}</td>
+								<td>
+									<strong>рубов</strong>
+								</td>
+								<td>{total.chop}</td>
+								<td>
+									<strong>общее время, ч</strong>
+								</td>
+								<td>{(total.time / 60).toFixed(2)}</td>
+								<td>
+									<strong>общ вес, кг</strong>
+								</td>
+								<td>{total.weight.toFixed(1)}</td>
+							</tr>
+						</tbody>
+					</Table>
+
+					<Table bordered hover size='sm' className={styles.metal}>
+						<thead>
+							<tr>
+								<th colSpan={4}>Металл</th>
+							</tr>
+							<tr>
+								<th>Толщина</th>
+								<th>Ширина</th>
+								<th>Длина</th>
+								<th>Листы</th>
+							</tr>
+						</thead>
+						<tbody>
+							{setups?.map((metal, index) => (
+								<MetalTable key={index} metals={metal} />
+							))}
+						</tbody>
+					</Table>
+
 					<div className={styles.specifications}>
 						<div className={styles.block}>
 							<p>
@@ -103,62 +145,30 @@ export function DocWorkhop() {
 							<p>
 								<span>Выдал:</span>
 							</p>
-
-							<Table bordered hover size='sm'>
-								<tbody>
-									<tr>
-										<td>общее время, ч</td>
-										<td>{(total.time / 60).toFixed(2)}</td>
-									</tr>
-									<tr>
-										<td>гибов</td>
-										<td>{total.bend}</td>
-									</tr>
-									<tr>
-										<td>рубов</td>
-										<td>{total.chop}</td>
-									</tr>
-									<tr>
-										<td>общ вес, кг</td>
-										<td>{total.weight.toFixed(1)}</td>
-									</tr>
-								</tbody>
-							</Table>
 						</div>
 						<div className={styles.block}>
-							<Table
-								bordered
-								hover
-								size='sm'
-								className={styles.metal}
-							>
-								<thead>
-									<tr>
-										<th colSpan={4}>Металл</th>
-									</tr>
-									<tr>
-										<th>Толщина</th>
-										<th>Ширина</th>
-										<th>Длина</th>
-										<th>Листы</th>
-									</tr>
-								</thead>
-								<tbody>
-									{setups?.map((metal, index) => (
-										<MetalTable
-											key={index}
-											metals={metal}
-										/>
-									))}
-								</tbody>
-							</Table>
+							<p>
+								<strong>Подразделения:</strong>
+							</p>
+							<p>
+								<span>Лазерный цех:</span>
+							</p>
+							<p>
+								<span>Цех металлоконструкций:</span>
+							</p>
+							<p>
+								<span>Цех сельхозмашиностроения:</span>
+							</p>
+							<p>
+								<span>Токарно-фрезерный цех:</span>
+							</p>
+							<p>
+								<span>Цех художественной ковки:</span>
+							</p>
+							<p>
+								<span>Аддитивный цех:</span>
+							</p>
 						</div>
-					</div>
-
-					<div className={styles.signatures}>
-						<p className={styles.right}>
-							<span>Детали принял:</span>
-						</p>
 					</div>
 				</div>
 			</div>
