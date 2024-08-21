@@ -9,6 +9,9 @@ export function PrepArrProducts(orders: Order | undefined) {
 		let totalPrice = 0
 		let totalWeight = 0
 		let detailsWeight = 0
+		let detailsCutCost = 0
+		let detailsChoping = 0
+		let detailsBanding = 0
 
 		const details = PrepArrDetils({
 			arrDetails,
@@ -28,6 +31,9 @@ export function PrepArrProducts(orders: Order | undefined) {
 			value += (Number(detail.surface) / 1000000) * 2 * detail.quantity
 			totalWeight += Number(detail.weight) * detail.quantity
 			detailsWeight += Number(detail.weight)
+			detailsCutCost += Number(detail.cut_cost)
+			detailsChoping += Number(detail.choping)
+			detailsBanding += Number(detail.bending)
 		})
 
 		totalPrice +=
@@ -56,6 +62,9 @@ export function PrepArrProducts(orders: Order | undefined) {
 			painting_cost: product.painting_cost * product.quantity,
 			weight: totalWeight,
 			detailsWeight: detailsWeight,
+			detailsCutCost: detailsCutCost,
+			detailsChoping: detailsChoping,
+			detailsBanding: detailsBanding,
 			welding:
 				Number(product.welding_allowance) +
 				Number(product.welding_delivery) +

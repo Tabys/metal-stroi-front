@@ -14,6 +14,7 @@ import { UsersPage } from './pages/Users'
 import { useUser } from './hooks/curentUser'
 import { DocPainting } from './pages/OrderPage/documents/painting/docPainting'
 import { DocSpecialization } from './pages/OrderPage/documents/specialization/docSpecialization'
+import { DocContract } from './pages/OrderPage/documents/contract/docContract'
 
 function App() {
 	const { currentUser } = useUser()
@@ -46,6 +47,10 @@ function App() {
 						<Route
 							path='/order/:id/doc-specialization'
 							element={<DocSpecialization />}
+						/>
+						<Route
+							path='/order/:id/doc-contract'
+							element={<DocContract />}
 						/>
 						{currentUser?.['roles'] !== 'ROLE_USER' ? (
 							<>
