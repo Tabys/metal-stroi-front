@@ -398,6 +398,9 @@ export type DocTableProductSpec = {
 	painting_cost?: number
 	weight?: number
 	detailsWeight?: number
+	detailsCutCost?: number
+	detailsChoping?: number
+	detailsBanding?: number
 	value?: number
 	welding?: number
 	turning_works?: number

@@ -112,6 +112,11 @@ export function OrderPage() {
 									</Link>
 								</ListGroup.Item>
 								<ListGroup.Item variant='light'>
+									<Link relative='path' to={`doc-contract`}>
+										<FaFileLines /> К договору
+									</Link>
+								</ListGroup.Item>
+								<ListGroup.Item variant='light'>
 									<SendPDFForm orderId={Number(id)} />
 								</ListGroup.Item>
 							</ListGroup>
