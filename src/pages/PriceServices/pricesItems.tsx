@@ -28,6 +28,24 @@ export function PircesItems({ price, update }: PricesProps) {
 					? '- ' + price.metal_thickness_max
 					: ''}
 			</div>
+			{price.metal_length_min || price.metal_length_max ? (
+				<div className={'p-2'}>
+					{price.metal_length_min}
+					{' - '}
+					{price.metal_length_max}
+				</div>
+			) : (
+				''
+			)}
+			{price.quantity_min || price.quantity_max ? (
+				<div className={'p-2'}>
+					{price.quantity_min}
+					{' - '}
+					{price.quantity_max}
+				</div>
+			) : (
+				''
+			)}
 			<div className={price.cost ? 'p-2' : 'p-2 d-none'}>
 				<input
 					type='number'

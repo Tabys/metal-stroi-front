@@ -15,6 +15,7 @@ import { useUser } from './hooks/curentUser'
 import { DocPainting } from './pages/OrderPage/documents/painting/docPainting'
 import { DocSpecialization } from './pages/OrderPage/documents/specialization/docSpecialization'
 import { DocContract } from './pages/OrderPage/documents/contract/docContract'
+import { ExemptionCustomers } from './pages/ExemptionCustomers'
 
 function App() {
 	const { currentUser } = useUser()
@@ -61,6 +62,10 @@ function App() {
 								<Route
 									path='/price-materials/'
 									element={<PriceMaterials />}
+								/>
+								<Route
+									path='/exemption-customers/'
+									element={<ExemptionCustomers />}
 								/>
 							</>
 						) : (

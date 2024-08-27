@@ -60,6 +60,14 @@ export function Header() {
 										Создать пользователя
 									</Link>
 								</li>
+								<li>
+									<Link
+										to={`/exemption-customers/`}
+										onClick={handleClose}
+									>
+										Заказчики-исключения
+									</Link>
+								</li>
 							</>
 						) : (
 							<></>
