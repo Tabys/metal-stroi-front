@@ -18,7 +18,7 @@ import { FormSelectRoll } from './formElements/formSelectRoll'
 import { UpdPainting } from './updPrices/updPainting'
 import Select from 'react-select'
 import { UpdPaintingOption } from './updPrices/updPaintingOption'
-import { useUser } from '../../../hooks/curentUser'
+import { postConditions } from './component/postConditions/postConditions'
 
 type FormDetailItemProps = {
 	orderData: Order
@@ -26,7 +26,7 @@ type FormDetailItemProps = {
 	index: number
 	updDetail: () => void
 	rollAlert: () => void
-	metalCostAlert: () => void
+	serviseAlert: (min_price: number | undefined) => void
 }
 
 export function FormDetailItem({
@@ -34,18 +34,27 @@ export function FormDetailItem({
 	orderData,
 	index,
 	rollAlert,
+	serviseAlert,
 	updDetail,
-	metalCostAlert,
 }: FormDetailItemProps) {
-	const { currentUser } = useUser()
-
 	const methods = useForm<Detail>()
 
-	const [isDisabled, setIsDisabled] = useState(
+	const [isDisabledPP, setIsDisabledPP] = useState(
 		DetailItem.polymer_price === null || DetailItem.polymer_price == 0
 			? true
 			: false
 	)
+	const [isDisabledChop, setIsDisabledChop] = useState(
+		DetailItem.chop_count === null || DetailItem.chop_count == 0
+			? true
+			: false
+	)
+	const [isDisabledBend, setIsDisabledBend] = useState(
+		DetailItem.bends_count === null || DetailItem.bends_count == 0
+			? true
+			: false
+	)
+
 	const options: any[] = [
 		{ value: 'shagreen', label: 'Шагрень' },
 		{ value: 'matte', label: 'Матовые' },
@@ -69,6 +78,8 @@ export function FormDetailItem({
 		await methods.setValue('bend_cost', data.bend_cost)
 		await methods.setValue('chop_cost', data.chop_cost)
 		await updDetail()
+		setIsDisabledChop(data.chop_count !== 0 ? false : true)
+		setIsDisabledBend(data.bends_count !== 0 ? false : true)
 	}
 
 	const onSubmitCutInset: SubmitHandler<Detail> = async data => {
@@ -114,7 +125,7 @@ export function FormDetailItem({
 			'polymer_base_price',
 			Number.isNaN(data.polymer_base_price) ? 0 : data.polymer_base_price
 		)
-		await setIsDisabled(data.polymer_price !== 0 ? false : true)
+		await setIsDisabledPP(data.polymer_price !== 0 ? false : true)
 		await updDetail()
 	}
 
@@ -143,7 +154,7 @@ export function FormDetailItem({
 		)
 		await methods.setValue('polymer_options', [])
 		await methods.setValue('polymer_base_price', data.polymer_price)
-		await setIsDisabled(data.polymer_price !== 0 ? false : true)
+		await setIsDisabledPP(data.polymer_price !== 0 ? false : true)
 		await updDetail()
 	}
 
@@ -155,6 +166,118 @@ export function FormDetailItem({
 			data
 		)
 		await updDetail()
+	}
+
+	const onSubmitPriceChop: SubmitHandler<Detail> = async data => {
+		console.log(data)
+		const { access, choping } = await postConditions({
+			order: orderData,
+			detail: data,
+			type: 'chop-bend',
+		})
+		if (Number(data.chop_cost) >= Number(choping?.cost)) {
+			// console.log(data)
+			await axios.put<Detail>(
+				process.env.REACT_APP_BACKEND_API_URL + 'detail/',
+				{
+					id: data.id,
+					add_id: data.add_id,
+					chop_cost: data.chop_cost,
+				}
+			)
+			DetailItem.chop_cost = data.chop_cost
+			updDetail()
+		} else {
+			if (access === true) {
+				await axios.put<Detail>(
+					process.env.REACT_APP_BACKEND_API_URL + 'detail/',
+					{
+						id: data.id,
+						add_id: data.add_id,
+						chop_cost: data.chop_cost,
+					}
+				)
+				DetailItem.chop_cost = data.chop_cost
+				updDetail()
+			} else {
+				methods.setValue('chop_cost', DetailItem.chop_cost)
+				serviseAlert(choping?.cost)
+			}
+		}
+	}
+
+	const onSubmitPriceBend: SubmitHandler<Detail> = async data => {
+		const { access, bending } = await postConditions({
+			order: orderData,
+			detail: data,
+			type: 'chop-bend',
+		})
+		if (Number(data.bend_cost) >= Number(bending?.cost)) {
+			// console.log(data)
+			await axios.put<Detail>(
+				process.env.REACT_APP_BACKEND_API_URL + 'detail/',
+				{
+					id: data.id,
+					add_id: data.add_id,
+					bend_cost: data.bend_cost,
+				}
+			)
+			DetailItem.bend_cost = data.bend_cost
+			updDetail()
+		} else {
+			if (access === true) {
+				await axios.put<Detail>(
+					process.env.REACT_APP_BACKEND_API_URL + 'detail/',
+					{
+						id: data.id,
+						add_id: data.add_id,
+						bend_cost: data.bend_cost,
+					}
+				)
+				DetailItem.bend_cost = data.bend_cost
+				updDetail()
+			} else {
+				await methods.setValue('bend_cost', DetailItem.bend_cost)
+				serviseAlert(bending?.cost)
+			}
+		}
+	}
+
+	const onSubmitPriceCuting: SubmitHandler<Detail> = async data => {
+		const { access, cuting } = await postConditions({
+			order: orderData,
+			detail: data,
+			type: 'cut',
+		})
+		if (Number(data.cut_cost) >= Number(cuting?.cost)) {
+			// console.log(data)
+			await axios.put<Detail>(
+				process.env.REACT_APP_BACKEND_API_URL + 'detail/',
+				{
+					id: data.id,
+					add_id: data.add_id,
+					cut_cost: data.cut_cost,
+				}
+			)
+			DetailItem.cut_cost = data.cut_cost
+			updDetail()
+		} else {
+			if (access === true) {
+				await axios.put<Detail>(
+					process.env.REACT_APP_BACKEND_API_URL + 'detail/',
+					{
+						id: data.id,
+						add_id: data.add_id,
+						cut_cost: data.cut_cost,
+					}
+				)
+				DetailItem.cut_cost = data.cut_cost
+				updDetail()
+			} else {
+				await methods.setValue('cut_cost', DetailItem.cut_cost)
+				serviseAlert(cuting?.cost)
+			}
+		}
 	}
 
 	const onSubmitPriceMetal: SubmitHandler<Detail> = async data => {
@@ -237,7 +360,7 @@ export function FormDetailItem({
 				<div className={styles.line}>
 					<input
 						{...methods.register('chop_cost', {
-							onBlur: methods.handleSubmit(onSubmitPrice),
+							onBlur: methods.handleSubmit(onSubmitPriceChop),
 							valueAsNumber: true,
 						})}
 						defaultValue={
@@ -257,6 +380,7 @@ export function FormDetailItem({
 								{ passive: false }
 							)
 						}
+						disabled={isDisabledChop}
 						className='form-control'
 					/>
 				</div>
@@ -290,7 +414,7 @@ export function FormDetailItem({
 				<div className={styles.line}>
 					<input
 						{...methods.register('bend_cost', {
-							onBlur: methods.handleSubmit(onSubmitPrice),
+							onBlur: methods.handleSubmit(onSubmitPriceBend),
 							valueAsNumber: true,
 						})}
 						defaultValue={
@@ -311,6 +435,7 @@ export function FormDetailItem({
 						}
 						step='0.1'
 						min='0'
+						disabled={isDisabledBend}
 						className='form-control'
 					/>
 				</div>
@@ -350,7 +475,7 @@ export function FormDetailItem({
 								onBlur={methods.handleSubmit(
 									onSubmitOptionPainting
 								)}
-								isDisabled={isDisabled}
+								isDisabled={isDisabledPP}
 								options={options}
 								isMulti
 								placeholder='Нажми'
@@ -464,7 +589,7 @@ export function FormDetailItem({
 				<div className={styles.line}>
 					<input
 						{...methods.register('cut_cost', {
-							onBlur: methods.handleSubmit(onSubmitPrice),
+							onBlur: methods.handleSubmit(onSubmitPriceCuting),
 							valueAsNumber: true,
 						})}
 						defaultValue={

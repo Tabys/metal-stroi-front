@@ -34,6 +34,7 @@ export async function UpdBandChop(dataDetail: Detail) {
 
 	// SETUPS DATA
 	const THICKNESS = SETUP?.work_piece?.split(' x ')[2]
+	const LENGTH = SETUP?.work_piece?.split(' x ')[0]
 
 	// FIND SERVICE TYPE
 	const BEND = PRICES?.find(function (priceArray) {
@@ -46,20 +47,27 @@ export async function UpdBandChop(dataDetail: Detail) {
 	const bending = BEND?.price_services_items?.find(function (n) {
 		return (
 			Number(n.metal_thickness_min) <= Number(THICKNESS) &&
-			Number(n.metal_thickness_max) >= Number(THICKNESS)
+			Number(n.metal_thickness_max) >= Number(THICKNESS) &&
+			Number(n.metal_length_min) <= Number(LENGTH) &&
+			Number(n.metal_length_max) >= Number(LENGTH) &&
+			Number(n.quantity_min) <= Number(dataDetail.bends_count) &&
+			Number(n.quantity_max) >= Number(dataDetail.bends_count)
 		)
 	})
 
 	const choping = CHOP?.price_services_items?.find(function (n) {
 		return (
 			Number(n.metal_thickness_min) <= Number(THICKNESS) &&
-			Number(n.metal_thickness_max) >= Number(THICKNESS)
+			Number(n.metal_thickness_max) >= Number(THICKNESS) &&
+			Number(n.quantity_min) <= Number(dataDetail.chop_count) &&
+			Number(n.quantity_max) >= Number(dataDetail.chop_count)
 		)
 	})
 
 	if (
 		Number(dataDetail.chop_count) === 0 ||
-		dataDetail.chop_count === undefined
+		dataDetail.chop_count === undefined ||
+		isNaN(dataDetail.chop_count)
 	) {
 		dataDetail.chop_cost = 0
 	} else {
@@ -68,7 +76,8 @@ export async function UpdBandChop(dataDetail: Detail) {
 
 	if (
 		Number(dataDetail.bends_count) === 0 ||
-		dataDetail.bends_count === undefined
+		dataDetail.bends_count === undefined ||
+		isNaN(dataDetail.bends_count)
 	) {
 		dataDetail.bend_cost = 0
 	} else {

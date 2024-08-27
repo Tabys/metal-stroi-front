@@ -2,6 +2,7 @@ import { Detail, Order } from '../../../models'
 import { FormDetailItem } from './formDetailItem'
 import Alert from 'react-bootstrap/Alert'
 import { useState } from 'react'
+import { useUser } from '../../../hooks/curentUser'
 
 interface FormProps {
 	orderData: Order
@@ -9,9 +10,14 @@ interface FormProps {
 }
 
 export function FormDetailList({ details, orderData }: FormProps) {
+	// if (currentUser?.roles === 'ROLE_USER' && ){}
+
 	const [alertShow, setAlertShow] = useState(false)
 	const [rollAlertShow, setRollAlertShow] = useState(false)
-	const [metalAlertShow, setMetalAlertShow] = useState(false)
+	const [serviseAlertShow, setServiseAlertShow] = useState(false)
+	const [minPriceInf, setMinPriceInf] = useState<number | undefined>(
+		undefined
+	)
 
 	const openRollAlert = () => {
 		setRollAlertShow(true)
@@ -27,10 +33,11 @@ export function FormDetailList({ details, orderData }: FormProps) {
 		}, 1000)
 	}
 
-	const openMetalAlert = () => {
-		setMetalAlertShow(true)
+	const openServiseAlert = (min_price: number | undefined) => {
+		setServiseAlertShow(true)
+		setMinPriceInf(min_price)
 		setTimeout(() => {
-			setMetalAlertShow(false)
+			setServiseAlertShow(false)
 		}, 2000)
 	}
 
@@ -40,7 +47,7 @@ export function FormDetailList({ details, orderData }: FormProps) {
 				<FormDetailItem
 					updDetail={openAlert}
 					rollAlert={openRollAlert}
-					metalCostAlert={openMetalAlert}
+					serviseAlert={openServiseAlert}
 					orderData={orderData}
 					DetailItem={item}
 					index={index}
@@ -59,10 +66,10 @@ export function FormDetailList({ details, orderData }: FormProps) {
 			</Alert>
 			<Alert
 				className='alert-fixed'
-				show={metalAlertShow}
+				show={serviseAlertShow}
 				variant='danger'
 			>
-				Стоимость металла не должна быть меньше установленной!
+				Стоимость не должна быть меньше {minPriceInf}
 			</Alert>
 		</>
 	)

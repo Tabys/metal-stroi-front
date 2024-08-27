@@ -199,6 +199,10 @@ export type PricesServiceItem = {
 	id: number
 	metal_thickness_min?: number
 	metal_thickness_max?: number
+	metal_length_min?: number
+	metal_length_max?: number
+	quantity_min?: number
+	quantity_max?: number
 	cost?: number
 	cut_cost?: number
 }
@@ -406,4 +410,15 @@ export type DocTableProductSpec = {
 	turning_works?: number
 	smithy?: number
 	design_department?: number
+}
+
+export type ExeCustomers = {
+	id: number
+	name: string
+}
+export type ExeCustomersCreate = {
+	name: string
+}
+export type ExeCustomersDel = {
+	id: number
 }
