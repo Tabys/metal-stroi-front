@@ -9,17 +9,11 @@ import { useState } from 'react'
 
 type OneSetupProps = {
 	setup: Setup
-	arrDetails: Detail[]
 	openAlert: () => void
 	onChange: () => void
 }
 
-export function OneSetup({
-	onChange,
-	openAlert,
-	setup,
-	arrDetails,
-}: OneSetupProps) {
+export function OneSetup({ onChange, openAlert, setup }: OneSetupProps) {
 	const options = getOption(setup)
 
 	const methods = useForm<MetalChange>()
@@ -34,13 +28,6 @@ export function OneSetup({
 		await onChange()
 		await openAlert()
 	}
-	const addDetails = arrDetails.filter(detail => {
-		const setupIndexes = detail.additional_setups?.split(' ')
-		const result = setupIndexes?.filter(index => {
-			return Number(index) === Number(setup.order_index)
-		})
-		return result?.length
-	})
 
 	return (
 		<FormProvider {...methods}>
@@ -68,9 +55,6 @@ export function OneSetup({
 					{setup.details?.map(detail => (
 						<OneDetail key={detail.id} detail={detail} />
 					))}
-					{addDetails?.map(detail => (
-						<OneDetail key={detail.id} detail={detail} />
-					))}
 					<div className={style.detail + ' ' + style.empty}></div>
 				</div>
 				<input
@@ -90,8 +74,6 @@ export function OneSetup({
 						setup.details
 							? setup.details?.length > 0
 								? setup.details[0]?.thickness
-								: addDetails.length > 0
-								? addDetails[0]?.thickness
 								: setup.work_piece?.split(' x ')[2]
 							: setup.work_piece?.split(' x ')[2]
 					}

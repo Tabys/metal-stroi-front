@@ -41,6 +41,7 @@ export function UploadSetups({
 					await setTimeout(() => {
 						setLoad(false)
 						onCreate()
+						closeModal()
 					}, 300)
 				}
 			})

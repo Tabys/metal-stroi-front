@@ -181,7 +181,6 @@ export function FormDetailItem({
 				process.env.REACT_APP_BACKEND_API_URL + 'detail/',
 				{
 					id: data.id,
-					add_id: data.add_id,
 					chop_cost: data.chop_cost,
 				}
 			)
@@ -193,7 +192,6 @@ export function FormDetailItem({
 					process.env.REACT_APP_BACKEND_API_URL + 'detail/',
 					{
 						id: data.id,
-						add_id: data.add_id,
 						chop_cost: data.chop_cost,
 					}
 				)
@@ -218,7 +216,6 @@ export function FormDetailItem({
 				process.env.REACT_APP_BACKEND_API_URL + 'detail/',
 				{
 					id: data.id,
-					add_id: data.add_id,
 					bend_cost: data.bend_cost,
 				}
 			)
@@ -230,7 +227,6 @@ export function FormDetailItem({
 					process.env.REACT_APP_BACKEND_API_URL + 'detail/',
 					{
 						id: data.id,
-						add_id: data.add_id,
 						bend_cost: data.bend_cost,
 					}
 				)
@@ -255,7 +251,6 @@ export function FormDetailItem({
 				process.env.REACT_APP_BACKEND_API_URL + 'detail/',
 				{
 					id: data.id,
-					add_id: data.add_id,
 					cut_cost: data.cut_cost,
 				}
 			)
@@ -267,7 +262,6 @@ export function FormDetailItem({
 					process.env.REACT_APP_BACKEND_API_URL + 'detail/',
 					{
 						id: data.id,
-						add_id: data.add_id,
 						cut_cost: data.cut_cost,
 					}
 				)
@@ -286,7 +280,6 @@ export function FormDetailItem({
 			process.env.REACT_APP_BACKEND_API_URL + 'detail/',
 			{
 				id: data.id,
-				add_id: data.add_id,
 				metal_cost: data.metal_cost,
 			}
 		)
@@ -309,11 +302,6 @@ export function FormDetailItem({
 					{...methods.register('thickness')}
 					type='hidden'
 					defaultValue={DetailItem.thickness}
-				/>
-				<input
-					{...methods.register('add_id')}
-					type='hidden'
-					defaultValue={DetailItem.add_id}
 				/>
 				<div className={styles.line}>{index + 1} </div>
 				<div className={styles.line}>{DetailItem.name}</div>

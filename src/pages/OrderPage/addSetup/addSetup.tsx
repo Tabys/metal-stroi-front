@@ -68,6 +68,10 @@ export function AddSetup({ onCreate, onClose, order_id }: addSetupProps) {
 			detail.table_number = realTickness?.table_name
 			detail.cut_type = ''
 			detail.metal_cost = realTickness?.cost
+			detail.setup_detail = {
+				count: detail.quantity,
+			}
+			delete detail.quantity
 		})
 		await axios.post<AddSetups>(
 			process.env.REACT_APP_BACKEND_API_URL + 'setup/',
@@ -176,7 +180,10 @@ export function AddSetup({ onCreate, onClose, order_id }: addSetupProps) {
 								</option>
 								{groupAvalibleMetal?.map(metal => {
 									return (
-										<option value={metal.title}>
+										<option
+											key={metal.id}
+											value={metal.title}
+										>
 											{metal.title}
 										</option>
 									)

@@ -5,7 +5,6 @@ import { Order } from '../../models'
 import { Badge } from 'react-bootstrap'
 import { DetailList } from './detailList/detailList'
 import { UploadSetupModal } from '../../components/modal/UploadSetupModal'
-import { DeleteSetups } from './deleteSetups/deleteSetups'
 import { TransformDate } from '../../components/TransformDate'
 import { FormOrderController } from './orderController/formOrderController'
 import ListGroup from 'react-bootstrap/ListGroup'
@@ -18,6 +17,7 @@ import { AddSuffixModal } from '../../components/modal/AddSuffixModal'
 import { CopyOrderModal } from '../../components/modal/CopyOrderModal'
 import { AddDetailSetupModal } from '../../components/modal/AddDetailSetupModal'
 import { ScrollTop } from '../../components/ScrollTop'
+import { DelSetupModal } from '../../components/modal/DelSetupModal'
 
 export function EmptySetup() {
 	return <p>Элементов нет</p>
@@ -137,6 +137,10 @@ export function OrderPage() {
 
 						{/* FIXED INTERFACE ELEMENTS */}
 						<div className='fixed-element'>
+							<UploadSetupModal
+								onCreate={updateOrders}
+								orderId={Number(id)}
+							/>
 							<AddDetailSetupModal
 								onAdd={updateOrders}
 								setups={order.setups}
@@ -151,10 +155,7 @@ export function OrderPage() {
 								order={order}
 								onAdd={updateOrders}
 							/>
-							<DeleteSetups
-								orderId={Number(id)}
-								onDel={updateOrders}
-							></DeleteSetups>
+							<DelSetupModal order={order} onDel={updateOrders} />
 						</div>
 
 						<ScrollTop></ScrollTop>

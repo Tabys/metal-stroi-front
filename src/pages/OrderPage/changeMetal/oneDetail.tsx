@@ -8,7 +8,9 @@ type OneDetailProp = {
 export function OneDetail({ detail }: OneDetailProp) {
 	return (
 		<div className={style.detail}>
-			<p>{detail.name}</p>
+			<p>
+				{detail.name} | {detail.setup_detail.count}шт.
+			</p>
 		</div>
 	)
 }
