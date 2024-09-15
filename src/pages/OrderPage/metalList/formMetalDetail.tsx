@@ -3,6 +3,7 @@ import { useForm, SubmitHandler, FormProvider } from 'react-hook-form'
 import { Metal } from '../../../models'
 import styles from './style.module.css'
 import { getMetalNameSuffix } from './getMetalNameSuffix'
+import { useEffect } from 'react'
 
 type FormMetalDetailProps = {
 	metal: Metal
@@ -13,6 +14,13 @@ export function FormMetalDetail({ metal, updMetal }: FormMetalDetailProps) {
 	const metalName = getMetalNameSuffix(metal.material)
 
 	const methods = useForm<Metal>()
+
+	useEffect(() => {
+		methods.setValue(
+			'metal_sheets',
+			metal.metal_sheets === null ? 0 : metal.metal_sheets
+		)
+	}, [metal])
 
 	const onSubmit: SubmitHandler<Metal> = async data => {
 		await axios.put<Metal>(

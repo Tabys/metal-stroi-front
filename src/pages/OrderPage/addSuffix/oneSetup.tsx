@@ -7,17 +7,11 @@ import style from './style.module.css'
 
 type OneSetupProps = {
 	setup: Setup
-	arrDetails: Detail[]
 	arrSuffix: AddSuffix[]
 	setArrSuffix: React.Dispatch<React.SetStateAction<AddSuffix[]>>
 }
 
-export function OneSetup({
-	setup,
-	arrDetails,
-	arrSuffix,
-	setArrSuffix,
-}: OneSetupProps) {
+export function OneSetup({ setup, arrSuffix, setArrSuffix }: OneSetupProps) {
 	const standartValue = arrSuffix.find(item => {
 		return item.id === Number(setup.id)
 	})
@@ -27,14 +21,6 @@ export function OneSetup({
 
 	const options = arrOptions.map(value => {
 		return { value: value, label: value }
-	})
-
-	const addDetails = arrDetails.filter(detail => {
-		const setupIndexes = detail.additional_setups?.split(' ')
-		const result = setupIndexes?.filter(index => {
-			return Number(index) === Number(setup.order_index)
-		})
-		return result?.length
 	})
 
 	const handleChange = (value: any) => {
@@ -72,9 +58,6 @@ export function OneSetup({
 			</div>
 			<div className={style.details}>
 				{setup.details?.map(detail => (
-					<OneDetail key={detail.id} detail={detail} />
-				))}
-				{addDetails.map(detail => (
 					<OneDetail key={detail.id} detail={detail} />
 				))}
 				<div className={style.detail + ' ' + style.empty}></div>

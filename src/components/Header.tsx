@@ -26,7 +26,7 @@ export function Header() {
 			>
 				<FaBars />
 			</Button>
-			<Offcanvas show={show} onHide={handleClose}>
+			<Offcanvas show={show} onHide={handleClose} placement='end'>
 				<Offcanvas.Header closeButton>
 					<img
 						src='/images/logo-black.png'

@@ -21,7 +21,7 @@ export function AddDetailSetupModal({ onAdd, setups, order_id }: ModalProps) {
 
 	return (
 		<>
-			<Tooltip conditions={true} text='Добавить сетап с деталями'>
+			<Tooltip conditions={true} text='Добавить сетап с деталями вручную'>
 				<Button
 					className='fixed right-175'
 					variant='primary'

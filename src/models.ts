@@ -62,13 +62,17 @@ export type Detail = {
 	metal_cost?: number
 	markup: number
 	table_number: string
-	add_id?: string[]
 	drowing?: number
-	additional_setups?: string
+	additional_setups?: JSON[]
 	product_detail?: ProductsDetails
 	products?: Product[]
+	setup_detail: SetupDetail
 }
-
+export type SetupDetail = {
+	count: number
+	detail_id: number
+	setup_id: number
+}
 export type Product = {
 	id: number
 	name: string
@@ -366,7 +370,7 @@ export type MetalChange = {
 export type AddDetail = {
 	name: string
 	thickness?: number
-	quantity: number
+	quantity?: number
 	l_size?: number
 	w_size?: number
 	cut_type?: string
@@ -374,6 +378,9 @@ export type AddDetail = {
 	chop_count?: number
 	bends_count?: number
 	metal_cost?: number
+	setup_detail?: {
+		count: number | undefined
+	}
 }
 
 export type AddSetups = {
