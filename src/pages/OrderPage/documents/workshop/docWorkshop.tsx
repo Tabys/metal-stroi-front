@@ -154,7 +154,7 @@ export function DocWorkhop() {
 								<span>Лазерный цех:</span>
 							</p>
 							<p>
-								<span>Цех металлоконструкций:</span>
+								<span>Цех полимерного покрытия:</span>
 							</p>
 							<p>
 								<span>Цех сельхозмашиностроения:</span>

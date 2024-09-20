@@ -70,6 +70,7 @@ export function FormDetailItem({
 	}, [orderData])
 
 	const onSubmitBendChop: SubmitHandler<Detail> = async data => {
+		console.log(await UpdBandChop(data))
 		delete data.metal_cost
 		await axios.put<Detail>(
 			process.env.REACT_APP_BACKEND_API_URL + 'detail/',
@@ -296,7 +297,7 @@ export function FormDetailItem({
 				<input
 					{...methods.register('setup_id')}
 					type='hidden'
-					defaultValue={DetailItem.setup_id}
+					defaultValue={DetailItem.setup_detail.setup_id}
 				/>
 				<input
 					{...methods.register('thickness')}
