@@ -6,7 +6,6 @@ import { PrepArrDetils } from '../components/prepArrDetails/prepArrDetails'
 import { DocTableDetail } from '../../../../models'
 import styles from '../style.module.css'
 import Table from 'react-bootstrap/Table'
-import { TransformDate } from '../../../../components/TransformDate'
 import { CulcTotalData } from '../components/culcTotalData'
 import { PrepArrProducts } from '../components/prepArrProducts'
 import { ContractWorkTableDetail } from './contractWorkTableDetails'
@@ -18,7 +17,6 @@ import { ContractShipmentTableProducts } from './contractShipmentTableProducts'
 export function DocContract() {
 	const { id } = useParams()
 	const { orders } = useOrders(id ? id : '')
-	const linkBX = process.env.REACT_APP_BX24_URL + `crm/deal/details/${id}/`
 
 	const arrDetails = orders ? CreateDetailGroupList(orders) : undefined
 	const details: DocTableDetail[] | undefined = PrepArrDetils({
@@ -132,12 +130,14 @@ export function DocContract() {
 						<tbody>
 							{details?.map((detail, index) => (
 								<ContractShipmentTableDetails
+									key={detail.id}
 									detail={detail}
 									index={index}
 								/>
 							))}
 							{products?.map((product, index) => (
 								<ContractShipmentTableProducts
+									key={product.id + index}
 									details={details}
 									product={product}
 									index={index}

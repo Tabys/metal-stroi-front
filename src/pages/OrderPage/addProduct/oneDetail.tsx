@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { AddProduct, Detail } from '../../../models'
 import styles from './style.module.css'
 import { FaSignal } from 'react-icons/fa6'
@@ -13,6 +13,10 @@ export function OneDetail({ detail, setArrProduct }: OneDetailProps) {
 	const [value, setValue] = useState('0')
 
 	let availableDetails = AvailableDetail(detail)
+
+	useEffect(() => {
+		availableDetails = AvailableDetail(detail)
+	}, [detail])
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setValue(event.target.value)

@@ -30,7 +30,7 @@ export function PrepArrDetils({
 						String(detail.table_number)
 					)
 				})
-
+				console.log(metal)
 				let cut_cost = ''
 				if (detail.cut_type === 'laser') {
 					cut_cost = (

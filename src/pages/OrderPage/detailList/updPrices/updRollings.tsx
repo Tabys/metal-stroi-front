@@ -43,6 +43,7 @@ export async function UpdRollings(dataDetail: Detail) {
 			return items.short_title === dataDetail.rolling_type
 		})
 		// SETUPS DATA
+
 		const THICKNESS = dataDetail.thickness
 		const MATERIAL_NAME = SETUP?.material
 
@@ -92,7 +93,7 @@ export async function UpdRollings(dataDetail: Detail) {
 		let rolling_cost =
 			(Number(detail?.serface) / 1000000) *
 			Number(SERVICE_COST?.cost) *
-			Number(detail?.quantity)
+			Number(detail?.setup_detail.count)
 		if (rolling_cost < Number(SERVICE_COST?.min_cost)) {
 			rolling_cost = Number(SERVICE_COST?.min_cost)
 		}
