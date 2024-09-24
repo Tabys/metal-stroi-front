@@ -133,6 +133,7 @@ export function DocContract() {
 									key={detail.id}
 									detail={detail}
 									index={index}
+									delivery={total.oneKgDelivery}
 								/>
 							))}
 							{products?.map((product, index) => (
@@ -141,6 +142,7 @@ export function DocContract() {
 									details={details}
 									product={product}
 									index={index}
+									delivery={total.oneKgDelivery}
 								/>
 							))}
 							<tr>

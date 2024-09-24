@@ -71,8 +71,9 @@ export function ContractWorkTableProduct({
 			)}
 			<td>
 				{(
-					product.totalPrice / product.quantity +
-					delivery * Number(product.detailsWeight)
+					(product.totalPrice +
+						delivery * Number(product.detailsWeight)) /
+					product.quantity
 				).toFixed(2)}
 			</td>
 			<td>{product.quantity}</td>

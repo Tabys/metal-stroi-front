@@ -55,14 +55,16 @@ export function CulcTotalData({
 
 	details?.forEach(detail => {
 		total_price +=
-			Number(detail.bending) +
-			Number(detail.choping) +
-			Number(detail.cut_cost) +
-			Number(detail.metal) +
-			Number(detail.painting) +
-			Number(detail.rolling) +
-			Number(detail.drowing) +
-			oneKgDelivery * Number(detail.weight) * detail.quantity
+			Math.ceil(
+				Number(detail.bending) +
+					Number(detail.choping) +
+					Number(detail.cut_cost) +
+					Number(detail.metal) +
+					Number(detail.painting) +
+					Number(detail.rolling) +
+					Number(detail.drowing) +
+					oneKgDelivery * Number(detail.weight)
+			) * detail.quantity
 
 		total_quantity += detail.quantity
 		// total_weight += Number(detail.weight) * Number(detail.quantity)
@@ -88,9 +90,12 @@ export function CulcTotalData({
 		total_drowing += detail.drowing ? detail.drowing : 0
 	})
 	products?.forEach(product => {
-		total_price +=
+		total_price += Math.ceil(
 			product.totalPrice +
-			oneKgDelivery * Number(product.weight) * Number(product.quantity)
+				oneKgDelivery *
+					Number(product.weight) *
+					Number(product.quantity)
+		)
 
 		total_quantity += product.quantity
 		// total_weight += product.weight ? product.weight * product.quantity : 0
@@ -121,7 +126,7 @@ export function CulcTotalData({
 	})
 
 	const total_data = {
-		price: Math.ceil(total_price),
+		price: total_price,
 		quantity: total_quantity,
 		weight: total_weight,
 		chop: total_chop,

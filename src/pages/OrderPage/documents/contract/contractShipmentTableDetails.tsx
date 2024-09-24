@@ -3,11 +3,13 @@ import { DocTableDetail } from '../../../../models'
 type ContractShipmentTableDetailsProps = {
 	detail: DocTableDetail
 	index: number
+	delivery: number
 }
 
 export function ContractShipmentTableDetails({
 	detail,
 	index,
+	delivery,
 }: ContractShipmentTableDetailsProps) {
 	const total_price =
 		Number(detail.bending) +
@@ -17,7 +19,7 @@ export function ContractShipmentTableDetails({
 		Number(detail.painting) +
 		Number(detail.rolling) +
 		(detail.drowing ? detail.drowing : 0) +
-		Number(detail.weight) * detail.quantity
+		delivery * Number(detail.weight) * detail.quantity
 
 	return (
 		<tr key={detail.id}>

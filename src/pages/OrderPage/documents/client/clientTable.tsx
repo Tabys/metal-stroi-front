@@ -7,7 +7,6 @@ type ClientTableProps = {
 }
 
 export function ClientTable({ detail, index, delivery }: ClientTableProps) {
-	console.log(detail)
 	const total_price =
 		Number(detail.bending) +
 		Number(detail.choping) +
