@@ -7,7 +7,7 @@ type getSuffixesProps = {
 
 export function getSuffixes({ order, detail }: getSuffixesProps) {
 	const actualSetup = order?.setups?.find(
-		setup => Number(setup.id) === detail.setup_id
+		setup => Number(setup.id) === detail.setup_detail.setup_id
 	)
 	let suffixes: string[] = []
 	actualSetup?.suffixes?.forEach(suffix => {
