@@ -1,45 +1,30 @@
-import { Setup } from '../../../models'
+import { MetalType, PriceMetalItems, Setup } from '../../../models'
 type Option = {
-	value: string[]
-	text: string[]
+	value: string[] | undefined
+	text: string[] | undefined
+}
+type getOptionProps = {
+	metals: MetalType[] | null
+	setup: Setup
 }
 
-export function getOption(setup: Setup) {
+export function getOption({ metals, setup }: getOptionProps) {
 	let listMetal: Option = {
 		value: [],
 		text: [],
 	}
-	switch (setup.material) {
-		case 'St37':
-			listMetal = {
-				value: ['St37', '1.4301', '09Г2С'],
-				text: ['Ст37', 'Нерж', '09Г2С'],
-			}
-			break
-		case '09Г2С':
-			listMetal = {
-				value: ['St37', '1.4301', '09Г2С'],
-				text: ['Ст37', 'Нерж', '09Г2С'],
-			}
-			break
-		case 'AlMg3':
-			listMetal = {
-				value: ['St37', '1.4301', '09Г2С'],
-				text: ['Ст37', 'Нерж', '09Г2С'],
-			}
-			break
-		case '1.4301':
-			listMetal = {
-				value: ['1.4301', 'aisi430'],
-				text: ['Нерж. (тех)', 'Нерж. (пищ)'],
-			}
-			break
-		case 'aisi430':
-			listMetal = {
-				value: ['1.4301', 'aisi430'],
-				text: ['Нерж. (тех)', 'Нерж. (пищ)'],
-			}
-			break
-	}
+
+	metals?.forEach(metal => {
+		let test = metal.price_metal_items?.filter(item => {
+			const thickness = setup.work_piece?.split('x')[2]
+			return Number(item.thickness) === Number(thickness)
+		})
+
+		if (test?.length) {
+			listMetal.value?.push(String(metal.abbreviation))
+			listMetal.text?.push(String(metal.name))
+		}
+	})
+
 	return listMetal
 }

@@ -82,7 +82,7 @@ export function FormMetalDetail({ metal, updMetal }: FormMetalDetailProps) {
 							metal.metal_sheets === null ? 0 : metal.metal_sheets
 						}
 						type='number'
-						step='0.0000001'
+						step='0.0001'
 						onFocus={e =>
 							e.target.addEventListener(
 								'wheel',
