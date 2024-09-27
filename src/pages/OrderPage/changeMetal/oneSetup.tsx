@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Detail, MetalChange, Setup } from '../../../models'
+import { Detail, MetalChange, MetalType, Setup } from '../../../models'
 import { FormSelect } from '../detailList/formElements/formSelect'
 import { OneDetail } from './oneDetail'
 import style from './style.module.css'
@@ -9,12 +9,18 @@ import { useState } from 'react'
 
 type OneSetupProps = {
 	setup: Setup
+	metals: MetalType[] | null
 	openAlert: () => void
 	onChange: () => void
 }
 
-export function OneSetup({ onChange, openAlert, setup }: OneSetupProps) {
-	const options = getOption(setup)
+export function OneSetup({
+	onChange,
+	openAlert,
+	metals,
+	setup,
+}: OneSetupProps) {
+	const options = getOption({ metals, setup })
 
 	const methods = useForm<MetalChange>()
 	const [defValue, setDefValue] = useState(setup.material)
@@ -79,8 +85,8 @@ export function OneSetup({ onChange, openAlert, setup }: OneSetupProps) {
 					}
 				/>
 				<FormSelect
-					arrOptions={options.value}
-					arrOptionsText={options.text}
+					arrOptions={options.value ? options.value : []}
+					arrOptionsText={options.text ? options.text : []}
 					selected={defValue}
 					name='abbreviation'
 					onSubmit={methods.handleSubmit(onSubmit)}

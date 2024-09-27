@@ -16,6 +16,9 @@ export function getMaterialName(table: string | undefined) {
 		case '09Г2С':
 			material = 'ГС'
 			break
+		case 'ОЦ':
+			material = 'ОЦ'
+			break
 	}
 	return material
 }

@@ -90,12 +90,10 @@ export function CulcTotalData({
 		total_drowing += detail.drowing ? detail.drowing : 0
 	})
 	products?.forEach(product => {
-		total_price += Math.ceil(
-			product.totalPrice +
-				oneKgDelivery *
-					Number(product.weight) *
-					Number(product.quantity)
-		)
+		total_price +=
+			Math.ceil(
+				product.totalPrice + oneKgDelivery * Number(product.weight)
+			) * Number(product.quantity)
 
 		total_quantity += product.quantity
 		// total_weight += product.weight ? product.weight * product.quantity : 0
