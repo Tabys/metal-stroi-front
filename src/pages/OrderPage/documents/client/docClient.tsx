@@ -24,7 +24,6 @@ export function DocClient() {
 	})
 	const products = PrepArrProducts(orders)
 	const total = CulcTotalData({ details, products, orders })
-	// console.log(details?.length)
 
 	return (
 		<>

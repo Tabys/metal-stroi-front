@@ -17,6 +17,7 @@ export function PrepArrDetils({
 	full,
 	poroductCount,
 }: PrepArrDetilsProp) {
+	console.log(arrDetails)
 	const prepArrDetails = arrDetails
 		? arrDetails.map((detail, index) => {
 				const availableDetail = poroductCount
@@ -30,7 +31,6 @@ export function PrepArrDetils({
 						String(detail.table_number)
 					)
 				})
-				console.log(metal)
 				let cut_cost = ''
 				if (detail.cut_type === 'laser') {
 					cut_cost = (
@@ -56,10 +56,9 @@ export function PrepArrDetils({
 						).toFixed(1)
 					}
 				}
-
 				const material = getMaterialName(detail.material)
 				const extraPriceMetal = getExtraPriceMetal(orders)
-				const suffixes = getSuffixes({ order: orders, detail })
+				const suffixes = getSuffixes({ order: orders, detail: detail })
 				const metal_cost =
 					Number(detail.metal_cost) !== 0
 						? (
@@ -128,7 +127,6 @@ export function PrepArrDetils({
 				}
 		  })
 		: ''
-
 	return prepArrDetails
 		? prepArrDetails.filter(item => item.quantity > 0)
 		: undefined

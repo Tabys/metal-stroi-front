@@ -23,7 +23,6 @@ export function CreateOrder({ onCreate, addItem }: CreateOrderProps) {
 	const onSubmit: SubmitHandler<Order> = async data => {
 		data.implementer =
 			currentUser?.last_name + ' ' + currentUser?.first_name
-		console.log(data)
 		await axios
 			.post<Order>(
 				process.env.REACT_APP_BACKEND_API_URL + 'import/',

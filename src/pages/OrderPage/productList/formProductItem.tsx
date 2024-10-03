@@ -31,7 +31,6 @@ export function FormProductItem({
 	}, [orderData])
 
 	const onSubmit: SubmitHandler<Product> = async data => {
-		// console.log(data)
 		await axios.put<Product>(
 			process.env.REACT_APP_BACKEND_API_URL + 'products/',
 			data
@@ -52,7 +51,6 @@ export function FormProductItem({
 	}
 
 	const onSubmitQuantity: SubmitHandler<Product> = async data => {
-		// console.log(data)
 		await axios
 			.put<Product>(
 				process.env.REACT_APP_BACKEND_API_URL + 'products/quantity/',

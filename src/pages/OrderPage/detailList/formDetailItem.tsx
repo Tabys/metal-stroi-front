@@ -70,7 +70,6 @@ export function FormDetailItem({
 	}, [orderData])
 
 	const onSubmitBendChop: SubmitHandler<Detail> = async data => {
-		console.log(await UpdBandChop(data))
 		delete data.metal_cost
 		await axios.put<Detail>(
 			process.env.REACT_APP_BACKEND_API_URL + 'detail/',
@@ -146,9 +145,7 @@ export function FormDetailItem({
 	const onSubmitPolymerPrice: SubmitHandler<Detail> = async data => {
 		data.polymer_base_price = data.polymer_price
 		data.polymer_options = []
-		console.log(data)
 		delete data.metal_cost
-		// console.log(data)
 		await axios.put<Detail>(
 			process.env.REACT_APP_BACKEND_API_URL + 'detail/',
 			data
@@ -161,7 +158,6 @@ export function FormDetailItem({
 
 	const onSubmitPrice: SubmitHandler<Detail> = async data => {
 		delete data.metal_cost
-		// console.log(data)
 		await axios.put<Detail>(
 			process.env.REACT_APP_BACKEND_API_URL + 'detail/',
 			data
@@ -170,14 +166,12 @@ export function FormDetailItem({
 	}
 
 	const onSubmitPriceChop: SubmitHandler<Detail> = async data => {
-		console.log(data)
 		const { access, choping } = await postConditions({
 			order: orderData,
 			detail: data,
 			type: 'chop-bend',
 		})
 		if (Number(data.chop_cost) >= Number(choping?.cost)) {
-			// console.log(data)
 			await axios.put<Detail>(
 				process.env.REACT_APP_BACKEND_API_URL + 'detail/',
 				{
@@ -212,7 +206,6 @@ export function FormDetailItem({
 			type: 'chop-bend',
 		})
 		if (Number(data.bend_cost) >= Number(bending?.cost)) {
-			// console.log(data)
 			await axios.put<Detail>(
 				process.env.REACT_APP_BACKEND_API_URL + 'detail/',
 				{
@@ -247,7 +240,6 @@ export function FormDetailItem({
 			type: 'cut',
 		})
 		if (Number(data.cut_cost) >= Number(cuting?.cost)) {
-			// console.log(data)
 			await axios.put<Detail>(
 				process.env.REACT_APP_BACKEND_API_URL + 'detail/',
 				{
@@ -276,7 +268,6 @@ export function FormDetailItem({
 	}
 
 	const onSubmitPriceMetal: SubmitHandler<Detail> = async data => {
-		// console.log(data)
 		await axios.put<Detail>(
 			process.env.REACT_APP_BACKEND_API_URL + 'detail/',
 			{

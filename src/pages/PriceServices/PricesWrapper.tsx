@@ -33,7 +33,6 @@ export function PricesWrapper() {
 		7: ['Тип металл', 'Толщина металла (мм)', 'Цена', 'Мин. цена'],
 		8: ['Серия RAL', 'Цена'],
 	}
-	// console.log(prices)
 	return (
 		<>
 			<Tabs

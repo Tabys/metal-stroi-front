@@ -9,14 +9,17 @@ import Table from 'react-bootstrap/Table'
 import { CulcTotalData } from '../components/culcTotalData'
 import { PrepArrProducts } from '../components/prepArrProducts'
 import { ContractWorkTableDetail } from './contractWorkTableDetails'
-import { CulcColSpan } from './culcColSpan'
 import { ContractWorkTableProduct } from './contractWorkTableProducts'
 import { ContractShipmentTableDetails } from './contractShipmentTableDetails'
 import { ContractShipmentTableProducts } from './contractShipmentTableProducts'
+import { useUser } from '../../../../hooks/curentUser'
+import { getVat } from './getVat'
 
 export function DocContract() {
 	const { id } = useParams()
 	const { orders } = useOrders(id ? id : '')
+	const { currentUser } = useUser()
+	const vat = getVat(orders)
 
 	const arrDetails = orders ? CreateDetailGroupList(orders) : undefined
 	const details: DocTableDetail[] | undefined = PrepArrDetils({
@@ -25,55 +28,43 @@ export function DocContract() {
 	})
 	const products = PrepArrProducts(orders)
 	const total = CulcTotalData({ details, products, orders })
-	const colSpan = CulcColSpan(total)
-	console.log(colSpan)
-
 	return (
 		<>
 			<div className='container'>
-				<Link to='..' relative='path' className='back-link'>
-					Вернуться назад
-				</Link>
-				<div className={styles.doc + ' ' + styles.full}>
+				{currentUser ? (
+					<Link to='..' relative='path' className='back-link'>
+						Вернуться назад
+					</Link>
+				) : (
+					''
+				)}
+				<div
+					className={
+						styles.doc + ' ' + styles.full + ' ' + styles.contract
+					}
+				>
 					<h3>Спецификация к договору на выполнение РАБОТ</h3>
 					<Table bordered hover>
 						<thead>
 							<tr>
-								<th rowSpan={2}>№ п/п</th>
-								<th rowSpan={2}>
+								<td rowSpan={2}>№ п/п</td>
+								<td rowSpan={2}>
 									Наименование результата Работ (изделия)
-								</th>
-								<th rowSpan={2}>Толщина металла, мм</th>
-								<th colSpan={colSpan}>Стоимость работ, руб.</th>
-								<th rowSpan={2}>
-									Итого за ед., в руб., (НДС не облагается)
-								</th>
-								<th rowSpan={2}>Кол-во, шт</th>
-								<th rowSpan={2}>
-									Итого, в руб. (НДС не облагается)
-								</th>
-								<th rowSpan={2}>Вес за шт.</th>
+								</td>
+								<td rowSpan={2}>Толщина металла, мм</td>
+								<td colSpan={6}>Стоимость работ, руб.</td>
+								<td rowSpan={2}>Итого за ед., в руб. {vat}</td>
+								<td rowSpan={2}>Кол-во, шт</td>
+								<td rowSpan={2}>Итого, в руб. {vat}</td>
+								<td rowSpan={2}>Вес за шт.</td>
 							</tr>
 							<tr>
-								{Number(total.cuting_laser) > 0 ||
-								Number(total.cuting_plasma) > 0 ? (
-									<th>резка</th>
-								) : (
-									''
-								)}
-								{total.choping > 0 ? <th>рубка</th> : ''}
-								{total.prod_turning_works > 0 ? (
-									<th>токарные работы</th>
-								) : (
-									''
-								)}
-								{total.bending > 0 ? <th>гибка</th> : ''}
-								{Number(total.prod_painting) > 0 ? (
-									<th>окрашивание</th>
-								) : (
-									''
-								)}
-								{total.prod_welding > 0 ? <th>сварка</th> : ''}
+								<td>резка</td>
+								<td>рубка</td>
+								<td>мех.обработка</td>
+								<td>гибка</td>
+								<td>окрашивание</td>
+								<td>сварка</td>
 							</tr>
 						</thead>
 						<tbody>
@@ -97,18 +88,10 @@ export function DocContract() {
 								/>
 							))}
 							<tr>
-								<td colSpan={colSpan + 4}>
-									<strong>Итого:</strong>
-								</td>
-								<td>
-									<strong>{total.quantity}</strong>
-								</td>
-								<td>
-									<strong>{total.price}</strong>
-								</td>
-								<td>
-									<strong>{total.weight}</strong>
-								</td>
+								<td colSpan={10}>Итого:</td>
+								<td>{total.quantity}</td>
+								<td>{total.price}</td>
+								<td>{total.weight.toFixed(3)}</td>
 							</tr>
 						</tbody>
 					</Table>
@@ -119,12 +102,12 @@ export function DocContract() {
 					<Table bordered hover>
 						<thead>
 							<tr>
-								<th>№ п/п</th>
-								<th>Толщина металла, мм</th>
-								<th>Наименование изделия</th>
-								<th>Цена за ед., руб., НДС не облагается</th>
-								<th>Кол-во</th>
-								<th>Итого, руб., НДС не облагается</th>
+								<td>№ п/п</td>
+								<td>Толщина металла, мм</td>
+								<td>Наименование изделия</td>
+								<td>Цена за ед., руб. {vat}</td>
+								<td>Кол-во</td>
+								<td>Итого, руб. {vat}</td>
 							</tr>
 						</thead>
 						<tbody>
@@ -146,15 +129,9 @@ export function DocContract() {
 								/>
 							))}
 							<tr>
-								<td colSpan={4}>
-									<strong>Итого:</strong>
-								</td>
-								<td>
-									<strong>{total.quantity}</strong>
-								</td>
-								<td>
-									<strong>{total.price}</strong>
-								</td>
+								<td colSpan={4}>Итого:</td>
+								<td>{total.quantity}</td>
+								<td>{total.price}</td>
 							</tr>
 						</tbody>
 					</Table>

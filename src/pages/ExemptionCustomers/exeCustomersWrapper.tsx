@@ -24,7 +24,6 @@ export function ExeCustomersWrapper() {
 	const { register, handleSubmit, control } = useForm<ExeCustomersCreate>()
 
 	const onSubmit: SubmitHandler<ExeCustomersCreate> = async data => {
-		console.log(data)
 		await axios.post<ExeCustomersCreate>(
 			process.env.REACT_APP_BACKEND_API_URL + 'exemptionCustomer',
 			data
@@ -32,7 +31,6 @@ export function ExeCustomersWrapper() {
 		await openAlert()
 	}
 
-	// console.log(prices)
 	return (
 		<>
 			<form onSubmit={handleSubmit(onSubmit)}>

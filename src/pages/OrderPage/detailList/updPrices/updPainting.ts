@@ -15,7 +15,6 @@ export async function UpdPainting(dataDetail: Detail) {
 		}
 	}
 
-	// console.log(dataDetail)
 	if (dataDetail.polymer === '') {
 		dataDetail.polymer_price = 0
 	} else {

@@ -18,6 +18,7 @@ import { CopyOrderModal } from '../../components/modal/CopyOrderModal'
 import { AddDetailSetupModal } from '../../components/modal/AddDetailSetupModal'
 import { ScrollTop } from '../../components/ScrollTop'
 import { DelSetupModal } from '../../components/modal/DelSetupModal'
+import { UpdBX24Data } from './updBX24Data/updBX24Data'
 
 export function EmptySetup() {
 	return <p>Элементов нет</p>
@@ -50,7 +51,6 @@ export function OrderPage() {
 		}
 	}, [id])
 
-	// console.log(order)
 	return (
 		<>
 			<div className='container-flued px-5 mb-5'>
@@ -62,18 +62,24 @@ export function OrderPage() {
 						№{order?.id} {order?.customer}{' '}
 						<Badge bg='success'>Сделка</Badge>
 					</h1>
-					<div className='d-flex flex-row'>
-						<div className='alert alert-primary p-2' role='alert'>
+					<div className='d-flex flex-row align-items-center'>
+						<div
+							className='alert alert-primary p-2 mb-0'
+							role='alert'
+						>
 							ID сделки: <strong>{order?.id}</strong>
 						</div>
 						<div
-							className='alert alert-primary p-2 mx-2'
+							className='alert alert-primary p-2 mb-0 mx-2'
 							role='alert'
 						>
 							Дата создания сделки:{' '}
 							<strong>
 								<TransformDate orderDate={order?.date_сreate} />
 							</strong>
+						</div>
+						<div>
+							<UpdBX24Data order={order} onUpd={updateOrders} />
 						</div>
 					</div>
 				</div>

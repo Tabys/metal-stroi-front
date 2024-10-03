@@ -11,7 +11,6 @@ export function PircesItems({ price, update }: PricesProps) {
 	const { register, handleSubmit } = useForm<PricesServiceItem>()
 
 	const onUpdate: SubmitHandler<PricesServiceItem> = async data => {
-		// console.log(data)
 		await axios.put<PricesServiceItem>(
 			process.env.REACT_APP_BACKEND_API_URL + 'price-services-item',
 			data

@@ -28,7 +28,6 @@ export function DocOrder() {
 	})
 	const total = CulcTotalData({ details })
 
-	// console.log(total.cuting_plasma)
 	return (
 		<>
 			<div className='container'>

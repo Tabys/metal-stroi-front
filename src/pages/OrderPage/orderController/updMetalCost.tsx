@@ -26,7 +26,6 @@ export function UpdMetalCost({
 				}
 			)
 			.then(result => {
-				console.log(result)
 				update()
 			})
 			.catch(err => {

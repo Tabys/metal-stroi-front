@@ -9,6 +9,7 @@ export type Order = {
 	markup: number
 	customer?: string
 	production_time?: number
+	vat?: string
 	createdAt?: string // date
 	updateAt?: string // date
 	metals?: Metal[]
@@ -66,6 +67,7 @@ export type Detail = {
 	additional_setups?: JSON[]
 	product_detail?: ProductsDetails
 	products?: Product[]
+	setups?: Setup[]
 	setup_detail: SetupDetail
 }
 export type SetupDetail = {
@@ -417,6 +419,10 @@ export type DocTableProductSpec = {
 	turning_works?: number
 	smithy?: number
 	design_department?: number
+}
+
+export type UpdBX24 = {
+	id: number
 }
 
 export type ExeCustomers = {

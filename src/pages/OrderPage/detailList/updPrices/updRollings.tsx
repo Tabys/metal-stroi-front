@@ -32,7 +32,6 @@ export async function UpdRollings(dataDetail: Detail) {
 			console.log({ error })
 		}
 	}
-	// console.log(dataDetail)
 	if (dataDetail.rolling_type === '') {
 		dataDetail.rolling = '0'
 	} else {

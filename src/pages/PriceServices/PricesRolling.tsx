@@ -11,7 +11,6 @@ export function PircesRolling({ price, update }: PricesProps) {
 	const { register, handleSubmit } = useForm<PricesServiceRolling>()
 
 	const onUpdate: SubmitHandler<PricesServiceRolling> = async data => {
-		// console.log(data)
 		await axios.put<PricesServiceRolling>(
 			process.env.REACT_APP_BACKEND_API_URL + 'price-services-rolling',
 			data
