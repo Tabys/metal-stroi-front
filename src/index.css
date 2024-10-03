@@ -234,6 +234,7 @@ code {
 .controllers form div label {
 	width: max-content;
 	margin: 0;
+	font-size: 14px;
 }
 
 .controllers form .form-select {
@@ -290,7 +291,10 @@ code {
 }
 
 .form-control.delivery {
-	max-width: 100px;
+	max-width: 80px;
+}
+.form-control.pallets {
+	max-width: 60px;
 }
 .modal-dialog .form-label {
 	font-weight: 500;

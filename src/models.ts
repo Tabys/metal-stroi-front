@@ -9,6 +9,7 @@ export type Order = {
 	markup: number
 	customer?: string
 	production_time?: number
+	rolling_outsourcing?: boolean
 	vat?: string
 	createdAt?: string // date
 	updateAt?: string // date
