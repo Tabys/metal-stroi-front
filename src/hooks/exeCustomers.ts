@@ -23,7 +23,6 @@ export function useExeCustomers() {
 				process.env.REACT_APP_BACKEND_API_URL + 'exemptionCustomer'
 			)
 			setCustomers(response.data)
-			// console.log(response.data)
 			setLoading(false)
 		} catch (e: unknown) {
 			const error = e as AxiosError

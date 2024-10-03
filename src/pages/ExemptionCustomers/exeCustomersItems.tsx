@@ -17,7 +17,6 @@ export function ExeCustomerItems({
 	const { register, handleSubmit } = useForm<ExeCustomers>()
 
 	const onUpdate: SubmitHandler<ExeCustomers> = async data => {
-		// console.log(data)
 		const config = {
 			data: {
 				id: data.id,

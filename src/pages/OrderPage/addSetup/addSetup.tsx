@@ -22,7 +22,6 @@ type addSetupProps = {
 
 export function AddSetup({ onCreate, onClose, order_id }: addSetupProps) {
 	const { prices } = useMaterialPrices()
-	// console.log(prices)
 	const {
 		register,
 		control,
@@ -79,8 +78,6 @@ export function AddSetup({ onCreate, onClose, order_id }: addSetupProps) {
 		)
 		onCreate()
 		onClose()
-
-		// console.log(data)
 	}
 
 	return (

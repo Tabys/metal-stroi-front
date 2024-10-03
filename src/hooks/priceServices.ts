@@ -20,7 +20,6 @@ export function useServicePrices() {
 					'price-services-category'
 			)
 			setPrices(response.data)
-			// console.log(response.data)
 			setLoading(false)
 		} catch (e: unknown) {
 			const error = e as AxiosError

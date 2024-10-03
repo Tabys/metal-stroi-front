@@ -19,7 +19,6 @@ export function useMaterialPrices() {
 				process.env.REACT_APP_BACKEND_API_URL + 'price-metal-category'
 			)
 			setPrices(response.data)
-			// console.log(response.data)
 			setLoading(false)
 		} catch (e: unknown) {
 			const error = e as AxiosError

@@ -11,7 +11,6 @@ export function PircesPainting({ price, update }: PricesProps) {
 	const { register, handleSubmit } = useForm<PricesServicePainting>()
 
 	const onUpdate: SubmitHandler<PricesServicePainting> = async data => {
-		// console.log(data)
 		await axios.put<PricesServicePainting>(
 			process.env.REACT_APP_BACKEND_API_URL + 'price-services-painting',
 			data

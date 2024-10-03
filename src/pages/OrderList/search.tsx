@@ -8,7 +8,6 @@ export function SearchOrder() {
 	const { register, handleSubmit } = useForm<Search>()
 
 	const onSubmit: SubmitHandler<Search> = data => {
-		// console.log(data)
 		function submit() {
 			return data
 		}

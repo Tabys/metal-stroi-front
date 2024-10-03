@@ -25,7 +25,6 @@ export function DocPainting() {
 	const products = PrepArrProducts(orders)
 	const productIndex = culcProductIndex(details)
 
-	// console.log(details)
 	return (
 		<>
 			<div className='container'>

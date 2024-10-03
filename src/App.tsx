@@ -79,6 +79,10 @@ function App() {
 				<>
 					<Routes>
 						<Route path='/' element={<LogIn />} />
+						<Route
+							path='/order/:id/doc-contract'
+							element={<DocContract />}
+						/>
 						<Route path='*' element={<Page404 />} />
 					</Routes>
 				</>

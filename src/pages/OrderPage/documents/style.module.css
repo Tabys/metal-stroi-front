@@ -177,6 +177,12 @@ h3 {
 	margin-bottom: 20px;
 }
 
+.contract table {
+	font-family: 'Times New Roman', Times;
+}
+.contract table thead tr td {
+	text-align: center;
+}
 @media print {
 	.doc,
 	.doc.full {

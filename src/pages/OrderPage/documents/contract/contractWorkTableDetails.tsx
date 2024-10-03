@@ -30,28 +30,12 @@ export function ContractWorkTableDetail({
 			<td>
 				{detail.thickness} {detail.material} {detail.suffixes}
 			</td>
-
-			{Number(total.cuting_laser) > 0 ||
-			Number(total.cuting_plasma) > 0 ? (
-				<td>
-					{(Number(detail.cut_cost) / detail.quantity).toFixed(2)}
-				</td>
-			) : (
-				''
-			)}
-			{total.choping > 0 ? (
-				<td>{(Number(detail.choping) / detail.quantity).toFixed(2)}</td>
-			) : (
-				''
-			)}
-			{total.prod_turning_works > 0 ? <td></td> : ''}
-			{total.bending > 0 ? (
-				<td>{(Number(detail.bending) / detail.quantity).toFixed(2)}</td>
-			) : (
-				''
-			)}
-			{Number(total.prod_painting) > 0 ? <td></td> : ''}
-			{total.prod_welding > 0 ? <td></td> : ''}
+			<td>{(Number(detail.cut_cost) / detail.quantity).toFixed(2)}</td>
+			<td>{(Number(detail.choping) / detail.quantity).toFixed(2)}</td>
+			<td>0.00</td>
+			<td>{(Number(detail.bending) / detail.quantity).toFixed(2)}</td>
+			<td>0.00</td>
+			<td>0.00</td>
 			<td>{(total_price / detail.quantity).toFixed(2)}</td>
 			<td>{detail.quantity}</td>
 			<td>{total_price.toFixed(2)}</td>

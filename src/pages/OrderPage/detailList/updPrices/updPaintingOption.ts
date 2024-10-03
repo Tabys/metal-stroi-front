@@ -1,7 +1,6 @@
 import { Detail } from '../../../../models'
 
 export function UpdPaintingOption(dataDetail: Detail) {
-	console.log(dataDetail)
 	if (dataDetail.polymer_options && dataDetail.polymer_options.length) {
 		let add_price_polymer = 0
 		dataDetail.polymer_options.forEach(item => {
