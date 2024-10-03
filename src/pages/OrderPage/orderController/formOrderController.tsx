@@ -100,11 +100,28 @@ export function FormOrderController({ orderData, updated }: formOCProps) {
 									valueAsNumber: true,
 								})}
 								defaultValue={orderData.pallets}
-								className='form-control delivery'
+								className='form-control pallets'
 							/>
 						</Form.Group>
+
 						<Form.Group>
-							<Form.Label>Наценка на металл:</Form.Label>
+							<Form.Label className='text-end'>
+								Вальцовка<br></br>аутсорс:
+							</Form.Label>
+							<input
+								{...methods.register('rolling_outsourcing', {
+									onChange: methods.handleSubmit(onSubmit),
+								})}
+								type='checkbox'
+								checked={orderData.rolling_outsourcing}
+								className='form-check-input'
+							/>
+						</Form.Group>
+
+						<Form.Group>
+							<Form.Label className='text-end'>
+								Наценка на<br></br>металл:
+							</Form.Label>
 							<FormSelect
 								name='markup'
 								selected={orderData.markup}
