@@ -9,14 +9,13 @@ export function CreateDetailGroupList(dataOrder: Order) {
 		element.details?.forEach((detail, index) => {
 			detail.material = element.material
 			detail.quantity = detail.setup_detail.count
+			detail.customers_metal = element.customers_metal
 			arrDetails.push(detail)
 		})
 	})
 
 	for (let i = 0; i < arrDetails.length; i++) {
-		const index = groupedDetails.findIndex(
-			el => el.name === arrDetails[i].name
-		)
+		const index = groupedDetails.findIndex(el => el.name === arrDetails[i].name)
 		if (index === -1) {
 			groupedDetails.push({ ...arrDetails[i] })
 		} else {

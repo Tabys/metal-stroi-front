@@ -29,15 +29,13 @@
 
 body {
 	margin: 0;
-	font-family: 'Roboto', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell',
-		'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif !important;
+	font-family: 'Roboto', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif !important;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
 
 code {
-	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-		monospace;
+	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
 #root {
@@ -272,6 +270,12 @@ code {
 	font-size: 11px;
 }
 
+.width900 {
+	max-width: 900px;
+}
+.width800 {
+	max-width: 800px;
+}
 .width700 {
 	max-width: 700px;
 }
@@ -347,6 +351,10 @@ code {
 .css-mohuvp-dummyInput-DummyInput {
 	height: 0;
 	padding: 0 !important;
+}
+.suffixes,
+.chg_metals {
+	font-size: 13px;
 }
 
 @media print {

@@ -9,7 +9,7 @@ export function MetalTable({ metals }: NeededMetalProps) {
 	return (
 		<tr>
 			<td>
-				{metals.thickness_title} {material} {metals.suffixes}
+				{metals.thickness_title} {material} {metals.suffixes} {metals.customers_metal ? 'зак' : ''}
 			</td>
 			<td>{metals.width}</td>
 			<td>{metals.length}</td>

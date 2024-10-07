@@ -9,13 +9,7 @@ type SelectProps = {
 	onSubmit: () => void
 }
 
-export function FormSelectRoll({
-	detailData,
-	selected,
-	name,
-	disabled,
-	onSubmit,
-}: SelectProps) {
+export function FormSelectRoll({ detailData, selected, name, disabled, onSubmit }: SelectProps) {
 	const { register, setValue } = useFormContext()
 	let arrOptions: string[] = []
 	let arrOptionsText: string[] = []
@@ -26,9 +20,7 @@ export function FormSelectRoll({
 			arrOptionsText = ['', 'Прокат', 'Конус']
 			break
 		case 'AlMg3':
-			arrOptions = ['', 'rolling_roll']
-			arrOptionsText = ['', 'Прокат']
-			break
+		case 'ОЦ':
 		case '1.4301':
 		case 'aisi430':
 			arrOptions = ['', 'rolling_roll']

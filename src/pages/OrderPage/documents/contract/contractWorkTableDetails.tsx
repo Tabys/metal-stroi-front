@@ -7,12 +7,7 @@ type ContractWorkTableDetailProps = {
 	delivery: number
 }
 
-export function ContractWorkTableDetail({
-	detail,
-	index,
-	total,
-	delivery,
-}: ContractWorkTableDetailProps) {
+export function ContractWorkTableDetail({ detail, index, total, delivery }: ContractWorkTableDetailProps) {
 	const total_price =
 		Number(detail.bending) +
 		Number(detail.choping) +
@@ -28,7 +23,7 @@ export function ContractWorkTableDetail({
 			<td>{index + 1}</td>
 			<td>{detail.name}</td>
 			<td>
-				{detail.thickness} {detail.material} {detail.suffixes}
+				{detail.thickness} {detail.material} {detail.suffixes} {detail.customers_metal ? 'зак' : ''}
 			</td>
 			<td>{(Number(detail.cut_cost) / detail.quantity).toFixed(2)}</td>
 			<td>{(Number(detail.choping) / detail.quantity).toFixed(2)}</td>

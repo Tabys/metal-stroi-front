@@ -1,18 +1,10 @@
 import axios, { AxiosError } from 'axios'
-import {
-	PriceServiceCategory,
-	Detail,
-	Setup,
-	PricesServiceRolling,
-} from '../../../../models'
+import { PriceServiceCategory, Detail, Setup, PricesServiceRolling } from '../../../../models'
 
 export async function UpdRollings(dataDetail: Detail) {
 	async function getPrices() {
 		try {
-			const response = await axios.get<PriceServiceCategory[]>(
-				process.env.REACT_APP_BACKEND_API_URL +
-					'price-services-category'
-			)
+			const response = await axios.get<PriceServiceCategory[]>(process.env.REACT_APP_BACKEND_API_URL + 'price-services-category')
 			return response.data
 		} catch (e: unknown) {
 			const error = e as AxiosError
@@ -22,10 +14,7 @@ export async function UpdRollings(dataDetail: Detail) {
 
 	async function getSetup() {
 		try {
-			const response = await axios.get<Setup>(
-				process.env.REACT_APP_BACKEND_API_URL +
-					`setup/${dataDetail.setup_id}`
-			)
+			const response = await axios.get<Setup>(process.env.REACT_APP_BACKEND_API_URL + `setup/${dataDetail.setup_id}`)
 			return response.data
 		} catch (e: unknown) {
 			const error = e as AxiosError
@@ -57,42 +46,34 @@ export async function UpdRollings(dataDetail: Detail) {
 		switch (MATERIAL_NAME) {
 			case 'St37':
 			case '09Г2С':
-				SERVICES_COST = PRICE?.price_services_rollings?.filter(
-					function (items) {
-						return items.type_metal === 'Черный'
-					}
-				)
+			case 'ОЦ':
+				SERVICES_COST = PRICE?.price_services_rollings?.filter(function (items) {
+					return items.type_metal === 'Черный'
+				})
 				SERVICE_COST = SERVICES_COST?.find(function (items) {
 					return items.metal_thickness === THICKNESS
 				})
 				break
 			case 'AlMg3':
-				SERVICES_COST = PRICE?.price_services_rollings?.filter(
-					function (items) {
-						return items.type_metal === 'Алюм'
-					}
-				)
+				SERVICES_COST = PRICE?.price_services_rollings?.filter(function (items) {
+					return items.type_metal === 'Алюм'
+				})
 				SERVICE_COST = SERVICES_COST?.find(function (items) {
 					return items.metal_thickness === THICKNESS
 				})
 				break
 			case '1.4301':
 			case 'aisi430':
-				SERVICES_COST = PRICE?.price_services_rollings?.filter(
-					function (items) {
-						return items.type_metal === 'Нерж'
-					}
-				)
+				SERVICES_COST = PRICE?.price_services_rollings?.filter(function (items) {
+					return items.type_metal === 'Нерж'
+				})
 				SERVICE_COST = SERVICES_COST?.find(function (items) {
 					return items.metal_thickness === THICKNESS
 				})
 				break
 		}
 
-		let rolling_cost =
-			(Number(detail?.serface) / 1000000) *
-			Number(SERVICE_COST?.cost) *
-			Number(detail?.setup_detail.count)
+		let rolling_cost = (Number(detail?.serface) / 1000000) * Number(SERVICE_COST?.cost) * Number(detail?.setup_detail.count)
 		if (rolling_cost < Number(SERVICE_COST?.min_cost)) {
 			rolling_cost = Number(SERVICE_COST?.min_cost)
 		}
