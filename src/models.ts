@@ -29,6 +29,8 @@ export type Setup = {
 	order_index?: number
 	order_id?: number
 	suffixes?: JSON[]
+	unique: string
+	customers_metal: boolean
 	details?: Detail[]
 }
 
@@ -66,6 +68,7 @@ export type Detail = {
 	table_number: string
 	drowing?: number
 	additional_setups?: JSON[]
+	customers_metal?: boolean
 	product_detail?: ProductsDetails
 	products?: Product[]
 	setups?: Setup[]
@@ -122,6 +125,13 @@ export type AddProductDetail = {
 
 export type AddSuffix = {
 	id: number
+	order_id: number
+	thickness: number
+	customers_metal: boolean
+	metals: {
+		value: string
+		label: string
+	} | null
 	suffixes: JSON[] | undefined
 }
 
@@ -245,6 +255,7 @@ export type WorkshopMetal = {
 	length: number
 	width: number
 	suffixes: string
+	customers_metal: boolean
 	thickness_title?: string
 }
 
@@ -278,6 +289,7 @@ export type DocTableDetail = {
 	polymer_price?: number
 	surface?: string
 	metal_title?: string[]
+	customers_metal?: boolean
 	product_detail?: ProductsDetails[]
 	products?: Product[]
 }
@@ -435,4 +447,11 @@ export type ExeCustomersCreate = {
 }
 export type ExeCustomersDel = {
 	id: number
+}
+
+export type FormatedSetupsData = {
+	thickness: number
+	table_number: string
+	metals: string
+	setups: Setup[] | undefined
 }

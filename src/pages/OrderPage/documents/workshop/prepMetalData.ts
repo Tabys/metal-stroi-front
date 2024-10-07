@@ -35,10 +35,7 @@ export function prepMetalData({ setups, materials }: prepMetalDataProps) {
 			used_metal_width = rounded_used_metal_width
 		}
 
-		const used_metal =
-			((used_metal_length * used_metal_width) /
-				(Number(full_metal_length) * Number(full_metal_width))) *
-			Number(setup.program_runs)
+		const used_metal = ((used_metal_length * used_metal_width) / (Number(full_metal_length) * Number(full_metal_width))) * Number(setup.program_runs)
 
 		const thickness = materials.find(items => {
 			return String(items.table_name) === String(setup.table_number)
@@ -62,6 +59,7 @@ export function prepMetalData({ setups, materials }: prepMetalDataProps) {
 			width: used_metal_width,
 			suffixes: strSuffixes,
 			thickness_title: thickness?.title,
+			customers_metal: setup.customers_metal,
 		}
 	})
 
@@ -78,18 +76,13 @@ export function prepMetalData({ setups, materials }: prepMetalDataProps) {
 			if (index === -1) {
 				groupedNeededMetal.push({ ...metalData[i] })
 			} else {
-				groupedNeededMetal[index].metal_sheets +=
-					metalData[i].metal_sheets
+				groupedNeededMetal[index].metal_sheets += metalData[i].metal_sheets
 			}
 		}
 	}
 
 	groupedNeededMetal.sort((a, b) => {
-		return (
-			a.thickness - b.thickness ||
-			a.width - b.width ||
-			a.length - b.length
-		)
+		return a.thickness - b.thickness || a.width - b.width || a.length - b.length
 	})
 	return groupedNeededMetal
 }

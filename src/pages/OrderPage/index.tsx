@@ -13,7 +13,7 @@ import { FaFileLines } from 'react-icons/fa6'
 import { MetalList } from './metalList/metalList'
 import { AddProductModal } from '../../components/modal/AddProductModal'
 import { ProductList } from './productList/productList'
-import { AddSuffixModal } from '../../components/modal/AddSuffixModal'
+import { AddSuffixModal } from '../../components/modal/AddSuffixAndMetalsModal'
 import { CopyOrderModal } from '../../components/modal/CopyOrderModal'
 import { AddDetailSetupModal } from '../../components/modal/AddDetailSetupModal'
 import { ScrollTop } from '../../components/ScrollTop'
@@ -35,9 +35,7 @@ export function OrderPage() {
 
 	async function getOrder(id: number) {
 		try {
-			let response = await axios.get<Order>(
-				process.env.REACT_APP_BACKEND_API_URL + `orders/${id}`
-			)
+			let response = await axios.get<Order>(process.env.REACT_APP_BACKEND_API_URL + `orders/${id}`)
 			await setOrder(response.data)
 		} catch (e: unknown) {
 			const error = e as AxiosError
@@ -59,20 +57,13 @@ export function OrderPage() {
 						Вернуться назад
 					</Link>
 					<h1>
-						№{order?.id} {order?.customer}{' '}
-						<Badge bg='success'>Сделка</Badge>
+						№{order?.id} {order?.customer} <Badge bg='success'>Сделка</Badge>
 					</h1>
 					<div className='d-flex flex-row align-items-center'>
-						<div
-							className='alert alert-primary p-2 mb-0'
-							role='alert'
-						>
+						<div className='alert alert-primary p-2 mb-0' role='alert'>
 							ID сделки: <strong>{order?.id}</strong>
 						</div>
-						<div
-							className='alert alert-primary p-2 mb-0 mx-2'
-							role='alert'
-						>
+						<div className='alert alert-primary p-2 mb-0 mx-2' role='alert'>
 							Дата создания сделки:{' '}
 							<strong>
 								<TransformDate orderDate={order?.date_сreate} />
@@ -110,10 +101,7 @@ export function OrderPage() {
 									</Link>
 								</ListGroup.Item>
 								<ListGroup.Item variant='light'>
-									<Link
-										relative='path'
-										to={`doc-specialization`}
-									>
+									<Link relative='path' to={`doc-specialization`}>
 										<FaFileLines /> Спецификация
 									</Link>
 								</ListGroup.Item>
@@ -126,41 +114,22 @@ export function OrderPage() {
 									<SendPDFForm orderId={Number(id)} />
 								</ListGroup.Item>
 							</ListGroup>
-							<FormOrderController
-								orderData={order}
-								updated={updateOrders}
-							/>
+							<FormOrderController orderData={order} updated={updateOrders} />
 						</div>
 
 						<DetailList dataOrder={order} />
 
 						{order.metals ? <MetalList metal={order.metals} /> : ''}
 
-						<ProductList
-							dataOrder={order}
-							delProduct={updateOrders}
-						/>
+						<ProductList dataOrder={order} delProduct={updateOrders} />
 
 						{/* FIXED INTERFACE ELEMENTS */}
 						<div className='fixed-element'>
-							<UploadSetupModal
-								onCreate={updateOrders}
-								orderId={Number(id)}
-							/>
-							<AddDetailSetupModal
-								onAdd={updateOrders}
-								setups={order.setups}
-								order_id={order.id}
-							/>
+							<UploadSetupModal onCreate={updateOrders} orderId={Number(id)} />
+							<AddDetailSetupModal onAdd={updateOrders} setups={order.setups} order_id={order.id} />
 							<CopyOrderModal order={order} />
-							<AddSuffixModal
-								onAdd={updateOrders}
-								order={order}
-							/>
-							<AddProductModal
-								order={order}
-								onAdd={updateOrders}
-							/>
+							<AddSuffixModal onAdd={updateOrders} order={order} />
+							<AddProductModal order={order} onAdd={updateOrders} />
 							<DelSetupModal order={order} onDel={updateOrders} />
 						</div>
 
@@ -168,15 +137,8 @@ export function OrderPage() {
 					</>
 				) : (
 					<div className='fixed-element'>
-						<UploadSetupModal
-							onCreate={updateOrders}
-							orderId={Number(id)}
-						/>
-						<AddDetailSetupModal
-							onAdd={updateOrders}
-							setups={order?.setups}
-							order_id={order?.id}
-						/>
+						<UploadSetupModal onCreate={updateOrders} orderId={Number(id)} />
+						<AddDetailSetupModal onAdd={updateOrders} setups={order?.setups} order_id={order?.id} />
 					</div>
 				)}
 			</div>

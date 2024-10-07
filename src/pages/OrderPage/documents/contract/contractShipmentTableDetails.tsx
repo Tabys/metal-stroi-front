@@ -6,11 +6,7 @@ type ContractShipmentTableDetailsProps = {
 	delivery: number
 }
 
-export function ContractShipmentTableDetails({
-	detail,
-	index,
-	delivery,
-}: ContractShipmentTableDetailsProps) {
+export function ContractShipmentTableDetails({ detail, index, delivery }: ContractShipmentTableDetailsProps) {
 	const total_price =
 		Number(detail.bending) +
 		Number(detail.choping) +
@@ -25,7 +21,7 @@ export function ContractShipmentTableDetails({
 		<tr key={detail.id}>
 			<td>{index + 1}</td>
 			<td>
-				{detail.thickness} {detail.suffixes}
+				{detail.thickness} {detail.suffixes} {detail.customers_metal ? 'зак' : ''}
 			</td>
 			<td>{detail.name}</td>
 			<td>{(total_price / detail.quantity).toFixed(2)}</td>

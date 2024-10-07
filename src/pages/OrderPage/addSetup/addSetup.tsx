@@ -1,11 +1,6 @@
 import axios from 'axios'
 import Form from 'react-bootstrap/Form'
-import {
-	useForm,
-	SubmitHandler,
-	Controller,
-	useFieldArray,
-} from 'react-hook-form'
+import { useForm, SubmitHandler, Controller, useFieldArray } from 'react-hook-form'
 import { AddSetups } from '../../../models'
 import { useMaterialPrices } from '../../../hooks/priceMaterials'
 import { useState } from 'react'
@@ -38,9 +33,7 @@ export function AddSetup({ onCreate, onClose, order_id }: addSetupProps) {
 
 	const arrOptions: any[] = listMetalName(material)
 	let avalibleMetals = prices.find(price => price.abbreviation === material)
-	let groupAvalibleMetal = avalibleMetals?.price_metal_items?.filter(
-		(obj, idx, arr) => idx === arr.findIndex(t => t.title === obj.title)
-	)
+	let groupAvalibleMetal = avalibleMetals?.price_metal_items?.filter((obj, idx, arr) => idx === arr.findIndex(t => t.title === obj.title))
 
 	const options = arrOptions.map(value => {
 		return { value: value, label: value }
@@ -57,9 +50,7 @@ export function AddSetup({ onCreate, onClose, order_id }: addSetupProps) {
 			})
 			data.suffixes = jsonList
 		}
-		let realTickness = groupAvalibleMetal?.find(
-			metal => metal.title === data.thicknessTitle
-		)
+		let realTickness = groupAvalibleMetal?.find(metal => metal.title === data.thicknessTitle)
 		data.thickness = Number(realTickness?.thickness)
 
 		data.details?.forEach(detail => {
@@ -72,10 +63,7 @@ export function AddSetup({ onCreate, onClose, order_id }: addSetupProps) {
 			}
 			delete detail.quantity
 		})
-		await axios.post<AddSetups>(
-			process.env.REACT_APP_BACKEND_API_URL + 'setup/',
-			data
-		)
+		await axios.post<AddSetups>(process.env.REACT_APP_BACKEND_API_URL + 'setup/', data)
 		onCreate()
 		onClose()
 	}
@@ -83,11 +71,7 @@ export function AddSetup({ onCreate, onClose, order_id }: addSetupProps) {
 	return (
 		<form onSubmit={handleSubmit(onSubmit)}>
 			<div className={style.setup}>
-				<input
-					{...register('order_id')}
-					type='hidden'
-					defaultValue={order_id}
-				/>
+				<input {...register('order_id')} type='hidden' defaultValue={order_id} />
 				<div className='mb-2'>
 					<label className='form-label'>Материал</label>
 					<select
@@ -97,11 +81,7 @@ export function AddSetup({ onCreate, onClose, order_id }: addSetupProps) {
 						onChange={e => {
 							setMaterial(e.target.value)
 						}}
-						className={
-							errors.material
-								? 'form-select is-invalid'
-								: 'form-select'
-						}
+						className={errors.material ? 'form-select is-invalid' : 'form-select'}
 						defaultValue={''}
 					>
 						<option disabled value={''}>
@@ -113,11 +93,7 @@ export function AddSetup({ onCreate, onClose, order_id }: addSetupProps) {
 							</option>
 						))}
 					</select>
-					{errors.material && (
-						<Form.Text className='text-danger'>
-							{errors.material.message}
-						</Form.Text>
-					)}
+					{errors.material && <Form.Text className='text-danger'>{errors.material.message}</Form.Text>}
 				</div>
 				<div className={style.flex + ' mb-2'}>
 					<label className='form-label'>Заготовка:</label>
@@ -129,17 +105,9 @@ export function AddSetup({ onCreate, onClose, order_id }: addSetupProps) {
 									required: 'Это поле обязательное',
 								})}
 								placeholder='Длина'
-								className={
-									errors.length
-										? 'form-control is-invalid'
-										: 'form-control'
-								}
+								className={errors.length ? 'form-control is-invalid' : 'form-control'}
 							/>
-							{errors.length && (
-								<Form.Text className='text-danger'>
-									{errors.length.message}
-								</Form.Text>
-							)}
+							{errors.length && <Form.Text className='text-danger'>{errors.length.message}</Form.Text>}
 						</div>
 						<div className={style.group}>
 							<input
@@ -148,28 +116,16 @@ export function AddSetup({ onCreate, onClose, order_id }: addSetupProps) {
 									required: 'Это поле обязательное',
 								})}
 								placeholder='Ширина'
-								className={
-									errors.width
-										? 'form-control is-invalid'
-										: 'form-control'
-								}
+								className={errors.width ? 'form-control is-invalid' : 'form-control'}
 							/>
-							{errors.width && (
-								<Form.Text className='text-danger'>
-									{errors.width.message}
-								</Form.Text>
-							)}
+							{errors.width && <Form.Text className='text-danger'>{errors.width.message}</Form.Text>}
 						</div>
 						<div className={style.group}>
 							<select
 								{...register('thicknessTitle', {
 									required: 'Это поле обязательное',
 								})}
-								className={
-									errors.thicknessTitle
-										? 'form-select is-invalid'
-										: 'form-select'
-								}
+								className={errors.thicknessTitle ? 'form-select is-invalid' : 'form-select'}
 								defaultValue={''}
 							>
 								<option value='' disabled>
@@ -177,20 +133,13 @@ export function AddSetup({ onCreate, onClose, order_id }: addSetupProps) {
 								</option>
 								{groupAvalibleMetal?.map(metal => {
 									return (
-										<option
-											key={metal.id}
-											value={metal.title}
-										>
+										<option key={metal.id} value={metal.title}>
 											{metal.title}
 										</option>
 									)
 								})}
 							</select>
-							{errors.thicknessTitle && (
-								<Form.Text className='text-danger'>
-									{errors.thicknessTitle.message}
-								</Form.Text>
-							)}
+							{errors.thicknessTitle && <Form.Text className='text-danger'>{errors.thicknessTitle.message}</Form.Text>}
 						</div>
 					</div>
 				</div>
@@ -204,17 +153,9 @@ export function AddSetup({ onCreate, onClose, order_id }: addSetupProps) {
 									required: 'Это поле обязательное',
 								})}
 								placeholder='Длина'
-								className={
-									errors.min_length
-										? 'form-control is-invalid'
-										: 'form-control'
-								}
+								className={errors.min_length ? 'form-control is-invalid' : 'form-control'}
 							/>
-							{errors.min_length && (
-								<Form.Text className='text-danger'>
-									{errors.min_length.message}
-								</Form.Text>
-							)}
+							{errors.min_length && <Form.Text className='text-danger'>{errors.min_length.message}</Form.Text>}
 						</div>
 						<div className={style.group}>
 							<input
@@ -223,17 +164,9 @@ export function AddSetup({ onCreate, onClose, order_id }: addSetupProps) {
 									required: 'Это поле обязательное',
 								})}
 								placeholder='Ширина'
-								className={
-									errors.min_width
-										? 'form-control is-invalid'
-										: 'form-control'
-								}
+								className={errors.min_width ? 'form-control is-invalid' : 'form-control'}
 							/>
-							{errors.min_width && (
-								<Form.Text className='text-danger'>
-									{errors.min_width.message}
-								</Form.Text>
-							)}
+							{errors.min_width && <Form.Text className='text-danger'>{errors.min_width.message}</Form.Text>}
 						</div>
 					</div>
 				</div>
@@ -252,17 +185,9 @@ export function AddSetup({ onCreate, onClose, order_id }: addSetupProps) {
 								message: 'Максимальное колличество 100',
 							},
 						})}
-						className={
-							errors.program_runs
-								? 'form-control is-invalid'
-								: 'form-control'
-						}
+						className={errors.program_runs ? 'form-control is-invalid' : 'form-control'}
 					/>
-					{errors.program_runs && (
-						<Form.Text className='text-danger'>
-							{errors.program_runs.message}
-						</Form.Text>
-					)}
+					{errors.program_runs && <Form.Text className='text-danger'>{errors.program_runs.message}</Form.Text>}
 				</div>
 				<div className='mb-2'>
 					<label className='form-label'>Суффиксы</label>
@@ -273,12 +198,9 @@ export function AddSetup({ onCreate, onClose, order_id }: addSetupProps) {
 							<Select
 								closeMenuOnSelect={false}
 								isSearchable={false}
-								value={options.filter(c =>
-									value?.includes(c.value)
-								)}
-								onChange={val =>
-									onChange(val.map(c => c.value))
-								}
+								value={options.filter(c => value?.includes(c.value))}
+								onChange={val => onChange(val.map(c => c.value))}
+								isDisabled={options.length > 0 ? false : true}
 								options={options}
 								isMulti
 								placeholder='Нажми'
@@ -294,29 +216,17 @@ export function AddSetup({ onCreate, onClose, order_id }: addSetupProps) {
 					return (
 						<div key={item.id} className={style.detail}>
 							<div className='mb-2'>
-								<label className='form-label'>
-									Название детали
-								</label>
+								<label className='form-label'>Название детали</label>
 								<input
 									{...register(`details.${index}.name`, {
 										required: true,
 									})}
-									className={
-										errors.details?.[index]?.name
-											? 'form-control is-invalid'
-											: 'form-control'
-									}
+									className={errors.details?.[index]?.name ? 'form-control is-invalid' : 'form-control'}
 								/>
-								{errors.details?.[index]?.name && (
-									<Form.Text className='text-danger'>
-										Это поле обязательное
-									</Form.Text>
-								)}
+								{errors.details?.[index]?.name && <Form.Text className='text-danger'>Это поле обязательное</Form.Text>}
 							</div>
 							<div className='mb-2'>
-								<label className='form-label'>
-									Колличество
-								</label>
+								<label className='form-label'>Колличество</label>
 								<input
 									{...register(`details.${index}.quantity`, {
 										required: true,
@@ -324,82 +234,44 @@ export function AddSetup({ onCreate, onClose, order_id }: addSetupProps) {
 									})}
 									type='number'
 									min={1}
-									className={
-										errors.details?.[index]?.quantity
-											? 'form-control is-invalid'
-											: 'form-control'
-									}
+									className={errors.details?.[index]?.quantity ? 'form-control is-invalid' : 'form-control'}
 								/>
-								{errors.details?.[index]?.quantity && (
-									<Form.Text className='text-danger'>
-										Это поле обязательное
-									</Form.Text>
-								)}
+								{errors.details?.[index]?.quantity && <Form.Text className='text-danger'>Это поле обязательное</Form.Text>}
 							</div>
 							<div className={style.flex + ' mb-2'}>
 								<div className={style.wrapp}>
 									<div className={style.group}>
-										<label className='form-label'>
-											Длина
-										</label>
+										<label className='form-label'>Длина</label>
 										<input
-											{...register(
-												`details.${index}.l_size`,
-												{
-													required: true,
-													valueAsNumber: true,
-												}
-											)}
+											{...register(`details.${index}.l_size`, {
+												required: true,
+												valueAsNumber: true,
+											})}
 											type='number'
 											step={0.01}
 											min={0}
-											className={
-												errors.details?.[index]?.l_size
-													? 'form-control is-invalid'
-													: 'form-control'
-											}
+											className={errors.details?.[index]?.l_size ? 'form-control is-invalid' : 'form-control'}
 										/>
-										{errors.details?.[index]?.l_size && (
-											<Form.Text className='text-danger'>
-												Заполни
-											</Form.Text>
-										)}
+										{errors.details?.[index]?.l_size && <Form.Text className='text-danger'>Заполни</Form.Text>}
 									</div>
 									<div className={style.group}>
-										<label className='form-label'>
-											Ширина
-										</label>
+										<label className='form-label'>Ширина</label>
 										<input
-											{...register(
-												`details.${index}.w_size`,
-												{
-													required: true,
-													valueAsNumber: true,
-												}
-											)}
+											{...register(`details.${index}.w_size`, {
+												required: true,
+												valueAsNumber: true,
+											})}
 											step={0.01}
 											min={0}
 											type='number'
-											className={
-												errors.details?.[index]?.w_size
-													? 'form-control is-invalid'
-													: 'form-control'
-											}
+											className={errors.details?.[index]?.w_size ? 'form-control is-invalid' : 'form-control'}
 										/>
-										{errors.details?.[index]?.w_size && (
-											<Form.Text className='text-danger'>
-												Заполни
-											</Form.Text>
-										)}
+										{errors.details?.[index]?.w_size && <Form.Text className='text-danger'>Заполни</Form.Text>}
 									</div>
 								</div>
 							</div>
 
-							<button
-								type='button'
-								onClick={() => remove(index)}
-								className='btn btn-primary'
-							>
+							<button type='button' onClick={() => remove(index)} className='btn btn-primary'>
 								<FaMinus />
 							</button>
 						</div>
