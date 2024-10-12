@@ -126,7 +126,8 @@ export type AddProductDetail = {
 export type AddSuffix = {
 	id: number
 	order_id: number
-	thickness: number
+	table_number: string
+	material: string
 	customers_metal: boolean
 	metals: {
 		value: string
@@ -265,14 +266,14 @@ export type DocTableDetail = {
 	material?: string
 	time: string
 	name: string
-	cut_cost: string
+	cut_cost: number
 	cut_type: string
 	bend_count?: number
 	chop_count?: number
 	bend_cost?: number
 	chop_cost?: number
-	choping: string
-	bending: string
+	choping: number
+	bending: number
 	metal: string
 	quantity: number
 	weight?: string
@@ -301,6 +302,7 @@ export type DocTableProduct = {
 	totalPrice: number
 	painting_color?: string
 	painting_cost?: number
+	design_department: number
 	weight?: number
 	value?: number
 }

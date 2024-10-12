@@ -1,8 +1,4 @@
-import {
-	DocTableDetail,
-	DocTableProductSpec,
-	Product,
-} from '../../../../models'
+import { DocTableDetail, DocTableProductSpec } from '../../../../models'
 
 type ContractShipmentTableProductsProps = {
 	product: DocTableProductSpec
@@ -11,31 +7,15 @@ type ContractShipmentTableProductsProps = {
 	delivery: number
 }
 
-export function ContractShipmentTableProducts({
-	product,
-	index,
-	details,
-	delivery,
-}: ContractShipmentTableProductsProps) {
+export function ContractShipmentTableProducts({ product, index, details, delivery }: ContractShipmentTableProductsProps) {
 	return (
 		<tr key={product.id}>
 			<td>{details?.length ? index + 1 + details.length : 0}</td>
 			<td>-</td>
 			<td>{product.name}</td>
-			<td>
-				{(
-					(product.totalPrice +
-						delivery * Number(product.detailsWeight)) /
-					product.quantity
-				).toFixed(2)}
-			</td>
+			<td>{Math.ceil(product.totalPrice + delivery * Number(product.weight)) / Number(product.quantity)}</td>
 			<td>{product.quantity}</td>
-			<td>
-				{(
-					product.totalPrice +
-					delivery * Number(product.detailsWeight)
-				).toFixed(2)}
-			</td>
+			<td>{Math.ceil(product.totalPrice + delivery * Number(product.weight))}</td>
 		</tr>
 	)
 }

@@ -4,11 +4,7 @@ type CulcTotalDataProps = {
 	products?: DocTableProductSpec[] | undefined
 	orders?: Order
 }
-export function CulcTotalData({
-	details,
-	products,
-	orders,
-}: CulcTotalDataProps) {
+export function CulcTotalData({ details, products, orders }: CulcTotalDataProps) {
 	let total_price = 0
 	let total_quantity = 0
 	let total_weight = 0
@@ -41,19 +37,20 @@ export function CulcTotalData({
 		total_weight += Number(detail.weight) * Number(detail.quantity)
 	})
 	products?.forEach(product => {
-		total_weight += product.weight ? product.weight * product.quantity : 0
+		total_weight += Number(product.weight)
 	})
 
 	// Delivery
 	let deliveryCost: number | null = null
 	let oneKgDelivery: number = 0
-
 	if (orders?.delivery! && orders?.delivery > 0) {
 		deliveryCost = orders?.delivery + orders?.pallets * 500
-		oneKgDelivery = Number(deliveryCost) / total_weight
+		oneKgDelivery = Number(deliveryCost) / parseFloat(total_weight.toFixed(3))
 	}
 
 	details?.forEach(detail => {
+		const oneKgDrowing = Number(detail.drowing) / (Number(detail.weight) * detail.quantity)
+
 		total_price +=
 			Math.ceil(
 				Number(detail.bending) +
@@ -62,8 +59,8 @@ export function CulcTotalData({
 					Number(detail.metal) +
 					Number(detail.painting) +
 					Number(detail.rolling) +
-					Number(detail.drowing) +
-					oneKgDelivery * Number(detail.weight)
+					oneKgDelivery * Number(detail.weight) +
+					oneKgDrowing * Number(detail.weight)
 			) * detail.quantity
 
 		total_quantity += detail.quantity
@@ -74,53 +71,29 @@ export function CulcTotalData({
 		total_bending += Number(detail.bending)
 		total_metal += Number(detail.metal)
 		total_time += Number(detail.time)
-		total_length += Number(
-			detail.cut_type === 'plasma' ? Number(detail.length).toFixed(2) : 0
-		)
-		total_inset += Number(
-			detail.cut_type === 'plasma' ? detail.cut_count : 0
-		)
+		total_length += Number(detail.cut_type === 'plasma' ? Number(detail.length).toFixed(2) : 0)
+		total_inset += Number(detail.cut_type === 'plasma' ? detail.cut_count : 0)
 		total_cuting += Number(detail.cut_cost)
-		total_cuting_laser +=
-			detail.cut_type === 'laser' ? Number(detail.cut_cost) : 0
-		total_cuting_plasma +=
-			detail.cut_type === 'plasma' ? Number(detail.cut_cost) : 0
+		total_cuting_laser += detail.cut_type === 'laser' ? Number(detail.cut_cost) : 0
+		total_cuting_plasma += detail.cut_type === 'plasma' ? Number(detail.cut_cost) : 0
 		total_painting += Number(detail.painting)
 		total_rolling += detail.rolling ? detail.rolling : 0
 		total_drowing += detail.drowing ? detail.drowing : 0
 	})
 	products?.forEach(product => {
-		total_price +=
-			Math.ceil(
-				product.totalPrice + oneKgDelivery * Number(product.weight)
-			) * Number(product.quantity)
+		total_price += Math.ceil(product.totalPrice + oneKgDelivery * Number(product.weight))
 
 		total_quantity += product.quantity
 		// total_weight += product.weight ? product.weight * product.quantity : 0
 
 		// Only Products
 		total_prod_quantity += Number(product.quantity)
-		total_prod_price += Math.ceil(
-			product.totalPrice +
-				oneKgDelivery *
-					Number(product.weight) *
-					Number(product.quantity)
-		)
-		total_prod_painting += product.painting_cost
-			? Number(product.painting_cost) * Number(product.quantity)
-			: 0
-		total_prod_turning_works += product.turning_works
-			? Number(product.turning_works) * Number(product.quantity)
-			: 0
-		total_prod_smithy += product.smithy
-			? Number(product.smithy) * Number(product.quantity)
-			: 0
-		total_prod_welding += product.welding
-			? Number(product.welding) * Number(product.quantity)
-			: 0
-		total_prod_design_department += product.design_department
-			? Number(product.design_department) * Number(product.quantity)
-			: 0
+		total_prod_price += Math.ceil(product.totalPrice + oneKgDelivery * Number(product.weight)) * Number(product.quantity)
+		total_prod_painting += product.painting_cost ? Number(product.painting_cost) * Number(product.quantity) : 0
+		total_prod_turning_works += product.turning_works ? Number(product.turning_works) * Number(product.quantity) : 0
+		total_prod_smithy += product.smithy ? Number(product.smithy) * Number(product.quantity) : 0
+		total_prod_welding += product.welding ? Number(product.welding) * Number(product.quantity) : 0
+		total_prod_design_department += product.design_department ? Number(product.design_department) * Number(product.quantity) : 0
 	})
 
 	const total_data = {

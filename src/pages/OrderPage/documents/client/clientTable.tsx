@@ -7,15 +7,20 @@ type ClientTableProps = {
 }
 
 export function ClientTable({ detail, index, delivery }: ClientTableProps) {
+	const oneKgDrowing = Number(detail.drowing) / (Number(detail.weight) * detail.quantity)
+
 	const total_price =
-		Number(detail.bending) +
-		Number(detail.choping) +
-		Number(detail.cut_cost) +
-		Number(detail.metal) +
-		Number(detail.painting) +
-		Number(detail.rolling) +
-		(detail.drowing ? detail.drowing : 0) +
-		delivery * Number(detail.weight) * detail.quantity
+		Math.ceil(
+			Number(detail.bending) +
+				Number(detail.choping) +
+				Number(detail.cut_cost) +
+				Number(detail.metal) +
+				Number(detail.painting) +
+				Number(detail.rolling) +
+				delivery * Number(detail.weight) +
+				oneKgDrowing * Number(detail.weight)
+		) * detail.quantity
+
 	return (
 		<tr>
 			<td>{index + 1}</td>
@@ -24,7 +29,7 @@ export function ClientTable({ detail, index, delivery }: ClientTableProps) {
 				{detail.thickness} {detail.material} {detail.suffixes} {detail.customers_metal ? 'зак' : ''}
 			</td>
 			<td>{detail.quantity}</td>
-			<td>{Math.ceil(Number(total_price))}</td>
+			<td>{total_price}</td>
 		</tr>
 	)
 }
