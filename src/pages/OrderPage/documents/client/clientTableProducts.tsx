@@ -1,4 +1,4 @@
-import { DocTableProduct, Product } from '../../../../models'
+import { DocTableProduct } from '../../../../models'
 
 type ClientTableProductsProps = {
 	product: DocTableProduct
@@ -7,30 +7,16 @@ type ClientTableProductsProps = {
 	delivery: number
 }
 
-export function ClientTableProducts({
-	product,
-	index,
-	startIndex,
-	delivery,
-}: ClientTableProductsProps) {
-	// const total_price = (
-	// 	Number(product.bending) +
-	// 	Number(product.choping) +
-	// 	Number(product.cut_cost) +
-	// 	Number(product.metal)
-	// ).toFixed(1)
+export function ClientTableProducts({ product, index, startIndex, delivery }: ClientTableProductsProps) {
+	const total_price = Math.ceil(product.totalPrice + delivery * Number(product.weight))
+
 	return (
 		<tr className={index === 0 ? 'borderBold' : ''}>
 			<td>{startIndex ? startIndex + index + 1 : 0}</td>
 			<td>{product.name}</td>
 			<td>-</td>
 			<td>{product.quantity}</td>
-			<td>
-				{Math.ceil(
-					product.totalPrice +
-						delivery * Number(product.weight) * product.quantity
-				)}
-			</td>
+			<td>{total_price}</td>
 		</tr>
 	)
 }

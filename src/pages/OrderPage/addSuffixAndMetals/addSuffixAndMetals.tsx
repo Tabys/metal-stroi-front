@@ -49,7 +49,8 @@ export function AddSuffixesAndMetals({ onCreate, onClose, order }: AddSuffixAndM
 			return {
 				id: Number(setup.id),
 				order_id: Number(setup.order_id),
-				thickness: Number(setup?.details?.[0].thickness),
+				table_number: setup?.table_number ? setup?.table_number : '',
+				material: setup?.material ? setup?.material : '',
 				customers_metal: false,
 				metals: null,
 				suffixes: setup.suffixes,

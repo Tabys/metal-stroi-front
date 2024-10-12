@@ -3,8 +3,6 @@ import { DocTableDetail, Order } from '../../../models'
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form'
 import Form from 'react-bootstrap/Form'
 import { FormSelect } from '../detailList/formElements/formSelect'
-import { Role } from '../../../components/auth/role'
-import { ClearMetalCost } from './clearMetalCost'
 import { UpdMetalCost } from './updMetalCost'
 import { useState } from 'react'
 import { Alert } from 'react-bootstrap'
@@ -31,9 +29,7 @@ export function FormOrderController({ orderData, updated }: formOCProps) {
 
 	const onSubmitDelivery: SubmitHandler<Order> = async data => {
 		if (data.delivery !== 0) {
-			const arrDetails = orderData
-				? CreateDetailGroupList(orderData)
-				: undefined
+			const arrDetails = orderData ? CreateDetailGroupList(orderData) : undefined
 			const details: DocTableDetail[] | undefined = PrepArrDetils({
 				arrDetails,
 				orders: orderData,
@@ -45,25 +41,19 @@ export function FormOrderController({ orderData, updated }: formOCProps) {
 			data.pallets = 0
 		}
 
-		await axios.put<Order>(
-			process.env.REACT_APP_BACKEND_API_URL + 'orders/',
-			data
-		)
+		await axios.put<Order>(process.env.REACT_APP_BACKEND_API_URL + 'orders/', data)
 		methods.setValue('pallets', data.pallets)
 		updated()
 		openAlert()
 	}
 
 	const onSubmit: SubmitHandler<Order> = async data => {
-		await axios.put<Order>(
-			process.env.REACT_APP_BACKEND_API_URL + 'orders/',
-			data
-		)
+		await axios.put<Order>(process.env.REACT_APP_BACKEND_API_URL + 'orders/', data)
 		updated()
 		openAlert()
 	}
 	const detailsId: number[] = []
-	orderData?.setups?.map(setup => {
+	orderData?.setups?.forEach(setup => {
 		setup?.details?.map(detail => {
 			return detailsId?.push(Number(detail.id))
 		})
@@ -74,18 +64,12 @@ export function FormOrderController({ orderData, updated }: formOCProps) {
 			<div className='controllers'>
 				<FormProvider {...methods}>
 					<form>
-						<input
-							type='hidden'
-							{...methods.register('id')}
-							defaultValue={orderData.id}
-						/>
+						<input type='hidden' {...methods.register('id')} defaultValue={orderData.id} />
 						<Form.Group>
 							<Form.Label>Доставка:</Form.Label>
 							<input
 								{...methods.register('delivery', {
-									onBlur: methods.handleSubmit(
-										onSubmitDelivery
-									),
+									onBlur: methods.handleSubmit(onSubmitDelivery),
 									valueAsNumber: true,
 								})}
 								defaultValue={orderData.delivery}
@@ -125,23 +109,14 @@ export function FormOrderController({ orderData, updated }: formOCProps) {
 							<FormSelect
 								name='markup'
 								selected={orderData.markup}
-								arrOptions={[2, 3, 4, 5, 6, 7, 8, 9, 10]}
+								arrOptions={[2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]}
 								onSubmit={methods.handleSubmit(onSubmit)}
 								// disabled={Role() === 'ROLE_USER' ? true : false}
 							/>
 						</Form.Group>
 					</form>
 				</FormProvider>
-				<UpdMetalCost
-					orderId={orderData.id}
-					update={updated}
-					openAlert={openAlert}
-				/>
-				<ClearMetalCost
-					details={detailsId}
-					update={updated}
-					openAlert={openAlert}
-				/>
+				<UpdMetalCost orderId={orderData.id} update={updated} openAlert={openAlert} />
 			</div>
 			<Alert className='alert-fixed' show={alertShow} variant='success'>
 				Изменения сохранены

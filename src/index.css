@@ -356,6 +356,9 @@ code {
 .chg_metals {
 	font-size: 13px;
 }
+.narrow_cells > :not(caption) > * > * {
+	padding: 0.25rem 0.25rem;
+}
 
 @media print {
 	#root {
@@ -375,6 +378,9 @@ code {
 	.menu-button,
 	.back-link {
 		display: none !important;
+	}
+	.page_brake {
+		page-break-after: always;
 	}
 
 	@page {

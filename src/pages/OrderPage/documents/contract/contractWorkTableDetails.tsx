@@ -8,15 +8,19 @@ type ContractWorkTableDetailProps = {
 }
 
 export function ContractWorkTableDetail({ detail, index, total, delivery }: ContractWorkTableDetailProps) {
+	const oneKgDrowing = Number(detail.drowing) / (Number(detail.weight) * detail.quantity)
+
 	const total_price =
-		Number(detail.bending) +
-		Number(detail.choping) +
-		Number(detail.cut_cost) +
-		Number(detail.metal) +
-		Number(detail.painting) +
-		Number(detail.rolling) +
-		(detail.drowing ? detail.drowing : 0) +
-		delivery * Number(detail.weight) * detail.quantity
+		Math.ceil(
+			Number(detail.bending) +
+				Number(detail.choping) +
+				Number(detail.cut_cost) +
+				Number(detail.metal) +
+				Number(detail.painting) +
+				Number(detail.rolling) +
+				delivery * Number(detail.weight) +
+				oneKgDrowing * Number(detail.weight)
+		) * detail.quantity
 
 	return (
 		<tr>
@@ -25,15 +29,15 @@ export function ContractWorkTableDetail({ detail, index, total, delivery }: Cont
 			<td>
 				{detail.thickness} {detail.material} {detail.suffixes} {detail.customers_metal ? 'зак' : ''}
 			</td>
-			<td>{(Number(detail.cut_cost) / detail.quantity).toFixed(2)}</td>
-			<td>{(Number(detail.choping) / detail.quantity).toFixed(2)}</td>
+			<td>{Number(detail.cut_cost).toFixed(2)}</td>
+			<td>{Number(detail.choping).toFixed(2)}</td>
 			<td>0.00</td>
-			<td>{(Number(detail.bending) / detail.quantity).toFixed(2)}</td>
+			<td>{Number(detail.bending).toFixed(2)}</td>
 			<td>0.00</td>
 			<td>0.00</td>
-			<td>{(total_price / detail.quantity).toFixed(2)}</td>
+			<td>{total_price / detail.quantity}</td>
 			<td>{detail.quantity}</td>
-			<td>{total_price.toFixed(2)}</td>
+			<td>{total_price}</td>
 			<td>{detail.weight}</td>
 		</tr>
 	)

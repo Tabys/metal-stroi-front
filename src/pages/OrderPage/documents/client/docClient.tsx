@@ -47,32 +47,22 @@ export function DocClient() {
 								</div>
 							</div>
 							<div className={styles.order_inf}>
-								<a
-									href={linkBX}
-									target='_blank'
-									rel='noreferrer'
-									className={styles.order_number}
-								>
+								<a href={linkBX} target='_blank' rel='noreferrer' className={styles.order_number}>
 									№ {orders?.order_number}
 								</a>
 								<p>
-									<strong>Дата приема заказа:</strong>{' '}
-									<TransformDate
-										orderDate={orders?.date_сreate}
-									/>
+									<strong>Дата приема заказа:</strong> <TransformDate orderDate={orders?.date_сreate} />
 								</p>
 								<p>
-									<strong>Заказчик:</strong>{' '}
-									{orders?.customer}
+									<strong>Заказчик:</strong> {orders?.customer}
 								</p>
 								<p>
-									<strong>Срок изготовления заказа:</strong>{' '}
-									{orders?.production_time} рабочих дней
+									<strong>Срок изготовления заказа:</strong> {orders?.production_time} рабочих дней
 								</p>
 							</div>
 						</div>
 					</div>
-					<Table bordered hover>
+					<Table bordered hover className='narrow_cells'>
 						<thead>
 							<tr>
 								<th>№ п/п</th>
@@ -84,12 +74,7 @@ export function DocClient() {
 						</thead>
 						<tbody>
 							{details?.map((detail, index) => (
-								<ClientTable
-									key={detail.id}
-									detail={detail}
-									index={index}
-									delivery={total.oneKgDelivery}
-								/>
+								<ClientTable key={detail.id} detail={detail} index={index} delivery={total.oneKgDelivery} />
 							))}
 							{products?.map((product, index) => (
 								<ClientTableProducts
@@ -110,18 +95,16 @@ export function DocClient() {
 							</tr>
 						</tbody>
 					</Table>
-
+					{Number(details?.length) + Number(products?.length) > 5 ? <div className='page_brake'></div> : ''}
 					<div className={styles.invoice_header}>
 						<p>
-							<strong>
-								Товарная накладная №{orders?.order_number}
-							</strong>
+							<strong>Товарная накладная №{orders?.order_number}</strong>
 						</p>
 						<p>
 							<strong>Покупатель:</strong> {orders?.customer}
 						</p>
 					</div>
-					<Table bordered hover>
+					<Table bordered hover className='narrow_cells'>
 						<thead>
 							<tr>
 								<th>№ п/п</th>
@@ -144,15 +127,8 @@ export function DocClient() {
 								</tr>
 							))}
 							{orders?.products?.map((product, index) => (
-								<tr
-									className={index === 0 ? 'borderBold' : ''}
-									key={product.id}
-								>
-									<td>
-										{details?.length
-											? index + 1 + details.length
-											: 0}
-									</td>
+								<tr className={index === 0 ? 'borderBold' : ''} key={product.id}>
+									<td>{details?.length ? index + 1 + details.length : 0}</td>
 									<td>{product.name}</td>
 									<td>-</td>
 									<td>шт.</td>
@@ -173,9 +149,7 @@ export function DocClient() {
 									<strong>Общий вес:</strong>
 								</td>
 								<td>
-									<strong>
-										{total.weight.toFixed(2)} кг
-									</strong>
+									<strong>{total.weight.toFixed(2)} кг</strong>
 								</td>
 								<td>
 									<strong>Сумма:</strong>
@@ -186,7 +160,6 @@ export function DocClient() {
 							</tr>
 						</tbody>
 					</Table>
-
 					<div className={styles.signatures}>
 						<div className={styles.top}>
 							<p>
@@ -195,15 +168,11 @@ export function DocClient() {
 								</strong>
 							</p>
 							<p>
-								Давальческий металл хранится в течение 10 дней
-								после забора заказа. По истечении срока
-								хранения, мы не несём ответственность за
+								Давальческий металл хранится в течение 10 дней после забора заказа. По истечении срока хранения, мы не несём ответственность за
 								сохранность качества металла.
 							</p>
 							<p>
-								Я, <span></span> заказанные изделия получил в
-								полном объеме, в установленный срок, к качеству
-								претензий не имею.
+								Я, <span></span> заказанные изделия получил в полном объеме, в установленный срок, к качеству претензий не имею.
 							</p>
 						</div>
 						<div className={styles.blocks}>
