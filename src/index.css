@@ -223,13 +223,13 @@ code {
 	gap: 20px;
 }
 
-.controllers form div {
+.controllers form .group {
 	display: flex;
 	gap: 10px;
 	align-items: center;
 }
 
-.controllers form div label {
+.controllers form .group label {
 	width: max-content;
 	margin: 0;
 	font-size: 14px;
@@ -242,7 +242,12 @@ code {
 .controllers form button {
 	margin: 0 0 0 10px;
 }
-
+.controllers form .markup {
+	z-index: 2;
+}
+.controllers form .markup .pref__option {
+	font-size: 14px;
+}
 .mr-1 {
 	margin-right: 10px;
 }
