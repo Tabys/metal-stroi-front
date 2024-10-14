@@ -1,61 +1,47 @@
 import axios from 'axios'
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form'
-import { Order, Product } from '../../../models'
+import { Order, Product, ProductsFull } from '../../../models'
 import styles from './styles.module.css'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { DeleteProduct } from './DeleteProduct'
 import { CulcPaintingCost } from './CulcPaintingCost'
+import { culcCostProduct } from './culcCostProduct'
 
 type FormProductItemProps = {
 	orderData: Order
 	productItem: Product
 	index: number
+	editedProducts: ProductsFull[] | undefined
+	delivery: number
 	updProduct: () => void
 	delProduct: () => void
 	setError: React.Dispatch<React.SetStateAction<undefined>>
 }
 
-export function FormProductItem({
-	productItem,
-	orderData,
-	index,
-	delProduct,
-	updProduct,
-	setError,
-}: FormProductItemProps) {
+export function FormProductItem({ productItem, editedProducts, delivery, orderData, index, delProduct, updProduct, setError }: FormProductItemProps) {
+	const [productCost, setProductCost] = useState(0)
 	const methods = useForm<Product>()
 	// Change METAL COST input value during change METAL MARKAP
 	useEffect(() => {
 		methods.reset()
+		setProductCost(culcCostProduct({ products: productItem, editProducts: editedProducts, delivery }))
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [orderData])
 
 	const onSubmit: SubmitHandler<Product> = async data => {
-		await axios.put<Product>(
-			process.env.REACT_APP_BACKEND_API_URL + 'products/',
-			data
-		)
+		await axios.put<Product>(process.env.REACT_APP_BACKEND_API_URL + 'products/', data)
 		await updProduct()
 	}
 
 	const onSubmitPainting: SubmitHandler<Product> = async data => {
-		await axios.put<Product>(
-			process.env.REACT_APP_BACKEND_API_URL + 'products/',
-			CulcPaintingCost({ data, productItem })
-		)
+		await axios.put<Product>(process.env.REACT_APP_BACKEND_API_URL + 'products/', CulcPaintingCost({ data, productItem }))
 		await updProduct()
-		await methods.setValue(
-			'painting_cost',
-			Number(data.painting_cost.toFixed(2))
-		)
+		await methods.setValue('painting_cost', Number(data.painting_cost.toFixed(2)))
 	}
 
 	const onSubmitQuantity: SubmitHandler<Product> = async data => {
 		await axios
-			.put<Product>(
-				process.env.REACT_APP_BACKEND_API_URL + 'products/quantity/',
-				data
-			)
+			.put<Product>(process.env.REACT_APP_BACKEND_API_URL + 'products/quantity/', data)
 			.then(async result => {
 				await setError(undefined)
 				await updProduct()
@@ -72,25 +58,15 @@ export function FormProductItem({
 	return (
 		<FormProvider {...methods}>
 			<form className={styles.row}>
-				<input
-					{...methods.register('id')}
-					type='hidden'
-					defaultValue={productItem.id}
-				/>
-				<input
-					{...methods.register('order_id')}
-					type='hidden'
-					defaultValue={productItem.order_id}
-				/>
+				<input {...methods.register('id')} type='hidden' defaultValue={productItem.id} />
+				<input {...methods.register('order_id')} type='hidden' defaultValue={productItem.order_id} />
 				<div>{index + 1}</div>
 				<div>
 					<input
 						{...methods.register('name', {
 							onBlur: methods.handleSubmit(onSubmit),
 						})}
-						defaultValue={
-							productItem.name === null ? 0 : productItem.name
-						}
+						defaultValue={productItem.name === null ? 0 : productItem.name}
 						type='text'
 						className='form-control'
 					/>
@@ -101,11 +77,7 @@ export function FormProductItem({
 							onBlur: methods.handleSubmit(onSubmitQuantity),
 							valueAsNumber: true,
 						})}
-						defaultValue={
-							productItem.quantity === null
-								? 0
-								: productItem.quantity
-						}
+						defaultValue={productItem.quantity === null ? 0 : productItem.quantity}
 						type='number'
 						className='form-control'
 					/>
@@ -116,11 +88,7 @@ export function FormProductItem({
 							onBlur: methods.handleSubmit(onSubmit),
 							valueAsNumber: true,
 						})}
-						defaultValue={
-							productItem.welding_work === null
-								? 0
-								: productItem.welding_work
-						}
+						defaultValue={productItem.welding_work === null ? 0 : productItem.welding_work}
 						type='number'
 						className='form-control'
 					/>
@@ -131,11 +99,7 @@ export function FormProductItem({
 							onBlur: methods.handleSubmit(onSubmit),
 							valueAsNumber: true,
 						})}
-						defaultValue={
-							productItem.welding_fixings === null
-								? 0
-								: productItem.welding_fixings
-						}
+						defaultValue={productItem.welding_fixings === null ? 0 : productItem.welding_fixings}
 						type='number'
 						className='form-control'
 					/>
@@ -146,11 +110,7 @@ export function FormProductItem({
 							onBlur: methods.handleSubmit(onSubmit),
 							valueAsNumber: true,
 						})}
-						defaultValue={
-							productItem.welding_profit === null
-								? 0
-								: productItem.welding_profit
-						}
+						defaultValue={productItem.welding_profit === null ? 0 : productItem.welding_profit}
 						type='number'
 						className='form-control'
 					/>
@@ -161,11 +121,7 @@ export function FormProductItem({
 							onBlur: methods.handleSubmit(onSubmit),
 							valueAsNumber: true,
 						})}
-						defaultValue={
-							productItem.welding_tax === null
-								? 0
-								: productItem.welding_tax
-						}
+						defaultValue={productItem.welding_tax === null ? 0 : productItem.welding_tax}
 						type='number'
 						className='form-control'
 					/>
@@ -176,11 +132,7 @@ export function FormProductItem({
 							onBlur: methods.handleSubmit(onSubmit),
 							valueAsNumber: true,
 						})}
-						defaultValue={
-							productItem.welding_rolling === null
-								? 0
-								: productItem.welding_rolling
-						}
+						defaultValue={productItem.welding_rolling === null ? 0 : productItem.welding_rolling}
 						type='number'
 						className='form-control'
 					/>
@@ -191,11 +143,7 @@ export function FormProductItem({
 							onBlur: methods.handleSubmit(onSubmit),
 							valueAsNumber: true,
 						})}
-						defaultValue={
-							productItem.welding_painting === null
-								? 0
-								: productItem.welding_painting
-						}
+						defaultValue={productItem.welding_painting === null ? 0 : productItem.welding_painting}
 						type='number'
 						className='form-control'
 					/>
@@ -206,11 +154,7 @@ export function FormProductItem({
 							onBlur: methods.handleSubmit(onSubmit),
 							valueAsNumber: true,
 						})}
-						defaultValue={
-							productItem.welding_delivery === null
-								? 0
-								: productItem.welding_delivery
-						}
+						defaultValue={productItem.welding_delivery === null ? 0 : productItem.welding_delivery}
 						type='number'
 						className='form-control'
 					/>
@@ -221,11 +165,7 @@ export function FormProductItem({
 							onBlur: methods.handleSubmit(onSubmit),
 							valueAsNumber: true,
 						})}
-						defaultValue={
-							productItem.welding_install === null
-								? 0
-								: productItem.welding_install
-						}
+						defaultValue={productItem.welding_install === null ? 0 : productItem.welding_install}
 						type='number'
 						className='form-control'
 					/>
@@ -236,11 +176,7 @@ export function FormProductItem({
 							onBlur: methods.handleSubmit(onSubmit),
 							valueAsNumber: true,
 						})}
-						defaultValue={
-							productItem.welding_allowance === null
-								? 0
-								: productItem.welding_allowance
-						}
+						defaultValue={productItem.welding_allowance === null ? 0 : productItem.welding_allowance}
 						type='number'
 						className='form-control'
 					/>
@@ -250,11 +186,7 @@ export function FormProductItem({
 						{...methods.register('painting_color', {
 							onBlur: methods.handleSubmit(onSubmit),
 						})}
-						defaultValue={
-							productItem.painting_color === ''
-								? '-'
-								: productItem.painting_color
-						}
+						defaultValue={productItem.painting_color === '' ? '-' : productItem.painting_color}
 						type='text'
 						className='form-control'
 					/>
@@ -265,11 +197,7 @@ export function FormProductItem({
 							onBlur: methods.handleSubmit(onSubmitPainting),
 							valueAsNumber: true,
 						})}
-						defaultValue={
-							productItem.painting_price === null
-								? 0
-								: productItem.painting_price
-						}
+						defaultValue={productItem.painting_price === null ? 0 : productItem.painting_price}
 						type='number'
 						className='form-control'
 					/>
@@ -280,11 +208,7 @@ export function FormProductItem({
 							onBlur: methods.handleSubmit(onSubmit),
 							valueAsNumber: true,
 						})}
-						defaultValue={
-							productItem.painting_cost === null
-								? 0
-								: productItem.painting_cost
-						}
+						defaultValue={productItem.painting_cost === null ? 0 : productItem.painting_cost}
 						type='number'
 						className='form-control'
 					/>
@@ -295,9 +219,7 @@ export function FormProductItem({
 							onBlur: methods.handleSubmit(onSubmit),
 							valueAsNumber: true,
 						})}
-						defaultValue={
-							productItem.smithy === null ? 0 : productItem.smithy
-						}
+						defaultValue={productItem.smithy === null ? 0 : productItem.smithy}
 						type='number'
 						className='form-control'
 					/>
@@ -308,11 +230,7 @@ export function FormProductItem({
 							onBlur: methods.handleSubmit(onSubmit),
 							valueAsNumber: true,
 						})}
-						defaultValue={
-							productItem.turning_works === null
-								? 0
-								: productItem.turning_works
-						}
+						defaultValue={productItem.turning_works === null ? 0 : productItem.turning_works}
 						type='number'
 						className='form-control'
 					/>
@@ -323,20 +241,14 @@ export function FormProductItem({
 							onBlur: methods.handleSubmit(onSubmit),
 							valueAsNumber: true,
 						})}
-						defaultValue={
-							productItem.design_department === null
-								? 0
-								: productItem.design_department
-						}
+						defaultValue={productItem.design_department === null ? 0 : productItem.design_department}
 						type='number'
 						className='form-control'
 					/>
 				</div>
+				<div>{productCost}</div>
 				<div>
-					<DeleteProduct
-						product={productItem.id}
-						update={delProduct}
-					/>
+					<DeleteProduct product={productItem.id} update={delProduct} />
 				</div>
 			</form>
 		</FormProvider>

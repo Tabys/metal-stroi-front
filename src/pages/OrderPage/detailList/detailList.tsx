@@ -33,13 +33,11 @@ export function DetailList({ dataOrder }: detailListProps) {
 					<div className={styles.line}>Цена резки</div>
 					<div className={styles.line}>Цена врезания</div>
 					<div className={styles.line}>Цена металла</div>
+					<div className={styles.line}>Стоимость</div>
 					{/* <div className={styles.line}>Пищевая сталь</div> */}
 				</div>
 
-				<FormDetailList
-					details={CreateDetailGroupList(dataOrder)}
-					orderData={dataOrder}
-				/>
+				<FormDetailList details={CreateDetailGroupList(dataOrder)} orderData={dataOrder} />
 			</div>
 		</div>
 	)

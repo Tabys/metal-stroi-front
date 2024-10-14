@@ -49,7 +49,7 @@ export function AddSuffixesAndMetals({ onCreate, onClose, order }: AddSuffixAndM
 			return {
 				id: Number(setup.id),
 				order_id: Number(setup.order_id),
-				table_number: setup?.table_number ? setup?.table_number : '',
+				thickness: Number(setup?.work_piece?.split(' x ')[2]),
 				material: setup?.material ? setup?.material : '',
 				customers_metal: false,
 				metals: null,

@@ -1,13 +1,12 @@
 import axios from 'axios'
 import { useForm, SubmitHandler, FormProvider, Controller } from 'react-hook-form'
-import { Detail, Order } from '../../../models'
+import { Detail, DocTableDetail, Order } from '../../../models'
 import styles from './style.module.css'
 import { UpdCutInset } from './updPrices/updCutInset'
 import { UpdBandChop } from './updPrices/updBendChop'
 import { FormRadio } from './formElements/formRadio'
 import { useEffect, useState } from 'react'
 import Tooltip from '../../../components/Tooltip'
-import { extraPrice } from './updPrices/extraPriceMetal'
 import { UpdRollings } from './updPrices/updRollings'
 import { FormSelectRoll } from './formElements/formSelectRoll'
 import { UpdPainting } from './updPrices/updPainting'
@@ -15,23 +14,27 @@ import Select from 'react-select'
 import { UpdPaintingOption } from './updPrices/updPaintingOption'
 import { postConditions } from './component/postConditions/postConditions'
 import { culcMetalPriceOneDetail } from './component/culcMetalPriceOneDetail/culcMetalPriceOneDetail'
+import { culcCostDetail } from './component/culcCostDetails/culcCostDetails'
 
 type FormDetailItemProps = {
 	orderData: Order
 	DetailItem: Detail
+	editedDetails: DocTableDetail[] | undefined
 	index: number
+	delivery: number
 	updDetail: () => void
 	rollAlert: () => void
 	serviseAlert: (min_price: number | undefined) => void
 }
 
-export function FormDetailItem({ DetailItem, orderData, index, rollAlert, serviseAlert, updDetail }: FormDetailItemProps) {
+export function FormDetailItem({ DetailItem, delivery, editedDetails, orderData, index, rollAlert, serviseAlert, updDetail }: FormDetailItemProps) {
 	const methods = useForm<Detail>()
 
 	const [isDisabledPP, setIsDisabledPP] = useState(DetailItem.polymer_price === null || DetailItem.polymer_price == 0 ? true : false)
 	const [isDisabledChop, setIsDisabledChop] = useState(DetailItem.chop_count === null || DetailItem.chop_count == 0 ? true : false)
 	const [isDisabledBend, setIsDisabledBend] = useState(DetailItem.bends_count === null || DetailItem.bends_count == 0 ? true : false)
 	const [metalPriceOneDetail, setMetalPriceOneDetail] = useState('')
+	const [detailCost, setDetailCost] = useState(0)
 
 	const options: any[] = [
 		{ value: 'shagreen', label: 'Шагрень' },
@@ -40,13 +43,10 @@ export function FormDetailItem({ DetailItem, orderData, index, rollAlert, servis
 		{ value: 'big', label: 'Габаритные изделия' },
 	]
 
-	let metal_cost = ''
-
-	// Change METAL COST input value during change METAL MARKAP
 	useEffect(() => {
 		methods.reset()
-		console.log(DetailItem)
 		setMetalPriceOneDetail(culcMetalPriceOneDetail({ order: orderData, detail: DetailItem }))
+		setDetailCost(culcCostDetail({ detailsInProduct: editedDetails, detailOutProduct: DetailItem, delivery }))
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [orderData])
 
@@ -475,6 +475,7 @@ export function FormDetailItem({ DetailItem, orderData, index, rollAlert, servis
 					/>
 				</div>
 				<div className={styles.line}>{metalPriceOneDetail}</div>
+				<div className={styles.line}>{detailCost}</div>
 				{/* <div className={styles.line}>
 					<FormCheckbox
 						name='food_steel'
