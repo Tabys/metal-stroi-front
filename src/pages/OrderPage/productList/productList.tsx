@@ -24,6 +24,7 @@ export function ProductList({ dataOrder, delProduct }: detailListProps) {
 								<td rowSpan={2}>Кузня</td>
 								<td rowSpan={2}>Токарка</td>
 								<td rowSpan={2}>Конструкторский отдел</td>
+								<td rowSpan={2}>Стоимость</td>
 								<td rowSpan={2}></td>
 							</tr>
 							<tr>
@@ -43,11 +44,7 @@ export function ProductList({ dataOrder, delProduct }: detailListProps) {
 						</thead>
 					</table>
 
-					<FormProductList
-						products={dataOrder.products}
-						orderData={dataOrder}
-						delProduct={delProduct}
-					/>
+					<FormProductList products={dataOrder.products} orderData={dataOrder} delProduct={delProduct} />
 				</div>
 			) : (
 				'Изделий нет'

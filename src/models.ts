@@ -104,6 +104,25 @@ export type Product = {
 	product_detail?: ProductsDetails
 }
 
+export type ProductsFull = {
+	id: number
+	name: string
+	quantity: number
+	totalPrice: number
+	painting_color: string
+	value: number
+	painting_cost: number
+	weight: number
+	detailsWeight: number
+	detailsCutCost: number
+	detailsChoping: number
+	detailsBanding: number
+	welding: number
+	turning_works: number
+	smithy: number
+	design_department: number
+}
+
 export type ProductsDetails = {
 	detail_id: number
 	product_id: number
@@ -126,7 +145,7 @@ export type AddProductDetail = {
 export type AddSuffix = {
 	id: number
 	order_id: number
-	table_number: string
+	thickness: number
 	material: string
 	customers_metal: boolean
 	metals: {

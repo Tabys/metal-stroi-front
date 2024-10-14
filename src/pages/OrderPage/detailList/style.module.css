@@ -33,7 +33,24 @@
 	border: 1px solid #ccc;
 	padding: 5px;
 }
-
+.detail_list .row .line.colSpan_8 {
+	grid-column: span 8;
+}
+.table_total {
+	display: contents;
+}
+.table_total tr {
+	background-color: #f3f3f3;
+}
+.table_total td {
+	border: 1px solid #ccc;
+	padding: 5px;
+	vertical-align: middle;
+	font-weight: bold;
+}
+.table_total td:not(:first-child) {
+	text-align: right;
+}
 .detail_list .row .line input:not([type='radio']):not([type='checkbox']) {
 	min-width: 60px;
 	font-size: 14px;
