@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import { AddProduct, Detail, Order } from '../../../models'
 import { CreateDetailGroupList } from '../detailList/createDetailGroupList'
 import { OneDetail } from './oneDetail'
@@ -14,11 +13,7 @@ export function DetailList({ order, setArrProduct }: DetailListProps) {
 	return (
 		<>
 			{details.map(detail => (
-				<OneDetail
-					key={detail.id}
-					detail={detail}
-					setArrProduct={setArrProduct}
-				/>
+				<OneDetail key={detail.id} detail={detail} setArrProduct={setArrProduct} />
 			))}
 		</>
 	)

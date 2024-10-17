@@ -21,13 +21,10 @@ export function ExeCustomersWrapper() {
 	}
 
 	const options: any[] = FilteredCustomers(customers)
-	const { register, handleSubmit, control } = useForm<ExeCustomersCreate>()
+	const { handleSubmit, control } = useForm<ExeCustomersCreate>()
 
 	const onSubmit: SubmitHandler<ExeCustomersCreate> = async data => {
-		await axios.post<ExeCustomersCreate>(
-			process.env.REACT_APP_BACKEND_API_URL + 'exemptionCustomer',
-			data
-		)
+		await axios.post<ExeCustomersCreate>(process.env.REACT_APP_BACKEND_API_URL + 'exemptionCustomer', data)
 		await openAlert()
 	}
 
@@ -38,17 +35,10 @@ export function ExeCustomersWrapper() {
 					control={control}
 					name={'name'}
 					render={({ field: { onChange, value, ref } }) => (
-						<Select
-							options={options}
-							value={options.find(c => c.value === value)}
-							onChange={val => onChange(val.value)}
-						/>
+						<Select options={options} value={options.find(c => c.value === value)} onChange={val => onChange(val.value)} />
 					)}
 				/>
-				<button
-					type='submit'
-					className='btn btn-primary container-fluid mt-3 mb-5'
-				>
+				<button type='submit' className='btn btn-primary container-fluid mt-3 mb-5'>
 					Добавить
 				</button>
 			</form>
@@ -60,14 +50,7 @@ export function ExeCustomersWrapper() {
 					<div className='p-2'>Удалить</div>
 				</div>
 				{customers
-					? customers?.map((customer, index) => (
-							<ExeCustomerItems
-								index={index}
-								customer={customer}
-								key={customer.id}
-								update={openAlert}
-							/>
-					  ))
+					? customers?.map((customer, index) => <ExeCustomerItems index={index} customer={customer} key={customer.id} update={openAlert} />)
 					: ''}
 			</div>
 

@@ -16,35 +16,17 @@ export function PricesWrapper() {
 		}, 1000)
 	}
 
-	const clearPrice = prices.map(category => ({
-		id: category.id,
-		abbreviation: category.abbreviation,
-		name: category.name,
-		price_metal_items: category?.price_metal_items?.filter(item => {
-			return item.gas !== 'azote'
-		}),
-	}))
-	clearPrice.forEach(prices => {
-		prices.price_metal_items?.sort((a, b) =>
-			Number(a.thickness) > Number(b.thickness) ? 1 : -1
-		)
+	prices.sort((a, b) => (Number(a.sort) > Number(b.sort) ? 1 : -1))
+	prices.forEach(prices => {
+		prices.price_metal_items?.sort((a, b) => (Number(a.thickness) > Number(b.thickness) ? 1 : -1))
 	})
 
 	return (
 		<>
-			<Tabs
-				defaultActiveKey='1'
-				transition={false}
-				id='noanim-tab-example'
-				className='mb-3'
-			>
-				{clearPrice &&
-					clearPrice.map(category => (
-						<Tab
-							eventKey={category.id}
-							title={category.name}
-							key={category.id}
-						>
+			<Tabs defaultActiveKey='1' transition={false} id='noanim-tab-example' className='mb-3'>
+				{prices &&
+					prices.map(category => (
+						<Tab eventKey={category.id} title={category.name} key={category.id}>
 							<div className='table'>
 								<div className='row header'>
 									<div className='p-2'>Толщина металла</div>
@@ -52,12 +34,7 @@ export function PricesWrapper() {
 									<div className='p-2'>Цена</div>
 								</div>
 								{category.price_metal_items?.map(price => (
-									<PircesItems
-										allPrices={prices}
-										price={price}
-										key={price.id}
-										update={openAlert}
-									/>
+									<PircesItems price={price} key={price.id} update={openAlert} />
 								))}
 							</div>
 						</Tab>

@@ -10,21 +10,14 @@ type UpdMetalCostProps = {
 	openAlert: () => void
 }
 
-export function UpdMetalCost({
-	orderId,
-	openAlert,
-	update,
-}: UpdMetalCostProps) {
-	const { register, handleSubmit } = useForm<UpdMetalCostForm>()
+export function UpdMetalCost({ orderId, openAlert, update }: UpdMetalCostProps) {
+	const { handleSubmit } = useForm<UpdMetalCostForm>()
 
 	const onSubmit: SubmitHandler<UpdMetalCostForm> = async data => {
 		await axios
-			.put<UpdMetalCostForm>(
-				process.env.REACT_APP_BACKEND_API_URL + 'detail/all-actual',
-				{
-					id: orderId,
-				}
-			)
+			.put<UpdMetalCostForm>(process.env.REACT_APP_BACKEND_API_URL + 'detail/all-actual', {
+				id: orderId,
+			})
 			.then(result => {
 				update()
 			})

@@ -31,6 +31,7 @@ export type Setup = {
 	suffixes?: JSON[]
 	unique: string
 	customers_metal: boolean
+	azote: boolean
 	details?: Detail[]
 }
 
@@ -148,6 +149,7 @@ export type AddSuffix = {
 	thickness: number
 	material: string
 	customers_metal: boolean
+	azote: boolean
 	metals: {
 		value: string
 		label: string
@@ -195,7 +197,7 @@ export type MetalType = {
 	abbreviation?: string
 	price_metal_items?: PriceMetalItems[]
 	density?: number
-	price?: number
+	sort?: number
 }
 
 export type PriceMetalItems = {

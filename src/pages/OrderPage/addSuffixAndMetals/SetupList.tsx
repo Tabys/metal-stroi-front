@@ -16,6 +16,7 @@ type SetupListProp = {
 
 export function SetupList({ dubleDetails, metals, data, setArrSuffix, arrSuffix }: SetupListProp) {
 	const [checked, setChecked] = useState(false)
+	const [checkedAzote, setCheckedAzote] = useState(false)
 	const [valueSuffixSelect, setSuffixValueSelect] = useState<any>()
 	const [valueMetalSelect, setValueMetalSelect] = useState<any>()
 
@@ -26,6 +27,18 @@ export function SetupList({ dubleDetails, metals, data, setArrSuffix, arrSuffix 
 			data?.setups?.forEach(setup => {
 				const objIndex = updatedSetupsList.findIndex(obj => obj.id === Number(setup.id))
 				updatedSetupsList[objIndex].customers_metal = !checked
+			})
+			return updatedSetupsList
+		})
+	}
+
+	const handleChangeAzote = () => {
+		setCheckedAzote(!checkedAzote)
+		setArrSuffix(prevArrSetup => {
+			let updatedSetupsList = prevArrSetup
+			data?.setups?.forEach(setup => {
+				const objIndex = updatedSetupsList.findIndex(obj => obj.id === Number(setup.id))
+				updatedSetupsList[objIndex].azote = !checkedAzote
 			})
 			return updatedSetupsList
 		})
@@ -71,6 +84,16 @@ export function SetupList({ dubleDetails, metals, data, setArrSuffix, arrSuffix 
 				</h2>
 				<div className={style.controllers}>
 					<label className={style.label}>
+						<span className={style.span}>Азот:</span>{' '}
+						<input
+							type='checkbox'
+							name='azote'
+							onChange={handleChangeAzote}
+							className='form-check-input'
+							disabled={data?.metals === '1.4301' || data?.metals === 'aisi430' ? false : true}
+						/>
+					</label>
+					<label className={style.label}>
 						<span className={style.span}>Металл заказчика:</span>{' '}
 						<input type='checkbox' name='customers_metal' onChange={handleChange} className='form-check-input' />
 					</label>
@@ -113,8 +136,9 @@ export function SetupList({ dubleDetails, metals, data, setArrSuffix, arrSuffix 
 						setup={setup}
 						arrSuffix={arrSuffix}
 						setArrSuffix={setArrSuffix}
-						allChecked={checked}
 						dubleDetails={dubleDetails}
+						allChecked={checked}
+						allCheckedAzote={checkedAzote}
 						allValueMetalSelect={valueMetalSelect}
 						allValueSuffixSelect={valueSuffixSelect}
 					/>

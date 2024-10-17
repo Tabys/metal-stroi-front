@@ -8,7 +8,7 @@ export function CulcPaintingCost({ data, productItem }: CulcPaintingCostProps) {
 	let cost = 0
 	let surface = 0
 
-	productItem.details?.map(detail => {
+	productItem.details?.forEach(detail => {
 		surface += Number(detail.serface) * Number(detail.product_detail?.count)
 	})
 
