@@ -66,30 +66,30 @@ export function FormDetailList({ details, orderData }: FormProps) {
 				<tr>
 					<td colSpan={8}>Итого по всему заказу (учитывая изделия)</td>
 					<td>
-						<strong>{total.choping}</strong>
+						<strong>{total.choping.toFixed(2)}</strong>
 					</td>
 					<td></td>
 					<td>
-						<strong>{total.bending}</strong>
+						<strong>{total.bending.toFixed(2)}</strong>
 					</td>
 					<td></td>
 					<td></td>
 					<td>
-						<strong>{total.painting}</strong>
+						<strong>{total.painting.toFixed(2)}</strong>
 					</td>
 					<td></td>
 					<td>
-						<strong>{total.rolling}</strong>
+						<strong>{total.rolling.toFixed(2)}</strong>
 					</td>
 					<td>
-						<strong>{total.drowing}</strong>
+						<strong>{total.drowing.toFixed(2)}</strong>
 					</td>
 					<td>
-						<strong>{total.cuting}</strong>
+						<strong>{total.cuting.toFixed(2)}</strong>
 					</td>
 					<td></td>
 					<td>
-						<strong>{total.metal}</strong>
+						<strong>{total.metal.toFixed(2)}</strong>
 					</td>
 					<td>
 						<strong>{total.price}</strong>

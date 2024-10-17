@@ -53,6 +53,7 @@ export function AddSuffixesAndMetals({ onCreate, onClose, order }: AddSuffixAndM
 				material: setup?.material ? setup?.material : '',
 				customers_metal: false,
 				metals: null,
+				azote: setup.azote,
 				suffixes: setup.suffixes,
 			}
 		})

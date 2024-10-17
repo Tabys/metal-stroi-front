@@ -1,4 +1,4 @@
-import { DocTableProduct, Product } from '../../../../models'
+import { DocTableProduct } from '../../../../models'
 
 type PaintingTableProductsProps = {
 	product: DocTableProduct
@@ -6,11 +6,7 @@ type PaintingTableProductsProps = {
 	startIndex: number | undefined
 }
 
-export function PaintingTableProducts({
-	product,
-	index,
-	startIndex,
-}: PaintingTableProductsProps) {
+export function PaintingTableProducts({ product, index, startIndex }: PaintingTableProductsProps) {
 	return (
 		<tr className={index === 0 ? 'borderBold' : ''}>
 			<td>{startIndex ? startIndex + index + 1 : 0}</td>

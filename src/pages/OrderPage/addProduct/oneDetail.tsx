@@ -12,7 +12,7 @@ type OneDetailProps = {
 export function OneDetail({ detail, setArrProduct }: OneDetailProps) {
 	const [value, setValue] = useState('0')
 
-	let availableDetails = AvailableDetail(detail)
+	let availableDetails = 0
 
 	useEffect(() => {
 		availableDetails = AvailableDetail(detail)
@@ -22,9 +22,7 @@ export function OneDetail({ detail, setArrProduct }: OneDetailProps) {
 		setValue(event.target.value)
 
 		setArrProduct(prevArrProduct => {
-			const isDetailInDetailGroup = prevArrProduct?.details?.find(
-				item => item.id === Number(event.target.name)
-			)
+			const isDetailInDetailGroup = prevArrProduct?.details?.find(item => item.id === Number(event.target.name))
 			let { details: updatedDetailsList } = prevArrProduct
 
 			if (isDetailInDetailGroup === undefined) {
@@ -35,16 +33,10 @@ export function OneDetail({ detail, setArrProduct }: OneDetailProps) {
 				})
 			} else {
 				if (Number(event.target.value) !== 0) {
-					const objIndex = updatedDetailsList.findIndex(
-						obj => obj.id === Number(event.target.name)
-					)
-					updatedDetailsList[objIndex].count = Number(
-						event.target.value
-					)
+					const objIndex = updatedDetailsList.findIndex(obj => obj.id === Number(event.target.name))
+					updatedDetailsList[objIndex].count = Number(event.target.value)
 				} else {
-					updatedDetailsList = updatedDetailsList.filter(
-						detail => detail.id !== Number(event.target.name)
-					)
+					updatedDetailsList = updatedDetailsList.filter(detail => detail.id !== Number(event.target.name))
 				}
 			}
 

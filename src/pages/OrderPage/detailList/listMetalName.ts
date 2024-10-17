@@ -2,7 +2,7 @@ export function listMetalName(material: string | undefined) {
 	let listMetal: string[] = []
 	switch (material) {
 		case 'St37':
-			listMetal = ['Hardox', 'Magstrong', 'ГС']
+			listMetal = ['Hardox', 'Magstrong']
 			break
 		case '09Г2С':
 			listMetal = []

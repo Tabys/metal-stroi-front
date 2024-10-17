@@ -5,11 +5,9 @@ export function AvailableDetail(detail: Detail | DocTableDetail) {
 	let detailsCount = 0
 	let quantity = 0
 
-	detail?.products?.map(product => {
+	detail?.products?.forEach(product => {
 		productsCount = product.quantity
-		detailsCount = product.product_detail?.count
-			? product.product_detail?.count
-			: 0
+		detailsCount = product.product_detail?.count ? product.product_detail?.count : 0
 		quantity += productsCount * detailsCount
 	})
 

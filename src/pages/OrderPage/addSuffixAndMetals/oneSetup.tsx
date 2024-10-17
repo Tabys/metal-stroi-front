@@ -12,18 +12,30 @@ type OneSetupProps = {
 	allValueMetalSelect: any
 	allValueSuffixSelect: any
 	allChecked: boolean
+	allCheckedAzote: boolean
 	dubleDetails: number[]
 	metals: MetalType[] | null
 	setArrSuffix: React.Dispatch<React.SetStateAction<AddSuffix[]>>
 }
 
-export function OneSetup({ dubleDetails, allValueSuffixSelect, allValueMetalSelect, allChecked, metals, setup, arrSuffix, setArrSuffix }: OneSetupProps) {
+export function OneSetup({
+	dubleDetails,
+	allValueSuffixSelect,
+	allValueMetalSelect,
+	allChecked,
+	allCheckedAzote,
+	metals,
+	setup,
+	arrSuffix,
+	setArrSuffix,
+}: OneSetupProps) {
 	const standartValue = arrSuffix.find(item => {
 		return item.id === Number(setup.id)
 	})
 	const [valueSuffixSelect, setValueSuffixSelect] = useState<any>(standartValue?.suffixes)
 	const [valueMetalSelect, setValueMetalSelect] = useState<any>()
 	const [checked, setChecked] = useState<boolean>(setup.customers_metal)
+	const [checkedAzote, setCheckedAzote] = useState<boolean>(setup.azote)
 
 	useEffect(() => {
 		setChecked(allChecked)
@@ -34,10 +46,14 @@ export function OneSetup({ dubleDetails, allValueSuffixSelect, allValueMetalSele
 	useEffect(() => {
 		setValueSuffixSelect(allValueSuffixSelect)
 	}, [allValueSuffixSelect])
+	useEffect(() => {
+		setCheckedAzote(allCheckedAzote)
+	}, [allCheckedAzote])
 
 	useEffect(() => {
 		setValueSuffixSelect(standartValue?.suffixes)
 		setChecked(setup.customers_metal)
+		setCheckedAzote(setup.azote)
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
@@ -77,6 +93,16 @@ export function OneSetup({ dubleDetails, allValueSuffixSelect, allValueMetalSele
 		})
 	}
 
+	const handleChangeAzote = () => {
+		setCheckedAzote(!checkedAzote)
+		setArrSuffix(prevArrSetup => {
+			let updatedSetupsList = prevArrSetup
+			const objIndex = updatedSetupsList.findIndex(obj => obj.id === Number(setup.id))
+			updatedSetupsList[objIndex].azote = !checkedAzote
+			return updatedSetupsList
+		})
+	}
+
 	return (
 		<div className={style.setup}>
 			<div className={style.title}>
@@ -98,6 +124,17 @@ export function OneSetup({ dubleDetails, allValueSuffixSelect, allValueMetalSele
 					<div className={style.detail + ' ' + style.empty}></div>
 				</div>
 				<div>
+					<label className={style.select_label}>
+						Азот:{' '}
+						<input
+							type='checkbox'
+							name={'azote' + setup.id}
+							checked={checkedAzote}
+							className='form-check-input'
+							onChange={handleChangeAzote}
+							disabled={setup?.material === '1.4301' || setup?.material === 'aisi430' ? false : true}
+						/>
+					</label>
 					<label className={style.select_label}>
 						Металл заказчика:{' '}
 						<input

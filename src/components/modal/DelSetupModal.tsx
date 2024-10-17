@@ -34,26 +34,14 @@ export function DelSetupModal({ onDel, order }: ModalProps) {
 				</Button>
 			</Tooltip>
 
-			<Modal
-				show={showModal}
-				onHide={closeModal}
-				dialogClassName='width600'
-			>
+			<Modal show={showModal} onHide={closeModal} dialogClassName='width600'>
 				<Modal.Header closeButton>
 					<Modal.Title>Удалить сетапы</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
-					<DelSetups
-						onClose={closeModal}
-						onDel={onDel}
-						order={order}
-					/>
+					<DelSetups onClose={closeModal} onDel={onDel} order={order} />
 				</Modal.Body>
-				<Alert
-					className='alert-fixed'
-					show={alertShow}
-					variant='success'
-				>
+				<Alert className='alert-fixed' show={alertShow} variant='success'>
 					Изменения сохранены
 				</Alert>
 			</Modal>
