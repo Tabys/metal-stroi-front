@@ -9,7 +9,6 @@ type DetailListProps = {
 
 export function DetailList({ order, setArrProduct }: DetailListProps) {
 	let details: Detail[] = CreateDetailGroupList(order)
-
 	return (
 		<>
 			{details.map(detail => (

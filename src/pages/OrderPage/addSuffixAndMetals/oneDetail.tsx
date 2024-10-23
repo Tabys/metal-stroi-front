@@ -15,8 +15,7 @@ export function OneDetail({ dubleDetails, detail }: OneDetailProp) {
 			{duble ? (
 				<Tooltip conditions={true} text='Деталь есть в другом сетапе'>
 					<p className={style.duble}>
-						<span>{detail.name}</span> {detail.setup_detail.count}шт.
-						<p>*</p>
+						<span>{detail.name}</span> {detail.setup_detail.count}шт.*
 					</p>
 				</Tooltip>
 			) : (

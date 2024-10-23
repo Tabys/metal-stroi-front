@@ -11,11 +11,10 @@ type OneDetailProps = {
 
 export function OneDetail({ detail, setArrProduct }: OneDetailProps) {
 	const [value, setValue] = useState('0')
-
-	let availableDetails = 0
+	const [availableDetails, setAvailableDetails] = useState(0)
 
 	useEffect(() => {
-		availableDetails = AvailableDetail(detail)
+		setAvailableDetails(AvailableDetail(detail))
 	}, [detail])
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
