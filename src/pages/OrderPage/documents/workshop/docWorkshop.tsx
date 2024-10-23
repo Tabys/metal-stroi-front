@@ -17,6 +17,7 @@ export function DocWorkhop() {
 	const { id } = useParams()
 	const { orders } = useOrders(id ? id : '')
 	const { materials } = useMaterials()
+
 	const setups = prepMetalData({ setups: orders?.setups, materials })
 
 	const arrDetails = orders ? CreateDetailGroupList(orders) : undefined
@@ -38,23 +39,16 @@ export function DocWorkhop() {
 						<div className={styles.doc_header}>
 							<div className={styles.order_inf}>
 								<p className={styles.order_number}>
-									<strong>
-										Заявка в цех № {orders?.order_number}
-									</strong>
+									<strong>Заявка в цех № {orders?.order_number}</strong>
 								</p>
 								<p>
-									<strong>Дата приема заказа:</strong>{' '}
-									<TransformDate
-										orderDate={orders?.date_сreate}
-									/>
+									<strong>Дата приема заказа:</strong> <TransformDate orderDate={orders?.date_сreate} />
 								</p>
 								<p>
-									<strong>Заказчик:</strong>{' '}
-									{orders?.customer}
+									<strong>Заказчик:</strong> {orders?.customer}
 								</p>
 								<p>
-									<strong>Технолог:</strong>{' '}
-									{orders?.implementer}
+									<strong>Технолог:</strong> {orders?.implementer}
 								</p>
 							</div>
 						</div>
@@ -66,19 +60,26 @@ export function DocWorkhop() {
 								<th>Наименование изделия</th>
 								<th>Толщина металла, мм</th>
 								<th>Кол-во, шт</th>
-								<th>Вид резки</th>
-								<th>Рубка</th>
-								<th>Гибка</th>
-								<th>Вальцовка</th>
+								{orders?.work_types.find(work_type => work_type === 246 || work_type === 254) ? <th>Вид резки</th> : ''}
+								{orders?.work_types.find(work_type => work_type === 250) ? <th>Рубка</th> : ''}
+								{orders?.work_types.find(work_type => work_type === 248) ? <th>Гибка</th> : ''}
+								{orders?.work_types.find(work_type => work_type === 252) ? <th>Вальцовка</th> : ''}
+								{orders?.work_types.find(work_type => work_type === 330 || work_type === 478) ? (
+									<th>
+										{orders?.work_types.find(work_type => work_type === 330) ? 'МК' : ''}{' '}
+										{orders?.work_types.find(work_type => work_type === 478) ? 'СМ' : ''}
+									</th>
+								) : (
+									''
+								)}
+								{orders?.work_types.find(work_type => work_type === 320) ? <th>Полим.</th> : ''}
+								{orders?.work_types.find(work_type => work_type === 458) ? <th>Кузня</th> : ''}
+								{orders?.work_types.find(work_type => work_type === 470) ? <th>Токарка</th> : ''}
 							</tr>
 						</thead>
 						<tbody>
 							{details?.map((detail, index) => (
-								<WorkshopTable
-									key={index}
-									details={detail}
-									index={index}
-								/>
+								<WorkshopTable key={index} detail={detail} work_types={orders?.work_types} index={index} />
 							))}
 						</tbody>
 					</Table>
@@ -86,14 +87,26 @@ export function DocWorkhop() {
 					<Table bordered>
 						<tbody>
 							<tr>
-								<td>
-									<strong>гибов</strong>
-								</td>
-								<td>{total.bend}</td>
-								<td>
-									<strong>рубов</strong>
-								</td>
-								<td>{total.chop}</td>
+								{orders?.work_types.find(work_type => work_type === 250) ? (
+									<>
+										<td>
+											<strong>рубов</strong>
+										</td>
+										<td>{total.chop}</td>
+									</>
+								) : (
+									''
+								)}
+								{orders?.work_types.find(work_type => work_type === 248) ? (
+									<>
+										<td>
+											<strong>гибов</strong>
+										</td>
+										<td>{total.bend}</td>
+									</>
+								) : (
+									''
+								)}
 								<td>
 									<strong>общее время, ч</strong>
 								</td>

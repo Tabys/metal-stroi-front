@@ -63,38 +63,40 @@ export function FormDetailList({ details, orderData }: FormProps) {
 				/>
 			))}
 			<table className={styles.table_total}>
-				<tr>
-					<td colSpan={8}>Итого по всему заказу (учитывая изделия)</td>
-					<td>
-						<strong>{total.choping.toFixed(2)}</strong>
-					</td>
-					<td></td>
-					<td>
-						<strong>{total.bending.toFixed(2)}</strong>
-					</td>
-					<td></td>
-					<td></td>
-					<td>
-						<strong>{total.painting.toFixed(2)}</strong>
-					</td>
-					<td></td>
-					<td>
-						<strong>{total.rolling.toFixed(2)}</strong>
-					</td>
-					<td>
-						<strong>{total.drowing.toFixed(2)}</strong>
-					</td>
-					<td>
-						<strong>{total.cuting.toFixed(2)}</strong>
-					</td>
-					<td></td>
-					<td>
-						<strong>{total.metal.toFixed(2)}</strong>
-					</td>
-					<td>
-						<strong>{total.price}</strong>
-					</td>
-				</tr>
+				<tbody>
+					<tr>
+						<td colSpan={8}>Итого по всему заказу (учитывая изделия)</td>
+						<td>
+							<strong>{total.choping.toFixed(2)}</strong>
+						</td>
+						<td></td>
+						<td>
+							<strong>{total.bending.toFixed(2)}</strong>
+						</td>
+						<td></td>
+						<td></td>
+						<td>
+							<strong>{total.painting.toFixed(2)}</strong>
+						</td>
+						<td></td>
+						<td>
+							<strong>{total.rolling.toFixed(2)}</strong>
+						</td>
+						<td>
+							<strong>{total.drowing.toFixed(2)}</strong>
+						</td>
+						<td>
+							<strong>{total.cuting.toFixed(2)}</strong>
+						</td>
+						<td></td>
+						<td>
+							<strong>{total.metal.toFixed(2)}</strong>
+						</td>
+						<td>
+							<strong>{total.price}</strong>
+						</td>
+					</tr>
+				</tbody>
 			</table>
 
 			<Alert className='alert-fixed' show={alertShow} variant='success'>

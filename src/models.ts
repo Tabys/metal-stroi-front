@@ -13,6 +13,7 @@ export type Order = {
 	vat?: string
 	createdAt?: string // date
 	updateAt?: string // date
+	work_types: number[]
 	metals?: Metal[]
 	setups?: Setup[]
 	products?: Product[]

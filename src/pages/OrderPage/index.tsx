@@ -59,6 +59,7 @@ export function OrderPage() {
 					<h1>
 						№{order?.id} {order?.customer} <Badge bg='success'>Сделка</Badge>
 					</h1>
+					<h2>"{order?.title}"</h2>
 					<div className='d-flex flex-row align-items-center'>
 						<div className='alert alert-primary p-2 mb-0' role='alert'>
 							ID сделки: <strong>{order?.id}</strong>

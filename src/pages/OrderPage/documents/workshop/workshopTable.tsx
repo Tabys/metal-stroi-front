@@ -1,25 +1,32 @@
 import { DocTableDetail } from '../../../../models'
+import { findDataInProducts } from './findDataInProduct'
 
 type WHTableProps = {
-	details: DocTableDetail
+	detail: DocTableDetail
+	work_types: number[] | undefined
 	index: number
 }
 
-export function WorkshopTable({ details, index }: WHTableProps) {
-	// const total_price = ((Number(details.bending) + Number(details.choping) + Number(details.cut_cost) + Number(details.metal)) * details.quantity).toFixed(1)
+export function WorkshopTable({ detail, work_types, index }: WHTableProps) {
+	// const total_price = ((Number(detail.bending) + Number(detail.choping) + Number(detail.cut_cost) + Number(detail.metal)) * detail.quantity).toFixed(1)
+	const dataProducts = findDataInProducts({ detail })
 
 	return (
 		<tr>
 			<td>{index + 1}</td>
-			<td>{details.name}</td>
+			<td>{detail.name}</td>
 			<td>
-				{details.thickness} {details.material} {details.suffixes} {details.customers_metal ? 'зак' : ''}
+				{detail.thickness} {detail.material} {detail.suffixes} {detail.customers_metal ? 'зак' : ''}
 			</td>
-			<td>{details.quantity}</td>
-			<td>{details.cut_type === 'laser' ? 'Лазер' : 'Плазма'}</td>
-			<td>{details.chop_count ? details.chop_count : 0}</td>
-			<td>{details.bend_count ? details.bend_count : 0}</td>
-			<td>{details.rolling ? '✓' : ' '}</td>
+			<td>{detail.quantity}</td>
+			{work_types?.find(work_type => work_type === 246 || work_type === 254) ? <td>{detail.cut_type === 'laser' ? 'Лазер' : 'Плазма'}</td> : ''}
+			{work_types?.find(work_type => work_type === 250) ? <td>{detail.chop_count ? detail.chop_count : ''}</td> : ''}
+			{work_types?.find(work_type => work_type === 248) ? <td>{detail.bend_count ? detail.bend_count : ''}</td> : ''}
+			{work_types?.find(work_type => work_type === 252) ? <td>{detail.rolling ? '✓' : ''}</td> : ''}
+			{work_types?.find(work_type => work_type === 330 || work_type === 478) ? <td>{dataProducts.weldings > 0 ? '✓' : ''}</td> : ''}
+			{work_types?.find(work_type => work_type === 320) ? <td>{dataProducts.painting > 0 || Number(detail.polymer_price) > 0 ? '✓' : ''}</td> : ''}
+			{work_types?.find(work_type => work_type === 458) ? <td>{dataProducts.smithy > 0 ? '✓' : ''}</td> : ''}
+			{work_types?.find(work_type => work_type === 470) ? <td>{dataProducts.turning_works > 0 ? '✓' : ''}</td> : ''}
 		</tr>
 	)
 }

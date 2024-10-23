@@ -16,11 +16,11 @@ export function OrderProfile({ order, update }: OrderProps) {
 		<div className='col-12 col-sm-6 p-6'>
 			<div className='p-2 border bg-light d-flex justify-content-between'>
 				<Link to={`/order/${order.id}`} className='text-start text-decoration-none text-muted'>
-					№{order?.id} {order?.customer}
+					№{order?.id} "{order?.title}"
 				</Link>
 				<div className='d-flex align-items-center'>
 					<p className='mb-0 mr-1'>
-						<TransformDate orderDate={order?.date_сreate} />
+						{order?.customer} | <TransformDate orderDate={order?.date_сreate} />
 					</p>
 					{currentUser?.roles === 'ROLE_ADMIN' ? <DeleteOrder order={order} update={update} /> : ''}
 				</div>
