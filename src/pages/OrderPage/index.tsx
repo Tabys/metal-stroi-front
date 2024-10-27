@@ -121,7 +121,7 @@ export function OrderPage() {
 
 						<ProductList dataOrder={order} delProduct={updateOrders} />
 
-						{order.metals ? <MetalList metal={order.metals} /> : ''}
+						{order.metals ? <MetalList metal={order.metals} updMetal={updateOrders} /> : ''}
 
 						{/* FIXED INTERFACE ELEMENTS */}
 						<div className='fixed-element'>

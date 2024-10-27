@@ -5,9 +5,10 @@ import { useState } from 'react'
 
 interface FormProps {
 	metal: Metal[]
+	updMetal: () => void
 }
 
-export function FormMetalList({ metal }: FormProps) {
+export function FormMetalList({ metal, updMetal }: FormProps) {
 	const [alertShow, setAlertShow] = useState(false)
 
 	const openAlert = () => {
@@ -19,11 +20,7 @@ export function FormMetalList({ metal }: FormProps) {
 	return (
 		<>
 			{metal.map((item, index) => (
-				<FormMetalDetail
-					key={index}
-					metal={item}
-					updMetal={openAlert}
-				/>
+				<FormMetalDetail key={index} metal={item} openAlert={openAlert} updMetal={updMetal} />
 			))}
 			<Alert className='alert-fixed' show={alertShow} variant='success'>
 				Изменения сохранены

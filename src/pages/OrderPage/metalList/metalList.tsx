@@ -4,9 +4,10 @@ import styles from './style.module.css'
 
 type metalListProps = {
 	metal: Metal[]
+	updMetal: () => void
 }
 
-export function MetalList({ metal }: metalListProps) {
+export function MetalList({ metal, updMetal }: metalListProps) {
 	return (
 		<div className={styles.wrapper_table + ' ' + styles.metal_table}>
 			<h2>Металл</h2>
@@ -16,9 +17,10 @@ export function MetalList({ metal }: metalListProps) {
 					<div>Ширина</div>
 					<div>Длина</div>
 					<div>Листы</div>
+					<div>Актуализировать листы</div>
 				</div>
 
-				<FormMetalList metal={metal} />
+				<FormMetalList metal={metal} updMetal={updMetal} />
 			</div>
 		</div>
 	)
