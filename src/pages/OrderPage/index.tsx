@@ -16,7 +16,6 @@ import { ProductList } from './productList/productList'
 import { AddSuffixModal } from '../../components/modal/AddSuffixAndMetalsModal'
 import { CopyOrderModal } from '../../components/modal/CopyOrderModal'
 import { AddDetailSetupModal } from '../../components/modal/AddDetailSetupModal'
-import { ScrollTop } from '../../components/ScrollTop'
 import { DelSetupModal } from '../../components/modal/DelSetupModal'
 import { UpdBX24Data } from './updBX24Data/updBX24Data'
 
@@ -133,8 +132,6 @@ export function OrderPage() {
 							<AddProductModal order={order} onAdd={updateOrders} />
 							<DelSetupModal order={order} onDel={updateOrders} />
 						</div>
-
-						<ScrollTop></ScrollTop>
 					</>
 				) : (
 					<div className='fixed-element'>

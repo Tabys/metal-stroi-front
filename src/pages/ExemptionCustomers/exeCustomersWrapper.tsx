@@ -47,6 +47,8 @@ export function ExeCustomersWrapper() {
 				<div className='row header'>
 					<div className='p-2'>№</div>
 					<div className='p-2'>Заказчик</div>
+					<div className='p-2'>Мин. цена резки(азот)</div>
+					<div className='p-2'>Мин. цена резки(кислород)</div>
 					<div className='p-2'>Удалить</div>
 				</div>
 				{customers

@@ -16,6 +16,7 @@ import { DocPainting } from './pages/OrderPage/documents/painting/docPainting'
 import { DocSpecialization } from './pages/OrderPage/documents/specialization/docSpecialization'
 import { DocContract } from './pages/OrderPage/documents/contract/docContract'
 import { ExemptionCustomers } from './pages/ExemptionCustomers'
+import { ScrollTop } from './components/ScrollTop'
 
 function App() {
 	const { currentUser } = useUser()
@@ -26,47 +27,21 @@ function App() {
 			{currentUser ? (
 				<>
 					<Header />
+					<ScrollTop></ScrollTop>
 					<Routes>
 						<Route path='/' element={<OrdersPage />} />
 						<Route path='/order/:id' element={<OrderPage />} />
-						<Route
-							path='/order/:id/doc-client'
-							element={<DocClient />}
-						/>
-						<Route
-							path='/order/:id/doc-workshop'
-							element={<DocWorkhop />}
-						/>
-						<Route
-							path='/order/:id/doc-order'
-							element={<DocOrder />}
-						/>
-						<Route
-							path='/order/:id/doc-painting'
-							element={<DocPainting />}
-						/>
-						<Route
-							path='/order/:id/doc-specialization'
-							element={<DocSpecialization />}
-						/>
-						<Route
-							path='/order/:id/doc-contract'
-							element={<DocContract />}
-						/>
+						<Route path='/order/:id/doc-client' element={<DocClient />} />
+						<Route path='/order/:id/doc-workshop' element={<DocWorkhop />} />
+						<Route path='/order/:id/doc-order' element={<DocOrder />} />
+						<Route path='/order/:id/doc-painting' element={<DocPainting />} />
+						<Route path='/order/:id/doc-specialization' element={<DocSpecialization />} />
+						<Route path='/order/:id/doc-contract' element={<DocContract />} />
 						{currentUser?.['roles'] !== 'ROLE_USER' ? (
 							<>
-								<Route
-									path='/price-services/'
-									element={<PriceServices />}
-								/>
-								<Route
-									path='/price-materials/'
-									element={<PriceMaterials />}
-								/>
-								<Route
-									path='/exemption-customers/'
-									element={<ExemptionCustomers />}
-								/>
+								<Route path='/price-services/' element={<PriceServices />} />
+								<Route path='/price-materials/' element={<PriceMaterials />} />
+								<Route path='/exemption-customers/' element={<ExemptionCustomers />} />
 							</>
 						) : (
 							''
@@ -79,10 +54,7 @@ function App() {
 				<>
 					<Routes>
 						<Route path='/' element={<LogIn />} />
-						<Route
-							path='/order/:id/doc-contract'
-							element={<DocContract />}
-						/>
+						<Route path='/order/:id/doc-contract' element={<DocContract />} />
 						<Route path='*' element={<Page404 />} />
 					</Routes>
 				</>

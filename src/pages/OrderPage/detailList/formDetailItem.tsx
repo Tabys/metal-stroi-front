@@ -175,7 +175,7 @@ export function FormDetailItem({ DetailItem, delivery, editedDetails, orderData,
 			detail: data,
 			type: 'cut',
 		})
-		if (Number(data.cut_cost) >= Number(cuting?.cost)) {
+		if (Number(data.cut_cost) >= Number(cuting)) {
 			await axios.put<Detail>(process.env.REACT_APP_BACKEND_API_URL + 'detail/', {
 				id: data.id,
 				cut_cost: data.cut_cost,
@@ -192,7 +192,7 @@ export function FormDetailItem({ DetailItem, delivery, editedDetails, orderData,
 				updDetail()
 			} else {
 				await methods.setValue('cut_cost', DetailItem.cut_cost)
-				serviseAlert(cuting?.cost)
+				serviseAlert(cuting)
 			}
 		}
 	}
