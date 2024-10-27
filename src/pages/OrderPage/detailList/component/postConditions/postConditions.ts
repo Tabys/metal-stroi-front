@@ -45,10 +45,16 @@ export async function postConditions({ order, detail, type }: postConditionsProp
 	const setup = await getSetup()
 
 	let access: boolean = false
-	let cuting: PricesServiceItem | undefined = undefined
+	let min_cuting_price: number | undefined = undefined
+	let serviceItem: PricesServiceItem | undefined = undefined
+	let cuting: number = 0
 	let bending: PricesServiceItem | undefined = undefined
 	let choping: PricesServiceItem | undefined = undefined
 
+	const filteredCustomer = customers?.find(function (customer) {
+		return customer.name === order.customer
+	})
+	console.log(filteredCustomer)
 	switch (type) {
 		case 'cut':
 			const plasm_cut = prices?.find(function (priceArray) {
@@ -61,19 +67,30 @@ export async function postConditions({ order, detail, type }: postConditionsProp
 				return priceArray.short_title === 'laser_oxigen_cut'
 			})
 			if (detail.cut_type === 'plasma') {
-				cuting = plasm_cut?.price_services_items?.find(function (n) {
+				serviceItem = plasm_cut?.price_services_items?.find(function (n) {
 					return Number(n.metal_thickness_min) <= Number(detail.thickness) && Number(n.metal_thickness_max) >= Number(detail.thickness)
 				})
+				cuting = Number(serviceItem?.cost)
 			} else {
 				if (setup?.azote === false) {
-					cuting = laser_cut_oxigen?.price_services_items?.find(function (n) {
+					serviceItem = laser_cut_oxigen?.price_services_items?.find(function (n) {
 						return Number(n.metal_thickness_min) <= Number(detail.thickness) && Number(n.metal_thickness_max) >= Number(detail.thickness)
 					})
+					if (filteredCustomer?.min_price_oxigen && filteredCustomer?.min_price_oxigen > 0) {
+						cuting = filteredCustomer?.min_price_oxigen
+					} else {
+						cuting = Number(serviceItem?.cost)
+					}
 					// console.log('OXYGEN')
 				} else {
-					cuting = laser_cut_azote?.price_services_items?.find(function (n) {
+					serviceItem = laser_cut_azote?.price_services_items?.find(function (n) {
 						return Number(n.metal_thickness_min) <= Number(detail.thickness) && Number(n.metal_thickness_max) >= Number(detail.thickness)
 					})
+					if (filteredCustomer?.min_price_azote && filteredCustomer?.min_price_azote > 0) {
+						cuting = filteredCustomer?.min_price_azote
+					} else {
+						cuting = Number(serviceItem?.cost)
+					}
 					// console.log('AZOTE')
 				}
 			}
@@ -108,13 +125,9 @@ export async function postConditions({ order, detail, type }: postConditionsProp
 			})
 			break
 	}
-
-	const filteredCustomer = customers?.find(function (customer) {
-		return customer.name === order.customer
-	})
-
+	console.log(cuting)
 	if (currentUser?.roles === 'ROLE_USER') {
-		if (filteredCustomer !== undefined && filteredCustomer !== null) {
+		if (filteredCustomer !== undefined && filteredCustomer !== null && cuting <= Number(detail.cut_cost)) {
 			access = true
 		} else {
 			access = false
@@ -122,6 +135,5 @@ export async function postConditions({ order, detail, type }: postConditionsProp
 	} else {
 		access = true
 	}
-
 	return { access, choping, bending, cuting }
 }

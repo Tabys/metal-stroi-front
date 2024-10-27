@@ -465,9 +465,12 @@ export type UpdBX24 = {
 export type ExeCustomers = {
 	id: number
 	name: string
+	min_price_oxigen: number
+	min_price_azote: number
 }
 export type ExeCustomersCreate = {
 	name: string
+	min_proce: number
 }
 export type ExeCustomersDel = {
 	id: number
@@ -478,4 +481,15 @@ export type FormatedSetupsData = {
 	table_number: string
 	metals: string
 	setups: Setup[] | undefined
+}
+
+export type OrderController = {
+	id: number
+	delivery: number
+	pallets: number
+	markup: number
+	rolling_outsourcing?: boolean
+	customer: string
+	cut_price?: number
+	user_role?: string
 }

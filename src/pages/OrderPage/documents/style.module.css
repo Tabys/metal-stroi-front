@@ -191,7 +191,8 @@ h3 {
 		margin: 0;
 		max-width: 1200px;
 	}
-	.order_inf button {
+	.order_inf button,
+	.doc button {
 		display: none;
 	}
 }

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { DocTableDetail, Order } from '../../../models'
+import { DocTableDetail, Order, OrderController } from '../../../models'
 import { useForm, SubmitHandler, FormProvider, Controller } from 'react-hook-form'
 import Form from 'react-bootstrap/Form'
 import CreatableSelect from 'react-select/creatable'
@@ -9,6 +9,8 @@ import { Alert } from 'react-bootstrap'
 import { CreateDetailGroupList } from '../detailList/createDetailGroupList'
 import { PrepArrDetils } from '../documents/components/prepArrDetails/prepArrDetails'
 import { CulcTotalData } from '../documents/components/culcTotalData'
+import Tooltip from '../../../components/Tooltip'
+import { useUser } from '../../../hooks/curentUser'
 
 type formOCProps = {
 	orderData: Order
@@ -16,6 +18,8 @@ type formOCProps = {
 }
 
 export function FormOrderController({ orderData, updated }: formOCProps) {
+	const { currentUser } = useUser()
+
 	const defaultOptions = [
 		{ value: 2, label: '2' },
 		{ value: 3, label: '3' },
@@ -43,6 +47,7 @@ export function FormOrderController({ orderData, updated }: formOCProps) {
 	}
 
 	const [alertShow, setAlertShow] = useState(false)
+	const [errorAlertShow, setErrorAlertShow] = useState(false)
 	const [options, setOptions] = useState(defaultOptions)
 
 	const openAlert = () => {
@@ -52,9 +57,16 @@ export function FormOrderController({ orderData, updated }: formOCProps) {
 		}, 1000)
 	}
 
-	const methods = useForm<Order>()
+	const openErrorAlert = () => {
+		setErrorAlertShow(true)
+		setTimeout(() => {
+			setErrorAlertShow(false)
+		}, 1000)
+	}
 
-	const onSubmitDelivery: SubmitHandler<Order> = async data => {
+	const methods = useForm<OrderController>()
+
+	const onSubmitDelivery: SubmitHandler<OrderController> = async data => {
 		if (data.delivery !== 0) {
 			const arrDetails = orderData ? CreateDetailGroupList(orderData) : undefined
 			const details: DocTableDetail[] | undefined = PrepArrDetils({
@@ -63,12 +75,16 @@ export function FormOrderController({ orderData, updated }: formOCProps) {
 				full: true,
 			})
 			const total = CulcTotalData({ details })
-			data.pallets = Math.ceil(total.weight / 500)
+			if (total.weight > 300) {
+				data.pallets = Math.ceil(total.weight / 500)
+			} else {
+				data.pallets = 0
+			}
 		} else {
 			data.pallets = 0
 		}
 
-		await axios.put<Order>(process.env.REACT_APP_BACKEND_API_URL + 'orders/', data)
+		await axios.put<OrderController>(process.env.REACT_APP_BACKEND_API_URL + 'orders/', data)
 		methods.setValue('pallets', data.pallets)
 		updated()
 		openAlert()
@@ -81,11 +97,30 @@ export function FormOrderController({ orderData, updated }: formOCProps) {
 		methods.handleSubmit(onSubmit)()
 	}
 
-	const onSubmit: SubmitHandler<Order> = async data => {
+	const onSubmit: SubmitHandler<OrderController> = async data => {
 		// console.log(data)
-		await axios.put<Order>(process.env.REACT_APP_BACKEND_API_URL + 'orders/', data)
+		await axios.put<OrderController>(process.env.REACT_APP_BACKEND_API_URL + 'orders/', data)
 		updated()
 		openAlert()
+	}
+
+	const onSubmitCut: SubmitHandler<OrderController> = async data => {
+		data.user_role = currentUser?.roles
+		await axios
+			.put<OrderController>(process.env.REACT_APP_BACKEND_API_URL + 'detail/cut-prices', data)
+			.then(result => {
+				updated()
+				openAlert()
+			})
+			.catch(err => {
+				if (err.response.status > 200) {
+					methods.setError('root.serverError', {
+						type: err.response.status,
+						message: err.response.data.message,
+					})
+					openErrorAlert()
+				}
+			})
 	}
 	const detailsId: number[] = []
 	orderData?.setups?.forEach(setup => {
@@ -100,6 +135,20 @@ export function FormOrderController({ orderData, updated }: formOCProps) {
 				<FormProvider {...methods}>
 					<form>
 						<input type='hidden' {...methods.register('id')} defaultValue={orderData.id} />
+						<input type='hidden' {...methods.register('customer')} defaultValue={orderData.customer} />
+
+						<Form.Group className='group'>
+							<Form.Label>Цена резки:</Form.Label>
+							<Tooltip conditions={true} text='Только лазер(кислород)'>
+								<input
+									{...methods.register('cut_price', {
+										onBlur: methods.handleSubmit(onSubmitCut),
+										valueAsNumber: true,
+									})}
+									className='form-control delivery'
+								/>
+							</Tooltip>
+						</Form.Group>
 						<Form.Group className='group'>
 							<Form.Label>Доставка:</Form.Label>
 							<input
@@ -175,6 +224,9 @@ export function FormOrderController({ orderData, updated }: formOCProps) {
 			</div>
 			<Alert className='alert-fixed' show={alertShow} variant='success'>
 				Изменения сохранены
+			</Alert>
+			<Alert variant='danger' show={errorAlertShow} className='alert-fixed'>
+				{methods.formState.errors?.root?.serverError.message}
 			</Alert>
 		</>
 	)
