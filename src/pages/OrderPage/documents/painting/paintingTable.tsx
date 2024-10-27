@@ -12,7 +12,7 @@ export function PaintingTable({ detail, index }: PaintingTableProps) {
 			<td>{index + 1}</td>
 			<td>{detail.name}</td>
 			<td>{detail.quantity}</td>
-			<td>{detail.polymer}</td>
+			<td>{(Number(detail.polymer) * Number(detail.quantity)).toFixed(3)}</td>
 			<td>{volume.toFixed(3)}</td>
 			<td>{Number(detail.painting).toFixed(3)}</td>
 		</tr>
