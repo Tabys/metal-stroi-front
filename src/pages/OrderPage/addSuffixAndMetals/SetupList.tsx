@@ -80,7 +80,7 @@ export function SetupList({ dubleDetails, metals, data, setArrSuffix, arrSuffix 
 		<div className={style.setups_group}>
 			<div className={style.group_thickness}>
 				<h2>
-					S{data?.thickness} ({data?.metals})
+					S{data?.thickness} ({data?.metals}) {data?.customer_metal ? '- металл заказчика' : ''}
 				</h2>
 				<div className={style.controllers}>
 					<label className={style.label}>

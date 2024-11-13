@@ -3,14 +3,12 @@ import { DocTableDetail, Order, OrderController } from '../../../models'
 import { useForm, SubmitHandler, FormProvider, Controller } from 'react-hook-form'
 import Form from 'react-bootstrap/Form'
 import CreatableSelect from 'react-select/creatable'
-import { UpdMetalCost } from './updMetalCost'
 import { useState } from 'react'
 import { Alert } from 'react-bootstrap'
 import { CreateDetailGroupList } from '../detailList/createDetailGroupList'
 import { PrepArrDetils } from '../documents/components/prepArrDetails/prepArrDetails'
 import { CulcTotalData } from '../documents/components/culcTotalData'
 import Tooltip from '../../../components/Tooltip'
-import { useUser } from '../../../hooks/curentUser'
 
 type formOCProps = {
 	orderData: Order
@@ -18,8 +16,6 @@ type formOCProps = {
 }
 
 export function FormOrderController({ orderData, updated }: formOCProps) {
-	const { currentUser } = useUser()
-
 	const defaultOptions = [
 		{ value: 2, label: '2' },
 		{ value: 3, label: '3' },
@@ -47,20 +43,12 @@ export function FormOrderController({ orderData, updated }: formOCProps) {
 	}
 
 	const [alertShow, setAlertShow] = useState(false)
-	const [errorAlertShow, setErrorAlertShow] = useState(false)
 	const [options, setOptions] = useState(defaultOptions)
 
 	const openAlert = () => {
 		setAlertShow(true)
 		setTimeout(() => {
 			setAlertShow(false)
-		}, 1000)
-	}
-
-	const openErrorAlert = () => {
-		setErrorAlertShow(true)
-		setTimeout(() => {
-			setErrorAlertShow(false)
 		}, 1000)
 	}
 
@@ -104,30 +92,12 @@ export function FormOrderController({ orderData, updated }: formOCProps) {
 		openAlert()
 	}
 
-	const onSubmitCut: SubmitHandler<OrderController> = async data => {
-		data.user_role = currentUser?.roles
-		await axios
-			.put<OrderController>(process.env.REACT_APP_BACKEND_API_URL + 'detail/cut-prices', data)
-			.then(result => {
-				updated()
-				openAlert()
-			})
-			.catch(err => {
-				if (err.response.status > 200) {
-					methods.setError('root.serverError', {
-						type: err.response.status,
-						message: err.response.data.message,
-					})
-					openErrorAlert()
-				}
-			})
-	}
-	const detailsId: number[] = []
-	orderData?.setups?.forEach(setup => {
-		setup?.details?.map(detail => {
-			return detailsId?.push(Number(detail.id))
-		})
-	})
+	// const detailsId: number[] = []
+	// orderData?.setups?.forEach(setup => {
+	// 	setup?.details?.map(detail => {
+	// 		return detailsId?.push(Number(detail.id))
+	// 	})
+	// })
 
 	return (
 		<>
@@ -138,19 +108,11 @@ export function FormOrderController({ orderData, updated }: formOCProps) {
 						<input type='hidden' {...methods.register('customer')} defaultValue={orderData.customer} />
 
 						<Form.Group className='group'>
-							<Form.Label>Цена резки:</Form.Label>
-							<Tooltip conditions={true} text='Только лазер(кислород)'>
-								<input
-									{...methods.register('cut_price', {
-										onBlur: methods.handleSubmit(onSubmitCut),
-										valueAsNumber: true,
-									})}
-									className='form-control delivery'
-								/>
-							</Tooltip>
-						</Form.Group>
-						<Form.Group className='group'>
-							<Form.Label>Доставка:</Form.Label>
+							<Form.Label>
+								<Tooltip conditions={true} text='Доставка'>
+									<img src='/images/header-table/package-min.png' alt='delivery' />
+								</Tooltip>
+							</Form.Label>
 							<input
 								{...methods.register('delivery', {
 									onBlur: methods.handleSubmit(onSubmitDelivery),
@@ -161,7 +123,11 @@ export function FormOrderController({ orderData, updated }: formOCProps) {
 							/>
 						</Form.Group>
 						<Form.Group className='group'>
-							<Form.Label>Поддоны:</Form.Label>
+							<Form.Label>
+								<Tooltip conditions={true} text='Поддоны'>
+									<img src='/images/header-table/free-icon-pallets-7854833-min.png' alt='pallets' />
+								</Tooltip>
+							</Form.Label>
 							<input
 								{...methods.register('pallets', {
 									onBlur: methods.handleSubmit(onSubmit),
@@ -174,29 +140,11 @@ export function FormOrderController({ orderData, updated }: formOCProps) {
 
 						<Form.Group className='group'>
 							<Form.Label className='text-end'>
-								Вальцовка<br></br>аутсорс:
+								<Tooltip conditions={true} text='Наценка на металл'>
+									<img src='/images/header-table/free-icon-interest-rate-11651084-min.png' alt='markup' />
+								</Tooltip>
 							</Form.Label>
-							<input
-								{...methods.register('rolling_outsourcing', {
-									onChange: methods.handleSubmit(onSubmit),
-								})}
-								type='checkbox'
-								checked={orderData.rolling_outsourcing}
-								className='form-check-input'
-							/>
-						</Form.Group>
 
-						<Form.Group className='group'>
-							<Form.Label className='text-end'>
-								Наценка на<br></br>металл:
-							</Form.Label>
-							{/* <FormSelect
-								name='markup'
-								selected={orderData.markup}
-								arrOptions={[2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]}
-								onSubmit={methods.handleSubmit(onSubmit)}
-								// disabled={Role() === 'ROLE_USER' ? true : false}
-							/> */}
 							<Controller
 								control={methods.control}
 								name='markup'
@@ -220,13 +168,9 @@ export function FormOrderController({ orderData, updated }: formOCProps) {
 						</Form.Group>
 					</form>
 				</FormProvider>
-				<UpdMetalCost orderId={orderData.id} update={updated} openAlert={openAlert} />
 			</div>
 			<Alert className='alert-fixed' show={alertShow} variant='success'>
 				Изменения сохранены
-			</Alert>
-			<Alert variant='danger' show={errorAlertShow} className='alert-fixed'>
-				{methods.formState.errors?.root?.serverError.message}
 			</Alert>
 		</>
 	)

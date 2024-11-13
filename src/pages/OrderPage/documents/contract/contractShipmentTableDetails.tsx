@@ -1,4 +1,5 @@
 import { DocTableDetail } from '../../../../models'
+import styles from '../style.module.css'
 
 type ContractShipmentTableDetailsProps = {
 	detail: DocTableDetail
@@ -27,7 +28,7 @@ export function ContractShipmentTableDetails({ detail, index, delivery }: Contra
 			<td>
 				{detail.thickness} {detail.suffixes} {detail.customers_metal ? 'зак' : ''}
 			</td>
-			<td>{detail.name}</td>
+			<td className={styles.left}>{detail.name}</td>
 			<td>{total_price / detail.quantity}</td>
 			<td>{detail.quantity}</td>
 			<td>{total_price}</td>

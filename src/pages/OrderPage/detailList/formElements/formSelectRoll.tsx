@@ -15,6 +15,8 @@ export function FormSelectRoll({ detailData, selected, name, disabled, onSubmit 
 	let arrOptionsText: string[] = []
 	switch (detailData.material) {
 		case 'St37':
+		case 'St37HK':
+		case 'St37RIF':
 		case '09Г2С':
 			arrOptions = ['', 'rolling_roll', 'rolling_cone']
 			arrOptionsText = ['', 'Прокат', 'Конус']

@@ -72,6 +72,7 @@ export function PrepArrDetils({ arrDetails, orders, full, poroductCount }: PrepA
 					quantity: availableDetail,
 					polymer: detail.polymer,
 					polymer_price: detail.polymer_price,
+					polymer_options: detail.polymer_options,
 					rolling: Number(detail.rolling),
 					drowing: detail.drowing,
 					additional_setups: detail.additional_setups,

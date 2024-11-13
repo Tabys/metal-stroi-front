@@ -45,6 +45,8 @@ export async function UpdRollings(dataDetail: Detail) {
 
 		switch (MATERIAL_NAME) {
 			case 'St37':
+			case 'St37HK':
+			case 'St37RIF':
 			case '09Г2С':
 			case 'ОЦ':
 				SERVICES_COST = PRICE?.price_services_rollings?.filter(function (items) {

@@ -6,6 +6,7 @@ import { PrepArrDetils } from '../documents/components/prepArrDetails/prepArrDet
 import { PrepArrProducts } from '../documents/components/prepArrProducts'
 import { CulcTotalData } from '../documents/components/culcTotalData'
 import styles from './style.module.css'
+import { usePaintingMods } from '../../../hooks/paintingMods'
 
 interface FormProps {
 	orderData: Order
@@ -13,6 +14,7 @@ interface FormProps {
 }
 
 export function FormDetailList({ details, orderData }: FormProps) {
+	const { paintingMods } = usePaintingMods()
 	const editedDetails: DocTableDetail[] | undefined = PrepArrDetils({
 		arrDetails: details,
 		orders: orderData,
@@ -58,6 +60,7 @@ export function FormDetailList({ details, orderData }: FormProps) {
 					DetailItem={item}
 					delivery={total.oneKgDelivery}
 					editedDetails={editedDetails}
+					paintingMods={paintingMods}
 					index={index}
 					key={item.id}
 				/>
@@ -65,32 +68,37 @@ export function FormDetailList({ details, orderData }: FormProps) {
 			<table className={styles.table_total}>
 				<tbody>
 					<tr>
-						<td colSpan={8}>Итого по всему заказу (учитывая изделия)</td>
+						<td colSpan={3}>Итого по всему заказу (+изделия)</td>
+						<td></td>
+						<td></td>
 						<td>
-							<strong>{total.choping.toFixed(2)}</strong>
+							<strong>{total.metal.toFixed(2)}</strong>
+						</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td>
+							<strong>{total.cuting.toFixed(2)}</strong>
 						</td>
 						<td></td>
 						<td>
 							<strong>{total.bending.toFixed(2)}</strong>
 						</td>
 						<td></td>
-						<td></td>
 						<td>
-							<strong>{total.painting.toFixed(2)}</strong>
+							<strong>{total.choping.toFixed(2)}</strong>
 						</td>
 						<td></td>
 						<td>
 							<strong>{total.rolling.toFixed(2)}</strong>
 						</td>
-						<td>
-							<strong>{total.drowing.toFixed(2)}</strong>
-						</td>
-						<td>
-							<strong>{total.cuting.toFixed(2)}</strong>
-						</td>
+						<td></td>
 						<td></td>
 						<td>
-							<strong>{total.metal.toFixed(2)}</strong>
+							<strong>{total.painting.toFixed(2)}</strong>
+						</td>
+						<td>
+							<strong>{total.drowing.toFixed(2)}</strong>
 						</td>
 						<td>
 							<strong>{total.price}</strong>

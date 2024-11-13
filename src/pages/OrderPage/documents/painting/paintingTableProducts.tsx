@@ -1,4 +1,5 @@
 import { DocTableProduct } from '../../../../models'
+import styles from '../style.module.css'
 
 type PaintingTableProductsProps = {
 	product: DocTableProduct
@@ -9,9 +10,9 @@ type PaintingTableProductsProps = {
 export function PaintingTableProducts({ product, index, startIndex }: PaintingTableProductsProps) {
 	return (
 		<tr className={index === 0 ? 'borderBold' : ''}>
-			<td>{startIndex ? startIndex + index + 1 : 0}</td>
-			<td>{product.name}</td>
-			<td>{product.quantity}</td>
+			<td className={styles.center}>{startIndex ? startIndex + index + 1 : 0}</td>
+			<td className={styles.left}>{product.name}</td>
+			<td className={styles.center}>{product.quantity}</td>
 			<td>{product.painting_color}</td>
 			<td>{Number(product.value).toFixed(3)}</td>
 			<td>{Number(product.painting_cost).toFixed(3)}</td>

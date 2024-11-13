@@ -20,6 +20,10 @@ h3 {
 	font-size: 12px;
 }
 
+.doc table td {
+	text-align: right;
+}
+
 .doc table thead tr th {
 	text-align: center;
 	vertical-align: middle;
@@ -176,6 +180,12 @@ h3 {
 .gap {
 	margin-bottom: 20px;
 }
+.doc table td.center {
+	text-align: center;
+}
+.doc table td.left {
+	text-align: left;
+}
 
 .contract table {
 	font-family: 'Times New Roman', Times;
@@ -183,6 +193,44 @@ h3 {
 .contract table thead tr td {
 	text-align: center;
 }
+.comment {
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+.comment .heading {
+	width: 100%;
+	margin: 0;
+	font-weight: bold;
+}
+.comment .textarea {
+	max-width: 500px;
+	min-height: 100px;
+	font-size: 14px;
+}
+.doc .customer {
+	text-align: center;
+	font-size: 20px;
+}
+.doc .flex {
+	display: flex;
+	justify-content: space-between;
+}
+.doc .flex .group {
+	width: 50%;
+}
+.doc .flex .group .textarea_mini {
+	font-size: 14px;
+	margin-bottom: 15px;
+}
+textarea.metal_comment {
+	height: 20px;
+	min-height: 20px;
+	padding: 0 0.25rem !important;
+	font-size: 12px !important;
+}
+
 @media print {
 	.doc,
 	.doc.full {
@@ -194,5 +242,17 @@ h3 {
 	.order_inf button,
 	.doc button {
 		display: none;
+	}
+	.doc .flex .group .textarea_mini,
+	.comment .textarea,
+	.metal_comment {
+		resize: none;
+	}
+	::placeholder {
+		font-size: 0;
+	}
+	.metal_comment {
+		border: none !important;
+		padding: 0px 0.25rem !important;
 	}
 }

@@ -1,4 +1,5 @@
 import { DocTableProductSpec, TotalData } from '../../../../models'
+import styles from '../style.module.css'
 
 type ContractWorkTableProductProps = {
 	product: DocTableProductSpec
@@ -12,7 +13,7 @@ export function ContractWorkTableProduct({ product, total, index, delivery, star
 	return (
 		<tr>
 			<td>{Number(startIndex) + index + 1}</td>
-			<td>{product.name}</td>
+			<td className={styles.left}>{product.name}</td>
 			<td>-</td>
 
 			<td>{(Number(product.detailsCutCost) / product.quantity).toFixed(2)}</td>

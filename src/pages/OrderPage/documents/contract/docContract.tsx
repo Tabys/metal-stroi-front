@@ -30,7 +30,7 @@ export function DocContract() {
 	const total = CulcTotalData({ details, products, orders })
 	return (
 		<>
-			<div className='container'>
+			<div className='container doc-container'>
 				{currentUser ? (
 					<Link to='..' relative='path' className='back-link'>
 						Вернуться назад
@@ -38,44 +38,32 @@ export function DocContract() {
 				) : (
 					''
 				)}
-				<div
-					className={
-						styles.doc + ' ' + styles.full + ' ' + styles.contract
-					}
-				>
+				<div className={styles.doc + ' ' + styles.full + ' ' + styles.contract}>
 					<h3>Спецификация к договору на выполнение РАБОТ</h3>
-					<Table bordered hover>
+					<Table bordered hover className='narrow_cells'>
 						<thead>
 							<tr>
-								<td rowSpan={2}>№ п/п</td>
-								<td rowSpan={2}>
-									Наименование результата Работ (изделия)
-								</td>
-								<td rowSpan={2}>Толщина металла, мм</td>
-								<td colSpan={6}>Стоимость работ, руб.</td>
-								<td rowSpan={2}>Итого за ед., в руб. {vat}</td>
-								<td rowSpan={2}>Кол-во, шт</td>
-								<td rowSpan={2}>Итого, в руб. {vat}</td>
-								<td rowSpan={2}>Вес за шт.</td>
+								<th rowSpan={2}>№ п/п</th>
+								<th rowSpan={2}>Наименование результата Работ (изделия)</th>
+								<th rowSpan={2}>Толщина металла, мм</th>
+								<th colSpan={6}>Стоимость работ, руб.</th>
+								<th rowSpan={2}>Итого за ед., в руб. {vat}</th>
+								<th rowSpan={2}>Кол-во, шт</th>
+								<th rowSpan={2}>Итого, в руб. {vat}</th>
+								<th rowSpan={2}>Вес за шт.</th>
 							</tr>
 							<tr>
-								<td>резка</td>
-								<td>рубка</td>
-								<td>мех.обработка</td>
-								<td>гибка</td>
-								<td>окрашивание</td>
-								<td>сварка</td>
+								<th>резка</th>
+								<th>рубка</th>
+								<th>мех.обработка</th>
+								<th>гибка</th>
+								<th>окрашивание</th>
+								<th>сварка</th>
 							</tr>
 						</thead>
 						<tbody>
 							{details?.map((detail, index) => (
-								<ContractWorkTableDetail
-									key={detail.id}
-									detail={detail}
-									total={total}
-									index={index}
-									delivery={total.oneKgDelivery}
-								/>
+								<ContractWorkTableDetail key={detail.id} detail={detail} total={total} index={index} delivery={total.oneKgDelivery} />
 							))}
 							{products?.map((product, index) => (
 								<ContractWorkTableProduct
@@ -99,25 +87,20 @@ export function DocContract() {
 					<div className={styles.gap}></div>
 					<h3>Спецификация к договору ПОСТАВКИ</h3>
 
-					<Table bordered hover>
+					<Table bordered hover className='narrow_cells'>
 						<thead>
 							<tr>
-								<td>№ п/п</td>
-								<td>Толщина металла, мм</td>
-								<td>Наименование изделия</td>
-								<td>Цена за ед., руб. {vat}</td>
-								<td>Кол-во</td>
-								<td>Итого, руб. {vat}</td>
+								<th>№ п/п</th>
+								<th>Толщина металла, мм</th>
+								<th>Наименование изделия</th>
+								<th>Цена за ед., руб. {vat}</th>
+								<th>Кол-во</th>
+								<th>Итого, руб. {vat}</th>
 							</tr>
 						</thead>
 						<tbody>
 							{details?.map((detail, index) => (
-								<ContractShipmentTableDetails
-									key={detail.id}
-									detail={detail}
-									index={index}
-									delivery={total.oneKgDelivery}
-								/>
+								<ContractShipmentTableDetails key={detail.id} detail={detail} index={index} delivery={total.oneKgDelivery} />
 							))}
 							{products?.map((product, index) => (
 								<ContractShipmentTableProducts

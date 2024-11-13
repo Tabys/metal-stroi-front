@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { useForm, SubmitHandler, FormProvider, Controller } from 'react-hook-form'
-import { Detail, DocTableDetail, Order } from '../../../models'
+import { Detail, DocTableDetail, Order, PaintingMods } from '../../../models'
 import styles from './style.module.css'
 import { UpdCutInset } from './updPrices/updCutInset'
 import { UpdBandChop } from './updPrices/updBendChop'
@@ -22,12 +22,23 @@ type FormDetailItemProps = {
 	editedDetails: DocTableDetail[] | undefined
 	index: number
 	delivery: number
+	paintingMods: PaintingMods[]
 	updDetail: () => void
 	rollAlert: () => void
 	serviseAlert: (min_price: number | undefined) => void
 }
 
-export function FormDetailItem({ DetailItem, delivery, editedDetails, orderData, index, rollAlert, serviseAlert, updDetail }: FormDetailItemProps) {
+export function FormDetailItem({
+	DetailItem,
+	delivery,
+	editedDetails,
+	orderData,
+	index,
+	paintingMods,
+	rollAlert,
+	serviseAlert,
+	updDetail,
+}: FormDetailItemProps) {
 	const methods = useForm<Detail>()
 
 	const [isDisabledPP, setIsDisabledPP] = useState(DetailItem.polymer_price === null || DetailItem.polymer_price == 0 ? true : false)
@@ -36,12 +47,12 @@ export function FormDetailItem({ DetailItem, delivery, editedDetails, orderData,
 	const [metalPriceOneDetail, setMetalPriceOneDetail] = useState('')
 	const [detailCost, setDetailCost] = useState(0)
 
-	const options: any[] = [
-		{ value: 'shagreen', label: 'Шагрень' },
-		{ value: 'matte', label: 'Матовые' },
-		{ value: 'lacquer', label: 'Лак' },
-		{ value: 'big', label: 'Габаритные изделия' },
-	]
+	const options: any[] = paintingMods.map(paintingMod => {
+		return {
+			value: paintingMod.id,
+			label: paintingMod.name,
+		}
+	})
 
 	useEffect(() => {
 		methods.reset()
@@ -91,7 +102,7 @@ export function FormDetailItem({ DetailItem, delivery, editedDetails, orderData,
 
 	const onSubmitOptionPainting: SubmitHandler<Detail> = async data => {
 		delete data.metal_cost
-		await axios.put<Detail>(process.env.REACT_APP_BACKEND_API_URL + 'detail/', await UpdPaintingOption(data))
+		await axios.put<Detail>(process.env.REACT_APP_BACKEND_API_URL + 'detail/', await UpdPaintingOption({ dataDetail: data, paintingMods: paintingMods }))
 		await methods.setValue('polymer_price', Number.isNaN(data.polymer_price) ? 0 : data.polymer_price)
 		await updDetail()
 	}
@@ -214,41 +225,24 @@ export function FormDetailItem({ DetailItem, delivery, editedDetails, orderData,
 				<input {...methods.register('setup_id')} type='hidden' defaultValue={DetailItem.setup_detail.setup_id} />
 				<input {...methods.register('thickness')} type='hidden' defaultValue={DetailItem.thickness} />
 				<div className={styles.line}>{index + 1} </div>
-				<div className={styles.line}>{DetailItem.name}</div>
-				<div className={styles.line}>{DetailItem.thickness}</div>
-				<div className={styles.line}>{DetailItem.material}</div>
-				<div className={styles.line}>{DetailItem.quantity}</div>
-				{/* <div className={styles.line}>
-					{DetailItem.cut_count === null ? 0 : DetailItem.cut_count}
-				</div> */}
-				<FormRadio name='cut_type' defaultValue={DetailItem.cut_type} data={DetailItem} onSubmit={methods.handleSubmit(onSubmitCutInset)} />
-				<div className={styles.line}>
-					<Tooltip conditions={Number(DetailItem.thickness) > 5 ? true : false} text='Толщина металла должна быть < 5'>
-						<input
-							{...methods.register('chop_count', {
-								onBlur: methods.handleSubmit(onSubmitBendChop),
-								valueAsNumber: true,
-							})}
-							defaultValue={DetailItem.chop_count === null ? 0 : DetailItem.chop_count}
-							tabIndex={1}
-							type='number'
-							className='form-control'
-							disabled={Number(DetailItem.thickness) > 5 ? true : false}
-							required
-							min='0'
-						/>
-					</Tooltip>
+				<div className={styles.line + ' ' + styles.name}>
+					{DetailItem.name} {DetailItem.custom ? '(' + DetailItem.l_size + 'x' + DetailItem.w_size + ')' : ''}
 				</div>
-				<div className={styles.line}>
+				<div className={styles.line}>{DetailItem.quantity}</div>
+
+				<div className={styles.line + ' ' + styles.brown}>{DetailItem.thickness}</div>
+				<div className={styles.line + ' ' + styles.brown}>{DetailItem.material}</div>
+				<div className={styles.line + ' ' + styles.brown}>{metalPriceOneDetail}</div>
+
+				<FormRadio name='cut_type' defaultValue={DetailItem.cut_type} data={DetailItem} onSubmit={methods.handleSubmit(onSubmitCutInset)} />
+				<div className={styles.line + ' ' + styles.green}>
 					<input
-						{...methods.register('chop_cost', {
-							onBlur: methods.handleSubmit(onSubmitPriceChop),
+						{...methods.register('inset_cost', {
+							onBlur: methods.handleSubmit(onSubmitPrice),
 							valueAsNumber: true,
 						})}
-						defaultValue={DetailItem.chop_cost === null ? 0 : DetailItem.chop_cost}
-						tabIndex={2}
+						defaultValue={DetailItem.inset_cost === null ? 0 : DetailItem.inset_cost}
 						type='number'
-						step='0.1'
 						onFocus={e =>
 							e.target.addEventListener(
 								'wheel',
@@ -258,11 +252,37 @@ export function FormDetailItem({ DetailItem, delivery, editedDetails, orderData,
 								{ passive: false }
 							)
 						}
-						disabled={isDisabledChop}
+						step='0.1'
+						min='0'
+						disabled={DetailItem.cut_type === 'laser' ? true : false}
 						className='form-control'
 					/>
 				</div>
-				<div className={styles.line}>
+				<div className={styles.line + ' ' + styles.green}>
+					<input
+						{...methods.register('cut_cost', {
+							onBlur: methods.handleSubmit(onSubmitPriceCuting),
+							valueAsNumber: true,
+						})}
+						defaultValue={DetailItem.cut_cost === null ? 0 : DetailItem.cut_cost}
+						tabIndex={9}
+						type='number'
+						onFocus={e =>
+							e.target.addEventListener(
+								'wheel',
+								function (e) {
+									e.preventDefault()
+								},
+								{ passive: false }
+							)
+						}
+						step='0.1'
+						min='0'
+						className='form-control'
+					/>
+				</div>
+
+				<div className={styles.line + ' ' + styles.yellow}>
 					<input
 						{...methods.register('bends_count', {
 							onBlur: methods.handleSubmit(onSubmitBendChop),
@@ -285,7 +305,7 @@ export function FormDetailItem({ DetailItem, delivery, editedDetails, orderData,
 						required
 					/>
 				</div>
-				<div className={styles.line}>
+				<div className={styles.line + ' ' + styles.yellow}>
 					<input
 						{...methods.register('bend_cost', {
 							onBlur: methods.handleSubmit(onSubmitPriceBend),
@@ -309,7 +329,83 @@ export function FormDetailItem({ DetailItem, delivery, editedDetails, orderData,
 						className='form-control'
 					/>
 				</div>
-				<div className={styles.line}>
+
+				<div className={styles.line + ' ' + styles.orange}>
+					<Tooltip conditions={Number(DetailItem.thickness) > 5 ? true : false} text='Толщина металла должна быть < 5'>
+						<input
+							{...methods.register('chop_count', {
+								onBlur: methods.handleSubmit(onSubmitBendChop),
+								valueAsNumber: true,
+							})}
+							defaultValue={DetailItem.chop_count === null ? 0 : DetailItem.chop_count}
+							tabIndex={1}
+							type='number'
+							className='form-control'
+							disabled={Number(DetailItem.thickness) > 5 ? true : false}
+							required
+							min='0'
+						/>
+					</Tooltip>
+				</div>
+				<div className={styles.line + ' ' + styles.orange}>
+					<input
+						{...methods.register('chop_cost', {
+							onBlur: methods.handleSubmit(onSubmitPriceChop),
+							valueAsNumber: true,
+						})}
+						defaultValue={DetailItem.chop_cost === null ? 0 : DetailItem.chop_cost}
+						tabIndex={2}
+						type='number'
+						step='0.1'
+						onFocus={e =>
+							e.target.addEventListener(
+								'wheel',
+								function (e) {
+									e.preventDefault()
+								},
+								{ passive: false }
+							)
+						}
+						disabled={isDisabledChop}
+						className='form-control'
+					/>
+				</div>
+
+				<div className={styles.line + ' ' + styles.blue}>
+					<FormSelectRoll
+						detailData={DetailItem}
+						selected={DetailItem.rolling_type}
+						name='rolling_type'
+						disabled={Number(DetailItem.thickness) > 5 ? true : false}
+						onSubmit={methods.handleSubmit(onSubmitRolling)}
+					/>
+				</div>
+				<div className={styles.line + ' ' + styles.blue}>
+					<input
+						{...methods.register('rolling', {
+							onBlur: methods.handleSubmit(onSubmitPrice),
+							valueAsNumber: true,
+						})}
+						disabled={Number(DetailItem.thickness) > 5 ? true : false}
+						defaultValue={DetailItem.rolling === null ? 0 : DetailItem.rolling}
+						tabIndex={7}
+						type='number'
+						onFocus={e =>
+							e.target.addEventListener(
+								'wheel',
+								function (e) {
+									e.preventDefault()
+								},
+								{ passive: false }
+							)
+						}
+						step='0.1'
+						min='0'
+						className='form-control'
+					/>
+				</div>
+
+				<div className={styles.line + ' ' + styles.red}>
 					<input
 						{...methods.register('polymer', {
 							onBlur: methods.handleSubmit(onSubmitPainting),
@@ -320,7 +416,7 @@ export function FormDetailItem({ DetailItem, delivery, editedDetails, orderData,
 						className='form-control'
 					/>
 				</div>
-				<div className={styles.line}>
+				<div className={styles.line + ' ' + styles.red}>
 					<Controller
 						control={methods.control}
 						name={'polymer_options'}
@@ -343,7 +439,7 @@ export function FormDetailItem({ DetailItem, delivery, editedDetails, orderData,
 						)}
 					/>
 				</div>
-				<div className={styles.line}>
+				<div className={styles.line + ' ' + styles.red}>
 					<input
 						{...methods.register('polymer_base_price')}
 						defaultValue={DetailItem.polymer_base_price === null ? 0 : DetailItem.polymer_base_price}
@@ -372,40 +468,8 @@ export function FormDetailItem({ DetailItem, delivery, editedDetails, orderData,
 						className='form-control'
 					/>
 				</div>
-				<div className={styles.line}>
-					<FormSelectRoll
-						detailData={DetailItem}
-						selected={DetailItem.rolling_type}
-						name='rolling_type'
-						disabled={Number(DetailItem.thickness) > 5 ? true : false}
-						onSubmit={methods.handleSubmit(onSubmitRolling)}
-					/>
-				</div>
-				<div className={styles.line}>
-					<input
-						{...methods.register('rolling', {
-							onBlur: methods.handleSubmit(onSubmitPrice),
-							valueAsNumber: true,
-						})}
-						disabled={Number(DetailItem.thickness) > 5 ? true : false}
-						defaultValue={DetailItem.rolling === null ? 0 : DetailItem.rolling}
-						tabIndex={7}
-						type='number'
-						onFocus={e =>
-							e.target.addEventListener(
-								'wheel',
-								function (e) {
-									e.preventDefault()
-								},
-								{ passive: false }
-							)
-						}
-						step='0.1'
-						min='0'
-						className='form-control'
-					/>
-				</div>
-				<div className={styles.line}>
+
+				<div className={styles.line + ' ' + styles.purple}>
 					<input
 						{...methods.register('drowing', {
 							onBlur: methods.handleSubmit(onSubmitPrice),
@@ -428,64 +492,8 @@ export function FormDetailItem({ DetailItem, delivery, editedDetails, orderData,
 						className='form-control'
 					/>
 				</div>
-				<div className={styles.line}>
-					<input
-						{...methods.register('cut_cost', {
-							onBlur: methods.handleSubmit(onSubmitPriceCuting),
-							valueAsNumber: true,
-						})}
-						defaultValue={DetailItem.cut_cost === null ? 0 : DetailItem.cut_cost}
-						tabIndex={9}
-						type='number'
-						onFocus={e =>
-							e.target.addEventListener(
-								'wheel',
-								function (e) {
-									e.preventDefault()
-								},
-								{ passive: false }
-							)
-						}
-						step='0.1'
-						min='0'
-						className='form-control'
-					/>
-				</div>
-				<div className={styles.line}>
-					<input
-						{...methods.register('inset_cost', {
-							onBlur: methods.handleSubmit(onSubmitPrice),
-							valueAsNumber: true,
-						})}
-						defaultValue={DetailItem.inset_cost === null ? 0 : DetailItem.inset_cost}
-						type='number'
-						onFocus={e =>
-							e.target.addEventListener(
-								'wheel',
-								function (e) {
-									e.preventDefault()
-								},
-								{ passive: false }
-							)
-						}
-						step='0.1'
-						min='0'
-						disabled={DetailItem.cut_type === 'laser' ? true : false}
-						className='form-control'
-					/>
-				</div>
-				<div className={styles.line}>{metalPriceOneDetail}</div>
+
 				<div className={styles.line}>{detailCost}</div>
-				{/* <div className={styles.line}>
-					<FormCheckbox
-						name='food_steel'
-						defaultChecked={DetailItem.food_steel}
-						disable={
-							DetailItem.material === '1.4301' ? false : true
-						}
-						onSubmit={methods.handleSubmit(onSubmitFoodSteel)}
-					/>
-				</div> */}
 			</form>
 		</FormProvider>
 	)

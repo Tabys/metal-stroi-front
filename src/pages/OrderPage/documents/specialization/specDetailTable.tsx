@@ -26,11 +26,11 @@ export function SpecDetailTable({ detail, index, total, delivery, showTable }: S
 
 	return (
 		<tr>
-			<td>{index + 1}</td>
-			<td>
+			<td className={styles.center}>{index + 1}</td>
+			<td className={styles.left}>
 				{detail.thickness} {detail.material} {detail.suffixes} {detail.customers_metal ? 'зак' : ''}
 			</td>
-			<td>{detail.name}</td>
+			<td className={styles.left}>{detail.name}</td>
 			{Number(total.cuting_plasma) > 0 ? <td className={showTable === true ? '' : styles.hideTable}>{Number(detail.cut_cost).toFixed(2)}</td> : ''}
 			{Number(total.cuting_laser) > 0 ? <td className={showTable === true ? '' : styles.hideTable}>{Number(detail.cut_cost).toFixed(2)}</td> : ''}
 			{total.choping > 0 ? (

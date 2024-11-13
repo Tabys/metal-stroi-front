@@ -2,7 +2,6 @@ import axios, { AxiosError } from 'axios'
 import { useState, useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { Order } from '../../models'
-import { Badge } from 'react-bootstrap'
 import { DetailList } from './detailList/detailList'
 import { UploadSetupModal } from '../../components/modal/UploadSetupModal'
 import { TransformDate } from '../../components/TransformDate'
@@ -50,74 +49,40 @@ export function OrderPage() {
 
 	return (
 		<>
-			<div className='container-flued px-5 mb-5'>
+			<div className='container-flued px-5 mb-5 main-page'>
 				<div className='row  g-2'>
 					<Link to={`/`} className='back-link'>
 						Вернуться назад
 					</Link>
 					<h1>
-						№{order?.id} {order?.customer} <Badge bg='success'>Сделка</Badge>
+						№{order?.id} {order?.customer}
 					</h1>
 					<h2>"{order?.title}"</h2>
-					<div className='d-flex flex-row align-items-center'>
-						<div className='alert alert-primary p-2 mb-0' role='alert'>
-							ID сделки: <strong>{order?.id}</strong>
-						</div>
-						<div className='alert alert-primary p-2 mb-0 mx-2' role='alert'>
-							Дата создания сделки:{' '}
-							<strong>
-								<TransformDate orderDate={order?.date_сreate} />
-							</strong>
-						</div>
-						<div>
-							<UpdBX24Data order={order} onUpd={updateOrders} />
-						</div>
-					</div>
 				</div>
 
 				{!order?.setups?.length && EmptySetup()}
 				{order?.setups?.length ? (
 					<>
 						<div className='group-controll'>
-							<ListGroup horizontal>
-								<ListGroup.Item variant='light'>
-									<Link relative='path' to={`doc-client`}>
-										<FaFileLines /> Клиенту
-									</Link>
-								</ListGroup.Item>
-								<ListGroup.Item variant='light'>
-									<Link relative='path' to={`doc-workshop`}>
-										<FaFileLines /> В цех
-									</Link>
-								</ListGroup.Item>
-								<ListGroup.Item variant='light'>
-									<Link relative='path' to={`doc-order`}>
-										<FaFileLines /> Заказ
-									</Link>
-								</ListGroup.Item>
-								<ListGroup.Item variant='light'>
-									<Link relative='path' to={`doc-painting`}>
-										<FaFileLines /> Полимерка
-									</Link>
-								</ListGroup.Item>
-								<ListGroup.Item variant='light'>
-									<Link relative='path' to={`doc-specialization`}>
-										<FaFileLines /> Спецификация
-									</Link>
-								</ListGroup.Item>
-								<ListGroup.Item variant='light'>
-									<Link relative='path' to={`doc-contract`}>
-										<FaFileLines /> К договору
-									</Link>
-								</ListGroup.Item>
-								<ListGroup.Item variant='light'>
-									<SendPDFForm orderId={Number(id)} />
-								</ListGroup.Item>
-							</ListGroup>
+							<div className='d-flex flex-row align-items-center'>
+								<div className='alert alert-primary p-2 mb-0' role='alert'>
+									ID сделки: <strong>{order?.id}</strong>
+								</div>
+								<div className='alert alert-primary p-2 mb-0 mx-2' role='alert'>
+									Дата создания сделки:{' '}
+									<strong>
+										<TransformDate orderDate={order?.date_сreate} />
+									</strong>
+								</div>
+								<div>
+									<UpdBX24Data order={order} onUpd={updateOrders} />
+								</div>
+							</div>
+
 							<FormOrderController orderData={order} updated={updateOrders} />
 						</div>
 
-						<DetailList dataOrder={order} />
+						<DetailList dataOrder={order} updated={updateOrders} />
 
 						<ProductList dataOrder={order} delProduct={updateOrders} />
 
@@ -131,6 +96,51 @@ export function OrderPage() {
 							<AddSuffixModal onAdd={updateOrders} order={order} />
 							<AddProductModal order={order} onAdd={updateOrders} />
 							<DelSetupModal order={order} onDel={updateOrders} />
+						</div>
+
+						<div className='bottom-fixed-element'>
+							<div className='px-5'>
+								<ListGroup horizontal>
+									<ListGroup.Item variant='light'>
+										<Link relative='path' to={`group-docs`}>
+											<FaFileLines /> Клиенту/В цех/Заказ
+										</Link>
+									</ListGroup.Item>
+									{/* <ListGroup.Item variant='light'>
+									<Link relative='path' to={`doc-client`}>
+										<FaFileLines /> Клиенту
+									</Link>
+								</ListGroup.Item>
+								<ListGroup.Item variant='light'>
+									<Link relative='path' to={`doc-workshop`}>
+										<FaFileLines /> В цех
+									</Link>
+								</ListGroup.Item>
+								<ListGroup.Item variant='light'>
+									<Link relative='path' to={`doc-order`}>
+										<FaFileLines /> Заказ
+									</Link>
+								</ListGroup.Item> */}
+									<ListGroup.Item variant='light'>
+										<Link relative='path' to={`doc-painting`}>
+											<FaFileLines /> Полимерка
+										</Link>
+									</ListGroup.Item>
+									<ListGroup.Item variant='light'>
+										<Link relative='path' to={`doc-specialization`}>
+											<FaFileLines /> Спецификация
+										</Link>
+									</ListGroup.Item>
+									<ListGroup.Item variant='light'>
+										<Link relative='path' to={`doc-contract`}>
+											<FaFileLines /> К договору
+										</Link>
+									</ListGroup.Item>
+									<ListGroup.Item variant='light'>
+										<SendPDFForm orderId={Number(id)} />
+									</ListGroup.Item>
+								</ListGroup>
+							</div>
 						</div>
 					</>
 				) : (

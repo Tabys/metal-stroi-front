@@ -21,6 +21,8 @@ type FormProductItemProps = {
 export function FormProductItem({ productItem, editedProducts, delivery, orderData, index, delProduct, updProduct, setError }: FormProductItemProps) {
 	const [productCost, setProductCost] = useState(0)
 	const methods = useForm<Product>()
+
+	console.log(productItem)
 	// Change METAL COST input value during change METAL MARKAP
 	useEffect(() => {
 		methods.reset()
@@ -251,6 +253,13 @@ export function FormProductItem({ productItem, editedProducts, delivery, orderDa
 					<DeleteProduct product={productItem.id} update={delProduct} />
 				</div>
 			</form>
+			<tr className={styles.details_td}>
+				<td colSpan={20}>
+					{productItem.details?.map(detail => {
+						return <p>{detail.name + '(' + detail?.product_detail?.count + 'шт.)'}</p>
+					})}
+				</td>
+			</tr>
 		</FormProvider>
 	)
 }

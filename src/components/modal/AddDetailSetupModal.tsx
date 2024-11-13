@@ -19,7 +19,7 @@ export function AddDetailSetupModal({ onAdd, setups, order_id }: ModalProps) {
 
 	return (
 		<>
-			<Tooltip conditions={true} text='Добавить сетап с деталями вручную'>
+			<Tooltip conditions={true} text='Создать задание на рубку'>
 				<Button className='fixed right-175' variant='primary' onClick={openModal}>
 					<FaRegSquarePlus />
 				</Button>
@@ -27,7 +27,7 @@ export function AddDetailSetupModal({ onAdd, setups, order_id }: ModalProps) {
 
 			<Modal show={showSetupModal} onHide={closeModal} dialogClassName='width600'>
 				<Modal.Header closeButton>
-					<Modal.Title>Добавить сетап с деталями</Modal.Title>
+					<Modal.Title>Создать задание на рубку</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
 					<AddSetup onCreate={onAdd} onClose={closeModal} order_id={order_id} />

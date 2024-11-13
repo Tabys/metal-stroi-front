@@ -1,4 +1,5 @@
 import { DocTableDetail } from '../../../../models'
+import styles from '../style.module.css'
 
 type ClientTableProps = {
 	detail: DocTableDetail
@@ -23,12 +24,12 @@ export function ClientTable({ detail, index, delivery }: ClientTableProps) {
 
 	return (
 		<tr>
-			<td>{index + 1}</td>
-			<td>{detail.name}</td>
-			<td>
+			<td className={styles.center}>{index + 1}</td>
+			<td className={styles.left}>{detail.name}</td>
+			<td className={styles.center}>
 				{detail.thickness} {detail.material} {detail.suffixes} {detail.customers_metal ? 'зак' : ''}
 			</td>
-			<td>{detail.quantity}</td>
+			<td className={styles.center}>{detail.quantity}</td>
 			<td>{total_price}</td>
 		</tr>
 	)
