@@ -4,6 +4,12 @@ export function listMetalName(material: string | undefined) {
 		case 'St37':
 			listMetal = ['Hardox', 'Magstrong']
 			break
+		case 'St37HK':
+			listMetal = ['Hardox', 'Magstrong']
+			break
+		case 'St37RIF':
+			listMetal = ['Hardox', 'Magstrong']
+			break
 		case '09Г2С':
 			listMetal = []
 			break

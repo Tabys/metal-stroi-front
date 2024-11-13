@@ -10,6 +10,7 @@ export function CreateDetailGroupList(dataOrder: Order) {
 			detail.material = element.material
 			detail.quantity = detail.setup_detail.count
 			detail.customers_metal = element.customers_metal
+			detail.custom = element.custom
 			arrDetails.push(detail)
 		})
 	})

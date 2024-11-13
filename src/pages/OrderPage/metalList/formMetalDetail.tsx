@@ -10,9 +10,11 @@ type FormMetalDetailProps = {
 	metal: Metal
 	updMetal: () => void
 	openAlert: () => void
+	openErrorAlert: () => void
+	setTextErrorAlert: React.Dispatch<React.SetStateAction<string>>
 }
 
-export function FormMetalDetail({ metal, updMetal, openAlert }: FormMetalDetailProps) {
+export function FormMetalDetail({ metal, updMetal, openAlert, openErrorAlert, setTextErrorAlert }: FormMetalDetailProps) {
 	const metalName = getMetalNameSuffix(metal.material)
 
 	const methods = useForm<Metal>()
@@ -23,8 +25,22 @@ export function FormMetalDetail({ metal, updMetal, openAlert }: FormMetalDetailP
 	}, [metal])
 
 	const onSubmit: SubmitHandler<Metal> = async data => {
-		await axios.put<Metal>(process.env.REACT_APP_BACKEND_API_URL + 'metal/', data)
-		openAlert()
+		await axios
+			.put<Metal>(process.env.REACT_APP_BACKEND_API_URL + 'metal/', data)
+			.then(result => {
+				openAlert()
+			})
+			.catch(err => {
+				if (err.response.status > 200) {
+					methods.setError('root.serverError', {
+						type: err.response.status,
+						message: err.response.data.message,
+					})
+					openErrorAlert()
+					methods.setValue('metal_sheets', err.response.data.original_sheets)
+					setTextErrorAlert(err.response.data.message)
+				}
+			})
 	}
 
 	const onSubmitUpdMetalLists: SubmitHandler<Metal> = async data => {
@@ -44,7 +60,7 @@ export function FormMetalDetail({ metal, updMetal, openAlert }: FormMetalDetailP
 				<input {...methods.register('weight_metal')} type='hidden' defaultValue={metal.weight_metal} />
 				<input {...methods.register('width')} type='hidden' defaultValue={metal.width} />
 				<div>
-					{metal.thickness_title} {metalName}
+					{metal.thickness_title} {metalName} {metal.customer_metal ? 'зак' : ''}
 				</div>
 				<div>{metal.width}</div>
 				<div>{metal.length}</div>

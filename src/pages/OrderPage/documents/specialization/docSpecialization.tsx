@@ -29,7 +29,7 @@ export function DocSpecialization() {
 
 	return (
 		<>
-			<div className='container'>
+			<div className='container doc-container'>
 				<Link to='..' relative='path' className='back-link'>
 					Вернуться назад
 				</Link>
@@ -48,7 +48,7 @@ export function DocSpecialization() {
 							{showTable === true ? 'Скрыть стоимость' : 'Показать стоимость'}
 						</button>
 					</div>
-					<Table bordered hover>
+					<Table bordered hover className='narrow_cells'>
 						<thead>
 							<tr>
 								<th rowSpan={2}>№ п/п</th>
@@ -111,7 +111,7 @@ export function DocSpecialization() {
 
 					<p className={styles.mini_header}>Изделия:</p>
 					{products! && products?.length > 0 ? (
-						<Table bordered hover>
+						<Table bordered hover className='narrow_cells'>
 							<thead>
 								<tr>
 									<th>№ п/п</th>

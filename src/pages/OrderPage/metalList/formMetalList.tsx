@@ -9,7 +9,10 @@ interface FormProps {
 }
 
 export function FormMetalList({ metal, updMetal }: FormProps) {
+	metal.sort((a, b) => (a.thickness > b.thickness ? 1 : -1))
 	const [alertShow, setAlertShow] = useState(false)
+	const [alertErrorShow, setAlertErrorShow] = useState(false)
+	const [textErrorAlert, setTextErrorAlert] = useState('')
 
 	const openAlert = () => {
 		setAlertShow(true)
@@ -17,13 +20,31 @@ export function FormMetalList({ metal, updMetal }: FormProps) {
 			setAlertShow(false)
 		}, 1000)
 	}
+
+	const openErrorAlert = () => {
+		setAlertErrorShow(true)
+		setTimeout(() => {
+			setAlertErrorShow(false)
+		}, 1000)
+	}
+
 	return (
 		<>
 			{metal.map((item, index) => (
-				<FormMetalDetail key={index} metal={item} openAlert={openAlert} updMetal={updMetal} />
+				<FormMetalDetail
+					key={index}
+					metal={item}
+					openAlert={openAlert}
+					openErrorAlert={openErrorAlert}
+					updMetal={updMetal}
+					setTextErrorAlert={setTextErrorAlert}
+				/>
 			))}
 			<Alert className='alert-fixed' show={alertShow} variant='success'>
 				Изменения сохранены
+			</Alert>
+			<Alert className='alert-fixed' show={alertErrorShow} variant='danger'>
+				{textErrorAlert}
 			</Alert>
 		</>
 	)

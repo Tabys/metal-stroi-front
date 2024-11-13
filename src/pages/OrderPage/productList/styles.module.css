@@ -53,6 +53,17 @@
 	column-span: 7;
 }
 
+.detail_list .details_td td {
+	background-color: initial;
+	text-align: left;
+	font-weight: normal;
+}
+
+.detail_list .details_td td p {
+	font-size: 11px;
+	margin: 0;
+}
+
 /* input[type='number']::-webkit-outer-spin-button,
 input[type='number']::-webkit-inner-spin-button {
 	-webkit-appearance: none;

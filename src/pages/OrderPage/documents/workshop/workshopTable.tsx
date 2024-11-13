@@ -1,5 +1,6 @@
 import { DocTableDetail } from '../../../../models'
 import { findDataInProducts } from './findDataInProduct'
+import styles from '../style.module.css'
 
 type WHTableProps = {
 	detail: DocTableDetail
@@ -13,13 +14,17 @@ export function WorkshopTable({ detail, work_types, index }: WHTableProps) {
 
 	return (
 		<tr>
-			<td>{index + 1}</td>
-			<td>{detail.name}</td>
-			<td>
+			<td className={styles.center}>{index + 1}</td>
+			<td className={styles.left}>{detail.name}</td>
+			<td className={styles.center}>
 				{detail.thickness} {detail.material} {detail.suffixes} {detail.customers_metal ? 'зак' : ''}
 			</td>
-			<td>{detail.quantity}</td>
-			{work_types?.find(work_type => work_type === 246 || work_type === 254) ? <td>{detail.cut_type === 'laser' ? 'Лазер' : 'Плазма'}</td> : ''}
+			<td className={styles.center}>{detail.quantity}</td>
+			{work_types?.find(work_type => work_type === 246 || work_type === 254) ? (
+				<td>{detail.cut_type === 'laser' ? 'Лазер' : detail.cut_type === 'plasma' ? 'Плазма' : '-'}</td>
+			) : (
+				''
+			)}
 			{work_types?.find(work_type => work_type === 250) ? <td>{detail.chop_count ? detail.chop_count : ''}</td> : ''}
 			{work_types?.find(work_type => work_type === 248) ? <td>{detail.bend_count ? detail.bend_count : ''}</td> : ''}
 			{work_types?.find(work_type => work_type === 252) ? <td>{detail.rolling ? '✓' : ''}</td> : ''}

@@ -1,4 +1,5 @@
 import { DocTableProductSpec, TotalData } from '../../../../models'
+import styles from '../style.module.css'
 
 type SpecProductTableProps = {
 	product: DocTableProductSpec
@@ -19,8 +20,8 @@ export function SpecProductTable({ product, total, index, delivery }: SpecProduc
 
 	return (
 		<tr>
-			<td>{index + 1}</td>
-			<td>{product.name}</td>
+			<td className={styles.center}>{index + 1}</td>
+			<td className={styles.left}>{product.name}</td>
 			<td>{product.quantity}</td>
 			{total.prod_welding > 0 ? <td>{Number(product.welding).toFixed(2)}</td> : ''}
 			{total.prod_painting > 0 ? <td>{Number(product.painting_cost).toFixed(2)}</td> : ''}

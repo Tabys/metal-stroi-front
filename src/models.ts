@@ -14,6 +14,8 @@ export type Order = {
 	createdAt?: string // date
 	updateAt?: string // date
 	work_types: number[]
+	comment_painting?: string
+	comment_workshop?: string
 	metals?: Metal[]
 	setups?: Setup[]
 	products?: Product[]
@@ -33,6 +35,7 @@ export type Setup = {
 	unique: string
 	customers_metal: boolean
 	azote: boolean
+	custom: boolean
 	details?: Detail[]
 }
 
@@ -71,6 +74,9 @@ export type Detail = {
 	drowing?: number
 	additional_setups?: JSON[]
 	customers_metal?: boolean
+	custom?: boolean
+	l_size?: number
+	w_size?: number
 	product_detail?: ProductsDetails
 	products?: Product[]
 	setups?: Setup[]
@@ -168,6 +174,8 @@ export type Metal = {
 	length: number
 	width: number
 	thickness_title?: string
+	comment?: string
+	customer_metal: boolean
 }
 
 export type Upload = {
@@ -233,6 +241,7 @@ export type PriceServiceCategory = {
 	price_services_items?: PricesServiceItem[]
 	price_services_rollings?: PricesServiceRolling[]
 	price_services_paintings?: PricesServicePainting[]
+	price_services_painting_mods?: PaintingMods[]
 }
 
 export type PricesServiceItem = {
@@ -310,6 +319,7 @@ export type DocTableDetail = {
 	suffixes?: string
 	polymer?: string
 	polymer_price?: number
+	polymer_options?: JSON[]
 	surface?: string
 	metal_title?: string[]
 	customers_metal?: boolean
@@ -477,9 +487,11 @@ export type ExeCustomersDel = {
 }
 
 export type FormatedSetupsData = {
+	id: number
 	thickness: number
 	table_number: string
 	metals: string
+	customer_metal: boolean
 	setups: Setup[] | undefined
 }
 
@@ -492,4 +504,27 @@ export type OrderController = {
 	customer: string
 	cut_price?: number
 	user_role?: string
+}
+
+export type PaintingMods = {
+	id: number
+	name: string
+	cost: number
+	type: string
+}
+
+export type ChangeCutPriceForm = {
+	id: number
+	user_role?: string
+	cut_price: number
+}
+
+export type ChangeCutTypeForm = {
+	id: number
+	cut_type: string
+}
+
+export type UniversalResetForm = {
+	id: number
+	condition: Object
 }

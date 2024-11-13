@@ -1,4 +1,5 @@
 import { DocTableDetail, TotalData } from '../../../../models'
+import styles from '../style.module.css'
 
 type ContractWorkTableDetailProps = {
 	detail: DocTableDetail
@@ -25,7 +26,7 @@ export function ContractWorkTableDetail({ detail, index, total, delivery }: Cont
 	return (
 		<tr>
 			<td>{index + 1}</td>
-			<td>{detail.name}</td>
+			<td className={styles.left}>{detail.name}</td>
 			<td>
 				{detail.thickness} {detail.material} {detail.suffixes} {detail.customers_metal ? 'зак' : ''}
 			</td>
