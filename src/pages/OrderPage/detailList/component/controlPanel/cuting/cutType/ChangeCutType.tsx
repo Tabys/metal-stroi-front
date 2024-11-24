@@ -23,8 +23,8 @@ export function ChangeCutType({ orderId, update, openAlert }: ChangeCutTypeProps
 		await axios
 			.put<ChangeCutTypeForm>(process.env.REACT_APP_BACKEND_API_URL + 'detail/cut-types', data)
 			.then(result => {
-				update()
 				openAlert('success', 'Изменения сохранены')
+				update()
 			})
 			.catch(err => {
 				if (err.response.status > 200) {

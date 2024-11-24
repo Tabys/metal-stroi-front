@@ -93,7 +93,7 @@ export function DocPainting() {
 							)}
 							<tr className={styles.total}>
 								<td colSpan={5}></td>
-								<th>{(total.painting + total.prod_painting).toFixed(3)}</th>
+								<th>{(total.painting_all + total.prod_painting).toFixed(3)}</th>
 							</tr>
 						</tbody>
 					</Table>

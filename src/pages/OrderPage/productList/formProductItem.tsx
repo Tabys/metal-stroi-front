@@ -22,7 +22,6 @@ export function FormProductItem({ productItem, editedProducts, delivery, orderDa
 	const [productCost, setProductCost] = useState(0)
 	const methods = useForm<Product>()
 
-	console.log(productItem)
 	// Change METAL COST input value during change METAL MARKAP
 	useEffect(() => {
 		methods.reset()
@@ -36,9 +35,10 @@ export function FormProductItem({ productItem, editedProducts, delivery, orderDa
 	}
 
 	const onSubmitPainting: SubmitHandler<Product> = async data => {
-		await axios.put<Product>(process.env.REACT_APP_BACKEND_API_URL + 'products/', CulcPaintingCost({ data, productItem }))
-		await updProduct()
-		await methods.setValue('painting_cost', Number(data.painting_cost.toFixed(2)))
+		await axios.put<Product>(process.env.REACT_APP_BACKEND_API_URL + 'products/', CulcPaintingCost({ data, productItem })).then(async result => {
+			await updProduct()
+			await methods.setValue('painting_cost', Number(data.painting_cost.toFixed(2)))
+		})
 	}
 
 	const onSubmitQuantity: SubmitHandler<Product> = async data => {

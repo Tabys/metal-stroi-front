@@ -11,9 +11,10 @@ import { usePaintingMods } from '../../../hooks/paintingMods'
 interface FormProps {
 	orderData: Order
 	details: Detail[]
+	updData: () => void
 }
 
-export function FormDetailList({ details, orderData }: FormProps) {
+export function FormDetailList({ details, orderData, updData }: FormProps) {
 	const { paintingMods } = usePaintingMods()
 	const editedDetails: DocTableDetail[] | undefined = PrepArrDetils({
 		arrDetails: details,
@@ -53,6 +54,7 @@ export function FormDetailList({ details, orderData }: FormProps) {
 		<>
 			{details.map((item, index) => (
 				<FormDetailItem
+					updData={updData}
 					updDetail={openAlert}
 					rollAlert={openRollAlert}
 					serviseAlert={openServiseAlert}
@@ -72,30 +74,31 @@ export function FormDetailList({ details, orderData }: FormProps) {
 						<td></td>
 						<td></td>
 						<td>
-							<strong>{total.metal.toFixed(2)}</strong>
+							<strong>{total.metal_all.toFixed(2)}</strong>
 						</td>
 						<td></td>
 						<td></td>
 						<td></td>
 						<td>
-							<strong>{total.cuting.toFixed(2)}</strong>
+							<strong>{total.cuting_all.toFixed(2)}</strong>
 						</td>
 						<td></td>
 						<td>
-							<strong>{total.bending.toFixed(2)}</strong>
+							<strong>{total.bending_all.toFixed(2)}</strong>
 						</td>
 						<td></td>
 						<td>
-							<strong>{total.choping.toFixed(2)}</strong>
+							<strong>{total.choping_all.toFixed(2)}</strong>
 						</td>
 						<td></td>
 						<td>
-							<strong>{total.rolling.toFixed(2)}</strong>
+							<strong>{total.rolling_all.toFixed(2)}</strong>
 						</td>
 						<td></td>
 						<td></td>
+						<td></td>
 						<td>
-							<strong>{total.painting.toFixed(2)}</strong>
+							<strong>{total.painting_all.toFixed(2)}</strong>
 						</td>
 						<td>
 							<strong>{total.drowing.toFixed(2)}</strong>

@@ -91,7 +91,7 @@ export function DocClient() {
 						</tr>
 					</tbody>
 				</Table>
-				{Number(details?.length) + Number(products?.length) > 5 ? <div className='page_brake'></div> : ''}
+				{/* {Number(details?.length) + Number(products?.length) > 5 ? <div className='page_brake'></div> : ''} */}
 				<div className={styles.invoice_header}>
 					<p>
 						<strong>Товарная накладная №{orders?.order_number}</strong>
@@ -123,7 +123,7 @@ export function DocClient() {
 								<td className={styles.center}>{index + 1}</td>
 								<td className={styles.left}>{detail.name}</td>
 								<td className={styles.center}>
-									{detail.thickness} {detail.suffixes}
+									{detail.thickness} {detail.material} {detail.suffixes} {detail.customers_metal ? 'зак' : ''}
 								</td>
 								<td className={styles.center}>шт.</td>
 								<td className={styles.center}>{detail.quantity}</td>

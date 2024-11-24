@@ -27,7 +27,7 @@ export function FormRadio({ name, defaultValue, data, onSubmit }: RadioProps) {
 					disabled={Number(data.thickness) > 20 || data.custom === true ? true : false}
 					type='radio'
 					defaultValue='laser'
-					defaultChecked={choise === 'laser' ? true : false}
+					defaultChecked={defaultValue === 'laser' ? true : false}
 					className='form-check-input'
 				/>
 			</div>
@@ -42,7 +42,7 @@ export function FormRadio({ name, defaultValue, data, onSubmit }: RadioProps) {
 					disabled={Number(data.thickness) < 4 || data.custom === true ? true : false}
 					type='radio'
 					defaultValue='plasma'
-					defaultChecked={choise === 'plasma' ? true : false}
+					defaultChecked={defaultValue === 'plasma' ? true : false}
 					className='form-check-input'
 				/>
 			</div>

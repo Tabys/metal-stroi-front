@@ -14,7 +14,7 @@ import { CulcColSpan } from './culcColSpan'
 import { useState } from 'react'
 
 export function DocSpecialization() {
-	const [showTable, setShowTable] = useState(true)
+	const [showTable, setShowTable] = useState(false)
 	const { id } = useParams()
 	const { orders } = useOrders(id ? id : '')
 
@@ -52,8 +52,13 @@ export function DocSpecialization() {
 						<thead>
 							<tr>
 								<th rowSpan={2}>№ п/п</th>
-								<th rowSpan={2}>Толщина металла, мм</th>
-								<th rowSpan={2}>Наименование изделия</th>
+								<th rowSpan={2}>
+									Толщина
+									<br /> металла, мм
+								</th>
+								<th rowSpan={2} className={styles.spec_name}>
+									Наименование изделия
+								</th>
 								<th className={showTable === true ? '' : styles.hideTable} colSpan={colSpan}>
 									Стоимость ед., руб
 								</th>
@@ -85,25 +90,45 @@ export function DocSpecialization() {
 								<td></td>
 								<td></td>
 								{Number(total.cuting_plasma) > 0 ? (
-									<td className={showTable === true ? '' : styles.hideTable}>{total.cuting_plasma.toFixed(2)}</td>
+									<td className={showTable === true ? styles.center : styles.hideTable}>{total.cuting_plasma.toFixed(2)}</td>
 								) : (
 									''
 								)}
 								{Number(total.cuting_laser) > 0 ? (
-									<td className={showTable === true ? '' : styles.hideTable}>{total.cuting_laser.toFixed(2)}</td>
+									<td className={showTable === true ? styles.center : styles.hideTable}>{total.cuting_laser.toFixed(2)}</td>
 								) : (
 									''
 								)}
-								{Number(total.choping) > 0 ? <td className={showTable === true ? '' : styles.hideTable}>{total.choping.toFixed(2)}</td> : ''}
-								{Number(total.bending) > 0 ? <td className={showTable === true ? '' : styles.hideTable}>{total.bending.toFixed(2)}</td> : ''}
-								{Number(total.painting) > 0 ? <td className={showTable === true ? '' : styles.hideTable}>{total.painting.toFixed(2)}</td> : ''}
+								{Number(total.choping) > 0 ? (
+									<td className={showTable === true ? styles.center : styles.hideTable}>{total.choping.toFixed(2)}</td>
+								) : (
+									''
+								)}
+								{Number(total.bending) > 0 ? (
+									<td className={showTable === true ? styles.center : styles.hideTable}>{total.bending.toFixed(2)}</td>
+								) : (
+									''
+								)}
+								{Number(total.painting) > 0 ? (
+									<td className={showTable === true ? styles.center : styles.hideTable}>{total.painting.toFixed(2)}</td>
+								) : (
+									''
+								)}
 
-								{Number(total.rolling) > 0 ? <td className={showTable === true ? '' : styles.hideTable}>{total.rolling.toFixed(2)}</td> : ''}
+								{Number(total.rolling) > 0 ? (
+									<td className={showTable === true ? styles.center : styles.hideTable}>{total.rolling.toFixed(2)}</td>
+								) : (
+									''
+								)}
 
-								{Number(total.drowing) > 0 ? <td className={showTable === true ? '' : styles.hideTable}>{total.drowing.toFixed(2)}</td> : ''}
-								<td className={showTable === true ? '' : styles.hideTable}>{total.metal.toFixed(2)}</td>
+								{Number(total.drowing) > 0 ? (
+									<td className={showTable === true ? styles.center : styles.hideTable}>{total.drowing.toFixed(2)}</td>
+								) : (
+									''
+								)}
+								<td className={showTable === true ? styles.center : styles.hideTable}>{total.metal.toFixed(2)}</td>
 								<td></td>
-								<td>{total.quantity - total.prod_quantity}</td>
+								<td className={styles.center}>{total.quantity - total.prod_quantity}</td>
 								<td></td>
 							</tr>
 						</tbody>
@@ -134,12 +159,12 @@ export function DocSpecialization() {
 								<tr className={styles.footer}>
 									<td></td>
 									<td></td>
-									<td>{total.prod_quantity}</td>
-									{total.prod_welding > 0 ? <td>{total.prod_welding.toFixed(2)}</td> : ''}
-									{total.prod_painting > 0 ? <td>{total.prod_painting.toFixed(2)}</td> : ''}
-									{total.prod_turning_works > 0 ? <td>{total.prod_turning_works.toFixed(2)}</td> : ''}
-									{total.prod_smithy > 0 ? <td>{total.prod_smithy.toFixed(2)}</td> : ''}
-									{total.prod_design_department > 0 ? <td>{total.prod_design_department.toFixed(2)}</td> : ''}
+									<td className={styles.center}>{total.prod_quantity}</td>
+									{total.prod_welding > 0 ? <td className={styles.center}>{total.prod_welding.toFixed(2)}</td> : ''}
+									{total.prod_painting > 0 ? <td className={styles.center}>{total.prod_painting.toFixed(2)}</td> : ''}
+									{total.prod_turning_works > 0 ? <td className={styles.center}>{total.prod_turning_works.toFixed(2)}</td> : ''}
+									{total.prod_smithy > 0 ? <td className={styles.center}>{total.prod_smithy.toFixed(2)}</td> : ''}
+									{total.prod_design_department > 0 ? <td className={styles.center}>{total.prod_design_department.toFixed(2)}</td> : ''}
 									<td></td>
 									<td></td>
 								</tr>

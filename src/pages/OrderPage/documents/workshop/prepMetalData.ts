@@ -71,7 +71,8 @@ export function prepMetalData({ setups, materials }: prepMetalDataProps) {
 					el.table_number === metalData[i].table_number &&
 					el.length === metalData[i].length &&
 					el.width === metalData[i].width &&
-					el.suffixes === metalData[i].suffixes
+					el.suffixes === metalData[i].suffixes &&
+					el.customers_metal === metalData[i].customers_metal
 			)
 			if (index === -1) {
 				groupedNeededMetal.push({ ...metalData[i] })

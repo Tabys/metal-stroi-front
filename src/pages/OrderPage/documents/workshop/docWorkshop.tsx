@@ -106,7 +106,11 @@ export function DocWorkhop() {
 							{orders?.work_types.find(work_type => work_type === 246 || work_type === 254) ? <th>Вид резки</th> : ''}
 							{orders?.work_types.find(work_type => work_type === 250) ? <th>Рубка</th> : ''}
 							{orders?.work_types.find(work_type => work_type === 248) ? <th>Гибка</th> : ''}
-							{orders?.work_types.find(work_type => work_type === 252) ? <th>Вальцовка</th> : ''}
+							{orders?.work_types.find(work_type => work_type === 252) ? (
+								<th>{orders?.rolling_outsourcing ? 'Вальцовка Трошин' : 'Вальцовка'}</th>
+							) : (
+								''
+							)}
 							{orders?.work_types.find(work_type => work_type === 330 || work_type === 478) ? (
 								<th>
 									{orders?.work_types.find(work_type => work_type === 330) ? 'МК' : ''}{' '}
@@ -162,7 +166,7 @@ export function DocWorkhop() {
 					</tbody>
 				</Table>
 
-				{Number(details?.length) > 20 ? <div className='page_brake'></div> : ''}
+				{/* {Number(details?.length) > 20 ? <div className='page_brake'></div> : ''} */}
 
 				<Table bordered hover size='sm' className={'mt-3 narrow_cells ' + styles.metal}>
 					<thead>
@@ -206,13 +210,13 @@ export function DocWorkhop() {
 						</p>
 					</div>
 					<div className={styles.block}>
-						{orders?.work_types.length ? (
+						{orders?.work_types.find(
+							work_type =>
+								work_type === 320 || work_type === 478 || work_type === 450 || work_type === 458 || work_type === 344 || work_type === 470
+						) ? (
 							<>
 								<p>
 									<strong>Передать в:</strong>
-								</p>
-								<p>
-									<span>Лазерный цех:</span>
 								</p>
 							</>
 						) : (

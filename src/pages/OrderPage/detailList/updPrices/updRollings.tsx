@@ -27,7 +27,7 @@ export async function UpdRollings(dataDetail: Detail) {
 		// DATA FROM API
 		const SETUP = await getSetup()
 		const ARR_PRICES = await getPrices()
-		const PRICE = ARR_PRICES?.find(function (items) {
+		const PRICE = ARR_PRICES?.find(items => {
 			return items.short_title === dataDetail.rolling_type
 		})
 		// SETUPS DATA
@@ -39,7 +39,7 @@ export async function UpdRollings(dataDetail: Detail) {
 		let SERVICE_COST: PricesServiceRolling | undefined = undefined
 
 		// DETAIL DATA
-		const detail = SETUP?.details?.find(function (items) {
+		const detail = SETUP?.details?.find(items => {
 			return items.id == dataDetail.id
 		})
 
@@ -49,27 +49,27 @@ export async function UpdRollings(dataDetail: Detail) {
 			case 'St37RIF':
 			case '09Г2С':
 			case 'ОЦ':
-				SERVICES_COST = PRICE?.price_services_rollings?.filter(function (items) {
+				SERVICES_COST = PRICE?.price_services_rollings?.filter(items => {
 					return items.type_metal === 'Черный'
 				})
-				SERVICE_COST = SERVICES_COST?.find(function (items) {
+				SERVICE_COST = SERVICES_COST?.find(items => {
 					return items.metal_thickness === THICKNESS
 				})
 				break
 			case 'AlMg3':
-				SERVICES_COST = PRICE?.price_services_rollings?.filter(function (items) {
+				SERVICES_COST = PRICE?.price_services_rollings?.filter(items => {
 					return items.type_metal === 'Алюм'
 				})
-				SERVICE_COST = SERVICES_COST?.find(function (items) {
+				SERVICE_COST = SERVICES_COST?.find(items => {
 					return items.metal_thickness === THICKNESS
 				})
 				break
 			case '1.4301':
 			case 'aisi430':
-				SERVICES_COST = PRICE?.price_services_rollings?.filter(function (items) {
+				SERVICES_COST = PRICE?.price_services_rollings?.filter(items => {
 					return items.type_metal === 'Нерж'
 				})
-				SERVICE_COST = SERVICES_COST?.find(function (items) {
+				SERVICE_COST = SERVICES_COST?.find(items => {
 					return items.metal_thickness === THICKNESS
 				})
 				break

@@ -68,10 +68,8 @@ export function AddSuffixesAndMetals({ onCreate, onClose, order }: AddSuffixAndM
 	}, [order])
 
 	dataSetups?.sort((a, b) => (a.thickness > b.thickness ? 1 : -1))
-	console.log(dataSetups)
 
 	const onSubmit: SubmitHandler<AddSuffix> = async data => {
-		// console.log(arrSuffix)
 		await axios.put<AddSuffix>(process.env.REACT_APP_BACKEND_API_URL + 'setup/suffixes', arrSuffix)
 		onClose()
 		setTimeout(() => {

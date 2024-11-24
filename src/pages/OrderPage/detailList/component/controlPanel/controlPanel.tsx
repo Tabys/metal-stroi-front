@@ -82,6 +82,7 @@ export function ControlPanel({ orderData, update }: ControlPanelProps) {
 					<ResetPolymerOptions update={update} orderId={orderData.id} openAlert={openAlert} />
 				</div>
 				<div className={styles.line + ' ' + styles.red}></div>
+				<div className={styles.line + ' ' + styles.red}></div>
 
 				<div className={styles.line + ' ' + styles.purple}>
 					<UniversalReset update={update} orderId={orderData.id} openAlert={openAlert} condition={{ drowing: 0 }} />

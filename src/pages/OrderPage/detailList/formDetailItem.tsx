@@ -24,6 +24,7 @@ type FormDetailItemProps = {
 	delivery: number
 	paintingMods: PaintingMods[]
 	updDetail: () => void
+	updData: () => void
 	rollAlert: () => void
 	serviseAlert: (min_price: number | undefined) => void
 }
@@ -38,6 +39,7 @@ export function FormDetailItem({
 	rollAlert,
 	serviseAlert,
 	updDetail,
+	updData,
 }: FormDetailItemProps) {
 	const methods = useForm<Detail>()
 
@@ -61,13 +63,25 @@ export function FormDetailItem({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [orderData])
 
-	const onSubmitBendChop: SubmitHandler<Detail> = async data => {
+	const onSubmitChop: SubmitHandler<Detail> = async data => {
+		data.quantity = DetailItem.quantity
+		data.order_id = orderData.id
 		delete data.metal_cost
-		await axios.put<Detail>(process.env.REACT_APP_BACKEND_API_URL + 'detail/', await UpdBandChop(data))
-		await methods.setValue('bend_cost', data.bend_cost)
-		await methods.setValue('chop_cost', data.chop_cost)
-		await updDetail()
+		await axios.put<Detail>(process.env.REACT_APP_BACKEND_API_URL + 'detail/updChop', data).then(number => {
+			updDetail()
+			updData()
+		})
 		setIsDisabledChop(data.chop_count !== 0 ? false : true)
+	}
+
+	const onSubmitBend: SubmitHandler<Detail> = async data => {
+		data.quantity = DetailItem.quantity
+		data.order_id = orderData.id
+		delete data.metal_cost
+		await axios.put<Detail>(process.env.REACT_APP_BACKEND_API_URL + 'detail/updBend', data).then(number => {
+			updDetail()
+			updData()
+		})
 		setIsDisabledBend(data.bends_count !== 0 ? false : true)
 	}
 
@@ -120,8 +134,10 @@ export function FormDetailItem({
 
 	const onSubmitPrice: SubmitHandler<Detail> = async data => {
 		delete data.metal_cost
-		await axios.put<Detail>(process.env.REACT_APP_BACKEND_API_URL + 'detail/', data)
-		await updDetail()
+		await axios.put<Detail>(process.env.REACT_APP_BACKEND_API_URL + 'detail/', data).then(number => {
+			updDetail()
+			updData()
+		})
 	}
 
 	const onSubmitPriceChop: SubmitHandler<Detail> = async data => {
@@ -130,6 +146,7 @@ export function FormDetailItem({
 			detail: data,
 			type: 'chop-bend',
 		})
+
 		if (Number(data.chop_cost) >= Number(choping?.cost)) {
 			await axios.put<Detail>(process.env.REACT_APP_BACKEND_API_URL + 'detail/', {
 				id: data.id,
@@ -285,7 +302,7 @@ export function FormDetailItem({
 				<div className={styles.line + ' ' + styles.yellow}>
 					<input
 						{...methods.register('bends_count', {
-							onBlur: methods.handleSubmit(onSubmitBendChop),
+							onBlur: methods.handleSubmit(onSubmitBend),
 							valueAsNumber: true,
 						})}
 						defaultValue={DetailItem.bends_count === null ? 0 : DetailItem.bends_count}
@@ -334,7 +351,7 @@ export function FormDetailItem({
 					<Tooltip conditions={Number(DetailItem.thickness) > 5 ? true : false} text='Толщина металла должна быть < 5'>
 						<input
 							{...methods.register('chop_count', {
-								onBlur: methods.handleSubmit(onSubmitBendChop),
+								onBlur: methods.handleSubmit(onSubmitChop),
 								valueAsNumber: true,
 							})}
 							defaultValue={DetailItem.chop_count === null ? 0 : DetailItem.chop_count}
@@ -452,6 +469,29 @@ export function FormDetailItem({
 							valueAsNumber: true,
 						})}
 						defaultValue={DetailItem.polymer_price === null ? 0 : DetailItem.polymer_price}
+						tabIndex={6}
+						type='number'
+						onFocus={e =>
+							e.target.addEventListener(
+								'wheel',
+								function (e) {
+									e.preventDefault()
+								},
+								{ passive: false }
+							)
+						}
+						step='0.1'
+						min='0'
+						className='form-control'
+					/>
+				</div>
+				<div className={styles.line + ' ' + styles.red}>
+					<input
+						{...methods.register('polymer_one_element_price', {
+							onBlur: methods.handleSubmit(onSubmitPrice),
+							valueAsNumber: true,
+						})}
+						defaultValue={DetailItem.polymer_one_element_price === null ? 0 : DetailItem.polymer_one_element_price}
 						tabIndex={6}
 						type='number'
 						onFocus={e =>

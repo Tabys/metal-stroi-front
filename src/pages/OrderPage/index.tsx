@@ -28,7 +28,7 @@ export function OrderPage() {
 	const { id } = useParams()
 
 	const updateOrders = async () => {
-		getOrder(Number(id))
+		await getOrder(Number(id))
 	}
 
 	async function getOrder(id: number) {

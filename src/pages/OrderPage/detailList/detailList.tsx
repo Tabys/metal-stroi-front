@@ -90,6 +90,10 @@ export function DetailList({ dataOrder, updated }: detailListProps) {
 						<img src='/images/header-table/ruble-min.png' alt='pp-price' />
 						<p>Цена за м²</p>
 					</div>
+					<div className={styles.line + ' ' + styles.small}>
+						<img src='/images/header-table/ruble-min.png' alt='pp-price' />
+						<p>Цена за деталь</p>
+					</div>
 
 					<div className={styles.line + ' ' + styles.small}>
 						<img src='/images/header-table/free-icon-protactor-3976304-min.png' alt='drowing' />
@@ -104,7 +108,7 @@ export function DetailList({ dataOrder, updated }: detailListProps) {
 
 				<ControlPanel orderData={dataOrder} update={updated} />
 
-				<FormDetailList details={CreateDetailGroupList(dataOrder)} orderData={dataOrder} />
+				<FormDetailList updData={updated} details={CreateDetailGroupList(dataOrder)} orderData={dataOrder} />
 			</div>
 		</div>
 	)

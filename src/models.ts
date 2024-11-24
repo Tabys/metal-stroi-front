@@ -55,6 +55,7 @@ export type Detail = {
 	polymer_price: number
 	polymer_base_price: number
 	polymer_options: JSON[]
+	polymer_one_element_price: number
 	food_steel: boolean
 	rolling: string
 	rolling_type?: string
@@ -77,6 +78,7 @@ export type Detail = {
 	custom?: boolean
 	l_size?: number
 	w_size?: number
+	order_id?: number
 	product_detail?: ProductsDetails
 	products?: Product[]
 	setups?: Setup[]
