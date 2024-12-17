@@ -1,6 +1,6 @@
 import { useForm, SubmitHandler } from 'react-hook-form'
-import axios from 'axios'
 import { PaintingMods } from '../../models'
+import apiClient from '../../components/apiClient'
 
 type PricesProps = {
 	price: PaintingMods
@@ -11,7 +11,7 @@ export function PircesPaintingMods({ price, update }: PricesProps) {
 	const { register, handleSubmit } = useForm<PaintingMods>()
 
 	const onUpdate: SubmitHandler<PaintingMods> = async data => {
-		await axios.put<PaintingMods>(process.env.REACT_APP_BACKEND_API_URL + 'price-services-painting-mods', data)
+		await apiClient.put<PaintingMods>('price-services-painting-mods', data)
 		update()
 	}
 

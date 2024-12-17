@@ -1,13 +1,19 @@
+import Tooltip from '../../../components/Tooltip'
+import { usePaintingMods } from '../../../hooks/paintingMods'
 import { Order } from '../../../models'
+import { PPHint } from '../detailList/component/ppHint/ppHint'
 import { FormProductList } from './formProductList'
 import styles from './styles.module.css'
 
 type detailListProps = {
 	dataOrder: Order
 	delProduct: () => void
+	updData: () => void
 }
 
-export function ProductList({ dataOrder, delProduct }: detailListProps) {
+export function ProductList({ dataOrder, delProduct, updData }: detailListProps) {
+	const { paintingMods } = usePaintingMods()
+
 	return (
 		<div className={styles.wrapper_table + ' ' + styles.product_table}>
 			<h2>Изделия</h2>
@@ -38,13 +44,22 @@ export function ProductList({ dataOrder, delProduct }: detailListProps) {
 								<td>Монтаж</td>
 								<td>Команд.</td>
 								<td>Цвет</td>
-								<td>Цена за м2</td>
+								<Tooltip conditions={true} text={<PPHint paintingMods={paintingMods} />}>
+									<td>Опции ПП</td>
+								</Tooltip>
+								{/* <td>Цена за м2</td> */}
 								<td>Стоимость</td>
 							</tr>
 						</thead>
 					</table>
 
-					<FormProductList products={dataOrder.products} orderData={dataOrder} delProduct={delProduct} />
+					<FormProductList
+						products={dataOrder.products}
+						orderData={dataOrder}
+						delProduct={delProduct}
+						updData={updData}
+						paintingMods={paintingMods}
+					/>
 				</div>
 			) : (
 				'Изделий нет'

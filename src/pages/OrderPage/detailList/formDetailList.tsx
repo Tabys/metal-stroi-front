@@ -1,4 +1,4 @@
-import { Detail, DocTableDetail, Order } from '../../../models'
+import { Detail, DocTableDetail, Order, PaintingMods } from '../../../models'
 import { FormDetailItem } from './formDetailItem'
 import Alert from 'react-bootstrap/Alert'
 import { useState } from 'react'
@@ -6,22 +6,28 @@ import { PrepArrDetils } from '../documents/components/prepArrDetails/prepArrDet
 import { PrepArrProducts } from '../documents/components/prepArrProducts'
 import { CulcTotalData } from '../documents/components/culcTotalData'
 import styles from './style.module.css'
-import { usePaintingMods } from '../../../hooks/paintingMods'
 
 interface FormProps {
 	orderData: Order
 	details: Detail[]
+	paintingMods: PaintingMods[]
 	updData: () => void
 }
 
-export function FormDetailList({ details, orderData, updData }: FormProps) {
-	const { paintingMods } = usePaintingMods()
+export function FormDetailList({ details, orderData, paintingMods, updData }: FormProps) {
 	const editedDetails: DocTableDetail[] | undefined = PrepArrDetils({
 		arrDetails: details,
 		orders: orderData,
 	})
+	const editedDetailsFull: DocTableDetail[] | undefined = PrepArrDetils({
+		arrDetails: details,
+		orders: orderData,
+		full: true,
+	})
+
 	const products = PrepArrProducts(orderData)
 	const total = CulcTotalData({ details: editedDetails, products, orders: orderData })
+	const totalOnlyDetail = CulcTotalData({ details: editedDetailsFull, products, orders: orderData })
 
 	const [alertShow, setAlertShow] = useState(false)
 	const [rollAlertShow, setRollAlertShow] = useState(false)
@@ -74,28 +80,28 @@ export function FormDetailList({ details, orderData, updData }: FormProps) {
 						<td></td>
 						<td></td>
 						<td>
-							<strong>{total.metal_all.toFixed(2)}</strong>
+							<strong>{totalOnlyDetail.metal_all.toFixed(2)}</strong>
 						</td>
 						<td></td>
 						<td></td>
 						<td></td>
 						<td>
-							<strong>{total.cuting_all.toFixed(2)}</strong>
+							<strong>{totalOnlyDetail.cuting_all.toFixed(2)}</strong>
 						</td>
 						<td></td>
 						<td>
-							<strong>{total.bending_all.toFixed(2)}</strong>
+							<strong>{totalOnlyDetail.bending_all.toFixed(2)}</strong>
 						</td>
 						<td></td>
 						<td>
-							<strong>{total.choping_all.toFixed(2)}</strong>
+							<strong>{totalOnlyDetail.choping_all.toFixed(2)}</strong>
 						</td>
 						<td></td>
 						<td>
-							<strong>{total.rolling_all.toFixed(2)}</strong>
+							<strong>{totalOnlyDetail.rolling_all.toFixed(2)}</strong>
 						</td>
 						<td></td>
-						<td></td>
+						{/* <td></td> */}
 						<td></td>
 						<td>
 							<strong>{total.painting_all.toFixed(2)}</strong>

@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { Detail } from '../../../../models'
 import styles from '../style.module.css'
@@ -12,7 +11,6 @@ type RadioProps = {
 
 export function FormRadio({ name, defaultValue, data, onSubmit }: RadioProps) {
 	const { register, setValue } = useFormContext()
-	const [choise, setChoise] = useState(defaultValue)
 
 	return (
 		<>
@@ -20,7 +18,6 @@ export function FormRadio({ name, defaultValue, data, onSubmit }: RadioProps) {
 				<input
 					{...register(name)}
 					onChange={e => {
-						setChoise(e.target.value)
 						setValue(name, e.target.value ? 'laser' : 'plasma')
 						onSubmit()
 					}}
@@ -35,7 +32,6 @@ export function FormRadio({ name, defaultValue, data, onSubmit }: RadioProps) {
 				<input
 					{...register(name)}
 					onChange={e => {
-						setChoise(e.target.value)
 						setValue(name, e.target.value ? 'plasma' : 'laser')
 						onSubmit()
 					}}

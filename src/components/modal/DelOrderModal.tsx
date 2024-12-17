@@ -5,7 +5,7 @@ import { Order } from '../../models'
 import Tooltip from '../Tooltip'
 import { CloseButton } from 'react-bootstrap'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import axios from 'axios'
+import apiClient from '../apiClient'
 
 type ModalProps = {
 	order: Order
@@ -20,7 +20,7 @@ export function DelOrderModal({ update, order }: ModalProps) {
 	const { handleSubmit } = useForm<Order>()
 
 	const onSubmit: SubmitHandler<Order> = async () => {
-		await axios.delete<Order>(process.env.REACT_APP_BACKEND_API_URL + 'orders/', {
+		await apiClient.delete<Order>('orders/', {
 			data: {
 				id: order.id,
 			},

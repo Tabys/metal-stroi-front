@@ -3,7 +3,7 @@ export type Order = {
 	order_number: number
 	implementer?: string
 	title?: string
-	date_сreate?: string // date
+	date_create?: string // date
 	delivery: number
 	pallets: number
 	markup: number
@@ -103,7 +103,9 @@ export type Product = {
 	welding_install: number
 	welding_allowance: number
 	painting_color: string
+	painting_options: JSON[]
 	painting_price: number
+	painting_base_price: number
 	painting_cost: number
 	smithy: number
 	turning_works: number
@@ -334,6 +336,7 @@ export type DocTableProduct = {
 	name: string
 	quantity: number
 	totalPrice: number
+	painting_options: JSON[]
 	painting_color?: string
 	painting_cost?: number
 	design_department: number
@@ -434,21 +437,34 @@ export type AddDetail = {
 	}
 }
 
-export type AddSetups = {
+export type AddSetupsChoping = {
 	id: string
 	material?: string
 	length: number
 	width: number
-	min_length: number
-	min_width: number
 	thickness: number
 	thicknessTitle: string
-	program_runs?: string
 	table_number?: string
 	order_index?: number
 	order_id?: number
 	suffixes?: JSON[]
-	details?: AddDetail[]
+	detailsNames?: string
+	details: AddDetail[]
+}
+
+export type AddSetupsBending = {
+	id: string
+	material?: string
+	length: number
+	width: number
+	thickness: number
+	thicknessTitle: string
+	table_number?: string
+	order_index?: number
+	order_id?: number
+	suffixes?: JSON[]
+	detailsNames?: string
+	details: AddDetail[]
 }
 
 export type DocTableProductSpec = {
@@ -468,6 +484,7 @@ export type DocTableProductSpec = {
 	turning_works?: number
 	smithy?: number
 	design_department?: number
+	metal?: number
 }
 
 export type UpdBX24 = {
@@ -513,6 +530,7 @@ export type PaintingMods = {
 	name: string
 	cost: number
 	type: string
+	icon: string
 }
 
 export type ChangeCutPriceForm = {
@@ -529,4 +547,8 @@ export type ChangeCutTypeForm = {
 export type UniversalResetForm = {
 	id: number
 	condition: Object
+}
+
+export type Customers = {
+	customer: string
 }

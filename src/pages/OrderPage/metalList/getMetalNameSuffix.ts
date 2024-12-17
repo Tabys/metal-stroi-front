@@ -2,13 +2,13 @@ export function getMetalNameSuffix(metal: string) {
 	let metalName = ''
 	switch (metal) {
 		case 'St37':
-			metalName = ''
+			metalName = 'Ст3'
 			break
 		case 'St37HK':
-			metalName = ''
+			metalName = 'Ст3 х/к'
 			break
 		case 'St37RIF':
-			metalName = ''
+			metalName = 'Ст3 риф'
 			break
 		case 'AlMg3':
 			metalName = 'ал'

@@ -14,7 +14,8 @@ import { prepMetalData } from './prepMetalData'
 import { Alert } from 'react-bootstrap'
 import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import axios from 'axios'
+import authHeader from '../../../../components/auth/authHeader'
+import apiClient from '../../../../components/apiClient'
 
 export function DocWorkhop() {
 	const [alertShow, setAlertShow] = useState(false)
@@ -44,7 +45,7 @@ export function DocWorkhop() {
 	const { register, handleSubmit } = useForm<Order>()
 
 	const onSubmit: SubmitHandler<Order> = async data => {
-		await axios.put<Order>(process.env.REACT_APP_BACKEND_API_URL + 'orders/', data)
+		await apiClient.put<Order>('orders/', { data: data, headers: authHeader() })
 		openAlert()
 	}
 
@@ -63,7 +64,7 @@ export function DocWorkhop() {
 							<div className={styles.flex}>
 								<div className={styles.group}>
 									<p>
-										<strong>Дата приема заказа:</strong> <TransformDate orderDate={orders?.date_сreate} />
+										<strong>Дата приема заказа:</strong> <TransformDate orderDate={orders?.date_create} />
 									</p>
 									<p>
 										<strong>Технолог:</strong> {orders?.implementer}
@@ -171,9 +172,11 @@ export function DocWorkhop() {
 				<Table bordered hover size='sm' className={'mt-3 narrow_cells ' + styles.metal}>
 					<thead>
 						<tr>
-							<th colSpan={5}>Металл</th>
+							<th colSpan={7}>Металл</th>
 						</tr>
 						<tr>
+							<th>зак/наш</th>
+							<th>Вид металла</th>
 							<th>Толщина</th>
 							<th>Ширина</th>
 							<th>Длина</th>
@@ -193,18 +196,47 @@ export function DocWorkhop() {
 						<p>
 							<strong>Исполнители:</strong>
 						</p>
-						<p>
-							<span>Оператор лазера:</span>
-						</p>
-						<p>
-							<span>Оператор гильотины:</span>
-						</p>
-						<p>
-							<span>Оператор гибочника:</span>
-						</p>
-						<p>
-							<span>Оператор плазмы:</span>
-						</p>
+
+						{orders?.work_types.find(work_type => work_type === 246) ? (
+							<p>
+								<span>Оператор лазера:</span>
+							</p>
+						) : (
+							''
+						)}
+
+						{orders?.work_types.find(work_type => work_type === 250) ? (
+							<p>
+								<span>Оператор гильотины:</span>
+							</p>
+						) : (
+							''
+						)}
+
+						{orders?.work_types.find(work_type => work_type === 248) ? (
+							<p>
+								<span>Оператор гибочника:</span>
+							</p>
+						) : (
+							''
+						)}
+
+						{orders?.work_types.find(work_type => work_type === 254) ? (
+							<p>
+								<span>Оператор плазмы:</span>
+							</p>
+						) : (
+							''
+						)}
+
+						{orders?.work_types.find(work_type => work_type === 252) ? (
+							<p>
+								<span>Оператор вальцов:</span>
+							</p>
+						) : (
+							''
+						)}
+
 						<p className='mt-5'>
 							<span>Детали принял:</span>
 						</p>
@@ -212,7 +244,18 @@ export function DocWorkhop() {
 					<div className={styles.block}>
 						{orders?.work_types.find(
 							work_type =>
-								work_type === 320 || work_type === 478 || work_type === 450 || work_type === 458 || work_type === 344 || work_type === 470
+								work_type === 320 ||
+								work_type === 478 ||
+								work_type === 450 ||
+								work_type === 458 ||
+								work_type === 344 ||
+								work_type === 470 ||
+								work_type === 330 ||
+								work_type === 3538 ||
+								work_type === 4542 ||
+								work_type === 5346 ||
+								work_type === 5446 ||
+								work_type === 6594
 						) ? (
 							<>
 								<p>
@@ -229,28 +272,35 @@ export function DocWorkhop() {
 						) : (
 							''
 						)}
-						{orders?.work_types.find(work_type => work_type === 478) ? (
+						{orders?.work_types.find(work_type => work_type === 330 || work_type === 3538) ? (
+							<p>
+								<span>Цех металлоконструкций:</span>
+							</p>
+						) : (
+							''
+						)}
+						{orders?.work_types.find(work_type => work_type === 478 || work_type === 5346) ? (
 							<p>
 								<span>Цех сельхозмашиностроения:</span>
 							</p>
 						) : (
 							''
 						)}
-						{orders?.work_types.find(work_type => work_type === 450) ? (
+						{orders?.work_types.find(work_type => work_type === 450 || work_type === 5446) ? (
 							<p>
 								<span>Токарно-фрезерный цех:</span>
 							</p>
 						) : (
 							''
 						)}
-						{orders?.work_types.find(work_type => work_type === 458) ? (
+						{orders?.work_types.find(work_type => work_type === 458 || work_type === 6594) ? (
 							<p>
 								<span>Цех художественной ковки:</span>
 							</p>
 						) : (
 							''
 						)}
-						{orders?.work_types.find(work_type => work_type === 344) ? (
+						{orders?.work_types.find(work_type => work_type === 344 || work_type === 4542) ? (
 							<p>
 								<span>Аддитивный цех:</span>
 							</p>

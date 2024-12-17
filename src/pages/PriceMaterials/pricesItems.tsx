@@ -1,6 +1,6 @@
 import { useForm, SubmitHandler } from 'react-hook-form'
-import axios from 'axios'
 import { PriceMetalItems } from '../../models'
+import apiClient from '../../components/apiClient'
 
 type PricesProps = {
 	price: PriceMetalItems
@@ -11,7 +11,7 @@ export function PircesItems({ price, update }: PricesProps) {
 	const { register, handleSubmit } = useForm<PriceMetalItems>()
 
 	const onUpdate: SubmitHandler<PriceMetalItems> = async data => {
-		await axios.put<PriceMetalItems>(process.env.REACT_APP_BACKEND_API_URL + 'price-metal-item', data)
+		await apiClient.put<PriceMetalItems>('price-metal-item', data)
 		update()
 	}
 

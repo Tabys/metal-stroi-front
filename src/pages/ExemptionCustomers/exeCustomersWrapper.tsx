@@ -4,9 +4,9 @@ import { useState } from 'react'
 import { ExeCustomerItems } from './exeCustomersItems'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import { ExeCustomersCreate } from '../../models'
-import axios from 'axios'
 import Select from 'react-select'
 import { FilteredCustomers } from './filteredCustomers'
+import apiClient from '../../components/apiClient'
 
 export function ExeCustomersWrapper() {
 	const { customers, update } = useExeCustomers()
@@ -24,7 +24,7 @@ export function ExeCustomersWrapper() {
 	const { handleSubmit, control } = useForm<ExeCustomersCreate>()
 
 	const onSubmit: SubmitHandler<ExeCustomersCreate> = async data => {
-		await axios.post<ExeCustomersCreate>(process.env.REACT_APP_BACKEND_API_URL + 'exemptionCustomer', data)
+		await apiClient.post<ExeCustomersCreate>('exemptionCustomer', data)
 		await openAlert()
 	}
 

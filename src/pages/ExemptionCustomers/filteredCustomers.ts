@@ -1,20 +1,19 @@
 import { ExeCustomers } from '../../models'
-import { useOrders } from '../../hooks/orders'
+import { useCustomers } from '../../hooks/useCustomers'
 
-export function FilteredCustomers(customers: ExeCustomers[]) {
-	const { orders } = useOrders()
-	const allCustemersList = orders.map(order => {
+export function FilteredCustomers(chackedCustomers: ExeCustomers[]) {
+	const { customers } = useCustomers()
+	const allCustemersList = customers.map(order => {
 		return order.customer
 	})
+
 	const allCustemersListFiltered = Array.from(new Set(allCustemersList))
-	const addedCustemers = customers.map(customer => {
+	const addedCustemers = chackedCustomers.map(customer => {
 		return customer.name
 	})
 	const addedCustemersSet = new Set(addedCustemers)
 
-	const result = allCustemersListFiltered.filter(e =>
-		e ? !addedCustemersSet.has(e) : ''
-	)
+	const result = allCustemersListFiltered.filter(e => (e ? !addedCustemersSet.has(e) : ''))
 
 	const options = result.map(item => {
 		return {

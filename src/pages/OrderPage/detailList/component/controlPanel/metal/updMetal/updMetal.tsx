@@ -1,8 +1,8 @@
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { UpdMetalCostForm } from '../../../../../../../models'
-import axios from 'axios'
 import Tooltip from '../../../../../../../components/Tooltip'
 import { FaArrowsRotate } from 'react-icons/fa6'
+import apiClient from '../../../../../../../components/apiClient'
 
 type UpdMetalProps = {
 	orderId: number
@@ -14,8 +14,8 @@ export function UpdMetal({ orderId, update, openAlert }: UpdMetalProps) {
 	const { handleSubmit } = useForm<UpdMetalCostForm>()
 
 	const onSubmit: SubmitHandler<UpdMetalCostForm> = async data => {
-		await axios
-			.put<UpdMetalCostForm>(process.env.REACT_APP_BACKEND_API_URL + 'detail/all-actual', {
+		await apiClient
+			.put<UpdMetalCostForm>('detail/all-actual', {
 				id: orderId,
 			})
 			.then(result => {
@@ -24,7 +24,6 @@ export function UpdMetal({ orderId, update, openAlert }: UpdMetalProps) {
 			})
 			.catch(err => {
 				openAlert('danger', 'Ошибка')
-				console.log(err.response)
 			})
 	}
 

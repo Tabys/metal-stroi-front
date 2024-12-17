@@ -1,10 +1,11 @@
-import axios, { AxiosError } from 'axios'
+import { AxiosError } from 'axios'
 import { PriceServiceCategory, Detail, Setup } from '../../../../models'
+import apiClient from '../../../../components/apiClient'
 
 export async function UpdBandChop(dataDetail: Detail) {
 	async function getPrices() {
 		try {
-			const response = await axios.get<PriceServiceCategory[]>(process.env.REACT_APP_BACKEND_API_URL + 'price-services-category')
+			const response = await apiClient.get<PriceServiceCategory[]>('price-services-category')
 			return response.data
 		} catch (e: unknown) {
 			const error = e as AxiosError
@@ -14,7 +15,7 @@ export async function UpdBandChop(dataDetail: Detail) {
 
 	async function getSetup() {
 		try {
-			const response = await axios.get<Setup>(process.env.REACT_APP_BACKEND_API_URL + `setup/${dataDetail.setup_id}`)
+			const response = await apiClient.get<Setup>(`setup/${dataDetail.setup_id}`)
 			return response.data
 		} catch (e: unknown) {
 			const error = e as AxiosError

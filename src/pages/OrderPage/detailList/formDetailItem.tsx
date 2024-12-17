@@ -1,20 +1,17 @@
-import axios from 'axios'
 import { useForm, SubmitHandler, FormProvider, Controller } from 'react-hook-form'
 import { Detail, DocTableDetail, Order, PaintingMods } from '../../../models'
 import styles from './style.module.css'
 import { UpdCutInset } from './updPrices/updCutInset'
-import { UpdBandChop } from './updPrices/updBendChop'
 import { FormRadio } from './formElements/formRadio'
 import { useEffect, useState } from 'react'
 import Tooltip from '../../../components/Tooltip'
 import { UpdRollings } from './updPrices/updRollings'
 import { FormSelectRoll } from './formElements/formSelectRoll'
-import { UpdPainting } from './updPrices/updPainting'
 import Select from 'react-select'
-import { UpdPaintingOption } from './updPrices/updPaintingOption'
 import { postConditions } from './component/postConditions/postConditions'
 import { culcMetalPriceOneDetail } from './component/culcMetalPriceOneDetail/culcMetalPriceOneDetail'
 import { culcCostDetail } from './component/culcCostDetails/culcCostDetails'
+import apiClient from '../../../components/apiClient'
 
 type FormDetailItemProps = {
 	orderData: Order
@@ -43,16 +40,16 @@ export function FormDetailItem({
 }: FormDetailItemProps) {
 	const methods = useForm<Detail>()
 
-	const [isDisabledPP, setIsDisabledPP] = useState(DetailItem.polymer_price === null || DetailItem.polymer_price == 0 ? true : false)
-	const [isDisabledChop, setIsDisabledChop] = useState(DetailItem.chop_count === null || DetailItem.chop_count == 0 ? true : false)
-	const [isDisabledBend, setIsDisabledBend] = useState(DetailItem.bends_count === null || DetailItem.bends_count == 0 ? true : false)
+	const [isDisabledPP, setIsDisabledPP] = useState(DetailItem.polymer_price === null || Number(DetailItem.polymer_price) === 0 ? true : false)
+	const [isDisabledChop, setIsDisabledChop] = useState(DetailItem.chop_count === null || Number(DetailItem.chop_count) === 0 ? true : false)
+	const [isDisabledBend, setIsDisabledBend] = useState(DetailItem.bends_count === null || Number(DetailItem.bends_count) === 0 ? true : false)
 	const [metalPriceOneDetail, setMetalPriceOneDetail] = useState('')
 	const [detailCost, setDetailCost] = useState(0)
 
 	const options: any[] = paintingMods.map(paintingMod => {
 		return {
 			value: paintingMod.id,
-			label: paintingMod.name,
+			label: <i className={'fi ' + paintingMod.icon}></i>,
 		}
 	})
 
@@ -60,6 +57,9 @@ export function FormDetailItem({
 		methods.reset()
 		setMetalPriceOneDetail(culcMetalPriceOneDetail({ order: orderData, detail: DetailItem }))
 		setDetailCost(culcCostDetail({ detailsInProduct: editedDetails, detailOutProduct: DetailItem, delivery }))
+		methods.setValue('polymer_options', DetailItem.polymer_options)
+		setIsDisabledPP(DetailItem.polymer_price !== 0 ? false : true)
+		methods.setValue('rolling_type', DetailItem.rolling_type)
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [orderData])
 
@@ -67,10 +67,15 @@ export function FormDetailItem({
 		data.quantity = DetailItem.quantity
 		data.order_id = orderData.id
 		delete data.metal_cost
-		await axios.put<Detail>(process.env.REACT_APP_BACKEND_API_URL + 'detail/updChop', data).then(number => {
-			updDetail()
-			updData()
-		})
+		await apiClient
+			.put<Detail>('detail/updChop', data)
+			.then(number => {
+				updDetail()
+				updData()
+			})
+			.catch(err => {
+				console.log(err)
+			})
 		setIsDisabledChop(data.chop_count !== 0 ? false : true)
 	}
 
@@ -78,66 +83,103 @@ export function FormDetailItem({
 		data.quantity = DetailItem.quantity
 		data.order_id = orderData.id
 		delete data.metal_cost
-		await axios.put<Detail>(process.env.REACT_APP_BACKEND_API_URL + 'detail/updBend', data).then(number => {
-			updDetail()
-			updData()
-		})
+		await apiClient
+			.put<Detail>('detail/updBend', data)
+			.then(number => {
+				updDetail()
+				updData()
+			})
+			.catch(err => {
+				console.log(err)
+			})
 		setIsDisabledBend(data.bends_count !== 0 ? false : true)
 	}
 
 	const onSubmitCutInset: SubmitHandler<Detail> = async data => {
 		delete data.metal_cost
-		await axios.put<Detail>(process.env.REACT_APP_BACKEND_API_URL + 'detail/', await UpdCutInset(data))
-
-		await methods.setValue('cut_cost', data.cut_cost)
-		await methods.setValue('inset_cost', data.inset_cost)
-		await updDetail()
+		await apiClient
+			.put<Detail>('detail/', await UpdCutInset(data))
+			.then(() => {
+				methods.setValue('cut_cost', data.cut_cost)
+				methods.setValue('inset_cost', data.inset_cost)
+				updDetail()
+			})
+			.catch(err => {
+				console.log(err)
+			})
 	}
 
 	const onSubmitRolling: SubmitHandler<Detail> = async data => {
 		delete data.metal_cost
-		await axios.put<Detail>(process.env.REACT_APP_BACKEND_API_URL + 'detail/', await UpdRollings(data))
-
-		await methods.setValue('rolling', data.rolling)
-		if (data.rolling_type === 'rolling_cone' && Number(DetailItem.thickness) === 2) {
-			await rollAlert()
-		}
-		await updDetail()
+		await apiClient
+			.put<Detail>('detail/', await UpdRollings(data))
+			.then(() => {
+				if (data.rolling_type === 'rolling_cone' && Number(DetailItem.thickness) === 2) {
+					rollAlert()
+				}
+				updDetail()
+				updData()
+			})
+			.catch(err => {
+				console.log(err)
+			})
 	}
 
 	const onSubmitPainting: SubmitHandler<Detail> = async data => {
 		delete data.metal_cost
-		await axios.put<Detail>(process.env.REACT_APP_BACKEND_API_URL + 'detail/', await UpdPainting(data))
-		await methods.setValue('polymer_price', Number.isNaN(data.polymer_price) ? 0 : data.polymer_price)
-		await methods.setValue('polymer_base_price', Number.isNaN(data.polymer_base_price) ? 0 : data.polymer_base_price)
-		await setIsDisabledPP(data.polymer_price !== 0 ? false : true)
-		await updDetail()
+		await apiClient
+			.put<Detail>('detail/set-pp-color', data)
+			.then(() => {
+				updDetail()
+				updData()
+			})
+			.catch(err => {
+				console.log(err)
+			})
 	}
 
 	const onSubmitOptionPainting: SubmitHandler<Detail> = async data => {
 		delete data.metal_cost
-		await axios.put<Detail>(process.env.REACT_APP_BACKEND_API_URL + 'detail/', await UpdPaintingOption({ dataDetail: data, paintingMods: paintingMods }))
-		await methods.setValue('polymer_price', Number.isNaN(data.polymer_price) ? 0 : data.polymer_price)
-		await updDetail()
+		await apiClient
+			.put<Detail>('detail/set-pp-options', data)
+			.then(() => {
+				updDetail()
+				updData()
+				setIsDisabledPP(data.polymer_price !== 0 ? false : true)
+			})
+			.catch(err => {
+				console.log(err)
+			})
 	}
 
 	const onSubmitPolymerPrice: SubmitHandler<Detail> = async data => {
 		data.polymer_base_price = data.polymer_price
 		data.polymer_options = []
+		data.polymer_one_element_price = Number(data.polymer_price) * (Number(DetailItem.serface) / 1000000) * 2
 		delete data.metal_cost
-		await axios.put<Detail>(process.env.REACT_APP_BACKEND_API_URL + 'detail/', data)
-		await methods.setValue('polymer_options', [])
-		await methods.setValue('polymer_base_price', data.polymer_price)
-		await setIsDisabledPP(data.polymer_price !== 0 ? false : true)
-		await updDetail()
+		await apiClient
+			.put<Detail>('detail/', data)
+			.then(() => {
+				setIsDisabledPP(data.polymer_price !== 0 ? false : true)
+				updDetail()
+				updData()
+			})
+			.catch(err => {
+				console.log(err)
+			})
 	}
 
 	const onSubmitPrice: SubmitHandler<Detail> = async data => {
 		delete data.metal_cost
-		await axios.put<Detail>(process.env.REACT_APP_BACKEND_API_URL + 'detail/', data).then(number => {
-			updDetail()
-			updData()
-		})
+		await apiClient
+			.put<Detail>('detail/', data)
+			.then(number => {
+				updDetail()
+				updData()
+			})
+			.catch(err => {
+				console.log(err)
+			})
 	}
 
 	const onSubmitPriceChop: SubmitHandler<Detail> = async data => {
@@ -148,20 +190,26 @@ export function FormDetailItem({
 		})
 
 		if (Number(data.chop_cost) >= Number(choping?.cost)) {
-			await axios.put<Detail>(process.env.REACT_APP_BACKEND_API_URL + 'detail/', {
-				id: data.id,
-				chop_cost: data.chop_cost,
-			})
-			DetailItem.chop_cost = data.chop_cost
-			updDetail()
-		} else {
-			if (access === true) {
-				await axios.put<Detail>(process.env.REACT_APP_BACKEND_API_URL + 'detail/', {
+			await apiClient
+				.put<Detail>('detail/', {
 					id: data.id,
 					chop_cost: data.chop_cost,
 				})
-				DetailItem.chop_cost = data.chop_cost
-				updDetail()
+				.then(() => {
+					DetailItem.chop_cost = data.chop_cost
+					updDetail()
+				})
+		} else {
+			if (access === true) {
+				await apiClient
+					.put<Detail>('detail/', {
+						id: data.id,
+						chop_cost: data.chop_cost,
+					})
+					.then(() => {
+						DetailItem.chop_cost = data.chop_cost
+						updDetail()
+					})
 			} else {
 				methods.setValue('chop_cost', DetailItem.chop_cost)
 				serviseAlert(choping?.cost)
@@ -176,22 +224,28 @@ export function FormDetailItem({
 			type: 'chop-bend',
 		})
 		if (Number(data.bend_cost) >= Number(bending?.cost)) {
-			await axios.put<Detail>(process.env.REACT_APP_BACKEND_API_URL + 'detail/', {
-				id: data.id,
-				bend_cost: data.bend_cost,
-			})
-			DetailItem.bend_cost = data.bend_cost
-			updDetail()
-		} else {
-			if (access === true) {
-				await axios.put<Detail>(process.env.REACT_APP_BACKEND_API_URL + 'detail/', {
+			await apiClient
+				.put<Detail>('detail/', {
 					id: data.id,
 					bend_cost: data.bend_cost,
 				})
-				DetailItem.bend_cost = data.bend_cost
-				updDetail()
+				.then(() => {
+					DetailItem.bend_cost = data.bend_cost
+					updDetail()
+				})
+		} else {
+			if (access === true) {
+				await apiClient
+					.put<Detail>('detail/', {
+						id: data.id,
+						bend_cost: data.bend_cost,
+					})
+					.then(() => {
+						DetailItem.bend_cost = data.bend_cost
+						updDetail()
+					})
 			} else {
-				await methods.setValue('bend_cost', DetailItem.bend_cost)
+				methods.setValue('bend_cost', DetailItem.bend_cost)
 				serviseAlert(bending?.cost)
 			}
 		}
@@ -204,30 +258,52 @@ export function FormDetailItem({
 			type: 'cut',
 		})
 		if (Number(data.cut_cost) >= Number(cuting)) {
-			await axios.put<Detail>(process.env.REACT_APP_BACKEND_API_URL + 'detail/', {
-				id: data.id,
-				cut_cost: data.cut_cost,
-			})
-			DetailItem.cut_cost = data.cut_cost
-			updDetail()
-		} else {
-			if (access === true) {
-				await axios.put<Detail>(process.env.REACT_APP_BACKEND_API_URL + 'detail/', {
+			await apiClient
+				.put<Detail>('detail/', {
 					id: data.id,
 					cut_cost: data.cut_cost,
 				})
-				DetailItem.cut_cost = data.cut_cost
-				updDetail()
+				.then(() => {
+					DetailItem.cut_cost = data.cut_cost
+					updDetail()
+				})
+		} else {
+			if (access === true) {
+				await apiClient
+					.put<Detail>('detail/', {
+						id: data.id,
+						cut_cost: data.cut_cost,
+					})
+					.then(() => {
+						DetailItem.cut_cost = data.cut_cost
+						updDetail()
+					})
 			} else {
-				await methods.setValue('cut_cost', DetailItem.cut_cost)
+				methods.setValue('cut_cost', DetailItem.cut_cost)
 				serviseAlert(cuting)
 			}
 		}
 	}
 
+	const onSubmitQuantity: SubmitHandler<Detail> = async data => {
+		await apiClient
+			.put<Detail>('detail/quantity', {
+				id: data.id,
+				quantity: data.quantity,
+			})
+			.then(async number => {
+				await methods.handleSubmit(onSubmitBend)()
+				await methods.handleSubmit(onSubmitChop)()
+				updDetail()
+			})
+			.catch(err => {
+				console.log(err)
+			})
+	}
+
 	// const onSubmitPriceMetal: SubmitHandler<Detail> = async data => {
-	// 	await axios.put<Detail>(
-	// 		process.env.REACT_APP_BACKEND_API_URL + 'detail/',
+	// 	await apiClient.put<Detail>(
+	// 		'detail/',
 	// 		{
 	// 			id: data.id,
 	// 			metal_cost: data.metal_cost,
@@ -245,7 +321,31 @@ export function FormDetailItem({
 				<div className={styles.line + ' ' + styles.name}>
 					{DetailItem.name} {DetailItem.custom ? '(' + DetailItem.l_size + 'x' + DetailItem.w_size + ')' : ''}
 				</div>
-				<div className={styles.line}>{DetailItem.quantity}</div>
+				<div className={styles.line}>
+					{DetailItem.custom ? (
+						<input
+							{...methods.register('quantity', {
+								onBlur: methods.handleSubmit(onSubmitQuantity),
+								valueAsNumber: true,
+							})}
+							defaultValue={DetailItem.quantity}
+							type='number'
+							onFocus={e =>
+								e.target.addEventListener(
+									'wheel',
+									function (e) {
+										e.preventDefault()
+									},
+									{ passive: false }
+								)
+							}
+							min='0'
+							className='form-control'
+						/>
+					) : (
+						DetailItem.quantity
+					)}
+				</div>
 
 				<div className={styles.line + ' ' + styles.brown}>{DetailItem.thickness}</div>
 				<div className={styles.line + ' ' + styles.brown}>{DetailItem.material}</div>
@@ -456,35 +556,33 @@ export function FormDetailItem({
 						)}
 					/>
 				</div>
-				<div className={styles.line + ' ' + styles.red}>
-					<input
-						{...methods.register('polymer_base_price')}
-						defaultValue={DetailItem.polymer_base_price === null ? 0 : DetailItem.polymer_base_price}
-						tabIndex={6}
-						type='hidden'
-					/>
-					<input
-						{...methods.register('polymer_price', {
-							onBlur: methods.handleSubmit(onSubmitPolymerPrice),
-							valueAsNumber: true,
-						})}
-						defaultValue={DetailItem.polymer_price === null ? 0 : DetailItem.polymer_price}
-						tabIndex={6}
-						type='number'
-						onFocus={e =>
-							e.target.addEventListener(
-								'wheel',
-								function (e) {
-									e.preventDefault()
-								},
-								{ passive: false }
-							)
-						}
-						step='0.1'
-						min='0'
-						className='form-control'
-					/>
-				</div>
+				<input
+					{...methods.register('polymer_base_price')}
+					defaultValue={DetailItem.polymer_base_price === null ? 0 : DetailItem.polymer_base_price}
+					tabIndex={6}
+					type='hidden'
+				/>
+				<input
+					{...methods.register('polymer_price', {
+						onBlur: methods.handleSubmit(onSubmitPolymerPrice),
+						valueAsNumber: true,
+					})}
+					defaultValue={DetailItem.polymer_price === null ? 0 : DetailItem.polymer_price}
+					tabIndex={6}
+					type='hidden'
+					onFocus={e =>
+						e.target.addEventListener(
+							'wheel',
+							function (e) {
+								e.preventDefault()
+							},
+							{ passive: false }
+						)
+					}
+					step='0.1'
+					min='0'
+					className='form-control'
+				/>
 				<div className={styles.line + ' ' + styles.red}>
 					<input
 						{...methods.register('polymer_one_element_price', {

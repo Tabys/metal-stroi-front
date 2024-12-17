@@ -1,6 +1,7 @@
-import axios, { AxiosError } from 'axios'
+import { AxiosError } from 'axios'
 import { Detail, Order, PriceServiceCategory, ExeCustomers, PricesServiceItem, Setup } from '../../../../../models'
 import AuthService from '../../../../../services/auth.service'
+import apiClient from '../../../../../components/apiClient'
 
 type postConditionsProp = {
 	order: Order
@@ -10,7 +11,7 @@ type postConditionsProp = {
 
 async function getPrices() {
 	try {
-		const response = await axios.get<PriceServiceCategory[]>(process.env.REACT_APP_BACKEND_API_URL + 'price-services-category')
+		const response = await apiClient.get<PriceServiceCategory[]>('price-services-category')
 		return response.data
 	} catch (e: unknown) {
 		const error = e as AxiosError
@@ -20,7 +21,7 @@ async function getPrices() {
 
 async function getExeCustomers() {
 	try {
-		const response = await axios.get<ExeCustomers[]>(process.env.REACT_APP_BACKEND_API_URL + 'exemptionCustomer')
+		const response = await apiClient.get<ExeCustomers[]>('exemptionCustomer')
 		return response.data
 	} catch (e: unknown) {
 		const error = e as AxiosError
@@ -31,11 +32,7 @@ async function getExeCustomers() {
 export async function postConditions({ order, detail, type }: postConditionsProp) {
 	async function getSetup() {
 		try {
-			const response = await axios.get<Setup[]>(process.env.REACT_APP_BACKEND_API_URL + `setup/`, {
-				data: {
-					order_id: order.id,
-				},
-			})
+			const response = await apiClient.get<Setup[]>(`setup/all/${order.id}`)
 			return response.data
 		} catch (e: unknown) {
 			const error = e as AxiosError
@@ -59,7 +56,6 @@ export async function postConditions({ order, detail, type }: postConditionsProp
 	})
 
 	let access: boolean = false
-	let min_cuting_price: number | undefined = undefined
 	let serviceItem: PricesServiceItem | undefined = undefined
 	let cuting: number = 0
 	let bending: PricesServiceItem | undefined = undefined
@@ -149,5 +145,8 @@ export async function postConditions({ order, detail, type }: postConditionsProp
 	} else {
 		access = true
 	}
+
+	console.log(setups?.length)
+	console.log('BEND_COUNT: ' + bend_count + ' CHOP_COUNT: ' + chop_count)
 	return { access, choping, bending, cuting }
 }

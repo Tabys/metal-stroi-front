@@ -3,8 +3,6 @@ import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 import { Order } from '../../models'
 import Tooltip from '../Tooltip'
-import { FaRegTrashCan } from 'react-icons/fa6'
-import { Alert } from 'react-bootstrap'
 import { DelSetups } from '../../pages/OrderPage/delSetups/delSetups'
 
 type ModalProps = {
@@ -17,20 +15,11 @@ export function DelSetupModal({ onDel, order }: ModalProps) {
 	const openModal = () => setShowModal(true)
 	const closeModal = () => setShowModal(false)
 
-	const [alertShow, setAlertShow] = useState(false)
-
-	const openAlert = () => {
-		setAlertShow(true)
-		setTimeout(() => {
-			setAlertShow(false)
-		}, 1000)
-	}
-
 	return (
 		<>
 			<Tooltip conditions={true} text='Удалить сетапы'>
 				<Button variant='primary' onClick={openModal}>
-					<FaRegTrashCan />
+					<i className='fi fi-sr-delete-document'></i>
 				</Button>
 			</Tooltip>
 
@@ -41,9 +30,6 @@ export function DelSetupModal({ onDel, order }: ModalProps) {
 				<Modal.Body>
 					<DelSetups onClose={closeModal} onDel={onDel} order={order} />
 				</Modal.Body>
-				<Alert className='alert-fixed' show={alertShow} variant='success'>
-					Изменения сохранены
-				</Alert>
 			</Modal>
 		</>
 	)

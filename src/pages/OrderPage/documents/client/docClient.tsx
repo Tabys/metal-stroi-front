@@ -24,6 +24,9 @@ export function DocClient() {
 	const products = PrepArrProducts(orders)
 	const total = CulcTotalData({ details, products, orders })
 
+	details?.sort((a, b) => a.name.localeCompare(b.name))
+	products?.sort((a, b) => a.name.localeCompare(b.name))
+
 	return (
 		<>
 			<div className={styles.doc}>
@@ -46,7 +49,7 @@ export function DocClient() {
 								№ {orders?.order_number}
 							</a>
 							<p>
-								<strong>Дата приема заказа:</strong> <TransformDate orderDate={orders?.date_сreate} />
+								<strong>Дата приема заказа:</strong> <TransformDate orderDate={orders?.date_create} />
 							</p>
 							<p>
 								<strong>Заказчик:</strong> {orders?.customer}

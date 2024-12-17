@@ -1,6 +1,7 @@
-import axios, { AxiosError } from 'axios'
+import { AxiosError } from 'axios'
 import { useEffect, useState } from 'react'
 import { Order } from '../models'
+import apiClient from '../components/apiClient'
 
 export function useOrders(id: string) {
 	const [orders, setOrders] = useState<Order>()
@@ -11,9 +12,7 @@ export function useOrders(id: string) {
 		try {
 			setError('')
 			setLoading(true)
-			const response = await axios.get<Order>(
-				process.env.REACT_APP_BACKEND_API_URL + `orders/${id}`
-			)
+			const response = await apiClient.get<Order>(`orders/${id}`)
 			setOrders(response.data)
 			setLoading(false)
 		} catch (e: unknown) {

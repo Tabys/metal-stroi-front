@@ -1,7 +1,7 @@
 import { SubmitHandler, useForm } from 'react-hook-form'
-import axios from 'axios'
 import Tooltip from '../../../../../../components/Tooltip'
 import { Order } from '../../../../../../models'
+import apiClient from '../../../../../../components/apiClient'
 
 type OutsourcingRollingProps = {
 	orderData: Order
@@ -18,8 +18,8 @@ export function OutsourcingRolling({ orderData, update, openAlert }: Outsourcing
 
 	const onSubmit: SubmitHandler<OutsourcingRollingCostForm> = async data => {
 		data.id = orderData.id
-		await axios
-			.put<OutsourcingRollingCostForm>(process.env.REACT_APP_BACKEND_API_URL + 'orders/', data)
+		await apiClient
+			.put<OutsourcingRollingCostForm>('orders/', data)
 			.then(result => {
 				update()
 				openAlert('success', 'Изменения сохранены')

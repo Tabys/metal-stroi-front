@@ -4,7 +4,6 @@ import Offcanvas from 'react-bootstrap/Offcanvas'
 import AuthService from '../services/auth.service'
 import { useUser } from '../hooks/curentUser'
 import { Link } from 'react-router-dom'
-import { FaBars } from 'react-icons/fa6'
 
 export function Header() {
 	const { currentUser } = useUser()
@@ -19,39 +18,24 @@ export function Header() {
 
 	return (
 		<>
-			<Button
-				variant='primary'
-				onClick={handleShow}
-				className='menu-button'
-			>
-				<FaBars />
+			<Button variant='primary' onClick={handleShow} className='menu-button'>
+				<i className='fi fi-sr-menu-burger'></i>
 			</Button>
 			<Offcanvas show={show} onHide={handleClose} placement='end'>
 				<Offcanvas.Header closeButton>
-					<img
-						src='/images/logo-black.png'
-						width='150'
-						alt='logo'
-						className='d-inline-block align-top'
-					/>
+					<img src='/images/logo-black.png' width='150' alt='logo' className='d-inline-block align-top' />
 				</Offcanvas.Header>
 				<Offcanvas.Body>
 					<ul className='menu'>
 						{currentUser?.['roles'] !== 'ROLE_USER' ? (
 							<>
 								<li>
-									<Link
-										to={`/price-services/`}
-										onClick={handleClose}
-									>
+									<Link to={`/price-services/`} onClick={handleClose}>
 										Цены услуг
 									</Link>
 								</li>
 								<li>
-									<Link
-										to={`/price-materials/`}
-										onClick={handleClose}
-									>
+									<Link to={`/price-materials/`} onClick={handleClose}>
 										Цены материалов
 									</Link>
 								</li>
@@ -61,10 +45,7 @@ export function Header() {
 									</Link>
 								</li>
 								<li>
-									<Link
-										to={`/exemption-customers/`}
-										onClick={handleClose}
-									>
+									<Link to={`/exemption-customers/`} onClick={handleClose}>
 										Заказчики-исключения
 									</Link>
 								</li>

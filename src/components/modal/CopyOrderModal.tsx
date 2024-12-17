@@ -3,7 +3,6 @@ import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 import { Order } from '../../models'
 import Tooltip from '../Tooltip'
-import { FaRegClone } from 'react-icons/fa6'
 import { CopyOrderData } from '../../pages/OrderPage/orderController/copyOrderData'
 
 type ModalProps = {
@@ -17,19 +16,15 @@ export function CopyOrderModal({ order }: ModalProps) {
 
 	return (
 		<>
-			<Tooltip conditions={true} text='Клонирование сделки'>
+			<Tooltip conditions={true} text='Клонирование просчёта'>
 				<Button variant='primary' onClick={openModal}>
-					<FaRegClone />
+					<i className='fi fi-sr-duplicate'></i>
 				</Button>
 			</Tooltip>
 
-			<Modal
-				show={showModal}
-				onHide={closeModal}
-				dialogClassName='width700'
-			>
+			<Modal show={showModal} onHide={closeModal} dialogClassName='width700'>
 				<Modal.Header closeButton>
-					<Modal.Title>Клонирование сделки</Modal.Title>
+					<Modal.Title>Клонирование просчёта</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
 					<CopyOrderData orderID={order.id} onClose={closeModal} />

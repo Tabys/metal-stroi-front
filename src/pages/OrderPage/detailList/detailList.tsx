@@ -3,6 +3,9 @@ import styles from './style.module.css'
 import { FormDetailList } from './formDetailList'
 import { CreateDetailGroupList } from './createDetailGroupList'
 import { ControlPanel } from './component/controlPanel/controlPanel'
+import Tooltip from '../../../components/Tooltip'
+import { usePaintingMods } from '../../../hooks/paintingMods'
+import { PPHint } from './component/ppHint/ppHint'
 
 type detailListProps = {
 	dataOrder: Order
@@ -10,6 +13,8 @@ type detailListProps = {
 }
 
 export function DetailList({ dataOrder, updated }: detailListProps) {
+	const { paintingMods } = usePaintingMods()
+
 	return (
 		<div className={styles.wrapper_table}>
 			<div className={styles.detail_list + ' ' + styles.border_bold}>
@@ -82,14 +87,16 @@ export function DetailList({ dataOrder, updated }: detailListProps) {
 						<img src='/images/header-table/color-palette-min.png' alt='pp-color' />
 						<p>Цвет ПП</p>
 					</div>
-					<div className={styles.line + ' ' + styles.small}>
-						<img src='/images/header-table/free-icon-options-8129628-min.png' alt='pp-options' />
+					<div className={styles.line + ' ' + styles.small + ' ' + styles.pp_options}>
+						<Tooltip conditions={true} text={<PPHint paintingMods={paintingMods} />}>
+							<img src='/images/header-table/free-icon-options-8129628-min.png' alt='pp-options' />
+						</Tooltip>
 						<p>Опции ПП</p>
 					</div>
-					<div className={styles.line + ' ' + styles.small}>
+					{/* <div className={styles.line + ' ' + styles.small}>
 						<img src='/images/header-table/ruble-min.png' alt='pp-price' />
 						<p>Цена за м²</p>
-					</div>
+					</div> */}
 					<div className={styles.line + ' ' + styles.small}>
 						<img src='/images/header-table/ruble-min.png' alt='pp-price' />
 						<p>Цена за деталь</p>
@@ -106,9 +113,9 @@ export function DetailList({ dataOrder, updated }: detailListProps) {
 					</div>
 				</div>
 
-				<ControlPanel orderData={dataOrder} update={updated} />
+				<ControlPanel orderData={dataOrder} update={updated} paintingMods={paintingMods} />
 
-				<FormDetailList updData={updated} details={CreateDetailGroupList(dataOrder)} orderData={dataOrder} />
+				<FormDetailList updData={updated} details={CreateDetailGroupList(dataOrder)} orderData={dataOrder} paintingMods={paintingMods} />
 			</div>
 		</div>
 	)

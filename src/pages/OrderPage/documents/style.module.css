@@ -234,6 +234,9 @@ textarea.metal_comment {
 	padding: 0 0.25rem !important;
 	font-size: 12px !important;
 }
+.metal_comment_wrapper {
+	width: 40%;
+}
 
 @media print {
 	.doc,

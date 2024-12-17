@@ -1,8 +1,8 @@
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { UniversalResetForm } from '../../../../../../models'
-import axios from 'axios'
 import Tooltip from '../../../../../../components/Tooltip'
 import { FaXmark } from 'react-icons/fa6'
+import apiClient from '../../../../../../components/apiClient'
 
 type UniversalResetProps = {
 	orderId: number
@@ -15,8 +15,8 @@ export function UniversalReset({ orderId, condition, update, openAlert }: Univer
 	const { handleSubmit } = useForm<UniversalResetForm>()
 
 	const onSubmit: SubmitHandler<UniversalResetForm> = async data => {
-		await axios
-			.put<UniversalResetForm>(process.env.REACT_APP_BACKEND_API_URL + 'detail/reset', {
+		await apiClient
+			.put<UniversalResetForm>('detail/reset', {
 				id: orderId,
 				condition: condition,
 			})

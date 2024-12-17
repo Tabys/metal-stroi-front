@@ -7,6 +7,7 @@ export function PrepArrProducts(orders: Order | undefined) {
 		const poroductCount = product.quantity
 		let value = 0
 		let totalPrice = 0
+		let metal = 0
 		let totalWeight = 0
 		let detailsWeight = 0
 		let detailsCutCost = 0
@@ -38,6 +39,7 @@ export function PrepArrProducts(orders: Order | undefined) {
 			detailsCutCost += Number(detail.cut_cost)
 			detailsChoping += Number(detail.choping)
 			detailsBanding += Number(detail.bending)
+			metal += Number(detail.metal) * Number(detail.quantity)
 		})
 
 		totalPrice +=
@@ -62,7 +64,8 @@ export function PrepArrProducts(orders: Order | undefined) {
 			totalPrice: totalPrice,
 			painting_color: product.painting_color,
 			value: value,
-			painting_cost: product.painting_cost * product.quantity,
+			painting_cost: product.painting_cost,
+			painting_options: product.painting_options,
 			weight: totalWeight,
 			detailsWeight: detailsWeight,
 			detailsCutCost: detailsCutCost,
@@ -81,6 +84,7 @@ export function PrepArrProducts(orders: Order | undefined) {
 			turning_works: product.turning_works ? product.turning_works : 0,
 			smithy: product.smithy ? product.smithy : 0,
 			design_department: product.design_department ? product.design_department : 0,
+			metal: metal,
 		}
 	})
 

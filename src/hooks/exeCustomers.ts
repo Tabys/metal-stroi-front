@@ -1,6 +1,7 @@
-import axios, { AxiosError } from 'axios'
+import { AxiosError } from 'axios'
 import { useEffect, useState } from 'react'
 import { ExeCustomers } from '../models'
+import apiClient from '../components/apiClient'
 
 export function useExeCustomers() {
 	const [customers, setCustomers] = useState<ExeCustomers[]>([])
@@ -19,9 +20,7 @@ export function useExeCustomers() {
 		try {
 			setError('')
 			setLoading(true)
-			const response = await axios.get<ExeCustomers[]>(
-				process.env.REACT_APP_BACKEND_API_URL + 'exemptionCustomer'
-			)
+			const response = await apiClient.get<ExeCustomers[]>('exemptionCustomer')
 			setCustomers(response.data)
 			setLoading(false)
 		} catch (e: unknown) {

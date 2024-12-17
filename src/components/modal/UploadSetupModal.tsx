@@ -2,7 +2,6 @@ import { useState } from 'react'
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 import { UploadSetups } from '../../pages/OrderPage/uploadSetups/uploadSetups'
-import { FaFileArrowDown } from 'react-icons/fa6'
 import Tooltip from '../Tooltip'
 
 type ModalProps = {
@@ -17,22 +16,18 @@ export function UploadSetupModal({ onCreate, orderId }: ModalProps) {
 
 	return (
 		<>
-			<Tooltip conditions={true} text='Загрузить сетапы'>
+			<Tooltip conditions={true} text='Добавить сетапы'>
 				<Button className='fixed' variant='primary' onClick={openModal}>
-					<FaFileArrowDown />
+					<i className='fi fi-sr-add-document'></i>
 				</Button>
 			</Tooltip>
 
 			<Modal show={showSetupModal} onHide={closeModal}>
 				<Modal.Header closeButton>
-					<Modal.Title>Загрузить сетапы</Modal.Title>
+					<Modal.Title>Добавить сетапы</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
-					<UploadSetups
-						orderId={orderId}
-						onCreate={onCreate}
-						closeModal={closeModal}
-					></UploadSetups>
+					<UploadSetups orderId={orderId} onCreate={onCreate} closeModal={closeModal}></UploadSetups>
 				</Modal.Body>
 			</Modal>
 		</>

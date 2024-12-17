@@ -4,7 +4,6 @@ import Modal from 'react-bootstrap/Modal'
 import { Order } from '../../models'
 import { AddProducts } from '../../pages/OrderPage/addProduct/addProduct'
 import Tooltip from '../Tooltip'
-import { FaCube } from 'react-icons/fa6'
 
 type ModalProps = {
 	onAdd: () => void
@@ -20,7 +19,7 @@ export function AddProductModal({ onAdd, order }: ModalProps) {
 		<>
 			<Tooltip conditions={true} text='Добавить изделие'>
 				<Button variant='primary' onClick={openModal}>
-					<FaCube />
+					<i className='fi fi-sr-apps-add'></i>
 				</Button>
 			</Tooltip>
 
@@ -29,11 +28,7 @@ export function AddProductModal({ onAdd, order }: ModalProps) {
 					<Modal.Title>Добавить изделие</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
-					<AddProducts
-						onCreate={onAdd}
-						onClose={closeModal}
-						order={order}
-					/>
+					<AddProducts onCreate={onAdd} onClose={closeModal} order={order} />
 				</Modal.Body>
 			</Modal>
 		</>

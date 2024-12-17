@@ -1,6 +1,7 @@
-import axios, { AxiosError } from 'axios'
+import { AxiosError } from 'axios'
 import { useEffect, useState } from 'react'
 import { PaintingMods } from '../models'
+import apiClient from '../components/apiClient'
 
 export function usePaintingMods() {
 	const [paintingMods, setPainitngMods] = useState<PaintingMods[]>([])
@@ -11,7 +12,7 @@ export function usePaintingMods() {
 		try {
 			setError('')
 			setLoading(true)
-			const response = await axios.get<PaintingMods[]>(process.env.REACT_APP_BACKEND_API_URL + 'price-services-painting-mods/')
+			const response = await apiClient.get<PaintingMods[]>('price-services-painting-mods/')
 			setPainitngMods(response.data)
 			setLoading(false)
 		} catch (e: unknown) {

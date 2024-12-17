@@ -1,8 +1,8 @@
-import axios from 'axios'
 import { Order } from '../models'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { Form } from 'react-bootstrap'
 import { useUser } from '../hooks/curentUser'
+import apiClient from './apiClient'
 
 type CreateOrderProps = {
 	onCreate: () => void
@@ -11,7 +11,7 @@ type CreateOrderProps = {
 
 export function CreateOrder({ onCreate, addItem }: CreateOrderProps) {
 	const { currentUser } = useUser()
-
+	console.log(currentUser?.last_name + ' ' + currentUser?.first_name)
 	const {
 		register,
 		handleSubmit,
@@ -21,8 +21,9 @@ export function CreateOrder({ onCreate, addItem }: CreateOrderProps) {
 
 	const onSubmit: SubmitHandler<Order> = async data => {
 		data.implementer = currentUser?.last_name + ' ' + currentUser?.first_name
-		await axios
-			.post<Order>(process.env.REACT_APP_BACKEND_API_URL + 'import/', data)
+		data.implementer = currentUser?.last_name + ' ' + currentUser?.first_name
+		await apiClient
+			.post<Order>('import/', data)
 			.then(result => {
 				onCreate()
 				addItem(data)

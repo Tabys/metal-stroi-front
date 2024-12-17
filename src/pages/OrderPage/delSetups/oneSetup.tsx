@@ -2,8 +2,8 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { Setup } from '../../../models'
 import { OneDetail } from './oneDetail'
 import style from './style.module.css'
-import axios from 'axios'
 import { FaRegTrashCan } from 'react-icons/fa6'
+import apiClient from '../../../components/apiClient'
 
 type OneSetupProps = {
 	setup: Setup
@@ -14,10 +14,7 @@ export function OneSetup({ setup, onDel }: OneSetupProps) {
 	const { register, handleSubmit } = useForm<Setup>()
 
 	const onSubmit: SubmitHandler<Setup> = async data => {
-		await axios.delete<Setup>(
-			process.env.REACT_APP_BACKEND_API_URL + `setup/`,
-			{ data: { id: setup.id, order_id: setup.order_id } }
-		)
+		await apiClient.delete<Setup>(`setup/`, { data: { id: setup.id, order_id: setup.order_id } })
 		await onDel()
 	}
 
@@ -39,8 +36,7 @@ export function OneSetup({ setup, onDel }: OneSetupProps) {
 							Заготовка: <strong>{setup.work_piece}</strong>
 						</p>
 						<p>
-							Мин. заготовка:{' '}
-							<strong>{setup.min_work_piece}</strong>
+							Мин. заготовка: <strong>{setup.min_work_piece}</strong>
 						</p>
 					</div>
 				</div>

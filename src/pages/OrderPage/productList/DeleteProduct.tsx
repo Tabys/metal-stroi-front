@@ -1,8 +1,8 @@
-import axios from 'axios'
 import CloseButton from 'react-bootstrap/CloseButton'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { Product } from '../../../models'
 import Tooltip from '../../../components/Tooltip'
+import apiClient from '../../../components/apiClient'
 
 type DeleteProductProps = {
 	product: number
@@ -19,10 +19,7 @@ export function DeleteProduct({ product, update }: DeleteProductProps) {
 	const { handleSubmit } = useForm<Product>()
 
 	const onSubmit: SubmitHandler<Product> = async () => {
-		await axios.delete<Product>(
-			process.env.REACT_APP_BACKEND_API_URL + 'products/',
-			config
-		)
+		await apiClient.delete<Product>('products/', config)
 		await update()
 	}
 

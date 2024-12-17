@@ -24,7 +24,7 @@ export function CreateDetailGroupList(dataOrder: Order) {
 		}
 	}
 
-	groupedDetails.sort((a, b) => a.name.localeCompare(b.name))
+	groupedDetails.sort((a, b) => String(a.thickness).localeCompare(String(b.thickness)) || a.name.localeCompare(b.name))
 
 	return groupedDetails
 }
