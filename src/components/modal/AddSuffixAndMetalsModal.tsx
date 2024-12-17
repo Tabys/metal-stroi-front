@@ -3,7 +3,6 @@ import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 import { Order } from '../../models'
 import Tooltip from '../Tooltip'
-import { FaRegPenToSquare } from 'react-icons/fa6'
 import { AddSuffixesAndMetals } from '../../pages/OrderPage/addSuffixAndMetals/addSuffixAndMetals'
 import { Alert } from 'react-bootstrap'
 
@@ -28,15 +27,15 @@ export function AddSuffixModal({ onAdd, order }: ModalProps) {
 
 	return (
 		<>
-			<Tooltip conditions={true} text='Суффиксы и виды металлов'>
+			<Tooltip conditions={true} text='Виды металла'>
 				<Button variant='primary' onClick={openModal}>
-					<FaRegPenToSquare />
+					<i className='fi fi-sr-layers'></i>
 				</Button>
 			</Tooltip>
 
 			<Modal show={showModal} onHide={closeModal} dialogClassName='width900'>
 				<Modal.Header closeButton>
-					<Modal.Title>Суффиксы и виды металлов</Modal.Title>
+					<Modal.Title>Виды металла</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
 					<AddSuffixesAndMetals onClose={openAlert} onCreate={onAdd} order={order} />

@@ -1,0 +1,22 @@
+.search form {
+	display: flex;
+	flex-wrap: wrap;
+}
+.search .inputs {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	gap: 20px;
+}
+.search .inputs .group {
+	width: 33%;
+}
+.search .buttons {
+	display: flex;
+	justify-content: flex-end;
+	gap: 10px;
+	width: 100%;
+}
+.search .buttons button {
+	font-size: 14px;
+}

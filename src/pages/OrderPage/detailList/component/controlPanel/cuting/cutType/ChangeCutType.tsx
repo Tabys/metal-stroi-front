@@ -1,7 +1,7 @@
-import axios from 'axios'
 import styles from '../../../../style.module.css'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { ChangeCutTypeForm } from '../../../../../../../models'
+import apiClient from '../../../../../../../components/apiClient'
 
 type ChangeCutTypeProps = {
 	orderId: number
@@ -10,29 +10,19 @@ type ChangeCutTypeProps = {
 }
 
 export function ChangeCutType({ orderId, update, openAlert }: ChangeCutTypeProps) {
-	const {
-		handleSubmit,
-		setError,
-		register,
-		setValue,
-		formState: { errors },
-	} = useForm<ChangeCutTypeForm>()
+	const { handleSubmit, register, setValue } = useForm<ChangeCutTypeForm>()
 
 	const onSubmit: SubmitHandler<ChangeCutTypeForm> = async data => {
 		data.id = orderId
-		await axios
-			.put<ChangeCutTypeForm>(process.env.REACT_APP_BACKEND_API_URL + 'detail/cut-types', data)
+		await apiClient
+			.put<ChangeCutTypeForm>('detail/cut-types', data)
 			.then(result => {
-				update()
 				openAlert('success', 'Изменения сохранены')
+				update()
 			})
 			.catch(err => {
 				if (err.response.status > 200) {
-					setError('root.serverError', {
-						type: err.response.status,
-						message: err.response.data.message,
-					})
-					openAlert('danger', errors?.root?.serverError.message)
+					openAlert('danger', err.response.data.message)
 				}
 			})
 	}

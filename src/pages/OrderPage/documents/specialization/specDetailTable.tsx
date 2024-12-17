@@ -27,26 +27,34 @@ export function SpecDetailTable({ detail, index, total, delivery, showTable }: S
 	return (
 		<tr>
 			<td className={styles.center}>{index + 1}</td>
-			<td className={styles.left}>
+			<td className={styles.center}>
 				{detail.thickness} {detail.material} {detail.suffixes} {detail.customers_metal ? 'зак' : ''}
 			</td>
 			<td className={styles.left}>{detail.name}</td>
-			{Number(total.cuting_plasma) > 0 ? <td className={showTable === true ? '' : styles.hideTable}>{Number(detail.cut_cost).toFixed(2)}</td> : ''}
-			{Number(total.cuting_laser) > 0 ? <td className={showTable === true ? '' : styles.hideTable}>{Number(detail.cut_cost).toFixed(2)}</td> : ''}
-			{total.choping > 0 ? (
-				<td className={showTable === true ? '' : styles.hideTable}>{detail.choping ? Number(detail.choping).toFixed(2) : '0'}</td>
+			{Number(total.cuting_plasma) > 0 ? (
+				<td className={showTable === true ? styles.center : styles.hideTable}>{Number(detail.cut_cost).toFixed(2)}</td>
 			) : (
 				''
 			)}
-			{total.bending > 0 ? <td className={showTable === true ? '' : styles.hideTable}>{Number(detail.bending).toFixed(2)}</td> : ''}
-			{Number(total.painting) > 0 ? <td className={showTable === true ? '' : styles.hideTable}>{Number(detail.painting).toFixed(2)}</td> : ''}
-			{total.rolling > 0 ? <td className={showTable === true ? '' : styles.hideTable}>{Number(detail.rolling).toFixed(2)}</td> : ''}
-			{total.drowing > 0 ? <td className={showTable === true ? '' : styles.hideTable}>{Number(detail.drowing).toFixed(2)}</td> : ''}
+			{Number(total.cuting_laser) > 0 ? (
+				<td className={showTable === true ? styles.center : styles.hideTable}>{Number(detail.cut_cost).toFixed(2)}</td>
+			) : (
+				''
+			)}
+			{total.choping > 0 ? (
+				<td className={showTable === true ? styles.center : styles.hideTable}>{detail.choping ? Number(detail.choping).toFixed(2) : '0'}</td>
+			) : (
+				''
+			)}
+			{total.bending > 0 ? <td className={showTable === true ? styles.center : styles.hideTable}>{Number(detail.bending).toFixed(2)}</td> : ''}
+			{Number(total.painting) > 0 ? <td className={showTable === true ? styles.center : styles.hideTable}>{Number(detail.painting).toFixed(2)}</td> : ''}
+			{total.rolling > 0 ? <td className={showTable === true ? styles.center : styles.hideTable}>{Number(detail.rolling).toFixed(2)}</td> : ''}
+			{total.drowing > 0 ? <td className={showTable === true ? styles.center : styles.hideTable}>{Number(detail.drowing).toFixed(2)}</td> : ''}
 
-			<td className={showTable === true ? '' : styles.hideTable}>{Number(detail.metal).toFixed(2)}</td>
-			<td>{total_price / detail.quantity}</td>
-			<td>{detail.quantity}</td>
-			<td>{detail.weight}</td>
+			<td className={showTable === true ? styles.center : styles.hideTable}>{Number(detail.metal).toFixed(2)}</td>
+			<td className={styles.center}>{total_price / detail.quantity}</td>
+			<td className={styles.center}>{detail.quantity}</td>
+			<td className={styles.center}>{detail.weight}</td>
 		</tr>
 	)
 }

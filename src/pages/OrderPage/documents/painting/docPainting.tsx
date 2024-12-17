@@ -13,9 +13,10 @@ import { culcProductIndex } from './culcProductIndex'
 import { usePaintingMods } from '../../../../hooks/paintingMods'
 import { CulcTotalData } from '../components/culcTotalData'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import axios from 'axios'
 import { useState } from 'react'
 import { Alert } from 'react-bootstrap'
+import authHeader from '../../../../components/auth/authHeader'
+import apiClient from '../../../../components/apiClient'
 
 export function DocPainting() {
 	const [alertShow, setAlertShow] = useState(false)
@@ -39,14 +40,14 @@ export function DocPainting() {
 		arrDetails,
 		orders,
 	})
-	const filteredDetails = details?.filter(detail => detail.painting)
+	const filteredDetails = details?.filter(detail => Number(detail.painting) > 0)
 	const products = PrepArrProducts(orders)
 	const productIndex = culcProductIndex(details)
 
 	const total = CulcTotalData({ details, products, orders })
 
 	const onSubmit: SubmitHandler<Order> = async data => {
-		await axios.put<Order>(process.env.REACT_APP_BACKEND_API_URL + 'orders/', data)
+		await apiClient.put<Order>('orders/', { data: data, headers: authHeader() })
 		openAlert()
 	}
 
@@ -86,14 +87,20 @@ export function DocPainting() {
 							))}
 							{products?.map((product, index) =>
 								product.painting_cost ? (
-									<PaintingTableProducts key={product.id} index={index} product={product} startIndex={productIndex} />
+									<PaintingTableProducts
+										key={product.id}
+										index={index}
+										product={product}
+										paintingMods={paintingMods}
+										startIndex={productIndex}
+									/>
 								) : (
 									''
 								)
 							)}
 							<tr className={styles.total}>
 								<td colSpan={5}></td>
-								<th>{(total.painting + total.prod_painting).toFixed(3)}</th>
+								<th>{(total.painting_all + total.prod_painting).toFixed(3)}</th>
 							</tr>
 						</tbody>
 					</Table>

@@ -1,6 +1,7 @@
-import axios, { AxiosError } from 'axios'
+import { AxiosError } from 'axios'
 import { useEffect, useState } from 'react'
 import { Material } from '../models'
+import apiClient from '../components/apiClient'
 
 export function useMaterials() {
 	const [materials, setMaterials] = useState<Material[]>([])
@@ -15,9 +16,7 @@ export function useMaterials() {
 		try {
 			setError('')
 			setLoading(true)
-			const response = await axios.get<Material[]>(
-				process.env.REACT_APP_BACKEND_API_URL + 'price-metal-item'
-			)
+			const response = await apiClient.get<Material[]>('price-metal-item')
 			setMaterials(response.data)
 			setLoading(false)
 		} catch (e: unknown) {

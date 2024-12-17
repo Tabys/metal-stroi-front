@@ -1,13 +1,11 @@
-import axios, { AxiosError } from 'axios'
+import { AxiosError } from 'axios'
 import { Detail, Setup, MetalType } from '../../../../models'
+import apiClient from '../../../../components/apiClient'
 
 export async function UpdFoodSteel(dataDetail: Detail) {
 	async function getSetup() {
 		try {
-			const response = await axios.get<Setup>(
-				process.env.REACT_APP_BACKEND_API_URL +
-					`setup/${dataDetail.setup_id}`
-			)
+			const response = await apiClient.get<Setup>(`setup/${dataDetail.setup_id}`)
 			return response.data
 		} catch (e: unknown) {
 			const error = e as AxiosError
@@ -17,9 +15,7 @@ export async function UpdFoodSteel(dataDetail: Detail) {
 
 	async function getMetalType() {
 		try {
-			const response = await axios.get<MetalType[]>(
-				process.env.REACT_APP_BACKEND_API_URL + `price-metal-category`
-			)
+			const response = await apiClient.get<MetalType[]>(`price-metal-category`)
 			return response.data
 		} catch (e: unknown) {
 			const error = e as AxiosError

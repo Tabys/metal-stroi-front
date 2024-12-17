@@ -23,6 +23,13 @@ export function CulcTotalData({ details, products, orders }: CulcTotalDataProps)
 	let total_rolling = 0
 	let total_drowing = 0
 
+	let total_metal_all = 0
+	let total_cuting_all = 0
+	let total_bending_all = 0
+	let total_choping_all = 0
+	let total_rolling_all = 0
+	let total_painting_all = 0
+
 	// Only Products
 	let total_prod_painting = 0
 	let total_prod_turning_works = 0
@@ -78,7 +85,14 @@ export function CulcTotalData({ details, products, orders }: CulcTotalDataProps)
 		total_cuting_plasma += detail.cut_type === 'plasma' ? Number(detail.cut_cost) : 0
 		total_painting += Number(detail.painting)
 		total_rolling += detail.rolling ? detail.rolling : 0
-		total_drowing += detail.drowing ? detail.drowing : 0
+		total_drowing += detail.drowing ? Number(detail.drowing) : 0
+
+		total_metal_all += Number(detail.metal) * Number(detail.quantity)
+		total_cuting_all += Number(detail.cut_cost) * Number(detail.quantity)
+		total_bending_all += Number(detail.bending) * Number(detail.quantity)
+		total_choping_all += Number(detail.choping) * Number(detail.quantity)
+		total_rolling_all += Number(detail.rolling) * Number(detail.quantity)
+		total_painting_all += Number(detail.painting) * Number(detail.quantity)
 	})
 	products?.forEach(product => {
 		total_price += Math.ceil(product.totalPrice + oneKgDelivery * Number(product.weight))
@@ -89,7 +103,7 @@ export function CulcTotalData({ details, products, orders }: CulcTotalDataProps)
 		// Only Products
 		total_prod_quantity += Number(product.quantity)
 		total_prod_price += Math.ceil(product.totalPrice + oneKgDelivery * Number(product.weight)) * Number(product.quantity)
-		total_prod_painting += product.painting_cost ? Number(product.painting_cost) * Number(product.quantity) : 0
+		total_prod_painting += product.painting_cost ? Number(product.painting_cost) : 0
 		total_prod_turning_works += product.turning_works ? Number(product.turning_works) * Number(product.quantity) : 0
 		total_prod_smithy += product.smithy ? Number(product.smithy) * Number(product.quantity) : 0
 		total_prod_welding += product.welding ? Number(product.welding) * Number(product.quantity) : 0
@@ -114,6 +128,13 @@ export function CulcTotalData({ details, products, orders }: CulcTotalDataProps)
 		painting: total_painting,
 		rolling: total_rolling,
 		drowing: total_drowing,
+
+		metal_all: total_metal_all,
+		cuting_all: total_cuting_all,
+		bending_all: total_bending_all,
+		choping_all: total_choping_all,
+		rolling_all: total_rolling_all,
+		painting_all: total_painting_all,
 
 		prod_painting: total_prod_painting,
 		prod_turning_works: total_prod_turning_works,

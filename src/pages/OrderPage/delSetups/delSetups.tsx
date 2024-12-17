@@ -1,7 +1,7 @@
-import axios from 'axios'
 import { Order } from '../../../models'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { SetupList } from './setupList'
+import apiClient from '../../../components/apiClient'
 
 type DelSetupsProps = {
 	onDel: () => void
@@ -13,10 +13,7 @@ export function DelSetups({ onDel, onClose, order }: DelSetupsProps) {
 	const { handleSubmit } = useForm<Order>()
 
 	const onSubmit: SubmitHandler<Order> = async data => {
-		await axios.delete<Order>(
-			process.env.REACT_APP_BACKEND_API_URL + 'setup/all',
-			{ data: { id: order.id } }
-		)
+		await apiClient.delete<Order>('setup/all', { data: { id: order.id } })
 		await onDel()
 		await onClose()
 	}
@@ -24,10 +21,7 @@ export function DelSetups({ onDel, onClose, order }: DelSetupsProps) {
 	return (
 		<>
 			<form onSubmit={handleSubmit(onSubmit)}>
-				<button
-					type='submit'
-					className='btn btn-danger container-fluid mb-3'
-				>
+				<button type='submit' className='btn btn-danger container-fluid mb-3'>
 					Удалить все сетапы
 				</button>
 			</form>

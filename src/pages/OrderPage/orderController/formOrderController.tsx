@@ -1,4 +1,3 @@
-import axios from 'axios'
 import { DocTableDetail, Order, OrderController } from '../../../models'
 import { useForm, SubmitHandler, FormProvider, Controller } from 'react-hook-form'
 import Form from 'react-bootstrap/Form'
@@ -9,6 +8,7 @@ import { CreateDetailGroupList } from '../detailList/createDetailGroupList'
 import { PrepArrDetils } from '../documents/components/prepArrDetails/prepArrDetails'
 import { CulcTotalData } from '../documents/components/culcTotalData'
 import Tooltip from '../../../components/Tooltip'
+import apiClient from '../../../components/apiClient'
 
 type formOCProps = {
 	orderData: Order
@@ -72,7 +72,7 @@ export function FormOrderController({ orderData, updated }: formOCProps) {
 			data.pallets = 0
 		}
 
-		await axios.put<OrderController>(process.env.REACT_APP_BACKEND_API_URL + 'orders/', data)
+		await apiClient.put<OrderController>('orders/', data)
 		methods.setValue('pallets', data.pallets)
 		updated()
 		openAlert()
@@ -87,7 +87,7 @@ export function FormOrderController({ orderData, updated }: formOCProps) {
 
 	const onSubmit: SubmitHandler<OrderController> = async data => {
 		// console.log(data)
-		await axios.put<OrderController>(process.env.REACT_APP_BACKEND_API_URL + 'orders/', data)
+		await apiClient.put<OrderController>('orders/', data)
 		updated()
 		openAlert()
 	}

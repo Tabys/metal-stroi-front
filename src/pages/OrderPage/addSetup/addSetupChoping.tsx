@@ -1,21 +1,21 @@
-import axios from 'axios'
 import Form from 'react-bootstrap/Form'
 import { useForm, SubmitHandler, Controller, useFieldArray } from 'react-hook-form'
-import { AddSetups } from '../../../models'
+import { AddSetupsChoping } from '../../../models'
 import { useMaterialPrices } from '../../../hooks/priceMaterials'
 import { useState } from 'react'
 import { listMetalName } from '../detailList/listMetalName'
 import Select from 'react-select'
 import style from './style.module.css'
 import { FaMinus, FaPlus, FaRegTrashCan } from 'react-icons/fa6'
+import apiClient from '../../../components/apiClient'
 
-type addSetupProps = {
+type addSetupChopingProps = {
 	onCreate: () => void
 	onClose: () => void
 	order_id?: number
 }
 
-export function AddSetup({ onCreate, onClose, order_id }: addSetupProps) {
+export function AddSetupChoping({ onCreate, onClose, order_id }: addSetupChopingProps) {
 	const { prices } = useMaterialPrices()
 	const {
 		register,
@@ -23,7 +23,7 @@ export function AddSetup({ onCreate, onClose, order_id }: addSetupProps) {
 		handleSubmit,
 		reset,
 		formState: { errors },
-	} = useForm<AddSetups>()
+	} = useForm<AddSetupsChoping>()
 	const { fields, append, remove } = useFieldArray({
 		control,
 		name: 'details',
@@ -39,7 +39,7 @@ export function AddSetup({ onCreate, onClose, order_id }: addSetupProps) {
 		return { value: value, label: value }
 	})
 
-	const onSubmit: SubmitHandler<AddSetups> = async data => {
+	const onSubmit: SubmitHandler<AddSetupsChoping> = async data => {
 		if (data.suffixes) {
 			const jsonList: any[] = []
 			data.suffixes.forEach(suffix => {
@@ -63,7 +63,7 @@ export function AddSetup({ onCreate, onClose, order_id }: addSetupProps) {
 			}
 			delete detail.quantity
 		})
-		await axios.post<AddSetups>(process.env.REACT_APP_BACKEND_API_URL + 'setup/', data)
+		await apiClient.post<AddSetupsChoping>('setup/choping', data)
 		onCreate()
 		onClose()
 	}
@@ -142,52 +142,6 @@ export function AddSetup({ onCreate, onClose, order_id }: addSetupProps) {
 							{errors.thicknessTitle && <Form.Text className='text-danger'>{errors.thicknessTitle.message}</Form.Text>}
 						</div>
 					</div>
-				</div>
-				<div className={style.flex + ' mb-2'}>
-					<label className='form-label'>Минимальная заготовка:</label>
-					<div className={style.wrapp}>
-						<div className={style.group}>
-							<input
-								type='number'
-								{...register('min_length', {
-									required: 'Это поле обязательное',
-								})}
-								placeholder='Длина'
-								className={errors.min_length ? 'form-control is-invalid' : 'form-control'}
-							/>
-							{errors.min_length && <Form.Text className='text-danger'>{errors.min_length.message}</Form.Text>}
-						</div>
-						<div className={style.group}>
-							<input
-								type='number'
-								{...register('min_width', {
-									required: 'Это поле обязательное',
-								})}
-								placeholder='Ширина'
-								className={errors.min_width ? 'form-control is-invalid' : 'form-control'}
-							/>
-							{errors.min_width && <Form.Text className='text-danger'>{errors.min_width.message}</Form.Text>}
-						</div>
-					</div>
-				</div>
-				<div className='mb-2'>
-					<label className='form-label'>Кол-во прогонов</label>
-					<input
-						type='number'
-						{...register('program_runs', {
-							required: 'Это поле обязательное',
-							min: {
-								value: 1,
-								message: 'Минимальное колличество 1',
-							},
-							max: {
-								value: 100,
-								message: 'Максимальное колличество 100',
-							},
-						})}
-						className={errors.program_runs ? 'form-control is-invalid' : 'form-control'}
-					/>
-					{errors.program_runs && <Form.Text className='text-danger'>{errors.program_runs.message}</Form.Text>}
 				</div>
 				<div className='mb-2'>
 					<label className='form-label'>Суффиксы</label>

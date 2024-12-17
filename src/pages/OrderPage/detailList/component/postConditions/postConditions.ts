@@ -1,6 +1,7 @@
-import axios, { AxiosError } from 'axios'
+import { AxiosError } from 'axios'
 import { Detail, Order, PriceServiceCategory, ExeCustomers, PricesServiceItem, Setup } from '../../../../../models'
 import AuthService from '../../../../../services/auth.service'
+import apiClient from '../../../../../components/apiClient'
 
 type postConditionsProp = {
 	order: Order
@@ -10,7 +11,7 @@ type postConditionsProp = {
 
 async function getPrices() {
 	try {
-		const response = await axios.get<PriceServiceCategory[]>(process.env.REACT_APP_BACKEND_API_URL + 'price-services-category')
+		const response = await apiClient.get<PriceServiceCategory[]>('price-services-category')
 		return response.data
 	} catch (e: unknown) {
 		const error = e as AxiosError
@@ -20,7 +21,7 @@ async function getPrices() {
 
 async function getExeCustomers() {
 	try {
-		const response = await axios.get<ExeCustomers[]>(process.env.REACT_APP_BACKEND_API_URL + 'exemptionCustomer')
+		const response = await apiClient.get<ExeCustomers[]>('exemptionCustomer')
 		return response.data
 	} catch (e: unknown) {
 		const error = e as AxiosError
@@ -31,7 +32,7 @@ async function getExeCustomers() {
 export async function postConditions({ order, detail, type }: postConditionsProp) {
 	async function getSetup() {
 		try {
-			const response = await axios.get<Setup>(process.env.REACT_APP_BACKEND_API_URL + `setup/${detail.setup_id}`)
+			const response = await apiClient.get<Setup[]>(`setup/all/${order.id}`)
 			return response.data
 		} catch (e: unknown) {
 			const error = e as AxiosError
@@ -42,10 +43,19 @@ export async function postConditions({ order, detail, type }: postConditionsProp
 	const currentUser = AuthService.getCurrentUser()
 	const customers = await getExeCustomers()
 	const prices = await getPrices()
-	const setup = await getSetup()
+	const setups = await getSetup()
+	const setup = setups?.find(setup => Number(setup.id) === Number(detail.setup_id))
+
+	let bend_count = 0
+	let chop_count = 0
+	setups?.forEach(setup => {
+		setup.details?.forEach(item => {
+			bend_count += Number(item.bends_count) * Number(item.setup_detail.count)
+			chop_count += Number(item.chop_count) * Number(item.setup_detail.count)
+		})
+	})
 
 	let access: boolean = false
-	let min_cuting_price: number | undefined = undefined
 	let serviceItem: PricesServiceItem | undefined = undefined
 	let cuting: number = 0
 	let bending: PricesServiceItem | undefined = undefined
@@ -54,7 +64,7 @@ export async function postConditions({ order, detail, type }: postConditionsProp
 	const filteredCustomer = customers?.find(function (customer) {
 		return customer.name === order.customer
 	})
-	console.log(filteredCustomer)
+
 	switch (type) {
 		case 'cut':
 			const plasm_cut = prices?.find(function (priceArray) {
@@ -111,21 +121,21 @@ export async function postConditions({ order, detail, type }: postConditionsProp
 					Number(n.metal_thickness_max) >= Number(detail.thickness) &&
 					Number(n.metal_length_min) <= Number(length) &&
 					Number(n.metal_length_max) >= Number(length) &&
-					Number(n.quantity_min) <= Number(detail.bends_count) &&
-					Number(n.quantity_max) >= Number(detail.bends_count)
+					Number(n.quantity_min) <= bend_count &&
+					Number(n.quantity_max) >= bend_count
 				)
 			})
 			choping = chop?.price_services_items?.find(function (n) {
 				return (
 					Number(n.metal_thickness_min) <= Number(detail.thickness) &&
 					Number(n.metal_thickness_max) >= Number(detail.thickness) &&
-					Number(n.quantity_min) <= Number(detail.chop_count) &&
-					Number(n.quantity_max) >= Number(detail.chop_count)
+					Number(n.quantity_min) <= chop_count &&
+					Number(n.quantity_max) >= chop_count
 				)
 			})
 			break
 	}
-	console.log(cuting)
+
 	if (currentUser?.roles === 'ROLE_USER') {
 		if (filteredCustomer !== undefined && filteredCustomer !== null && cuting <= Number(detail.cut_cost)) {
 			access = true
@@ -135,5 +145,8 @@ export async function postConditions({ order, detail, type }: postConditionsProp
 	} else {
 		access = true
 	}
+
+	console.log(setups?.length)
+	console.log('BEND_COUNT: ' + bend_count + ' CHOP_COUNT: ' + chop_count)
 	return { access, choping, bending, cuting }
 }

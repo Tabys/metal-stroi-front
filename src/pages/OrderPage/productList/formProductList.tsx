@@ -1,4 +1,4 @@
-import { DocTableDetail, Order, Product } from '../../../models'
+import { DocTableDetail, Order, PaintingMods, Product } from '../../../models'
 import { FormProductItem } from './formProductItem'
 import Alert from 'react-bootstrap/Alert'
 import { useState } from 'react'
@@ -10,10 +10,12 @@ import { CulcTotalData } from '../documents/components/culcTotalData'
 interface FormProps {
 	orderData: Order
 	products: Product[] | undefined
+	paintingMods: PaintingMods[]
 	delProduct: () => void
+	updData: () => void
 }
 
-export function FormProductList({ products, orderData, delProduct }: FormProps) {
+export function FormProductList({ products, orderData, paintingMods, delProduct, updData }: FormProps) {
 	const arrDetails = orderData ? CreateDetailGroupList(orderData) : undefined
 	const details: DocTableDetail[] | undefined = PrepArrDetils({
 		arrDetails,
@@ -35,6 +37,7 @@ export function FormProductList({ products, orderData, delProduct }: FormProps) 
 		<>
 			{products?.map((item, index) => (
 				<FormProductItem
+					updData={updData}
 					setError={setError}
 					updProduct={openAlert}
 					orderData={orderData}
@@ -42,6 +45,7 @@ export function FormProductList({ products, orderData, delProduct }: FormProps) 
 					editedProducts={editedProducts}
 					delivery={total.oneKgDelivery}
 					delProduct={delProduct}
+					paintingMods={paintingMods}
 					index={index}
 					key={item.id}
 				/>

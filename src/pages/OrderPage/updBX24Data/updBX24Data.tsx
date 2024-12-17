@@ -1,10 +1,9 @@
 import { Alert, Button } from 'react-bootstrap'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { FaArrowsRotate } from 'react-icons/fa6'
 import { Order, UpdBX24 } from '../../../models'
-import axios from 'axios'
 import Tooltip from '../../../components/Tooltip'
 import { useState } from 'react'
+import apiClient from '../../../components/apiClient'
 
 type UpdBX24DataProps = {
 	order: Order | null
@@ -24,7 +23,7 @@ export function UpdBX24Data({ order, onUpd }: UpdBX24DataProps) {
 	const { handleSubmit } = useForm<UpdBX24>()
 
 	const onSubmit: SubmitHandler<UpdBX24> = async data => {
-		await axios.post<UpdBX24>(process.env.REACT_APP_BACKEND_API_URL + 'import', {
+		await apiClient.post<UpdBX24>('import', {
 			id: order?.id,
 		})
 		await onUpd()
@@ -35,7 +34,7 @@ export function UpdBX24Data({ order, onUpd }: UpdBX24DataProps) {
 		<>
 			<Tooltip conditions={true} text='Акутализировать данные из BX24'>
 				<Button className='fixed right-175' variant='primary' onClick={handleSubmit(onSubmit)}>
-					<FaArrowsRotate />
+					<i className='fi fi-sr-refresh'></i>
 				</Button>
 			</Tooltip>
 			<Alert className='alert-fixed' show={alertShow} variant='success'>

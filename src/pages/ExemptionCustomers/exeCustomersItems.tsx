@@ -1,7 +1,7 @@
 import { useForm, SubmitHandler } from 'react-hook-form'
-import axios from 'axios'
 import { ExeCustomers } from '../../models'
 import { FaRegTrashCan } from 'react-icons/fa6'
+import apiClient from '../../components/apiClient'
 
 type ExeCustomerItemsProps = {
 	index: number
@@ -19,12 +19,12 @@ export function ExeCustomerItems({ index, customer, update }: ExeCustomerItemsPr
 			},
 		}
 
-		await axios.delete<ExeCustomers>(process.env.REACT_APP_BACKEND_API_URL + 'exemptionCustomer', config)
+		await apiClient.delete<ExeCustomers>('exemptionCustomer', config)
 		update()
 	}
 
 	const onSubmit: SubmitHandler<ExeCustomers> = async data => {
-		await axios.put<ExeCustomers>(process.env.REACT_APP_BACKEND_API_URL + 'exemptionCustomer', data)
+		await apiClient.put<ExeCustomers>('exemptionCustomer', data)
 		update()
 	}
 

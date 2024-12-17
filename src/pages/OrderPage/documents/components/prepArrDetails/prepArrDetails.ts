@@ -78,7 +78,7 @@ export function PrepArrDetils({ arrDetails, orders, full, poroductCount }: PrepA
 					additional_setups: detail.additional_setups,
 					suffixes: suffixes,
 					customers_metal: detail.customers_metal,
-					painting: detail.polymer_price ? detail.polymer_price * (Number(detail.serface) / 1000000) * 2 : 0,
+					painting: detail.polymer_one_element_price,
 					products: detail.products,
 				}
 		  })

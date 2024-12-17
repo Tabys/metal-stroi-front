@@ -1,10 +1,11 @@
-import axios, { AxiosError } from 'axios'
+import { AxiosError } from 'axios'
 import { AddSuffix, FormatedSetupsData, MetalType, Order } from '../../../models'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { useEffect, useState } from 'react'
 import { SetupList } from './SetupList'
 import style from './style.module.css'
 import { dubleDetails } from './findDublDetails'
+import apiClient from '../../../components/apiClient'
 
 type AddSuffixAndMetalsProps = {
 	onCreate: () => void
@@ -22,7 +23,7 @@ export function AddSuffixesAndMetals({ onCreate, onClose, order }: AddSuffixAndM
 
 	async function getOrder() {
 		try {
-			const dataMetals = await axios.get<MetalType[]>(process.env.REACT_APP_BACKEND_API_URL + 'price-metal-category')
+			const dataMetals = await apiClient.get<MetalType[]>('price-metal-category')
 			setMetals(dataMetals.data)
 		} catch (e: unknown) {
 			const error = e as AxiosError
@@ -68,11 +69,9 @@ export function AddSuffixesAndMetals({ onCreate, onClose, order }: AddSuffixAndM
 	}, [order])
 
 	dataSetups?.sort((a, b) => (a.thickness > b.thickness ? 1 : -1))
-	console.log(dataSetups)
 
 	const onSubmit: SubmitHandler<AddSuffix> = async data => {
-		// console.log(arrSuffix)
-		await axios.put<AddSuffix>(process.env.REACT_APP_BACKEND_API_URL + 'setup/suffixes', arrSuffix)
+		await apiClient.put<AddSuffix>('setup/suffixes', arrSuffix)
 		onClose()
 		setTimeout(() => {
 			onCreate()

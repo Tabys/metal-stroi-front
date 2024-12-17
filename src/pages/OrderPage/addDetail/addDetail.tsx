@@ -1,8 +1,8 @@
-import axios from 'axios'
 import Form from 'react-bootstrap/Form'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { Setup } from '../../../models'
 import { Detail } from '../../../models'
+import apiClient from '../../../components/apiClient'
 
 type addDetailProps = {
 	onCreate: () => void
@@ -14,15 +14,11 @@ export function AddDetail({ onCreate, onClose, setups }: addDetailProps) {
 	const {
 		register,
 		handleSubmit,
-		setValue,
 		formState: { errors },
 	} = useForm<Detail>()
 
 	const onSubmit: SubmitHandler<Detail> = async data => {
-		await axios.post<Detail>(
-			process.env.REACT_APP_BACKEND_API_URL + 'detail/',
-			data
-		)
+		await apiClient.post<Detail>('detail/', data)
 		onCreate()
 		onClose()
 	}
@@ -31,17 +27,8 @@ export function AddDetail({ onCreate, onClose, setups }: addDetailProps) {
 		<form onSubmit={handleSubmit(onSubmit)}>
 			<div className='mb-3'>
 				<label className='form-label'>Назавние детали</label>
-				<input
-					{...register('name', { required: 'Это поле обязательное' })}
-					className={
-						errors.name ? 'form-control is-invalid' : 'form-control'
-					}
-				/>
-				{errors.name && (
-					<Form.Text className='text-danger'>
-						{errors.name.message}
-					</Form.Text>
-				)}
+				<input {...register('name', { required: 'Это поле обязательное' })} className={errors.name ? 'form-control is-invalid' : 'form-control'} />
+				{errors.name && <Form.Text className='text-danger'>{errors.name.message}</Form.Text>}
 			</div>
 			<div className='mb-3'>
 				<label className='form-label'>Материал</label>
@@ -68,17 +55,9 @@ export function AddDetail({ onCreate, onClose, setups }: addDetailProps) {
 							message: 'Максимальное колличество 100',
 						},
 					})}
-					className={
-						errors.quantity
-							? 'form-control is-invalid'
-							: 'form-control'
-					}
+					className={errors.quantity ? 'form-control is-invalid' : 'form-control'}
 				/>
-				{errors.quantity && (
-					<Form.Text className='text-danger'>
-						{errors.quantity.message}
-					</Form.Text>
-				)}
+				{errors.quantity && <Form.Text className='text-danger'>{errors.quantity.message}</Form.Text>}
 			</div>
 			<div className='mb-3'>
 				<label className='form-label'>Кол-во рубов</label>
@@ -95,17 +74,9 @@ export function AddDetail({ onCreate, onClose, setups }: addDetailProps) {
 							message: 'Максимальное колличество 100',
 						},
 					})}
-					className={
-						errors.cut_count
-							? 'form-control is-invalid'
-							: 'form-control'
-					}
+					className={errors.cut_count ? 'form-control is-invalid' : 'form-control'}
 				/>
-				{errors.cut_count && (
-					<Form.Text className='text-danger'>
-						{errors.cut_count.message}
-					</Form.Text>
-				)}
+				{errors.cut_count && <Form.Text className='text-danger'>{errors.cut_count.message}</Form.Text>}
 			</div>
 
 			<div className='mb-3'>
@@ -116,15 +87,9 @@ export function AddDetail({ onCreate, onClose, setups }: addDetailProps) {
 					{...register('time', {
 						required: 'Это поле обязательное',
 					})}
-					className={
-						errors.time ? 'form-control is-invalid' : 'form-control'
-					}
+					className={errors.time ? 'form-control is-invalid' : 'form-control'}
 				/>
-				{errors.time && (
-					<Form.Text className='text-danger'>
-						{errors.time.message}
-					</Form.Text>
-				)}
+				{errors.time && <Form.Text className='text-danger'>{errors.time.message}</Form.Text>}
 			</div>
 
 			<div className='mb-3'>
@@ -135,22 +100,11 @@ export function AddDetail({ onCreate, onClose, setups }: addDetailProps) {
 					{...register('weight', {
 						required: 'Это поле обязательное',
 					})}
-					className={
-						errors.weight
-							? 'form-control is-invalid'
-							: 'form-control'
-					}
+					className={errors.weight ? 'form-control is-invalid' : 'form-control'}
 				/>
-				{errors.weight && (
-					<Form.Text className='text-danger'>
-						{errors.weight.message}
-					</Form.Text>
-				)}
+				{errors.weight && <Form.Text className='text-danger'>{errors.weight.message}</Form.Text>}
 			</div>
-			<button
-				type='submit'
-				className='btn btn-primary container-fluid mt-5'
-			>
+			<button type='submit' className='btn btn-primary container-fluid mt-5'>
 				Create
 			</button>
 		</form>

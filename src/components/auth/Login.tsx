@@ -12,13 +12,9 @@ export function LogIn() {
 		setError,
 		formState: { errors },
 	} = useForm<Login>()
-	console.log(process.env.REACT_APP_BACKEND_API_URL + 'auth/signin')
 	const onSubmitLogIn: SubmitHandler<Login> = async data => {
 		await axios
-			.post<Login>(
-				process.env.REACT_APP_BACKEND_API_URL + 'auth/signin',
-				data
-			)
+			.post<Login>(process.env.REACT_APP_BACKEND_API_URL + 'auth/signin', data)
 			.then(result => {
 				if (result.data.accessToken) {
 					localStorage.setItem('user', JSON.stringify(result.data))
@@ -52,17 +48,9 @@ export function LogIn() {
 								{...register('username', {
 									required: 'Это поле обязательное',
 								})}
-								className={
-									errors.username
-										? 'form-control is-invalid'
-										: 'form-control'
-								}
+								className={errors.username ? 'form-control is-invalid' : 'form-control'}
 							/>
-							{errors.username && (
-								<Form.Text className='text-danger'>
-									{errors.username.message}
-								</Form.Text>
-							)}
+							{errors.username && <Form.Text className='text-danger'>{errors.username.message}</Form.Text>}
 						</div>
 						<div className='mb-3'>
 							<label className='form-label'>Пароль:</label>
@@ -71,29 +59,15 @@ export function LogIn() {
 									required: 'Это поле обязательное',
 								})}
 								type='password'
-								className={
-									errors.password
-										? 'form-control is-invalid'
-										: 'form-control'
-								}
+								className={errors.password ? 'form-control is-invalid' : 'form-control'}
 							/>
-							{errors.password && (
-								<Form.Text className='text-danger'>
-									{errors.password.message}
-								</Form.Text>
-							)}
+							{errors.password && <Form.Text className='text-danger'>{errors.password.message}</Form.Text>}
 						</div>
-						<button
-							type='submit'
-							className='btn btn-primary container-fluid mt-3'
-						>
+						<button type='submit' className='btn btn-primary container-fluid mt-3'>
 							Войти
 						</button>
 						{errors.root?.serverError.type ? (
-							<Alert
-								variant='danger'
-								className='alert-fixed mb-0'
-							>
+							<Alert variant='danger' className='alert-fixed mb-0'>
 								{errors?.root?.serverError.message}
 							</Alert>
 						) : (

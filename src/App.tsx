@@ -15,6 +15,7 @@ import { DocContract } from './pages/OrderPage/documents/contract/docContract'
 import { ExemptionCustomers } from './pages/ExemptionCustomers'
 import { ScrollTop } from './components/ScrollTop'
 import { GroupMainDocs } from './pages/OrderPage/documents/group_mian_doc'
+import { DocOrder } from './pages/OrderPage/documents/order/docOrder'
 
 function App() {
 	const { currentUser } = useUser()
@@ -31,8 +32,8 @@ function App() {
 						<Route path='/order/:id' element={<OrderPage />} />
 						<Route path='/order/:id/group-docs' element={<GroupMainDocs />} />
 						{/* <Route path='/order/:id/doc-client' element={<DocClient />} />
-						<Route path='/order/:id/doc-workshop' element={<DocWorkhop />} />
-						<Route path='/order/:id/doc-order' element={<DocOrder />} /> */}
+						<Route path='/order/:id/doc-workshop' element={<DocWorkhop />} /> */}
+						<Route path='/order/:id/doc-order' element={<DocOrder />} />
 						<Route path='/order/:id/doc-painting' element={<DocPainting />} />
 						<Route path='/order/:id/doc-specialization' element={<DocSpecialization />} />
 						<Route path='/order/:id/doc-contract' element={<DocContract />} />

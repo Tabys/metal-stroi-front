@@ -157,6 +157,7 @@ export function OneSetup({
 						isDisabled={options.length > 0 ? false : true}
 						isMulti
 						className='suffixes'
+						menuPlacement='auto'
 						placeholder='Выбери для изменения'
 					/>
 					<label className={style.select_label}>Виды металлов: </label>
@@ -169,6 +170,7 @@ export function OneSetup({
 						options={optionsMetals}
 						className='chg_metals'
 						isClearable={true}
+						menuPlacement='auto'
 						placeholder='Выбери для изменения'
 					/>
 				</div>

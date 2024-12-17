@@ -1,6 +1,7 @@
-import axios, { AxiosError } from 'axios'
+import { AxiosError } from 'axios'
 import { useEffect, useState } from 'react'
 import { MetalType } from '../models'
+import apiClient from '../components/apiClient'
 
 export function useMaterialPrices() {
 	const [prices, setPrices] = useState<MetalType[]>([])
@@ -15,9 +16,7 @@ export function useMaterialPrices() {
 		try {
 			setError('')
 			setLoading(true)
-			const response = await axios.get<MetalType[]>(
-				process.env.REACT_APP_BACKEND_API_URL + 'price-metal-category'
-			)
+			const response = await apiClient.get<MetalType[]>('price-metal-category')
 			setPrices(response.data)
 			setLoading(false)
 		} catch (e: unknown) {

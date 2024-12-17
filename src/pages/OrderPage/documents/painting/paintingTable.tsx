@@ -24,7 +24,7 @@ export function PaintingTable({ detail, index, paintingMods }: PaintingTableProp
 				{detail.polymer} {polymerOptions}
 			</td>
 			<td>{volume.toFixed(3)}</td>
-			<td>{Number(detail.painting).toFixed(3)}</td>
+			<td>{(Number(detail.painting) * Number(detail.quantity)).toFixed(3)}</td>
 		</tr>
 	)
 }

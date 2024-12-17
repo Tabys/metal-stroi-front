@@ -1,6 +1,7 @@
-import axios, { AxiosError } from 'axios'
+import { AxiosError } from 'axios'
 import { useEffect, useState } from 'react'
 import { PriceServiceCategory } from '../models'
+import apiClient from '../components/apiClient'
 
 export function useServicePrices() {
 	const [prices, setPrices] = useState<PriceServiceCategory[]>([])
@@ -15,10 +16,7 @@ export function useServicePrices() {
 		try {
 			setError('')
 			setLoading(true)
-			const response = await axios.get<PriceServiceCategory[]>(
-				process.env.REACT_APP_BACKEND_API_URL +
-					'price-services-category'
-			)
+			const response = await apiClient.get<PriceServiceCategory[]>('price-services-category')
 			setPrices(response.data)
 			setLoading(false)
 		} catch (e: unknown) {

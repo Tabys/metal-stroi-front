@@ -1,10 +1,9 @@
-import axios from 'axios'
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form'
 import { Metal } from '../../../models'
 import styles from './style.module.css'
 import { getMetalNameSuffix } from './getMetalNameSuffix'
 import { useEffect } from 'react'
-import { FaArrowsRotate } from 'react-icons/fa6'
+import apiClient from '../../../components/apiClient'
 
 type FormMetalDetailProps = {
 	metal: Metal
@@ -25,8 +24,8 @@ export function FormMetalDetail({ metal, updMetal, openAlert, openErrorAlert, se
 	}, [metal])
 
 	const onSubmit: SubmitHandler<Metal> = async data => {
-		await axios
-			.put<Metal>(process.env.REACT_APP_BACKEND_API_URL + 'metal/', data)
+		await apiClient
+			.put<Metal>('metal/', data)
 			.then(result => {
 				openAlert()
 			})
@@ -44,7 +43,7 @@ export function FormMetalDetail({ metal, updMetal, openAlert, openErrorAlert, se
 	}
 
 	const onSubmitUpdMetalLists: SubmitHandler<Metal> = async data => {
-		await axios.put<Metal>(process.env.REACT_APP_BACKEND_API_URL + 'metal/upd-lists', data)
+		await apiClient.put<Metal>('metal/upd-lists', data)
 		openAlert()
 		updMetal()
 	}
@@ -86,7 +85,7 @@ export function FormMetalDetail({ metal, updMetal, openAlert, openErrorAlert, se
 				</div>
 				<div className={styles.updLists}>
 					<button className='btn btn-primary' onClick={methods.handleSubmit(onSubmitUpdMetalLists)}>
-						<FaArrowsRotate />
+						<i className='fi fi-sr-refresh'></i>
 					</button>
 				</div>
 			</form>

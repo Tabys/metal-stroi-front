@@ -1,4 +1,4 @@
-import axios, { AxiosError } from 'axios'
+import { AxiosError } from 'axios'
 import { useState, useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { Order } from '../../models'
@@ -17,6 +17,7 @@ import { CopyOrderModal } from '../../components/modal/CopyOrderModal'
 import { AddDetailSetupModal } from '../../components/modal/AddDetailSetupModal'
 import { DelSetupModal } from '../../components/modal/DelSetupModal'
 import { UpdBX24Data } from './updBX24Data/updBX24Data'
+import apiClient from '../../components/apiClient'
 
 export function EmptySetup() {
 	return <p>Элементов нет</p>
@@ -28,12 +29,12 @@ export function OrderPage() {
 	const { id } = useParams()
 
 	const updateOrders = async () => {
-		getOrder(Number(id))
+		await getOrder(Number(id))
 	}
 
 	async function getOrder(id: number) {
 		try {
-			let response = await axios.get<Order>(process.env.REACT_APP_BACKEND_API_URL + `orders/${id}`)
+			let response = await apiClient.get<Order>(`orders/${id}`)
 			await setOrder(response.data)
 		} catch (e: unknown) {
 			const error = e as AxiosError
@@ -71,7 +72,7 @@ export function OrderPage() {
 								<div className='alert alert-primary p-2 mb-0 mx-2' role='alert'>
 									Дата создания сделки:{' '}
 									<strong>
-										<TransformDate orderDate={order?.date_сreate} />
+										<TransformDate orderDate={order?.date_create} />
 									</strong>
 								</div>
 								<div>
@@ -84,7 +85,7 @@ export function OrderPage() {
 
 						<DetailList dataOrder={order} updated={updateOrders} />
 
-						<ProductList dataOrder={order} delProduct={updateOrders} />
+						<ProductList dataOrder={order} delProduct={updateOrders} updData={updateOrders} />
 
 						{order.metals ? <MetalList metal={order.metals} updMetal={updateOrders} /> : ''}
 
@@ -103,24 +104,24 @@ export function OrderPage() {
 								<ListGroup horizontal>
 									<ListGroup.Item variant='light'>
 										<Link relative='path' to={`group-docs`}>
-											<FaFileLines /> Клиенту/В цех/Заказ
+											<FaFileLines /> Клиенту/В цех
 										</Link>
 									</ListGroup.Item>
 									{/* <ListGroup.Item variant='light'>
-									<Link relative='path' to={`doc-client`}>
-										<FaFileLines /> Клиенту
-									</Link>
-								</ListGroup.Item>
-								<ListGroup.Item variant='light'>
-									<Link relative='path' to={`doc-workshop`}>
-										<FaFileLines /> В цех
-									</Link>
-								</ListGroup.Item>
-								<ListGroup.Item variant='light'>
-									<Link relative='path' to={`doc-order`}>
-										<FaFileLines /> Заказ
-									</Link>
-								</ListGroup.Item> */}
+										<Link relative='path' to={`doc-client`}>
+											<FaFileLines /> Клиенту
+										</Link>
+									</ListGroup.Item>
+									<ListGroup.Item variant='light'>
+										<Link relative='path' to={`doc-workshop`}>
+											<FaFileLines /> В цех
+										</Link>
+									</ListGroup.Item> */}
+									<ListGroup.Item variant='light'>
+										<Link relative='path' to={`doc-order`}>
+											<FaFileLines /> Заказ
+										</Link>
+									</ListGroup.Item>
 									<ListGroup.Item variant='light'>
 										<Link relative='path' to={`doc-painting`}>
 											<FaFileLines /> Полимерка

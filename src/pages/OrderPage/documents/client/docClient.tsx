@@ -24,6 +24,9 @@ export function DocClient() {
 	const products = PrepArrProducts(orders)
 	const total = CulcTotalData({ details, products, orders })
 
+	details?.sort((a, b) => a.name.localeCompare(b.name))
+	products?.sort((a, b) => a.name.localeCompare(b.name))
+
 	return (
 		<>
 			<div className={styles.doc}>
@@ -46,7 +49,7 @@ export function DocClient() {
 								№ {orders?.order_number}
 							</a>
 							<p>
-								<strong>Дата приема заказа:</strong> <TransformDate orderDate={orders?.date_сreate} />
+								<strong>Дата приема заказа:</strong> <TransformDate orderDate={orders?.date_create} />
 							</p>
 							<p>
 								<strong>Заказчик:</strong> {orders?.customer}
@@ -91,7 +94,7 @@ export function DocClient() {
 						</tr>
 					</tbody>
 				</Table>
-				{Number(details?.length) + Number(products?.length) > 5 ? <div className='page_brake'></div> : ''}
+				{/* {Number(details?.length) + Number(products?.length) > 5 ? <div className='page_brake'></div> : ''} */}
 				<div className={styles.invoice_header}>
 					<p>
 						<strong>Товарная накладная №{orders?.order_number}</strong>
@@ -123,7 +126,7 @@ export function DocClient() {
 								<td className={styles.center}>{index + 1}</td>
 								<td className={styles.left}>{detail.name}</td>
 								<td className={styles.center}>
-									{detail.thickness} {detail.suffixes}
+									{detail.thickness} {detail.material} {detail.suffixes} {detail.customers_metal ? 'зак' : ''}
 								</td>
 								<td className={styles.center}>шт.</td>
 								<td className={styles.center}>{detail.quantity}</td>

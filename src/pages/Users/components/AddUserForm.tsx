@@ -1,8 +1,8 @@
-import axios from 'axios'
 import { Alert, Form } from 'react-bootstrap'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { User } from '../../../models'
 import { useState } from 'react'
+import apiClient from '../../../components/apiClient'
 
 export function AddUserForm() {
 	const [alertShow, setAlertShow] = useState(false)
@@ -22,11 +22,8 @@ export function AddUserForm() {
 	} = useForm<User>()
 
 	const onSubmit: SubmitHandler<User> = async data => {
-		await axios
-			.post<User>(
-				process.env.REACT_APP_BACKEND_API_URL + 'auth/signup',
-				data
-			)
+		await apiClient
+			.post<User>('auth/signup', data)
 			.then(result => {
 				openAlert()
 				reset()
@@ -50,17 +47,9 @@ export function AddUserForm() {
 					{...register('first_name', {
 						required: 'Это поле обязательное',
 					})}
-					className={
-						errors.first_name
-							? 'form-control is-invalid'
-							: 'form-control'
-					}
+					className={errors.first_name ? 'form-control is-invalid' : 'form-control'}
 				/>
-				{errors.first_name && (
-					<Form.Text className='text-danger'>
-						{errors.first_name.message}
-					</Form.Text>
-				)}
+				{errors.first_name && <Form.Text className='text-danger'>{errors.first_name.message}</Form.Text>}
 			</div>
 			<div className='mb-3'>
 				<label className='form-label'>Фамилия</label>
@@ -68,17 +57,9 @@ export function AddUserForm() {
 					{...register('last_name', {
 						required: 'Это поле обязательное',
 					})}
-					className={
-						errors.last_name
-							? 'form-control is-invalid'
-							: 'form-control'
-					}
+					className={errors.last_name ? 'form-control is-invalid' : 'form-control'}
 				/>
-				{errors.last_name && (
-					<Form.Text className='text-danger'>
-						{errors.last_name.message}
-					</Form.Text>
-				)}
+				{errors.last_name && <Form.Text className='text-danger'>{errors.last_name.message}</Form.Text>}
 			</div>
 			<div className='mb-3'>
 				<label className='form-label'>Логин</label>
@@ -86,17 +67,9 @@ export function AddUserForm() {
 					{...register('username', {
 						required: 'Это поле обязательное',
 					})}
-					className={
-						errors.username
-							? 'form-control is-invalid'
-							: 'form-control'
-					}
+					className={errors.username ? 'form-control is-invalid' : 'form-control'}
 				/>
-				{errors.username && (
-					<Form.Text className='text-danger'>
-						{errors.username.message}
-					</Form.Text>
-				)}
+				{errors.username && <Form.Text className='text-danger'>{errors.username.message}</Form.Text>}
 			</div>
 			<div className='mb-3'>
 				<label className='form-label'>Пароль</label>
@@ -105,17 +78,9 @@ export function AddUserForm() {
 						required: 'Это поле обязательное',
 					})}
 					type='password'
-					className={
-						errors.password
-							? 'form-control is-invalid'
-							: 'form-control'
-					}
+					className={errors.password ? 'form-control is-invalid' : 'form-control'}
 				/>
-				{errors.password && (
-					<Form.Text className='text-danger'>
-						{errors.password.message}
-					</Form.Text>
-				)}
+				{errors.password && <Form.Text className='text-danger'>{errors.password.message}</Form.Text>}
 			</div>
 
 			<div className='mb-3'>
@@ -124,21 +89,13 @@ export function AddUserForm() {
 					{...register('role_id', {
 						required: 'Это поле обязательное',
 					})}
-					className={
-						errors.role_id
-							? 'form-select is-invalid'
-							: 'form-select'
-					}
+					className={errors.role_id ? 'form-select is-invalid' : 'form-select'}
 				>
 					<option value='user'>Технолог</option>
 					<option value='moderator'>Модератор</option>
 					<option value='admin'>Администратор</option>
 				</select>
-				{errors.role_id && (
-					<Form.Text className='text-danger'>
-						{errors.role_id.message}
-					</Form.Text>
-				)}
+				{errors.role_id && <Form.Text className='text-danger'>{errors.role_id.message}</Form.Text>}
 			</div>
 			{errors.root?.serverError && (
 				<Alert variant='danger' className='alert-fixed mb-0'>
@@ -149,10 +106,7 @@ export function AddUserForm() {
 			<Alert className='alert-fixed' show={alertShow} variant='success'>
 				Пользователь создан
 			</Alert>
-			<button
-				type='submit'
-				className='btn btn-primary container-fluid mt-5'
-			>
+			<button type='submit' className='btn btn-primary container-fluid mt-5'>
 				Создать
 			</button>
 		</form>
