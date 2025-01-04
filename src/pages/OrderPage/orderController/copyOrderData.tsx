@@ -17,7 +17,7 @@ export function CopyOrderData({ orderID, onClose }: CopyOrderDataProps) {
 	} = useForm<CopyOrder>()
 
 	const onSubmit: SubmitHandler<CopyOrder> = async data => {
-		await apiClient.post<CopyOrder>('import/', data)
+		await apiClient.post<CopyOrder>('oauth/create/', data)
 		await onClose()
 		await navigate(`/order/${data.id}`)
 	}
