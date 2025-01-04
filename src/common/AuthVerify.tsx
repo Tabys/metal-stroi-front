@@ -29,17 +29,12 @@ export function AuthVerify() {
 		const preUser = localStorage.getItem('user')
 		const refToken = async (token: string) => {
 			await axios
-				.post<Token>(
-					process.env.REACT_APP_BACKEND_API_URL + 'auth/refreshtoken',
-					{
-						refreshToken: token,
-					}
-				)
+				.post<Token>(process.env.REACT_APP_BACKEND_API_URL + 'auth/refreshtoken', {
+					refreshToken: token,
+				})
 				.then(result => {
 					if (result.data.accessToken) {
-						TokenService.updateLocalAccessToken(
-							result.data.accessToken
-						)
+						TokenService.updateLocalAccessToken(result.data.accessToken)
 					} else {
 						logOut()
 					}
@@ -69,3 +64,7 @@ export function AuthVerify() {
 
 	return <></>
 }
+
+// setInterval(() => {
+// 	AuthVerify()
+// }, 1000)

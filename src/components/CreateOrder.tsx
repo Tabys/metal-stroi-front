@@ -23,7 +23,7 @@ export function CreateOrder({ onCreate, addItem }: CreateOrderProps) {
 		data.implementer = currentUser?.last_name + ' ' + currentUser?.first_name
 		data.implementer = currentUser?.last_name + ' ' + currentUser?.first_name
 		await apiClient
-			.post<Order>('import/', data)
+			.post<Order>('oauth/create/', data)
 			.then(result => {
 				onCreate()
 				addItem(data)
