@@ -76,7 +76,7 @@ export async function UpdRollings(dataDetail: Detail) {
 				break
 		}
 
-		let rolling_cost = (Number(detail?.serface) / 1000000) * Number(SERVICE_COST?.cost) * Number(detail?.setup_detail.count)
+		let rolling_cost = (Number(detail?.serface) / 1000000) * Number(SERVICE_COST?.cost)
 		if (rolling_cost < Number(SERVICE_COST?.min_cost)) {
 			rolling_cost = Number(SERVICE_COST?.min_cost)
 		}
