@@ -69,7 +69,7 @@ export function FormDetailItem({
 		delete data.metal_cost
 		await apiClient
 			.put<Detail>('detail/updChop', data)
-			.then(number => {
+			.then(response => {
 				updDetail()
 				updData()
 			})
