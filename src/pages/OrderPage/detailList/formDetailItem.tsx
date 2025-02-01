@@ -23,7 +23,7 @@ type FormDetailItemProps = {
 	updDetail: () => void
 	updData: () => void
 	rollAlert: () => void
-	serviseAlert: (min_price: number | undefined) => void
+	serviceAlert: (min_price: number | undefined) => void
 }
 
 export function FormDetailItem({
@@ -34,7 +34,7 @@ export function FormDetailItem({
 	index,
 	paintingMods,
 	rollAlert,
-	serviseAlert,
+	serviceAlert,
 	updDetail,
 	updData,
 }: FormDetailItemProps) {
@@ -212,7 +212,7 @@ export function FormDetailItem({
 					})
 			} else {
 				methods.setValue('chop_cost', DetailItem.chop_cost)
-				serviseAlert(choping?.cost)
+				serviceAlert(choping?.cost)
 			}
 		}
 	}
@@ -246,7 +246,7 @@ export function FormDetailItem({
 					})
 			} else {
 				methods.setValue('bend_cost', DetailItem.bend_cost)
-				serviseAlert(bending?.cost)
+				serviceAlert(bending?.cost)
 			}
 		}
 	}
@@ -280,7 +280,7 @@ export function FormDetailItem({
 					})
 			} else {
 				methods.setValue('cut_cost', DetailItem.cut_cost)
-				serviseAlert(cuting)
+				serviceAlert(cuting)
 			}
 		}
 	}

@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { Order } from '../../models'
 import { TransformDate } from '../../components/TransformDate'
-import { useUser } from '../../hooks/curentUser'
+import { useUser } from '../../hooks/currentUser'
 import { DelOrderModal } from '../../components/modal/DelOrderModal'
 
 type OrderProps = {

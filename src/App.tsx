@@ -8,14 +8,12 @@ import { Header } from './components/Header'
 import { LogIn } from './components/auth/Login'
 import { AuthVerify } from './common/AuthVerify'
 import { UsersPage } from './pages/Users'
-import { useUser } from './hooks/curentUser'
+import { useUser } from './hooks/currentUser'
 import { DocPainting } from './pages/OrderPage/documents/painting/docPainting'
 import { DocSpecialization } from './pages/OrderPage/documents/specialization/docSpecialization'
-import { DocContract } from './pages/OrderPage/documents/contract/docContract'
 import { ExemptionCustomers } from './pages/ExemptionCustomers'
 import { ScrollTop } from './components/ScrollTop'
-import { GroupMainDocs } from './pages/OrderPage/documents/group_mian_doc'
-import { DocOrder } from './pages/OrderPage/documents/order/docOrder'
+import { GroupMainDocs } from './pages/OrderPage/documents/groupMainDocs'
 
 function App() {
 	const { currentUser } = useUser()
@@ -33,10 +31,10 @@ function App() {
 						<Route path='/order/:id/group-docs' element={<GroupMainDocs />} />
 						{/* <Route path='/order/:id/doc-client' element={<DocClient />} />
 						<Route path='/order/:id/doc-workshop' element={<DocWorkhop />} /> */}
-						<Route path='/order/:id/doc-order' element={<DocOrder />} />
+						{/* <Route path='/order/:id/doc-order' element={<DocOrder />} /> */}
 						<Route path='/order/:id/doc-painting' element={<DocPainting />} />
 						<Route path='/order/:id/doc-specialization' element={<DocSpecialization />} />
-						<Route path='/order/:id/doc-contract' element={<DocContract />} />
+						{/* <Route path='/order/:id/doc-contract' element={<DocContract />} /> */}
 						{currentUser?.['roles'] !== 'ROLE_USER' ? (
 							<>
 								<Route path='/price-services/' element={<PriceServices />} />
@@ -54,7 +52,7 @@ function App() {
 				<>
 					<Routes>
 						<Route path='/' element={<LogIn />} />
-						<Route path='/order/:id/doc-contract' element={<DocContract />} />
+						{/* <Route path='/order/:id/doc-contract' element={<DocContract />} /> */}
 						<Route path='*' element={<Page404 />} />
 					</Routes>
 				</>

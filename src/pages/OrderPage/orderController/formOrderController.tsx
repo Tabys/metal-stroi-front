@@ -5,7 +5,7 @@ import CreatableSelect from 'react-select/creatable'
 import { useState } from 'react'
 import { Alert } from 'react-bootstrap'
 import { CreateDetailGroupList } from '../detailList/createDetailGroupList'
-import { PrepArrDetils } from '../documents/components/prepArrDetails/prepArrDetails'
+import { PrepArrDetails } from '../documents/components/prepArrDetails/prepArrDetails'
 import { CulcTotalData } from '../documents/components/culcTotalData'
 import Tooltip from '../../../components/Tooltip'
 import apiClient from '../../../components/apiClient'
@@ -57,7 +57,7 @@ export function FormOrderController({ orderData, updated }: formOCProps) {
 	const onSubmitDelivery: SubmitHandler<OrderController> = async data => {
 		if (data.delivery !== 0) {
 			const arrDetails = orderData ? CreateDetailGroupList(orderData) : undefined
-			const details: DocTableDetail[] | undefined = PrepArrDetils({
+			const details: DocTableDetail[] | undefined = PrepArrDetails({
 				arrDetails,
 				orders: orderData,
 				full: true,

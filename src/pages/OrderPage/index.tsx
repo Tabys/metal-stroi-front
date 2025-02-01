@@ -117,11 +117,11 @@ export function OrderPage() {
 											<FaFileLines /> В цех
 										</Link>
 									</ListGroup.Item> */}
-									<ListGroup.Item variant='light'>
+									{/* <ListGroup.Item variant='light'>
 										<Link relative='path' to={`doc-order`}>
 											<FaFileLines /> Заказ
 										</Link>
-									</ListGroup.Item>
+									</ListGroup.Item> */}
 									<ListGroup.Item variant='light'>
 										<Link relative='path' to={`doc-painting`}>
 											<FaFileLines /> Полимерка
@@ -132,11 +132,11 @@ export function OrderPage() {
 											<FaFileLines /> Спецификация
 										</Link>
 									</ListGroup.Item>
-									<ListGroup.Item variant='light'>
+									{/* <ListGroup.Item variant='light'>
 										<Link relative='path' to={`doc-contract`}>
 											<FaFileLines /> К договору
 										</Link>
-									</ListGroup.Item>
+									</ListGroup.Item> */}
 									<ListGroup.Item variant='light'>
 										<SendPDFForm orderId={Number(id)} />
 									</ListGroup.Item>

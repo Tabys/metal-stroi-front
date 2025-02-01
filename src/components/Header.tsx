@@ -2,7 +2,7 @@ import { useState } from 'react'
 import Button from 'react-bootstrap/Button'
 import Offcanvas from 'react-bootstrap/Offcanvas'
 import AuthService from '../services/auth.service'
-import { useUser } from '../hooks/curentUser'
+import { useUser } from '../hooks/currentUser'
 import { Link } from 'react-router-dom'
 
 export function Header() {

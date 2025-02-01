@@ -5,22 +5,20 @@ type findDataInProductsProps = {
 }
 export function findDataInProducts({ detail }: findDataInProductsProps) {
 	let dataProducts = {
-		weldings: 0,
+		sm_works: 0,
+		mk_works: 0,
+		tfc_works: 0,
+		ac_works: 0,
 		painting: 0,
 		smithy: 0,
 		turning_works: 0,
 	}
 
 	detail?.products?.forEach(product => {
-		dataProducts.weldings += product.welding_allowance
-		dataProducts.weldings += product.welding_delivery
-		dataProducts.weldings += product.welding_fixings
-		dataProducts.weldings += product.welding_install
-		dataProducts.weldings += product.welding_painting
-		dataProducts.weldings += product.welding_profit
-		dataProducts.weldings += product.welding_rolling
-		dataProducts.weldings += product.welding_tax
-		dataProducts.weldings += product.welding_work
+		dataProducts.ac_works += product.ac_works
+		dataProducts.sm_works += product.sm_works
+		dataProducts.mk_works += product.mk_works
+		dataProducts.tfc_works += product.tfc_works
 		dataProducts.painting += product.painting_cost
 		dataProducts.smithy += product.smithy
 		dataProducts.turning_works += product.turning_works

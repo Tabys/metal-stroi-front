@@ -93,15 +93,10 @@ export type Product = {
 	id: number
 	name: string
 	quantity: number
-	welding_work: number
-	welding_fixings: number
-	welding_profit: number
-	welding_tax: number
-	welding_rolling: number
-	welding_painting: number
-	welding_delivery: number
-	welding_install: number
-	welding_allowance: number
+	sm_works: number
+	mk_works: number
+	tfc_works: number
+	ac_works: number
 	painting_color: string
 	painting_options: JSON[]
 	painting_price: number
@@ -129,7 +124,10 @@ export type ProductsFull = {
 	detailsCutCost: number
 	detailsChoping: number
 	detailsBanding: number
-	welding: number
+	sm_works: number
+	mk_works: number
+	tfc_works: number
+	ac_works: number
 	turning_works: number
 	smithy: number
 	design_department: number
@@ -408,7 +406,10 @@ export type TotalData = {
 	prod_painting: number
 	prod_turning_works: number
 	prod_smithy: number
-	prod_welding: number
+	prod_sm_works: number
+	prod_mk_works: number
+	prod_tfc_works: number
+	prod_ac_works: number
 	prod_design_department: number
 	prod_price: number
 	prod_quantity: number
@@ -480,7 +481,10 @@ export type DocTableProductSpec = {
 	detailsChoping?: number
 	detailsBanding?: number
 	value?: number
-	welding?: number
+	sm_works?: number
+	mk_works?: number
+	tfc_works?: number
+	ac_works?: number
 	turning_works?: number
 	smithy?: number
 	design_department?: number

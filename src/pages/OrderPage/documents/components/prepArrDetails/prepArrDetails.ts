@@ -1,21 +1,21 @@
 import { Detail, Order } from '../../../../../models'
-import { AvailableDetail } from '../../../addProduct/availableDatail'
+import { AvailableDetail } from '../../../addProduct/availableDetail'
 import { getExtraPriceMetal } from './getExtraPriceMetal'
 import { getMaterialName } from './getMaterialName'
 import { getSuffixes } from './getSuffixes'
 
-type PrepArrDetilsProp = {
+type PrepArrDetailsProp = {
 	arrDetails: Detail[] | undefined
 	orders: Order | undefined
 	full?: boolean
-	poroductCount?: number
+	productCount?: number
 }
 
-export function PrepArrDetils({ arrDetails, orders, full, poroductCount }: PrepArrDetilsProp) {
+export function PrepArrDetails({ arrDetails, orders, full, productCount }: PrepArrDetailsProp) {
 	const prepArrDetails = arrDetails
 		? arrDetails.map((detail, index) => {
-				const availableDetail = poroductCount
-					? Number(detail.product_detail?.count) * poroductCount
+				const availableDetail = productCount
+					? Number(detail.product_detail?.count) * productCount
 					: full === true
 					? detail.quantity
 					: AvailableDetail(detail)
