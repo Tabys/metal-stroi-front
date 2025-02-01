@@ -2,7 +2,7 @@ import { Detail, DocTableDetail, Order, PaintingMods } from '../../../models'
 import { FormDetailItem } from './formDetailItem'
 import Alert from 'react-bootstrap/Alert'
 import { useState } from 'react'
-import { PrepArrDetils } from '../documents/components/prepArrDetails/prepArrDetails'
+import { PrepArrDetails } from '../documents/components/prepArrDetails/prepArrDetails'
 import { PrepArrProducts } from '../documents/components/prepArrProducts'
 import { CulcTotalData } from '../documents/components/culcTotalData'
 import styles from './style.module.css'
@@ -15,11 +15,11 @@ interface FormProps {
 }
 
 export function FormDetailList({ details, orderData, paintingMods, updData }: FormProps) {
-	const editedDetails: DocTableDetail[] | undefined = PrepArrDetils({
+	const editedDetails: DocTableDetail[] | undefined = PrepArrDetails({
 		arrDetails: details,
 		orders: orderData,
 	})
-	const editedDetailsFull: DocTableDetail[] | undefined = PrepArrDetils({
+	const editedDetailsFull: DocTableDetail[] | undefined = PrepArrDetails({
 		arrDetails: details,
 		orders: orderData,
 		full: true,
@@ -31,7 +31,7 @@ export function FormDetailList({ details, orderData, paintingMods, updData }: Fo
 
 	const [alertShow, setAlertShow] = useState(false)
 	const [rollAlertShow, setRollAlertShow] = useState(false)
-	const [serviseAlertShow, setServiseAlertShow] = useState(false)
+	const [serviceAlertShow, setServiceAlertShow] = useState(false)
 	const [minPriceInf, setMinPriceInf] = useState<number | undefined>(undefined)
 
 	const openRollAlert = () => {
@@ -48,11 +48,11 @@ export function FormDetailList({ details, orderData, paintingMods, updData }: Fo
 		}, 1000)
 	}
 
-	const openServiseAlert = (min_price: number | undefined) => {
-		setServiseAlertShow(true)
+	const openServiceAlert = (min_price: number | undefined) => {
+		setServiceAlertShow(true)
 		setMinPriceInf(min_price)
 		setTimeout(() => {
-			setServiseAlertShow(false)
+			setServiceAlertShow(false)
 		}, 2000)
 	}
 
@@ -63,7 +63,7 @@ export function FormDetailList({ details, orderData, paintingMods, updData }: Fo
 					updData={updData}
 					updDetail={openAlert}
 					rollAlert={openRollAlert}
-					serviseAlert={openServiseAlert}
+					serviceAlert={openServiceAlert}
 					orderData={orderData}
 					DetailItem={item}
 					delivery={total.oneKgDelivery}
@@ -122,7 +122,7 @@ export function FormDetailList({ details, orderData, paintingMods, updData }: Fo
 			<Alert className='alert-fixed' show={rollAlertShow} variant='warning'>
 				Уточните техническую возможность вальцевания!
 			</Alert>
-			<Alert className='alert-fixed' show={serviseAlertShow} variant='danger'>
+			<Alert className='alert-fixed' show={serviceAlertShow} variant='danger'>
 				Стоимость не должна быть меньше {minPriceInf}
 			</Alert>
 		</>

@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom'
 import { useOrders } from '../../../../hooks/prepareDataList'
 import { CreateDetailGroupList } from '../../detailList/createDetailGroupList'
-import { PrepArrDetils } from '../components/prepArrDetails/prepArrDetails'
+import { PrepArrDetails } from '../components/prepArrDetails/prepArrDetails'
 import { DocTableDetail, Order } from '../../../../models'
 import styles from '../style.module.css'
 import Table from 'react-bootstrap/Table'
@@ -35,7 +35,7 @@ export function DocWorkhop() {
 	orders?.metals?.sort((a, b) => (a.thickness > b.thickness ? 1 : -1))
 
 	const arrDetails = orders ? CreateDetailGroupList(orders) : undefined
-	const details: DocTableDetail[] | undefined = PrepArrDetils({
+	const details: DocTableDetail[] | undefined = PrepArrDetails({
 		arrDetails,
 		orders,
 		full: true,

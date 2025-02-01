@@ -23,11 +23,6 @@ export function CulcColSpan(total: TotalData) {
 		count -= 1
 	}
 
-	if (Number(total.prod_welding) > 0) {
-	} else {
-		count -= 1
-	}
-
 	if (Number(total.prod_turning_works) > 0) {
 	} else {
 		count -= 1

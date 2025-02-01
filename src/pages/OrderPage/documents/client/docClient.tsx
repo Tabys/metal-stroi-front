@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom'
 import { useOrders } from '../../../../hooks/prepareDataList'
 import { CreateDetailGroupList } from '../../detailList/createDetailGroupList'
-import { PrepArrDetils } from '../components/prepArrDetails/prepArrDetails'
+import { PrepArrDetails } from '../components/prepArrDetails/prepArrDetails'
 import { ClientTable } from './clientTable'
 import { DocTableDetail } from '../../../../models'
 import styles from '../style.module.css'
@@ -17,7 +17,7 @@ export function DocClient() {
 	const linkBX = process.env.REACT_APP_BX24_URL + `crm/deal/details/${id}/`
 
 	const arrDetails = orders ? CreateDetailGroupList(orders) : undefined
-	const details: DocTableDetail[] | undefined = PrepArrDetils({
+	const details: DocTableDetail[] | undefined = PrepArrDetails({
 		arrDetails,
 		orders,
 	})

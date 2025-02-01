@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { useParams } from 'react-router-dom'
 import { useOrders } from '../../../../hooks/prepareDataList'
 import { CreateDetailGroupList } from '../../detailList/createDetailGroupList'
-import { PrepArrDetils } from '../components/prepArrDetails/prepArrDetails'
+import { PrepArrDetails } from '../components/prepArrDetails/prepArrDetails'
 import { DocTableDetail } from '../../../../models'
 import styles from '../style.module.css'
 import Table from 'react-bootstrap/Table'
@@ -12,7 +12,7 @@ import { ContractWorkTableDetail } from './contractWorkTableDetails'
 import { ContractWorkTableProduct } from './contractWorkTableProducts'
 import { ContractShipmentTableDetails } from './contractShipmentTableDetails'
 import { ContractShipmentTableProducts } from './contractShipmentTableProducts'
-import { useUser } from '../../../../hooks/curentUser'
+import { useUser } from '../../../../hooks/currentUser'
 import { getVat } from './getVat'
 
 export function DocContract() {
@@ -22,7 +22,7 @@ export function DocContract() {
 	const vat = getVat(orders)
 
 	const arrDetails = orders ? CreateDetailGroupList(orders) : undefined
-	const details: DocTableDetail[] | undefined = PrepArrDetils({
+	const details: DocTableDetail[] | undefined = PrepArrDetails({
 		arrDetails,
 		orders,
 	})

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { AddProduct, Detail } from '../../../models'
 import styles from './style.module.css'
 import { FaSignal } from 'react-icons/fa6'
-import { AvailableDetail } from './availableDatail'
+import { AvailableDetail } from './availableDetail'
 
 type OneDetailProps = {
 	detail: Detail

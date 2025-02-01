@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { useParams } from 'react-router-dom'
 import { useOrders } from '../../../../hooks/prepareDataList'
 import { CreateDetailGroupList } from '../../detailList/createDetailGroupList'
-import { PrepArrDetils } from '../components/prepArrDetails/prepArrDetails'
+import { PrepArrDetails } from '../components/prepArrDetails/prepArrDetails'
 import { DocTableDetail } from '../../../../models'
 import styles from '../style.module.css'
 import Table from 'react-bootstrap/Table'
@@ -19,7 +19,7 @@ export function DocSpecialization() {
 	const { orders } = useOrders(id ? id : '')
 
 	const arrDetails = orders ? CreateDetailGroupList(orders) : undefined
-	const details: DocTableDetail[] | undefined = PrepArrDetils({
+	const details: DocTableDetail[] | undefined = PrepArrDetails({
 		arrDetails,
 		orders,
 	})
@@ -142,10 +142,14 @@ export function DocSpecialization() {
 									<th>№ п/п</th>
 									<th>Наименование изделия</th>
 									<th>Кол-во изд, шт</th>
-									{total.prod_welding > 0 ? <th>Сварка</th> : ''}
+									{total.prod_sm_works > 0 ? <th>Работы СМ</th> : ''}
+									{total.prod_mk_works > 0 ? <th>Работы МК</th> : ''}
+									{total.prod_smithy > 0 ? <th>Работы кузни</th> : ''}
+									{total.prod_tfc_works > 0 ? <th>Работы ТФЦ</th> : ''}
+									{total.prod_ac_works > 0 ? <th>Работы АЦ</th> : ''}
 									{total.prod_painting > 0 ? <th>п/п</th> : ''}
 									{total.prod_turning_works > 0 ? <th>Токарка</th> : ''}
-									{total.prod_smithy > 0 ? <th>Кузня</th> : ''}
+
 									{total.prod_design_department > 0 ? <th>Конструкторский отдел</th> : ''}
 
 									<th>Итого за ед, руб.</th>
@@ -160,10 +164,13 @@ export function DocSpecialization() {
 									<td></td>
 									<td></td>
 									<td className={styles.center}>{total.prod_quantity}</td>
-									{total.prod_welding > 0 ? <td className={styles.center}>{total.prod_welding.toFixed(2)}</td> : ''}
+									{total.prod_sm_works > 0 ? <td className={styles.center}>{total.prod_sm_works.toFixed(2)}</td> : ''}
+									{total.prod_mk_works > 0 ? <td className={styles.center}>{total.prod_mk_works.toFixed(2)}</td> : ''}
+									{total.prod_smithy > 0 ? <td className={styles.center}>{total.prod_smithy.toFixed(2)}</td> : ''}
+									{total.prod_tfc_works > 0 ? <td className={styles.center}>{total.prod_tfc_works.toFixed(2)}</td> : ''}
+									{total.prod_ac_works > 0 ? <td className={styles.center}>{total.prod_ac_works.toFixed(2)}</td> : ''}
 									{total.prod_painting > 0 ? <td className={styles.center}>{total.prod_painting.toFixed(2)}</td> : ''}
 									{total.prod_turning_works > 0 ? <td className={styles.center}>{total.prod_turning_works.toFixed(2)}</td> : ''}
-									{total.prod_smithy > 0 ? <td className={styles.center}>{total.prod_smithy.toFixed(2)}</td> : ''}
 									{total.prod_design_department > 0 ? <td className={styles.center}>{total.prod_design_department.toFixed(2)}</td> : ''}
 									<td></td>
 									<td></td>

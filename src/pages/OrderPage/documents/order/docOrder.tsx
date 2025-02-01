@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { useParams } from 'react-router-dom'
 import { useOrders } from '../../../../hooks/prepareDataList'
 import { CreateDetailGroupList } from '../../detailList/createDetailGroupList'
-import { PrepArrDetils } from '../components/prepArrDetails/prepArrDetails'
+import { PrepArrDetails } from '../components/prepArrDetails/prepArrDetails'
 import { OrderTable } from './orderTable'
 import { DocTableDetail } from '../../../../models'
 import styles from '../style.module.css'
@@ -21,7 +21,7 @@ export function DocOrder() {
 	const full = true
 
 	const arrDetails = orders ? CreateDetailGroupList(orders) : undefined
-	const details: DocTableDetail[] | undefined = PrepArrDetils({
+	const details: DocTableDetail[] | undefined = PrepArrDetails({
 		arrDetails,
 		orders,
 		full,

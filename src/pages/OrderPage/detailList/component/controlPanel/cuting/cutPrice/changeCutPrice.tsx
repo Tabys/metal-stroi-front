@@ -1,5 +1,5 @@
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { useUser } from '../../../../../../../hooks/curentUser'
+import { useUser } from '../../../../../../../hooks/currentUser'
 import { ChangeCutPriceForm } from '../../../../../../../models'
 import Tooltip from '../../../../../../../components/Tooltip'
 import apiClient from '../../../../../../../components/apiClient'

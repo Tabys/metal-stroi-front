@@ -124,7 +124,7 @@ export function FormProductItem({
 				<input {...methods.register('id')} type='hidden' defaultValue={productItem.id} />
 				<input {...methods.register('order_id')} type='hidden' defaultValue={productItem.order_id} />
 				<div className={styles.line}>{index + 1}</div>
-				<div className={styles.line}>
+				<div className={styles.line + ' ' + styles.big}>
 					<input
 						{...methods.register('name', {
 							onBlur: methods.handleSubmit(onSubmit),
@@ -145,106 +145,78 @@ export function FormProductItem({
 						className='form-control'
 					/>
 				</div>
-				<div className={styles.line}>
+				<div className={styles.line + ' ' + styles.details_in_prod + ' ' + styles.big}>
+					{productItem.details?.map(detail => {
+						return <p key={detail.id}>{detail.name + '(' + detail?.product_detail?.count + 'шт.)'}</p>
+					})}
+				</div>
+				<div className={styles.line + ' ' + styles.yellow}>
 					<input
-						{...methods.register('welding_work', {
+						{...methods.register('sm_works', {
 							onBlur: methods.handleSubmit(onSubmit),
 							valueAsNumber: true,
 						})}
-						defaultValue={productItem.welding_work === null ? 0 : productItem.welding_work}
+						defaultValue={productItem.sm_works === null ? 0 : productItem.sm_works}
 						type='number'
 						className='form-control'
 					/>
 				</div>
-				<div className={styles.line}>
+				<div className={styles.line + ' ' + styles.yellow}>
 					<input
-						{...methods.register('welding_fixings', {
+						{...methods.register('mk_works', {
 							onBlur: methods.handleSubmit(onSubmit),
 							valueAsNumber: true,
 						})}
-						defaultValue={productItem.welding_fixings === null ? 0 : productItem.welding_fixings}
+						defaultValue={productItem.mk_works === null ? 0 : productItem.mk_works}
 						type='number'
 						className='form-control'
 					/>
 				</div>
-				<div className={styles.line}>
+				<div className={styles.line + ' ' + styles.yellow}>
 					<input
-						{...methods.register('welding_profit', {
+						{...methods.register('smithy', {
 							onBlur: methods.handleSubmit(onSubmit),
 							valueAsNumber: true,
 						})}
-						defaultValue={productItem.welding_profit === null ? 0 : productItem.welding_profit}
+						defaultValue={productItem.smithy === null ? 0 : productItem.smithy}
 						type='number'
 						className='form-control'
 					/>
 				</div>
-				<div className={styles.line}>
+				<div className={styles.line + ' ' + styles.yellow}>
 					<input
-						{...methods.register('welding_tax', {
+						{...methods.register('tfc_works', {
 							onBlur: methods.handleSubmit(onSubmit),
 							valueAsNumber: true,
 						})}
-						defaultValue={productItem.welding_tax === null ? 0 : productItem.welding_tax}
+						defaultValue={productItem.tfc_works === null ? 0 : productItem.tfc_works}
 						type='number'
 						className='form-control'
 					/>
 				</div>
-				<div className={styles.line}>
+				<div className={styles.line + ' ' + styles.yellow}>
 					<input
-						{...methods.register('welding_rolling', {
+						{...methods.register('ac_works', {
 							onBlur: methods.handleSubmit(onSubmit),
 							valueAsNumber: true,
 						})}
-						defaultValue={productItem.welding_rolling === null ? 0 : productItem.welding_rolling}
+						defaultValue={productItem.ac_works === null ? 0 : productItem.ac_works}
 						type='number'
 						className='form-control'
 					/>
 				</div>
-				<div className={styles.line}>
+				<div className={styles.line + ' ' + styles.yellow}>
 					<input
-						{...methods.register('welding_painting', {
+						{...methods.register('turning_works', {
 							onBlur: methods.handleSubmit(onSubmit),
 							valueAsNumber: true,
 						})}
-						defaultValue={productItem.welding_painting === null ? 0 : productItem.welding_painting}
+						defaultValue={productItem.turning_works === null ? 0 : productItem.turning_works}
 						type='number'
 						className='form-control'
 					/>
 				</div>
-				<div className={styles.line}>
-					<input
-						{...methods.register('welding_delivery', {
-							onBlur: methods.handleSubmit(onSubmit),
-							valueAsNumber: true,
-						})}
-						defaultValue={productItem.welding_delivery === null ? 0 : productItem.welding_delivery}
-						type='number'
-						className='form-control'
-					/>
-				</div>
-				<div className={styles.line}>
-					<input
-						{...methods.register('welding_install', {
-							onBlur: methods.handleSubmit(onSubmit),
-							valueAsNumber: true,
-						})}
-						defaultValue={productItem.welding_install === null ? 0 : productItem.welding_install}
-						type='number'
-						className='form-control'
-					/>
-				</div>
-				<div className={styles.line}>
-					<input
-						{...methods.register('welding_allowance', {
-							onBlur: methods.handleSubmit(onSubmit),
-							valueAsNumber: true,
-						})}
-						defaultValue={productItem.welding_allowance === null ? 0 : productItem.welding_allowance}
-						type='number'
-						className='form-control'
-					/>
-				</div>
-				<div className={styles.line}>
+				<div className={styles.line + ' ' + styles.red}>
 					<input
 						{...methods.register('painting_color', {
 							onBlur: methods.handleSubmit(onSubmitColor),
@@ -254,7 +226,7 @@ export function FormProductItem({
 						className='form-control'
 					/>
 				</div>
-				<div className={styles.line}>
+				<div className={styles.line + ' ' + styles.red}>
 					<Controller
 						control={methods.control}
 						name={'painting_options'}
@@ -277,7 +249,6 @@ export function FormProductItem({
 						)}
 					/>
 				</div>
-
 				<input
 					{...methods.register('painting_base_price')}
 					defaultValue={productItem.painting_base_price === null ? 0 : productItem.painting_base_price}
@@ -294,7 +265,7 @@ export function FormProductItem({
 					className='form-control'
 				/>
 
-				<div className={styles.line}>
+				<div className={styles.line + ' ' + styles.red}>
 					<input
 						{...methods.register('painting_cost', {
 							onBlur: methods.handleSubmit(onSubmit),
@@ -305,29 +276,8 @@ export function FormProductItem({
 						className='form-control'
 					/>
 				</div>
-				<div className={styles.line}>
-					<input
-						{...methods.register('smithy', {
-							onBlur: methods.handleSubmit(onSubmit),
-							valueAsNumber: true,
-						})}
-						defaultValue={productItem.smithy === null ? 0 : productItem.smithy}
-						type='number'
-						className='form-control'
-					/>
-				</div>
-				<div className={styles.line}>
-					<input
-						{...methods.register('turning_works', {
-							onBlur: methods.handleSubmit(onSubmit),
-							valueAsNumber: true,
-						})}
-						defaultValue={productItem.turning_works === null ? 0 : productItem.turning_works}
-						type='number'
-						className='form-control'
-					/>
-				</div>
-				<div className={styles.line}>
+
+				<div className={styles.line + ' ' + styles.purple}>
 					<input
 						{...methods.register('design_department', {
 							onBlur: methods.handleSubmit(onSubmit),
@@ -343,13 +293,6 @@ export function FormProductItem({
 					<DeleteProduct product={productItem.id} update={delProduct} />
 				</div>
 			</form>
-			<tr className={styles.details_td}>
-				<td colSpan={21}>
-					{productItem.details?.map(detail => {
-						return <p key={detail.id}>{detail.name + '(' + detail?.product_detail?.count + 'шт.)'}</p>
-					})}
-				</td>
-			</tr>
 		</FormProvider>
 	)
 }

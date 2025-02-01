@@ -6,17 +6,18 @@ import apiClient from '../../../../../../components/apiClient'
 
 type UniversalResetProps = {
 	orderId: number
+	APIObject?: string
 	condition: Object
 	update: () => void
 	openAlert: (type: string, message?: string) => void
 }
 
-export function UniversalReset({ orderId, condition, update, openAlert }: UniversalResetProps) {
+export function UniversalReset({ orderId, APIObject = 'detail', condition, update, openAlert }: UniversalResetProps) {
 	const { handleSubmit } = useForm<UniversalResetForm>()
 
 	const onSubmit: SubmitHandler<UniversalResetForm> = async data => {
 		await apiClient
-			.put<UniversalResetForm>('detail/reset', {
+			.put<UniversalResetForm>(`${APIObject}/reset`, {
 				id: orderId,
 				condition: condition,
 			})

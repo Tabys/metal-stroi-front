@@ -9,7 +9,7 @@ import { useSearchParams } from 'react-router-dom'
 import Select from 'react-select'
 import styles from './style.module.css'
 import { useUsers } from '../../hooks/users'
-import { useUser } from '../../hooks/curentUser'
+import { useUser } from '../../hooks/currentUser'
 
 type ItemListProp = {
 	itemsPerPage: number

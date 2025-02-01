@@ -23,7 +23,7 @@ type FormDetailItemProps = {
 	updDetail: () => void
 	updData: () => void
 	rollAlert: () => void
-	serviseAlert: (min_price: number | undefined) => void
+	serviceAlert: (min_price: number | undefined) => void
 }
 
 export function FormDetailItem({
@@ -34,7 +34,7 @@ export function FormDetailItem({
 	index,
 	paintingMods,
 	rollAlert,
-	serviseAlert,
+	serviceAlert,
 	updDetail,
 	updData,
 }: FormDetailItemProps) {
@@ -212,7 +212,7 @@ export function FormDetailItem({
 					})
 			} else {
 				methods.setValue('chop_cost', DetailItem.chop_cost)
-				serviseAlert(choping?.cost)
+				serviceAlert(choping?.cost)
 			}
 		}
 	}
@@ -246,7 +246,7 @@ export function FormDetailItem({
 					})
 			} else {
 				methods.setValue('bend_cost', DetailItem.bend_cost)
-				serviseAlert(bending?.cost)
+				serviceAlert(bending?.cost)
 			}
 		}
 	}
@@ -280,7 +280,7 @@ export function FormDetailItem({
 					})
 			} else {
 				methods.setValue('cut_cost', DetailItem.cut_cost)
-				serviseAlert(cuting)
+				serviceAlert(cuting)
 			}
 		}
 	}
@@ -400,27 +400,30 @@ export function FormDetailItem({
 				</div>
 
 				<div className={styles.line + ' ' + styles.yellow}>
-					<input
-						{...methods.register('bends_count', {
-							onBlur: methods.handleSubmit(onSubmitBend),
-							valueAsNumber: true,
-						})}
-						defaultValue={DetailItem.bends_count === null ? 0 : DetailItem.bends_count}
-						tabIndex={3}
-						type='number'
-						onFocus={e =>
-							e.target.addEventListener(
-								'wheel',
-								function (e) {
-									e.preventDefault()
-								},
-								{ passive: false }
-							)
-						}
-						className='form-control'
-						min='0'
-						required
-					/>
+					<Tooltip conditions={Number(DetailItem.thickness) > 16 ? true : false} text='Толщина металла должна быть <= 16'>
+						<input
+							{...methods.register('bends_count', {
+								onBlur: methods.handleSubmit(onSubmitBend),
+								valueAsNumber: true,
+							})}
+							defaultValue={DetailItem.bends_count === null ? 0 : DetailItem.bends_count}
+							tabIndex={3}
+							type='number'
+							onFocus={e =>
+								e.target.addEventListener(
+									'wheel',
+									function (e) {
+										e.preventDefault()
+									},
+									{ passive: false }
+								)
+							}
+							disabled={Number(DetailItem.thickness) > 16 ? true : false}
+							className='form-control'
+							min='0'
+							required
+						/>
+					</Tooltip>
 				</div>
 				<div className={styles.line + ' ' + styles.yellow}>
 					<input

@@ -34,7 +34,10 @@ export function CulcTotalData({ details, products, orders }: CulcTotalDataProps)
 	let total_prod_painting = 0
 	let total_prod_turning_works = 0
 	let total_prod_smithy = 0
-	let total_prod_welding = 0
+	let total_prod_sm_works = 0
+	let total_prod_mk_works = 0
+	let total_prod_tfc_works = 0
+	let total_prod_ac_works = 0
 	let total_prod_design_department = 0
 	let total_prod_price = 0
 	let total_prod_quantity = 0
@@ -106,7 +109,10 @@ export function CulcTotalData({ details, products, orders }: CulcTotalDataProps)
 		total_prod_painting += product.painting_cost ? Number(product.painting_cost) : 0
 		total_prod_turning_works += product.turning_works ? Number(product.turning_works) * Number(product.quantity) : 0
 		total_prod_smithy += product.smithy ? Number(product.smithy) * Number(product.quantity) : 0
-		total_prod_welding += product.welding ? Number(product.welding) * Number(product.quantity) : 0
+		total_prod_sm_works += product.sm_works ? Number(product.sm_works) * Number(product.quantity) : 0
+		total_prod_mk_works += product.mk_works ? Number(product.mk_works) * Number(product.quantity) : 0
+		total_prod_tfc_works += product.tfc_works ? Number(product.tfc_works) * Number(product.quantity) : 0
+		total_prod_ac_works += product.ac_works ? Number(product.ac_works) * Number(product.quantity) : 0
 		total_prod_design_department += product.design_department ? Number(product.design_department) * Number(product.quantity) : 0
 	})
 
@@ -139,7 +145,10 @@ export function CulcTotalData({ details, products, orders }: CulcTotalDataProps)
 		prod_painting: total_prod_painting,
 		prod_turning_works: total_prod_turning_works,
 		prod_smithy: total_prod_smithy,
-		prod_welding: total_prod_welding,
+		prod_sm_works: total_prod_sm_works,
+		prod_mk_works: total_prod_mk_works,
+		prod_tfc_works: total_prod_tfc_works,
+		prod_ac_works: total_prod_ac_works,
 		prod_design_department: total_prod_design_department,
 		prod_price: total_prod_price,
 		prod_quantity: total_prod_quantity,
