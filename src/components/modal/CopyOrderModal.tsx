@@ -1,15 +1,16 @@
 import { useState } from 'react'
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
-import { Order } from '../../models'
+import { Order, UserData } from '../../models'
 import Tooltip from '../Tooltip'
-import { CopyOrderData } from '../../pages/OrderPage/orderController/copyOrderData'
+import { CopyOrderData } from '../../pages/OrderPage/LaserWorkshop/orderController/copyOrderData'
 
 type ModalProps = {
-	order: Order
+	order?: Order
+	user?: UserData
 }
 
-export function CopyOrderModal({ order }: ModalProps) {
+export function CopyOrderModal({ order, user }: ModalProps) {
 	const [showModal, setShowModal] = useState(false)
 	const openModal = () => setShowModal(true)
 	const closeModal = () => setShowModal(false)
@@ -27,7 +28,7 @@ export function CopyOrderModal({ order }: ModalProps) {
 					<Modal.Title>Клонирование просчёта</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
-					<CopyOrderData orderID={order.id} onClose={closeModal} />
+					<CopyOrderData orderID={order?.id} user={user} onClose={closeModal} />
 				</Modal.Body>
 			</Modal>
 		</>

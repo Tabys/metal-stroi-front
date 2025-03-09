@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 import { Order } from '../../models'
 import Tooltip from '../Tooltip'
-import { AddSuffixesAndMetals } from '../../pages/OrderPage/addSuffixAndMetals/addSuffixAndMetals'
+import { AddSuffixesAndMetals } from '../../pages/OrderPage/LaserWorkshop/addSuffixAndMetals/addSuffixAndMetals'
 import { Alert } from 'react-bootstrap'
 
 type ModalProps = {

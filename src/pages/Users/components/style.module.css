@@ -1,0 +1,12 @@
+.flex {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+.group {
+	width: calc(100% / 2 - 10px);
+}
+
+.full {
+	width: 100%;
+}

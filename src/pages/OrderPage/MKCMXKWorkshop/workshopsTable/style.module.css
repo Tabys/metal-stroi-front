@@ -1,0 +1,70 @@
+.workshops_list {
+	display: table;
+	border-collapse: collapse;
+	font-size: 14px;
+	opacity: 1;
+	transition: 0.3;
+	width: 100%;
+	margin-bottom: 50px;
+}
+.workshops_list.border_bold {
+	border: 2px solid #8f8f8f;
+}
+.workshops_list:hover .row:first-child {
+	opacity: 1;
+}
+.workshops_list .row {
+	display: table-row;
+	transition: 0.1s;
+}
+.workshops_list .row.header {
+	position: sticky;
+	top: 0;
+	z-index: 1;
+}
+.workshops_list .row:hover {
+	background-color: #f3f3f3;
+}
+.workshops_list .row:first-child {
+	font-weight: bold;
+	background-color: #f3f3f3;
+}
+.workshops_list .row.controll_panel {
+	text-align: center;
+	background-color: #f3f3f3;
+}
+.workshops_list .row.controll_panel button {
+	color: #333;
+}
+
+.workshops_list .row .line {
+	display: table-cell;
+	border: 1px solid #ccc;
+	padding: 5px;
+	width: calc(100% / 12);
+}
+.workshops_list .row .line.radio {
+	text-align: center;
+}
+
+.workshops_list .row .line input:not([type='radio']):not([type='checkbox']),
+.workshops_list .row .line select {
+	background-color: initial;
+}
+
+.workshops_list .row .line.name {
+	width: 20%;
+}
+
+.small {
+	text-align: center;
+}
+.small p {
+	margin: 0;
+	font-size: 10px;
+	line-height: 10px;
+}
+.small img {
+	max-height: 40px;
+	margin-bottom: 5px;
+}

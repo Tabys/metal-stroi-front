@@ -1,0 +1,101 @@
+.products {
+	border: 2px solid #ccc;
+	box-sizing: border-box;
+	margin-bottom: 50px;
+}
+.stack {
+	display: flex;
+}
+.flex {
+	display: flex;
+	justify-content: space-between;
+}
+.flex .group {
+	width: calc(100% / 2);
+	height: initial;
+}
+
+.flex .group p.title {
+	width: 100%;
+	text-align: center;
+	font-weight: bold;
+	margin: 0;
+	border: 1px solid #ccc;
+	padding: 5px 0;
+	box-sizing: border-box;
+}
+
+.flex .group.blue .table .tr .td,
+.flex .group.blue p.title,
+.flex .group.blue input {
+	background-color: #0000ff1a;
+}
+
+.flex .group.yellow .table .tr .td,
+.flex .group.yellow p.title,
+.flex .group.yellow input {
+	background-color: #b5b5001a;
+}
+.flex .group.green p.title,
+.flex .group.green .table .tr .td,
+.flex .group.green input {
+	background-color: #016a051a;
+}
+
+.flex .group .box {
+	background-color: #f3f3f3;
+}
+
+.table {
+	width: 100%;
+	display: table;
+	border-collapse: collapse;
+	font-size: 14px;
+	opacity: 1;
+	transition: 0.3;
+}
+
+.table.fullheight {
+	height: 100%;
+}
+
+.table .tr {
+	display: table-row;
+	transition: 0.1s;
+}
+.table .tr.thead {
+	font-weight: bold;
+	background-color: #f3f3f3;
+	height: 35px;
+}
+.summary .table .tr.thead {
+	height: 70px;
+	background-color: #f3f3f3;
+}
+
+.table .tr .td {
+	display: table-cell;
+	border: 1px solid #ccc;
+	padding: 5px;
+}
+.table .tr .td p {
+	margin: 0;
+}
+.table .tr .td.wide {
+	width: 35%;
+}
+
+.table .tr .td.orange {
+	background-color: #ffa50026;
+}
+
+.buttons {
+	margin: 5px;
+}
+.buttons button:first-of-type {
+	margin-right: 10px;
+}
+
+.tbody {
+	display: table-row-group;
+}

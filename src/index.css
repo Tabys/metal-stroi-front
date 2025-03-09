@@ -128,6 +128,7 @@ code {
 .btn:hover .fi {
 	color: #cc6666;
 }
+
 .bottom-fixed-element {
 	position: fixed;
 	bottom: 0;
@@ -205,6 +206,50 @@ code {
 .custom-btn {
 	border: none;
 	background-color: initial;
+	position: relative;
+}
+.custom-btn:after {
+	content: '';
+	position: absolute;
+	width: 6px;
+	height: 6px;
+	border-radius: 50%;
+	top: 4px;
+	right: -1px;
+}
+@keyframes glowing-green {
+	0% {
+		background-color: #2ba805;
+		box-shadow: 0 0 5px #2ba805;
+	}
+	50% {
+		background-color: #49e819;
+		box-shadow: 0 0 10px #49e819;
+	}
+	100% {
+		background-color: #2ba805;
+		box-shadow: 0 0 5px #2ba805;
+	}
+}
+@keyframes glowing-red {
+	0% {
+		background-color: #a80505;
+		box-shadow: 0 0 5px #a80505;
+	}
+	50% {
+		background-color: #e81919;
+		box-shadow: 0 0 10px #e81919;
+	}
+	100% {
+		background-color: #a80505;
+		box-shadow: 0 0 5px #a80505;
+	}
+}
+.custom-btn.btn-red:after {
+	animation: glowing-red 1500ms infinite;
+}
+.custom-btn.btn-green:after {
+	animation: glowing-green 1500ms infinite;
 }
 
 /* General table with DIV element */

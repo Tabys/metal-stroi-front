@@ -7,7 +7,7 @@ type PricesProps = {
 	update: () => void
 }
 
-export function PircesItems({ price, update }: PricesProps) {
+export function PricesItems({ price, update }: PricesProps) {
 	const { register, handleSubmit } = useForm<PriceMetalItems>()
 
 	const onUpdate: SubmitHandler<PriceMetalItems> = async data => {
