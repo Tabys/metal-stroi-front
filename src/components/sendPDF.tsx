@@ -1,5 +1,5 @@
 import { useForm, SubmitHandler } from 'react-hook-form'
-import { SendPDF } from '../models'
+import { Order, SendPDF } from '../models'
 import { MdIosShare } from 'react-icons/md'
 import Tooltip from '../components/Tooltip'
 import Alert from 'react-bootstrap/Alert'
@@ -8,9 +8,13 @@ import apiClient from './apiClient'
 
 type SendPdfProps = {
 	orderId: number
+	api: string
+	order: Order
+	total: number
+	update: () => void
 }
 
-export function SendPDFForm({ orderId }: SendPdfProps) {
+export function SendPDFForm({ orderId, order, total, api, update }: SendPdfProps) {
 	const [alertShow, setAlertShow] = useState(false)
 
 	const openAlert = () => {
@@ -23,10 +27,12 @@ export function SendPDFForm({ orderId }: SendPdfProps) {
 	const { register, handleSubmit, setError } = useForm<SendPDF>()
 
 	const onSubmit: SubmitHandler<SendPDF> = async data => {
+		data.cost = total
 		await apiClient
-			.post<SendPDF>('pdf', data)
+			.post<SendPDF>(api, data)
 			.then(result => {
 				openAlert()
+				update()
 			})
 			.catch(err => {
 				console.log(err.response)
@@ -43,8 +49,8 @@ export function SendPDFForm({ orderId }: SendPdfProps) {
 		<>
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<input {...register('id')} type='hidden' defaultValue={orderId} />
-				<Tooltip conditions={true} text='Отправить документы в Битрикс'>
-					<button type='submit' className='custom-btn'>
+				<Tooltip conditions={true} text='Отправить в Битрикс'>
+					<button type='submit' className={`custom-btn ${Number(total) === Number(order.cost) ? 'btn-green' : 'btn-red'}`}>
 						<MdIosShare />
 					</button>
 				</Tooltip>

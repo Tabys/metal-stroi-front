@@ -9,11 +9,13 @@ import { LogIn } from './components/auth/Login'
 import { AuthVerify } from './common/AuthVerify'
 import { UsersPage } from './pages/Users'
 import { useUser } from './hooks/currentUser'
-import { DocPainting } from './pages/OrderPage/documents/painting/docPainting'
-import { DocSpecialization } from './pages/OrderPage/documents/specialization/docSpecialization'
+import { DocPainting } from './pages/OrderPage/LaserWorkshop/documents/painting/docPainting'
+import { DocSpecialization } from './pages/OrderPage/LaserWorkshop/documents/specialization/docSpecialization'
 import { ExemptionCustomers } from './pages/ExemptionCustomers'
 import { ScrollTop } from './components/ScrollTop'
-import { GroupMainDocs } from './pages/OrderPage/documents/groupMainDocs'
+import { GroupMainDocs } from './pages/OrderPage/LaserWorkshop/documents/groupMainDocs'
+import { TariffsAndRates } from './pages/Tariffs'
+import { DocPaintingWorkshops } from './pages/OrderPage/MKCMXKWorkshop/documents/painting/DocPainitngWorkshops'
 
 function App() {
 	const { currentUser } = useUser()
@@ -33,6 +35,7 @@ function App() {
 						<Route path='/order/:id/doc-workshop' element={<DocWorkhop />} /> */}
 						{/* <Route path='/order/:id/doc-order' element={<DocOrder />} /> */}
 						<Route path='/order/:id/doc-painting' element={<DocPainting />} />
+						<Route path='/order/:id/doc-painting-wh' element={<DocPaintingWorkshops />} />
 						<Route path='/order/:id/doc-specialization' element={<DocSpecialization />} />
 						{/* <Route path='/order/:id/doc-contract' element={<DocContract />} /> */}
 						{currentUser?.['roles'] !== 'ROLE_USER' ? (
@@ -40,6 +43,7 @@ function App() {
 								<Route path='/price-services/' element={<PriceServices />} />
 								<Route path='/price-materials/' element={<PriceMaterials />} />
 								<Route path='/exemption-customers/' element={<ExemptionCustomers />} />
+								<Route path='/tariffs-rates/' element={<TariffsAndRates />} />
 							</>
 						) : (
 							''

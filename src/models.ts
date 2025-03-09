@@ -16,6 +16,10 @@ export type Order = {
 	work_types: number[]
 	comment_painting?: string
 	comment_workshop?: string
+	cost?: number
+	division: number
+	workshops_data?: WorkshopData
+	workshops_products?: WorkshopProduct[]
 	metals?: Metal[]
 	setups?: Setup[]
 	products?: Product[]
@@ -101,6 +105,7 @@ export type Product = {
 	painting_options: JSON[]
 	painting_price: number
 	painting_base_price: number
+	painting_one_element_price: number
 	painting_cost: number
 	smithy: number
 	turning_works: number
@@ -369,6 +374,7 @@ export type Login = {
 
 export type SendPDF = {
 	id: number
+	cost: number
 }
 
 export type ClearMetalCostForm = {
@@ -382,6 +388,7 @@ export type UpdMetalCostForm = {
 
 export type CopyOrder = {
 	id: number
+	implementer: string
 	copied_order: number
 }
 
@@ -403,6 +410,14 @@ export type TotalData = {
 	painting: number
 	rolling: number
 	drowing: number
+
+	metal_all: number
+	cuting_all: number
+	bending_all: number
+	choping_all: number
+	rolling_all: number
+	painting_all: number
+
 	prod_painting: number
 	prod_turning_works: number
 	prod_smithy: number
@@ -413,6 +428,8 @@ export type TotalData = {
 	prod_design_department: number
 	prod_price: number
 	prod_quantity: number
+
+	oneKgDelivery: number
 }
 
 export type MetalChange = {
@@ -491,6 +508,13 @@ export type DocTableProductSpec = {
 	metal?: number
 }
 
+export type Nomenclature = {
+	id: number
+	name: string
+	weight: number
+	price: number
+}
+
 export type UpdBX24 = {
 	id: number
 }
@@ -555,4 +579,124 @@ export type UniversalResetForm = {
 
 export type Customers = {
 	customer: string
+}
+
+// Workshops
+
+export type WorkshopData = {
+	id?: number
+	payment_form: string
+	outsourcing: number
+	business_trip: number
+	delivery: number
+	profit: number
+	tariff_welding: number
+	tariff_painting: number
+	tariff_installation: number
+	tariff_secondment: number
+	rate?: number
+}
+
+export type WorkshopProduct = {
+	id: number
+	name: string
+	quantity: number
+	work_time: number
+	work_complexity: number
+	installation_time: number
+	installation_complexity: number
+	painting_time: number
+	painting_complexity: number
+	polymer_color: string
+	polymer_options: JSON[]
+	polymer_price: number
+	workshops_materials: WorkshopMaterialType[]
+	workshops_consumables: WorkshopConsumablesType[]
+}
+
+export type WorkshopMaterialType = {
+	id: number
+	name: string
+	weight: number
+	price: number
+	quantity: number
+	workshops_product_material: WorkshopProductMaterial
+}
+
+export type WorkshopProductMaterial = {
+	base_quantity: number
+	actual_quantity: number
+	price: number
+}
+
+export type AddWorkshopMaterialType = {
+	workshops_material_id?: number
+	workshops_product_id: number
+	base_quantity?: number
+	actual_quantity?: number
+}
+
+export type WorkshopConsumablesType = {
+	id: number
+	name: string
+	price: number
+	quantity: number
+	workshops_product_id: number
+}
+
+export type AddWorkshopConsumablesType = {
+	name: string
+	workshops_product_id: number
+	price: number
+	quantity: number
+}
+
+export type UploadWorkshopType = {
+	order_id: number
+}
+
+export type AddWorkshopProductType = {
+	order_id: number
+	name: string
+	quantity: number
+}
+
+export type PriceRatesCategory = {
+	id: string
+	name: string
+	price_rates_items: PriceRatesItem[]
+}
+export type PriceRatesItem = {
+	id?: number
+	name: string
+	value: number
+}
+
+export type ChangeSummeryMaterialType = {
+	workshops_material_id?: number
+	workshops_product_id: number
+	order_id?: number
+	quantity: number
+}
+
+export type RoundingUpMaterialType = {
+	order_id?: number
+}
+
+export type WorkshopTotalData = {
+	work: number
+	installation: number
+	painting: number
+	polymer: number
+	tmc: number
+	weight: number
+	metal: number
+	cost: number
+}
+
+export type Rates = {
+	id: number
+	name: string
+	bx_id: number
+	value: number
 }

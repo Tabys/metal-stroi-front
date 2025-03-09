@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
-import { UploadSetups } from '../../pages/OrderPage/uploadSetups/uploadSetups'
+import { UploadSetups } from '../../pages/OrderPage/LaserWorkshop/uploadSetups/uploadSetups'
 import Tooltip from '../Tooltip'
 
 type ModalProps = {

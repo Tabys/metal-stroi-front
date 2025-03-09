@@ -1,0 +1,8 @@
+.flex {
+	display: flex;
+	justify-content: space-between;
+}
+
+.flex .group {
+	width: calc(100% / 2 - 10px);
+}

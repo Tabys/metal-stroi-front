@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 import { Order } from '../../models'
 import Tooltip from '../Tooltip'
-import { DelSetups } from '../../pages/OrderPage/delSetups/delSetups'
+import { DelSetups } from '../../pages/OrderPage/LaserWorkshop/delSetups/delSetups'
 
 type ModalProps = {
 	onDel: () => void

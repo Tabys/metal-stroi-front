@@ -1,0 +1,60 @@
+.suffix_form {
+	height: 500px;
+	margin: 0 0 20px 0;
+	overflow-y: scroll;
+	box-sizing: border-box;
+	scrollbar-width: thin;
+	scrollbar-color: #ced4da #fff;
+}
+.workshop_product {
+	margin: 0 0 20px 0;
+}
+.title {
+	border-bottom: 1px solid #dee2e6;
+	background-color: #dee2e6;
+	box-sizing: border-box;
+	padding: 5px;
+	display: flex;
+}
+.title .group {
+	width: 100%;
+}
+.title button {
+	width: 50px;
+	color: #dc3545;
+}
+.top {
+	display: flex;
+	justify-content: space-between;
+}
+.top p {
+	margin: 0;
+	font-size: 14px;
+}
+.top p strong {
+	font-size: initial;
+}
+.work_piece {
+	display: flex;
+	justify-content: space-between;
+}
+.work_piece p {
+	margin: 0;
+	font-size: 14px;
+}
+.details {
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	padding: 10px 0;
+}
+.detail {
+	width: calc(100% / 3);
+}
+.detail.empty {
+	height: 0;
+}
+.detail p {
+	margin: 0;
+	font-size: 11px;
+}

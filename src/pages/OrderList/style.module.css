@@ -20,3 +20,7 @@
 .search .buttons button {
 	font-size: 14px;
 }
+.custom_flex {
+	flex-direction: column;
+	max-height: 525px;
+}

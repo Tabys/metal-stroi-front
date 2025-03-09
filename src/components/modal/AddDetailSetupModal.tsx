@@ -2,10 +2,10 @@ import { useState } from 'react'
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 import { Setup } from '../../models'
-import { AddSetupChoping } from '../../pages/OrderPage/addSetup/addSetupChoping'
+import { AddSetupChoping } from '../../pages/OrderPage/LaserWorkshop/addSetup/addSetupChoping'
 import Tooltip from '../Tooltip'
 import { Tab, Tabs } from 'react-bootstrap'
-import { AddSetupBending } from '../../pages/OrderPage/addSetup/addSetupBending'
+import { AddSetupBending } from '../../pages/OrderPage/LaserWorkshop/addSetup/addSetupBending'
 
 type ModalProps = {
 	onAdd: () => void

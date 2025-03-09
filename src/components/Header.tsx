@@ -40,6 +40,11 @@ export function Header() {
 									</Link>
 								</li>
 								<li>
+									<Link to={`/tariffs-rates/`} onClick={handleClose}>
+										Тарифы и ставки
+									</Link>
+								</li>
+								<li>
 									<Link to={`/users/`} onClick={handleClose}>
 										Создать пользователя
 									</Link>

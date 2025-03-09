@@ -17,6 +17,7 @@ type ItemListProp = {
 type Search = {
 	id?: string
 	name?: string
+	customer?: string
 	creator?: string
 	date?: string
 }
@@ -43,6 +44,7 @@ export function ItemListPagination({ itemsPerPage }: ItemListProp) {
 	const currentPage = parseInt(searchParams.get('page') || '1', 10) - 1
 	const id = searchParams.get('id') || ''
 	const name = searchParams.get('name') || ''
+	const customer = searchParams.get('customer') || ''
 	const creator = searchParams.get('creator') || ''
 	const date = searchParams.get('date') || ''
 
@@ -64,6 +66,7 @@ export function ItemListPagination({ itemsPerPage }: ItemListProp) {
 		const params: any = {}
 		if (data.id) params.id = data.id
 		if (data.name) params.name = data.name
+		if (data.customer) params.customer = data.customer
 		if (data.creator) params.creator = data.creator
 		if (data.date) params.date = data.date
 		params.page = '1'
@@ -76,6 +79,7 @@ export function ItemListPagination({ itemsPerPage }: ItemListProp) {
 		reset({
 			id: '',
 			name: '',
+			customer: '',
 			creator: '',
 			date: '',
 		})
@@ -85,6 +89,7 @@ export function ItemListPagination({ itemsPerPage }: ItemListProp) {
 		const params: any = {
 			id,
 			name,
+			customer,
 			creator,
 			date,
 			page: (event.selected + 1).toString(),
@@ -101,12 +106,13 @@ export function ItemListPagination({ itemsPerPage }: ItemListProp) {
 		fetchOrders({
 			id,
 			name,
+			customer,
 			creator,
 			date,
 			page: currentPage,
 			itemsPerPage,
 		})
-	}, [id, name, creator, date, currentPage, itemsPerPage, fetchOrders])
+	}, [id, name, customer, creator, date, currentPage, itemsPerPage, fetchOrders])
 
 	const pageCount = Math.ceil(totalItems / itemsPerPage)
 
@@ -123,6 +129,10 @@ export function ItemListPagination({ itemsPerPage }: ItemListProp) {
 							<div className={styles.group + '  mb-3'}>
 								<label>Название сделки:</label>
 								<input {...register('name')} className='form-control' defaultValue={name} />
+							</div>
+							<div className={styles.group + '  mb-3'}>
+								<label>Заказчик:</label>
+								<input {...register('customer')} className='form-control' defaultValue={id} />
 							</div>
 							<div className={styles.group + '  mb-3'}>
 								<label>Технолог:</label>
@@ -162,7 +172,7 @@ export function ItemListPagination({ itemsPerPage }: ItemListProp) {
 
 				{loading && <Loader />}
 				{error && <ErrorMassage error={error} />}
-				<div className='row g-2'>
+				<div className={styles.custom_flex + ' row g-2'}>
 					{orders &&
 						orders.map(order => (
 							<OrderProfile
@@ -172,6 +182,7 @@ export function ItemListPagination({ itemsPerPage }: ItemListProp) {
 									fetchOrders({
 										id,
 										name,
+										customer,
 										creator,
 										date,
 										page: currentPage,

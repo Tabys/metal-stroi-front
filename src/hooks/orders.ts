@@ -13,6 +13,7 @@ export function useOrders() {
 		async (params: {
 			id?: string
 			name?: string
+			customer?: string
 			creator?: string
 			date?: string // Конкретная дата
 			page: number
