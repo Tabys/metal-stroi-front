@@ -26,7 +26,7 @@ export function AddDetail({ onCreate, onClose, setups }: addDetailProps) {
 	return (
 		<form onSubmit={handleSubmit(onSubmit)}>
 			<div className='mb-3'>
-				<label className='form-label'>Назавние детали</label>
+				<label className='form-label'>Название детали</label>
 				<input {...register('name', { required: 'Это поле обязательное' })} className={errors.name ? 'form-control is-invalid' : 'form-control'} />
 				{errors.name && <Form.Text className='text-danger'>{errors.name.message}</Form.Text>}
 			</div>

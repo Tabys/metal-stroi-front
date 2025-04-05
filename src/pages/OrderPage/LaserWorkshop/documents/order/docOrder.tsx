@@ -23,7 +23,7 @@ export function DocOrder() {
 	const arrDetails = orders ? CreateDetailGroupList(orders) : undefined
 	const details: DocTableDetail[] | undefined = PrepArrDetails({
 		arrDetails,
-		orders,
+		order: orders,
 		full,
 	})
 	const total = CulcTotalData({ details })
@@ -39,7 +39,7 @@ export function DocOrder() {
 						<div className={styles.doc_header}>
 							<div className={styles.order_inf}>
 								<a href={linkBX} target='_blank' rel='noreferrer' className={styles.order_number}>
-									Заявка № {orders?.order_number}
+									Заявка № {String(orders?.order_number).split('_')[0]}
 								</a>
 								<p>
 									<strong>Дата приема заказа:</strong> <TransformDate orderDate={orders?.date_create} />

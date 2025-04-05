@@ -1,9 +1,11 @@
 import { AddDetailSetupModal } from '../../components/modal/AddDetailSetupModal'
 import { UploadSetupModal } from '../../components/modal/UploadSetupModal'
+import { useRates } from '../../hooks/useRates'
 import { Order, PaintingMods, UserData } from '../../models'
 import { LaserWorkshop } from './LaserWorkshop'
 import { MKCMXKWorkshop } from './MKCMXKWorkshop'
 import { UploadWorkshop } from './MKCMXKWorkshop/uploadWorksop/UploadWorksop'
+import { TFCWorkshop } from './TFCWorkshop'
 
 type SwitchCalculatorsProps = {
 	id?: string
@@ -14,13 +16,16 @@ type SwitchCalculatorsProps = {
 }
 
 export function SwitchCalculators({ id, order, updateOrders, paintingMods, user }: SwitchCalculatorsProps) {
+	const { rates } = useRates()
+
 	switch (order?.division) {
-		case 20:
-			return user?.roles === 'ROLE_USER_WORKSHOPS' ? (
+		case 3:
+			return user?.roles === 'ROLE_USER_WORKSHOPS' || user?.roles === 'ROLE_USER_TFC' ? (
 				<p>У вас нет доступа к калькулятору этого цеха</p>
 			) : order?.setups?.length ? (
 				<LaserWorkshop id={id} order={order} updateOrders={updateOrders} paintingMods={paintingMods} />
 			) : (
+				// <pre>{JSON.stringify(order, null, 2)}</pre>
 				<>
 					<p>Элементов нет</p>
 					<div className='fixed-element'>
@@ -33,15 +38,28 @@ export function SwitchCalculators({ id, order, updateOrders, paintingMods, user 
 		case 17:
 		case 18:
 		case 19:
-			return user?.roles === 'ROLE_USER' ? (
+			return user?.roles === 'ROLE_USER' || user?.roles === 'ROLE_USER_TFC' ? (
 				<p>У вас нет доступа к калькулятору этого цеха</p>
 			) : order?.workshops_data ? (
-				<MKCMXKWorkshop id={id} user={user} order={order} updateOrders={updateOrders} paintingMods={paintingMods} />
+				<MKCMXKWorkshop id={id} user={user} rates={rates} order={order} updateOrders={updateOrders} paintingMods={paintingMods} />
 			) : (
 				<>
 					<p>Элементов нет</p>
 					<div className='fixed-element'>
-						<UploadWorkshop orderId={Number(id)} onCreate={updateOrders} />
+						<UploadWorkshop orderId={Number(id)} onCreate={updateOrders} apiUrl='workshops-data/' />
+					</div>
+				</>
+			)
+		case 16:
+			return user?.roles === 'ROLE_USER' || user?.roles === 'ROLE_USER_WORKSHOPS' ? (
+				<p>У вас нет доступа к калькулятору этого цеха</p>
+			) : order?.tfc_data ? (
+				<TFCWorkshop id={id} rates={rates} user={user} order={order} updateOrders={updateOrders} />
+			) : (
+				<>
+					<p>Элементов нет</p>
+					<div className='fixed-element'>
+						<UploadWorkshop orderId={Number(id)} onCreate={updateOrders} apiUrl='tfc-data/' />
 					</div>
 				</>
 			)

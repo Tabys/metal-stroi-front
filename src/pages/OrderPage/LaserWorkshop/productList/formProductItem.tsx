@@ -255,15 +255,6 @@ export function FormProductItem({
 					tabIndex={6}
 					type='hidden'
 				/>
-				<input
-					{...methods.register('painting_cost', {
-						onBlur: methods.handleSubmit(onSubmit),
-						valueAsNumber: true,
-					})}
-					defaultValue={productItem.painting_cost === null ? 0 : productItem.painting_cost}
-					type='hidden'
-					className='form-control'
-				/>
 
 				<input
 					{...methods.register('painting_price', {

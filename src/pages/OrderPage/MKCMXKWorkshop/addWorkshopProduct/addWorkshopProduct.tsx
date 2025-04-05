@@ -26,7 +26,7 @@ export function AddWorkshopProduct({ onCreate, onClose, order_id }: addAddWorksh
 		<form onSubmit={handleSubmit(onSubmit)}>
 			<input type='hidden' {...register('order_id', { valueAsNumber: true })} defaultValue={order_id} />
 			<div className='mb-3'>
-				<label className='form-label'>Назавние позиции</label>
+				<label className='form-label'>Название позиции</label>
 				<input {...register('name', { required: 'Это поле обязательное' })} className={errors.name ? 'form-control is-invalid' : 'form-control'} />
 				{errors.name && <Form.Text className='text-danger'>{errors.name.message}</Form.Text>}
 			</div>

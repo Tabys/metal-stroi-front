@@ -8,13 +8,14 @@ interface FormProps {
 	orderData: Order
 	details: Detail[]
 	editedDetails?: DocTableDetail[]
+	editedDetailsFull?: DocTableDetail[]
 	total: TotalData
 	totalOnlyDetail: TotalData
 	paintingMods: PaintingMods[]
 	updData: () => void
 }
 
-export function FormDetailList({ details, editedDetails, total, totalOnlyDetail, orderData, paintingMods, updData }: FormProps) {
+export function FormDetailList({ details, editedDetails, editedDetailsFull, total, totalOnlyDetail, orderData, paintingMods, updData }: FormProps) {
 	const [alertShow, setAlertShow] = useState(false)
 	const [rollAlertShow, setRollAlertShow] = useState(false)
 	const [serviceAlertShow, setServiceAlertShow] = useState(false)
@@ -54,6 +55,7 @@ export function FormDetailList({ details, editedDetails, total, totalOnlyDetail,
 					DetailItem={item}
 					delivery={total.oneKgDelivery}
 					editedDetails={editedDetails}
+					editedDetailsFull={editedDetailsFull}
 					paintingMods={paintingMods}
 					index={index}
 					key={item.id}

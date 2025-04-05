@@ -6,12 +6,12 @@ import { getSuffixes } from './getSuffixes'
 
 type PrepArrDetailsProp = {
 	arrDetails: Detail[] | undefined
-	orders: Order | undefined
+	order: Order | undefined
 	full?: boolean
 	productCount?: number
 }
 
-export function PrepArrDetails({ arrDetails, orders, full, productCount }: PrepArrDetailsProp) {
+export function PrepArrDetails({ arrDetails, order, full, productCount }: PrepArrDetailsProp) {
 	const prepArrDetails = arrDetails
 		? arrDetails.map((detail, index) => {
 				const availableDetail = productCount
@@ -19,7 +19,7 @@ export function PrepArrDetails({ arrDetails, orders, full, productCount }: PrepA
 					: full === true
 					? detail.quantity
 					: AvailableDetail(detail)
-				const metal = orders?.metals?.find(function (items) {
+				const metal = order?.metals?.find(function (items) {
 					return String(items.table_number) === String(detail.table_number)
 				})
 				let cut_cost = 0
@@ -33,15 +33,15 @@ export function PrepArrDetails({ arrDetails, orders, full, productCount }: PrepA
 					}
 				}
 				const material = getMaterialName(detail.material)
-				const extraPriceMetal = getExtraPriceMetal(orders)
-				const suffixes = getSuffixes({ order: orders, detail: detail })
+				const extraPriceMetal = getExtraPriceMetal(order)
+				const suffixes = getSuffixes({ order: order, detail: detail })
 				const metal_cost =
 					Number(detail.metal_cost) !== 0
 						? (
 								(Number(detail.weight) *
 									(Number(metal?.metal_sheets) *
 										Number(
-											Math.round(Number(detail.metal_cost) + extraPriceMetal + (Number(detail.metal_cost) * Number(orders?.markup)) / 100)
+											Math.round(Number(detail.metal_cost) + extraPriceMetal + (Number(detail.metal_cost) * Number(order?.markup)) / 100)
 										))) /
 								Number(metal?.weight_metal)
 						  ).toFixed(2)

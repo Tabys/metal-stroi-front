@@ -4,13 +4,16 @@ type culcCostDetailProp = {
 	detailsInProduct: DocTableDetail[] | undefined
 	detailOutProduct: Detail
 	delivery: number
+	editedDetailsFull?: DocTableDetail[]
 }
 
-export function culcCostDetail({ detailsInProduct, detailOutProduct, delivery }: culcCostDetailProp) {
+export function culcCostDetail({ detailsInProduct, detailOutProduct, delivery, editedDetailsFull }: culcCostDetailProp) {
 	const oneDetailInProduct = detailsInProduct?.find(detail => detail.id === detailOutProduct.id)
+	const full_detail_quantity = editedDetailsFull?.find(full_detail => full_detail.id === detailOutProduct.id)?.quantity
+
 	let cost = 0
 	if (oneDetailInProduct) {
-		const oneKgDrowing = Number(oneDetailInProduct.drowing) / (Number(oneDetailInProduct.weight) * oneDetailInProduct.quantity)
+		const oneKgDrowing = Number(oneDetailInProduct.drowing) / (Number(oneDetailInProduct.weight) * Number(full_detail_quantity))
 		cost =
 			Math.ceil(
 				Number(oneDetailInProduct.bending) +
@@ -21,7 +24,7 @@ export function culcCostDetail({ detailsInProduct, detailOutProduct, delivery }:
 					Number(oneDetailInProduct.rolling) +
 					delivery * Number(oneDetailInProduct.weight) +
 					oneKgDrowing * Number(oneDetailInProduct.weight)
-			) * oneDetailInProduct.quantity
+			) * Number(oneDetailInProduct.quantity)
 	}
 
 	return cost

@@ -37,7 +37,7 @@ export function DocWorkhop() {
 	const arrDetails = orders ? CreateDetailGroupList(orders) : undefined
 	const details: DocTableDetail[] | undefined = PrepArrDetails({
 		arrDetails,
-		orders,
+		order: orders,
 		full: true,
 	})
 	const total = CulcTotalData({ details })
@@ -56,7 +56,7 @@ export function DocWorkhop() {
 					<div className={styles.doc_header}>
 						<div className={styles.order_inf}>
 							<p className={styles.order_number}>
-								<strong>Заявка в цех № {orders?.order_number}</strong>
+								<strong>Заявка в цех № {String(orders?.order_number).split('_')[0]}</strong>
 							</p>
 							<p className={styles.customer}>
 								<strong>Заказчик:</strong> {orders?.customer}

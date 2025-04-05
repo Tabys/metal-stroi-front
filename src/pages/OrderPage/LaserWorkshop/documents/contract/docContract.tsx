@@ -24,9 +24,14 @@ export function DocContract() {
 	const arrDetails = orders ? CreateDetailGroupList(orders) : undefined
 	const details: DocTableDetail[] | undefined = PrepArrDetails({
 		arrDetails,
-		orders,
+		order: orders,
 	})
-	const products = PrepArrProducts(orders)
+	const editedDetailsFull: DocTableDetail[] | undefined = PrepArrDetails({
+		arrDetails: CreateDetailGroupList(orders),
+		order: orders,
+		full: true,
+	})
+	const products = PrepArrProducts({ order: orders, full_details: editedDetailsFull })
 	const total = CulcTotalData({ details, products, orders })
 	return (
 		<>

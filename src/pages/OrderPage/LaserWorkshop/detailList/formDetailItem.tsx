@@ -17,6 +17,7 @@ type FormDetailItemProps = {
 	orderData: Order
 	DetailItem: Detail
 	editedDetails: DocTableDetail[] | undefined
+	editedDetailsFull: DocTableDetail[] | undefined
 	index: number
 	delivery: number
 	paintingMods: PaintingMods[]
@@ -30,6 +31,7 @@ export function FormDetailItem({
 	DetailItem,
 	delivery,
 	editedDetails,
+	editedDetailsFull,
 	orderData,
 	index,
 	paintingMods,
@@ -56,7 +58,7 @@ export function FormDetailItem({
 	useEffect(() => {
 		methods.reset()
 		setMetalPriceOneDetail(culcMetalPriceOneDetail({ order: orderData, detail: DetailItem }))
-		setDetailCost(culcCostDetail({ detailsInProduct: editedDetails, detailOutProduct: DetailItem, delivery }))
+		setDetailCost(culcCostDetail({ detailsInProduct: editedDetails, detailOutProduct: DetailItem, delivery, editedDetailsFull }))
 		methods.setValue('polymer_options', DetailItem.polymer_options)
 		setIsDisabledPP(DetailItem.polymer_price !== 0 ? false : true)
 		methods.setValue('rolling_type', DetailItem.rolling_type)

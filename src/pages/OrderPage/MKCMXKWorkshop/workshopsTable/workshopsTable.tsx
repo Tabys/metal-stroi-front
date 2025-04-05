@@ -20,6 +20,10 @@ export function WorkshopsTable({ order, rates, total, onCreate, openAlert }: Wor
 			openAlert('danger', 'Прибыль не может быть меньше 15%')
 			return
 		}
+		if (data.consumables < 20) {
+			openAlert('danger', 'Расходники не могут быть меньше 20%')
+			return
+		}
 		await apiClient
 			.put<WorkshopData>('workshops-data/', data)
 			.then(result => {
@@ -30,7 +34,7 @@ export function WorkshopsTable({ order, rates, total, onCreate, openAlert }: Wor
 				openAlert('danger', err.response.data.message)
 			})
 	}
-
+	console.log(order?.workshops_data)
 	const onSubmitRate: SubmitHandler<WorkshopData> = async data => {
 		data.id = order?.workshops_data?.id
 		data.rate = rates.find(rate => rate.bx_id === Number(data.payment_form))?.value
@@ -73,6 +77,10 @@ export function WorkshopsTable({ order, rates, total, onCreate, openAlert }: Wor
 					<div className={styles.small + ' ' + styles.line}>
 						<img src='/images/header-table/install.png' alt='install' />
 						<p>Монтаж</p>
+					</div>
+					<div className={styles.small + ' ' + styles.line}>
+						<img src='/images/header-table/grinder.png' alt='grinder' />
+						<p>Расходники, %</p>
 					</div>
 					<div className={styles.small + ' ' + styles.line}>
 						<img src='/images/header-table/painting.png' alt='painting' />
@@ -169,6 +177,18 @@ export function WorkshopsTable({ order, rates, total, onCreate, openAlert }: Wor
 						/>
 					</div>
 					<div className={styles.line}>{total.installation}</div>
+					<div className={styles.line}>
+						<input
+							className='form-control'
+							defaultValue={order?.workshops_data?.consumables ? order?.workshops_data.consumables : 0}
+							type='number'
+							min={20}
+							{...register('consumables', {
+								onBlur: handleSubmit(onSubmit),
+								valueAsNumber: true,
+							})}
+						/>
+					</div>
 					<div className={styles.line}>{total.painting}</div>
 					<div className={styles.line}>{total.polymer}</div>
 					<div className={styles.line}>{total.tmc}</div>

@@ -21,10 +21,17 @@ export function DocSpecialization() {
 	const arrDetails = orders ? CreateDetailGroupList(orders) : undefined
 	const details: DocTableDetail[] | undefined = PrepArrDetails({
 		arrDetails,
-		orders,
+		order: orders,
 	})
-	const products = PrepArrProducts(orders)
-	const total = CulcTotalData({ details, products, orders })
+
+	const editedDetailsFull: DocTableDetail[] | undefined = PrepArrDetails({
+		arrDetails: CreateDetailGroupList(orders),
+		order: orders,
+		full: true,
+	})
+
+	const products = PrepArrProducts({ order: orders, full_details: editedDetailsFull })
+	const total = CulcTotalData({ details, full_details: editedDetailsFull, products, orders })
 	const colSpan = CulcColSpan(total)
 
 	return (

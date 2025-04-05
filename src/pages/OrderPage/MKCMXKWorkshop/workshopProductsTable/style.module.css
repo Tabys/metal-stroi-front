@@ -85,6 +85,12 @@
 	width: 35%;
 }
 
+.table .tr .td.green {
+	background-color: #016a051a;
+}
+.table .tr .td.red {
+	background-color: #ff000026;
+}
 .table .tr .td.orange {
 	background-color: #ffa50026;
 }

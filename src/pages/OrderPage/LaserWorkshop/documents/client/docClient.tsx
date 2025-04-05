@@ -19,10 +19,15 @@ export function DocClient() {
 	const arrDetails = orders ? CreateDetailGroupList(orders) : undefined
 	const details: DocTableDetail[] | undefined = PrepArrDetails({
 		arrDetails,
-		orders,
+		order: orders,
 	})
-	const products = PrepArrProducts(orders)
-	const total = CulcTotalData({ details, products, orders })
+	const editedDetailsFull: DocTableDetail[] | undefined = PrepArrDetails({
+		arrDetails: CreateDetailGroupList(orders),
+		order: orders,
+		full: true,
+	})
+	const products = PrepArrProducts({ order: orders, full_details: editedDetailsFull })
+	const total = CulcTotalData({ details, full_details: editedDetailsFull, products, orders })
 
 	details?.sort((a, b) => a.name.localeCompare(b.name))
 	products?.sort((a, b) => a.name.localeCompare(b.name))
@@ -46,7 +51,7 @@ export function DocClient() {
 						</div>
 						<div className={styles.order_inf}>
 							<a href={linkBX} target='_blank' rel='noreferrer' className={styles.order_number}>
-								№ {orders?.order_number}
+								№ {String(String(orders?.order_number).split('_')[0]).split('_')[0]}
 							</a>
 							<p>
 								<strong>Дата приема заказа:</strong> <TransformDate orderDate={orders?.date_create} />
@@ -79,7 +84,7 @@ export function DocClient() {
 					</thead>
 					<tbody>
 						{details?.map((detail, index) => (
-							<ClientTable key={detail.id} detail={detail} index={index} delivery={total.oneKgDelivery} />
+							<ClientTable key={detail.id} detail={detail} editedDetailsFull={editedDetailsFull} index={index} delivery={total.oneKgDelivery} />
 						))}
 						{products?.map((product, index) => (
 							<ClientTableProducts key={product.id} index={index} product={product} startIndex={details?.length} delivery={total.oneKgDelivery} />
@@ -97,7 +102,7 @@ export function DocClient() {
 				{/* {Number(details?.length) + Number(products?.length) > 5 ? <div className='page_brake'></div> : ''} */}
 				<div className={styles.invoice_header}>
 					<p>
-						<strong>Товарная накладная №{orders?.order_number}</strong>
+						<strong>Товарная накладная №{String(orders?.order_number).split('_')[0]}</strong>
 					</p>
 					<p>
 						<strong>Покупатель:</strong> {orders?.customer}

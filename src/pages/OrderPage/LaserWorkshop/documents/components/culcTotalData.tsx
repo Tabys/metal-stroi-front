@@ -1,10 +1,11 @@
 import { DocTableDetail, DocTableProductSpec, Order } from '../../../../../models'
 type CulcTotalDataProps = {
-	details: DocTableDetail[] | undefined
-	products?: DocTableProductSpec[] | undefined
+	details?: DocTableDetail[]
+	full_details?: DocTableDetail[]
+	products?: DocTableProductSpec[]
 	orders?: Order
 }
-export function CulcTotalData({ details, products, orders }: CulcTotalDataProps) {
+export function CulcTotalData({ details, full_details, products, orders }: CulcTotalDataProps) {
 	let total_price = 0
 	let total_quantity = 0
 	let total_weight = 0
@@ -42,24 +43,23 @@ export function CulcTotalData({ details, products, orders }: CulcTotalDataProps)
 	let total_prod_price = 0
 	let total_prod_quantity = 0
 
-	// Total Weight
 	details?.forEach(detail => {
 		total_weight += Number(detail.weight) * Number(detail.quantity)
 	})
 	products?.forEach(product => {
 		total_weight += Number(product.weight)
 	})
-
 	// Delivery
 	let deliveryCost: number | null = null
 	let oneKgDelivery: number = 0
 	if (orders?.delivery! && orders?.delivery > 0) {
 		deliveryCost = orders?.delivery + orders?.pallets * 500
-		oneKgDelivery = Number(deliveryCost) / parseFloat(total_weight.toFixed(3))
+		oneKgDelivery = Number(deliveryCost) / Number(total_weight)
 	}
 
 	details?.forEach(detail => {
-		const oneKgDrowing = Number(detail.drowing) / (Number(detail.weight) * detail.quantity)
+		const full_detail_quantity = full_details?.find(full_detail => full_detail.id === detail.id)?.quantity
+		const oneKgDrowing = Number(detail.drowing) / (Number(detail.weight) * Number(full_detail_quantity))
 
 		total_price +=
 			Math.ceil(
@@ -69,9 +69,9 @@ export function CulcTotalData({ details, products, orders }: CulcTotalDataProps)
 					Number(detail.metal) +
 					Number(detail.painting) +
 					Number(detail.rolling) +
-					oneKgDelivery * Number(detail.weight) +
-					oneKgDrowing * Number(detail.weight)
-			) * detail.quantity
+					Number(oneKgDelivery) * Number(detail.weight) +
+					Number(oneKgDrowing) * Number(detail.weight)
+			) * Number(detail.quantity)
 
 		total_quantity += detail.quantity
 		// total_weight += Number(detail.weight) * Number(detail.quantity)
@@ -99,14 +99,13 @@ export function CulcTotalData({ details, products, orders }: CulcTotalDataProps)
 	})
 	products?.forEach(product => {
 		total_price += Math.ceil(product.totalPrice + oneKgDelivery * Number(product.weight))
-
 		total_quantity += product.quantity
 		// total_weight += product.weight ? product.weight * product.quantity : 0
 
 		// Only Products
 		total_prod_quantity += Number(product.quantity)
-		total_prod_price += Math.ceil(product.totalPrice + oneKgDelivery * Number(product.weight)) * Number(product.quantity)
-		total_prod_painting += product.painting_cost ? Number(product.painting_cost) : 0
+		total_prod_price += Math.ceil(product.totalPrice + oneKgDelivery * Number(product.weight) * Number(product.quantity))
+		total_prod_painting += product.painting_one_element_price ? Number(product.painting_one_element_price) * Number(product.quantity) : 0
 		total_prod_turning_works += product.turning_works ? Number(product.turning_works) * Number(product.quantity) : 0
 		total_prod_smithy += product.smithy ? Number(product.smithy) * Number(product.quantity) : 0
 		total_prod_sm_works += product.sm_works ? Number(product.sm_works) * Number(product.quantity) : 0

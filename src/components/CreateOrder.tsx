@@ -52,7 +52,7 @@ export function CreateOrder({ onCreate, addItem }: CreateOrderProps) {
 				defaultValue={''}
 			/> */}
 			<label htmlFor='title' className='form-label'>
-				ID сделки
+				ID Смарт-процесса
 			</label>
 			<input
 				{...register('id', { required: 'Это поле обязательное' })}

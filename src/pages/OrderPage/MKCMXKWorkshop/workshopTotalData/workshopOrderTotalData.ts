@@ -19,7 +19,7 @@ export function workshopOrderTotalData({ products, rates, workshopData }: worksh
 
 	products?.forEach(product => {
 		product.workshops_materials.forEach(material => {
-			total_weight += Number(material.workshops_product_material.actual_quantity) * Number(material.weight)
+			total_weight += Number(material.workshops_product_material.actual_quantity) * Number(material.weight) * Number(product.quantity)
 		})
 	})
 

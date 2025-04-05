@@ -28,7 +28,7 @@ export function CopyOrderData({ orderID, user, onClose }: CopyOrderDataProps) {
 		<form onSubmit={handleSubmit(onSubmit)}>
 			<input {...register('copied_order')} defaultValue={orderID} type='hidden' />
 			<div className='mb-3'>
-				<label className='form-label'>ID новой сделки</label>
+				<label className='form-label'>ID нового смарт-процесса</label>
 				<input {...register('id', { required: 'Это поле обязательное' })} className={errors.id ? 'form-control is-invalid' : 'form-control'} />
 				{errors.id && <Form.Text className='text-danger'>{errors.id.message}</Form.Text>}
 			</div>

@@ -59,7 +59,7 @@ export function FormOrderController({ orderData, updated }: formOCProps) {
 			const arrDetails = orderData ? CreateDetailGroupList(orderData) : undefined
 			const details: DocTableDetail[] | undefined = PrepArrDetails({
 				arrDetails,
-				orders: orderData,
+				order: orderData,
 				full: true,
 			})
 			const total = CulcTotalData({ details })

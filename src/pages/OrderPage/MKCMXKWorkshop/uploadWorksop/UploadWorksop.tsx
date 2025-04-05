@@ -6,16 +6,18 @@ import { UploadWorkshopType } from '../../../../models'
 
 type UploadWorkshopProps = {
 	onCreate: () => void
+	apiUrl: string
 	orderId: number
 }
 
-export function UploadWorkshop({ onCreate, orderId }: UploadWorkshopProps) {
+export function UploadWorkshop({ onCreate, apiUrl, orderId }: UploadWorkshopProps) {
 	const [load, setLoad] = useState(false)
 
-	const { register, handleSubmit } = useForm<UploadWorkshopType>()
+	const { handleSubmit } = useForm<UploadWorkshopType>()
 
 	const onSubmit: SubmitHandler<UploadWorkshopType> = async data => {
-		await apiClient.post<UploadWorkshopType>('workshops-data/', data).then(async response => {
+		data.order_id = orderId
+		await apiClient.post<UploadWorkshopType>(apiUrl, data).then(async response => {
 			if (response) {
 				await setTimeout(() => {
 					setLoad(false)
@@ -26,7 +28,6 @@ export function UploadWorkshop({ onCreate, orderId }: UploadWorkshopProps) {
 	}
 	return (
 		<form onSubmit={handleSubmit(onSubmit)} encType='multipart/form-data'>
-			<input type='hidden' {...register('order_id')} defaultValue={orderId} />
 			<button type='submit' className='fixed' disabled={load === true ? true : false}>
 				{load === true ? <Spinner animation='border' /> : <i className='fi fi-sr-add'></i>}
 			</button>

@@ -98,6 +98,7 @@ export function AddUserForm() {
 					>
 						<option value='user'>Технолог - Лазерный цех</option>
 						<option value='user_workshops'>Технолог - МК СМ ХК</option>
+						<option value='user_tfc'>Менеджер ТФЦ</option>
 						<option value='moderator'>Модератор</option>
 						<option value='admin'>Администратор</option>
 					</select>

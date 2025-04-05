@@ -123,7 +123,7 @@ export function ItemListPagination({ itemsPerPage }: ItemListProp) {
 					<form onSubmit={handleSubmit(onSubmit)}>
 						<div className={styles.inputs}>
 							<div className={styles.group + '  mb-3'}>
-								<label>ID сделки:</label>
+								<label>ID Смарт-процесса:</label>
 								<input {...register('id')} className='form-control' defaultValue={id} />
 							</div>
 							<div className={styles.group + '  mb-3'}>

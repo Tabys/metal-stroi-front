@@ -3,12 +3,14 @@ import styles from '../style.module.css'
 
 type ClientTableProps = {
 	detail: DocTableDetail
+	editedDetailsFull?: DocTableDetail[]
 	index: number
 	delivery: number
 }
 
-export function ClientTable({ detail, index, delivery }: ClientTableProps) {
-	const oneKgDrowing = Number(detail.drowing) / (Number(detail.weight) * detail.quantity)
+export function ClientTable({ detail, editedDetailsFull, index, delivery }: ClientTableProps) {
+	const full_detail_quantity = editedDetailsFull?.find(full_detail => full_detail.id === detail.id)?.quantity
+	const oneKgDrowing = Number(detail.drowing) / (Number(detail.weight) * Number(full_detail_quantity))
 
 	const total_price =
 		Math.ceil(
@@ -20,7 +22,7 @@ export function ClientTable({ detail, index, delivery }: ClientTableProps) {
 				Number(detail.rolling) +
 				delivery * Number(detail.weight) +
 				oneKgDrowing * Number(detail.weight)
-		) * detail.quantity
+		) * Number(detail.quantity)
 
 	return (
 		<tr>

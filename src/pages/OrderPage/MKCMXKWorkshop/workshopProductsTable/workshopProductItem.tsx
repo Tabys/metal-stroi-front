@@ -84,7 +84,8 @@ export function WorkshopProductItem({ product, rates, workshopData, allMaterialW
 								<div className={styles.td + ' ' + styles.orange}>Работы</div>
 								<div className={styles.td + ' ' + styles.orange}>Монтаж</div>
 								<div className={styles.td + ' ' + styles.orange}>Покраска</div>
-								<div className={styles.td + ' ' + styles.orange}>
+								<div className={styles.td + ' ' + styles.green}>Другие цеха</div>
+								<div className={styles.td + ' ' + styles.red}>
 									<Tooltip conditions={true} text={<PPHint paintingMods={paintingMods} />}>
 										<p>Полимерка</p>
 									</Tooltip>
@@ -117,6 +118,7 @@ export function WorkshopProductItem({ product, rates, workshopData, allMaterialW
 										className='form-control'
 									/>
 								</div>
+								<div className={styles.td}></div>
 								<div className={styles.td}>
 									<input
 										type='text'
@@ -159,6 +161,7 @@ export function WorkshopProductItem({ product, rates, workshopData, allMaterialW
 										className='form-control'
 									/>
 								</div>
+								<div className={styles.td}></div>
 								<div className={styles.td}>
 									<Controller
 										control={control}
@@ -188,6 +191,14 @@ export function WorkshopProductItem({ product, rates, workshopData, allMaterialW
 								<div className={styles.td}>{total.work}</div>
 								<div className={styles.td}>{total.installation}</div>
 								<div className={styles.td}>{total.painting}</div>
+								<div className={styles.td}>
+									<input
+										type='number'
+										{...register('other_workshops', { onBlur: handleSubmit(onSubmit), valueAsNumber: true })}
+										defaultValue={product.other_workshops ? product.other_workshops : 0}
+										className='form-control'
+									/>
+								</div>
 								<div className={styles.td}>
 									<input
 										type='number'

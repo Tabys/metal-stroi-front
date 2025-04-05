@@ -3,11 +3,10 @@ import useOrder from '../../hooks/useOrder'
 import { usePaintingMods } from '../../hooks/paintingMods'
 import { useUser } from '../../hooks/currentUser'
 import { SwitchCalculators } from './SwitchCalculators'
-import { Spinner } from 'react-bootstrap'
 
 export function OrderPage() {
 	const { id } = useParams()
-	const { order, isLoading, updateOrders } = useOrder({ id })
+	const { order, updateOrders } = useOrder({ id })
 	const { paintingMods } = usePaintingMods()
 	const { currentUser } = useUser()
 
@@ -23,11 +22,8 @@ export function OrderPage() {
 					</h1>
 					<h2>"{order?.title}"</h2>
 				</div>
-				{isLoading ? (
-					<Spinner animation='border' />
-				) : (
-					<SwitchCalculators id={id} user={currentUser} order={order} updateOrders={updateOrders} paintingMods={paintingMods} />
-				)}
+
+				<SwitchCalculators id={id} user={currentUser} order={order} updateOrders={updateOrders} paintingMods={paintingMods} />
 			</div>
 		</>
 	)

@@ -13,7 +13,7 @@ export function TariffsAndRatesItem({ item, openAlert }: TariffsAndRatesItemProp
 	const onUpdate: SubmitHandler<PriceRatesItem> = async data => {
 		data.id = item.id
 		await apiClient
-			.put<PriceRatesItem>('price-metal-item', data)
+			.put<PriceRatesItem>('price-rates-item', data)
 			.then(result => {
 				openAlert('success', 'Изменения сохранены')
 			})

@@ -38,10 +38,15 @@ export function DocPainting() {
 	const arrDetails = orders ? CreateDetailGroupList(orders) : undefined
 	const details: DocTableDetail[] | undefined = PrepArrDetails({
 		arrDetails,
-		orders,
+		order: orders,
 	})
 	const filteredDetails = details?.filter(detail => Number(detail.painting) > 0)
-	const products = PrepArrProducts(orders)
+	const editedDetailsFull: DocTableDetail[] | undefined = PrepArrDetails({
+		arrDetails: CreateDetailGroupList(orders),
+		order: orders,
+		full: true,
+	})
+	const products = PrepArrProducts({ order: orders, full_details: editedDetailsFull })
 	const productIndex = culcProductIndex(details)
 
 	const total = CulcTotalData({ details, products, orders })
@@ -62,7 +67,7 @@ export function DocPainting() {
 						<div className={styles.doc_header}>
 							<div className={styles.order_inf}>
 								<a href={linkBX} target='_blank' rel='noreferrer' className={styles.order_number}>
-									Заявка в цех ПП № {orders?.order_number}
+									Заявка в цех ПП № {String(orders?.order_number).split('_')[0]}
 								</a>
 								<p>
 									<strong>Заказчик:</strong> {orders?.customer}
@@ -86,7 +91,7 @@ export function DocPainting() {
 								<PaintingTable key={detail.id} detail={detail} index={index} paintingMods={paintingMods} />
 							))}
 							{products?.map((product, index) =>
-								product.painting_cost ? (
+								product.painting_one_element_price ? (
 									<PaintingTableProducts
 										key={product.id}
 										index={index}

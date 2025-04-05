@@ -4,13 +4,9 @@ import { useMaterialPrices } from '../../hooks/priceMaterials'
 import { PricesItems } from './pricesItems'
 import Alert from 'react-bootstrap/Alert'
 import { useState } from 'react'
-import { PricesItemsWorkshopMaterial } from './PricesItemsWorkshopMaterial'
-import { AddNomenclatureModal } from '../../components/modal/AddNomenclatureModal'
-import { useWorkshopMaterials } from '../../hooks/useWorkshopMaterials'
 
 export function PricesWrapper() {
 	const { prices } = useMaterialPrices()
-	const { workshopMaterial, updateWorkshopMaterial } = useWorkshopMaterials()
 
 	const [alertShow, setAlertShow] = useState(false)
 
@@ -44,19 +40,6 @@ export function PricesWrapper() {
 							</div>
 						</Tab>
 					))}
-				<Tab eventKey={'nomenclature'} title={'Номенклатура'}>
-					<AddNomenclatureModal onAdd={updateWorkshopMaterial} />
-					<div className='table'>
-						<div className='row header'>
-							<div className='p-2'>Наименование позиции</div>
-							<div className='p-2'>Вес за единицу, кг</div>
-							<div className='p-2'>Цена за единицу</div>
-						</div>
-						{workshopMaterial.map(nomenclature => (
-							<PricesItemsWorkshopMaterial nomenclature={nomenclature} key={nomenclature.id} update={openAlert} />
-						))}
-					</div>
-				</Tab>
 			</Tabs>
 			<Alert className='alert-fixed' show={alertShow} variant='success'>
 				Изменения сохранены

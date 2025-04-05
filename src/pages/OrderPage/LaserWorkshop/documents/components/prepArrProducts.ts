@@ -1,14 +1,18 @@
-import { Order } from '../../../../../models'
+import { Order, DocTableDetail } from '../../../../../models'
 import { PrepArrDetails } from './prepArrDetails/prepArrDetails'
 
-export function PrepArrProducts(orders: Order | undefined) {
-	const prepArrProducts = orders?.products?.map(product => {
+type PrepArrProductsProps = {
+	order?: Order
+	full_details?: DocTableDetail[]
+}
+
+export function PrepArrProducts({ order, full_details }: PrepArrProductsProps) {
+	const prepArrProducts = order?.products?.map(product => {
 		const arrDetails = product.details
 		const productCount = product.quantity
 		let value = 0
 		let totalPrice = 0
 		let metal = 0
-		let totalWeight = 0
 		let detailsWeight = 0
 		let detailsCutCost = 0
 		let detailsChoping = 0
@@ -16,12 +20,13 @@ export function PrepArrProducts(orders: Order | undefined) {
 
 		const details = PrepArrDetails({
 			arrDetails,
-			orders,
+			order,
 			productCount,
 		})
 
 		details?.forEach(detail => {
-			const oneKgDrawing = Number(detail.drowing) / (Number(detail.weight) * detail.quantity)
+			const full_detail_quantity = full_details?.find(full_detail => full_detail.id === detail.id)?.quantity
+			const oneKgDrawing = Number(detail.drowing) / (Number(detail.weight) * Number(full_detail_quantity))
 
 			const cost =
 				Math.ceil(
@@ -31,10 +36,9 @@ export function PrepArrProducts(orders: Order | undefined) {
 						Number(detail.metal) +
 						Number(detail.rolling) +
 						oneKgDrawing * Number(detail.weight)
-				) * detail.quantity
+				) * Number(detail.quantity)
 			totalPrice += cost
 			value += (Number(detail.surface) / 1000000) * 2 * detail.quantity
-			totalWeight += Number(detail.weight) * detail.quantity
 			detailsWeight += Number(detail.weight)
 			detailsCutCost += Number(detail.cut_cost)
 			detailsChoping += Number(detail.choping)
@@ -48,7 +52,7 @@ export function PrepArrProducts(orders: Order | undefined) {
 			Number(product.tfc_works) * product.quantity +
 			Number(product.mk_works) * product.quantity +
 			Number(product.smithy) * product.quantity +
-			Number(product.painting_cost) * product.quantity +
+			Number(product.painting_one_element_price) * product.quantity +
 			Number(product.turning_works) * product.quantity +
 			Number(product.design_department)
 
@@ -59,9 +63,9 @@ export function PrepArrProducts(orders: Order | undefined) {
 			totalPrice: totalPrice,
 			painting_color: product.painting_color,
 			value: value,
-			painting_cost: product.painting_cost,
+			painting_one_element_price: product.painting_one_element_price,
 			painting_options: product.painting_options,
-			weight: totalWeight,
+			weight: Number(detailsWeight) * Number(product.quantity),
 			detailsWeight: detailsWeight,
 			detailsCutCost: detailsCutCost,
 			detailsChoping: detailsChoping,
@@ -76,6 +80,8 @@ export function PrepArrProducts(orders: Order | undefined) {
 			metal: metal,
 		}
 	})
+
+	prepArrProducts?.sort((a, b) => (a.id > b.id ? 1 : -1))
 
 	return prepArrProducts ? prepArrProducts : undefined
 }

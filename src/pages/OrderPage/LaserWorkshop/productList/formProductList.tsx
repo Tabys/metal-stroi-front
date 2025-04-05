@@ -15,6 +15,8 @@ interface FormProps {
 }
 
 export function FormProductList({ products, editedProducts, total, orderData, paintingMods, delProduct, updData }: FormProps) {
+	products?.sort((a, b) => (a.id > b.id ? 1 : -1))
+
 	const [alertShow, setAlertShow] = useState(false)
 	const [error, setError] = useState()
 
@@ -57,7 +59,7 @@ export function FormProductList({ products, editedProducts, total, orderData, pa
 						<td></td>
 						<td className={styles.text_right}>{total.prod_painting}</td>
 						<td className={styles.text_right}>{total.prod_design_department}</td>
-						<td className={styles.text_right}>{total.prod_price}</td>
+						<td className={styles.text_right}>{/* {total.prod_price} */}</td>
 						<td></td>
 					</tr>
 				</tbody>

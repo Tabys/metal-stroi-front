@@ -12,6 +12,5 @@ export function culcCostProduct({ products, editProducts, delivery }: culcCostPr
 	if (oneEditeProduct) {
 		cost = Math.ceil(oneEditeProduct.totalPrice + delivery * Number(oneEditeProduct.weight))
 	}
-
 	return cost
 }

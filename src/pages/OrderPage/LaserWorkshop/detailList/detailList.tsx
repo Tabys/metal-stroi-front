@@ -9,13 +9,14 @@ import { PPHint } from './component/ppHint/ppHint'
 type detailListProps = {
 	dataOrder: Order
 	editedDetails?: DocTableDetail[]
+	editedDetailsFull?: DocTableDetail[]
 	paintingMods: PaintingMods[]
 	total: TotalData
 	totalOnlyDetail: TotalData
 	updated: () => void
 }
 
-export function DetailList({ dataOrder, editedDetails, paintingMods, total, totalOnlyDetail, updated }: detailListProps) {
+export function DetailList({ dataOrder, editedDetails, editedDetailsFull, paintingMods, total, totalOnlyDetail, updated }: detailListProps) {
 	return (
 		<div className={styles.wrapper_table}>
 			<div className={styles.detail_list + ' ' + styles.border_bold}>
@@ -119,6 +120,7 @@ export function DetailList({ dataOrder, editedDetails, paintingMods, total, tota
 				<FormDetailList
 					updData={updated}
 					editedDetails={editedDetails}
+					editedDetailsFull={editedDetailsFull}
 					total={total}
 					totalOnlyDetail={totalOnlyDetail}
 					details={CreateDetailGroupList(dataOrder)}

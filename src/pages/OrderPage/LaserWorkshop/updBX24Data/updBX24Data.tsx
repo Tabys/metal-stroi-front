@@ -28,8 +28,8 @@ export function UpdBX24Data({ order, user, onUpd }: UpdBX24DataProps) {
 			id: order?.id,
 			implementer: user?.last_name + ' ' + user?.first_name,
 		})
-		await onUpd()
-		await openAlert()
+		onUpd()
+		openAlert()
 	}
 
 	return (

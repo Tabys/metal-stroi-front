@@ -33,18 +33,19 @@ export function EmptySetup() {
 }
 
 export function LaserWorkshop({ id, order, user, paintingMods, updateOrders }: LaserWorkshopProps) {
-	const editedDetails: DocTableDetail[] | undefined = PrepArrDetails({
-		arrDetails: CreateDetailGroupList(order),
-		orders: order,
-	})
 	const editedDetailsFull: DocTableDetail[] | undefined = PrepArrDetails({
 		arrDetails: CreateDetailGroupList(order),
-		orders: order,
+		order: order,
 		full: true,
 	})
 
-	const products = PrepArrProducts(order)
-	const total = CulcTotalData({ details: editedDetails, products, orders: order })
+	const editedDetails: DocTableDetail[] | undefined = PrepArrDetails({
+		arrDetails: CreateDetailGroupList(order),
+		order: order,
+	})
+
+	const products = PrepArrProducts({ order, full_details: editedDetailsFull })
+	const total = CulcTotalData({ details: editedDetails, full_details: editedDetailsFull, products, orders: order })
 	const totalOnlyDetail = CulcTotalData({ details: editedDetailsFull, products, orders: order })
 
 	return (
@@ -52,10 +53,10 @@ export function LaserWorkshop({ id, order, user, paintingMods, updateOrders }: L
 			<div className='group-controll'>
 				<div className='d-flex flex-row align-items-center'>
 					<div className='alert alert-primary p-2 mb-0' role='alert'>
-						ID сделки: <strong>{order?.id}</strong>
+						ID Смарт-процесса: <strong>{order?.id}</strong>
 					</div>
 					<div className='alert alert-primary p-2 mb-0 mx-2' role='alert'>
-						Дата создания сделки:{' '}
+						Дата создания смарт-процесса:{' '}
 						<strong>
 							<TransformDate orderDate={order?.date_create} />
 						</strong>
@@ -71,6 +72,7 @@ export function LaserWorkshop({ id, order, user, paintingMods, updateOrders }: L
 			<DetailList
 				dataOrder={order}
 				editedDetails={editedDetails}
+				editedDetailsFull={editedDetailsFull}
 				paintingMods={paintingMods}
 				total={total}
 				totalOnlyDetail={totalOnlyDetail}

@@ -16,6 +16,7 @@ import { ScrollTop } from './components/ScrollTop'
 import { GroupMainDocs } from './pages/OrderPage/LaserWorkshop/documents/groupMainDocs'
 import { TariffsAndRates } from './pages/Tariffs'
 import { DocPaintingWorkshops } from './pages/OrderPage/MKCMXKWorkshop/documents/painting/DocPainitngWorkshops'
+import { Nomenclature } from './pages/Nomenclature'
 
 function App() {
 	const { currentUser } = useUser()
@@ -38,17 +39,28 @@ function App() {
 						<Route path='/order/:id/doc-painting-wh' element={<DocPaintingWorkshops />} />
 						<Route path='/order/:id/doc-specialization' element={<DocSpecialization />} />
 						{/* <Route path='/order/:id/doc-contract' element={<DocContract />} /> */}
-						{currentUser?.['roles'] !== 'ROLE_USER' ? (
+						{currentUser?.['roles'] !== 'ROLE_USER' &&
+						currentUser?.['roles'] !== 'ROLE_USER_TFC' &&
+						currentUser?.['roles'] !== 'ROLE_USER_WORKSHOPS' ? (
 							<>
 								<Route path='/price-services/' element={<PriceServices />} />
 								<Route path='/price-materials/' element={<PriceMaterials />} />
 								<Route path='/exemption-customers/' element={<ExemptionCustomers />} />
 								<Route path='/tariffs-rates/' element={<TariffsAndRates />} />
+								<Route path='/users' element={<UsersPage />} />
 							</>
 						) : (
 							''
 						)}
-						<Route path='/users' element={<UsersPage />} />
+
+						{currentUser?.['roles'] !== 'ROLE_USER' && currentUser?.['roles'] !== 'ROLE_USER_TFC' ? (
+							<>
+								<Route path='/nomenclature' element={<Nomenclature />} />
+							</>
+						) : (
+							''
+						)}
+
 						<Route path='*' element={<Page404 />} />
 					</Routes>
 				</>

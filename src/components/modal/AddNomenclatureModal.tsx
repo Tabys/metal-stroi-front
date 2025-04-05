@@ -2,7 +2,7 @@ import { useState } from 'react'
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 // import Tooltip from '../Tooltip'
-import { AddNomenclature } from '../../pages/PriceMaterials/addNomenclature'
+import { AddNomenclature } from '../../pages/Nomenclature/addNomenclature'
 
 type ModalProps = {
 	onAdd: () => void

@@ -27,7 +27,9 @@ export function Header() {
 				</Offcanvas.Header>
 				<Offcanvas.Body>
 					<ul className='menu'>
-						{currentUser?.['roles'] !== 'ROLE_USER' ? (
+						{currentUser?.['roles'] !== 'ROLE_USER' &&
+						currentUser?.['roles'] !== 'ROLE_USER_TFC' &&
+						currentUser?.['roles'] !== 'ROLE_USER_WORKSHOPS' ? (
 							<>
 								<li>
 									<Link to={`/price-services/`} onClick={handleClose}>
@@ -52,6 +54,17 @@ export function Header() {
 								<li>
 									<Link to={`/exemption-customers/`} onClick={handleClose}>
 										Заказчики-исключения
+									</Link>
+								</li>
+							</>
+						) : (
+							<></>
+						)}
+						{currentUser?.['roles'] !== 'ROLE_USER' && currentUser?.['roles'] !== 'ROLE_USER_TFC' ? (
+							<>
+								<li>
+									<Link to={`/nomenclature/`} onClick={handleClose}>
+										Номенклатура
 									</Link>
 								</li>
 							</>

@@ -20,6 +20,9 @@ export type Order = {
 	division: number
 	workshops_data?: WorkshopData
 	workshops_products?: WorkshopProduct[]
+	tfc_data?: TFCData
+	tfc_details?: TFCDetail[]
+	details?: Detail[]
 	metals?: Metal[]
 	setups?: Setup[]
 	products?: Product[]
@@ -123,7 +126,7 @@ export type ProductsFull = {
 	totalPrice: number
 	painting_color: string
 	value: number
-	painting_cost: number
+	painting_cost?: number
 	weight: number
 	detailsWeight: number
 	detailsCutCost: number
@@ -342,6 +345,7 @@ export type DocTableProduct = {
 	painting_options: JSON[]
 	painting_color?: string
 	painting_cost?: number
+	painting_one_element_price?: number
 	design_department: number
 	weight?: number
 	value?: number
@@ -492,6 +496,7 @@ export type DocTableProductSpec = {
 	totalPrice: number
 	painting_color?: string
 	painting_cost?: number
+	painting_one_element_price?: number
 	weight?: number
 	detailsWeight?: number
 	detailsCutCost?: number
@@ -590,6 +595,8 @@ export type WorkshopData = {
 	business_trip: number
 	delivery: number
 	profit: number
+	comment: string
+	consumables: number
 	tariff_welding: number
 	tariff_painting: number
 	tariff_installation: number
@@ -607,6 +614,7 @@ export type WorkshopProduct = {
 	installation_complexity: number
 	painting_time: number
 	painting_complexity: number
+	other_workshops: number
 	polymer_color: string
 	polymer_options: JSON[]
 	polymer_price: number
@@ -699,4 +707,50 @@ export type Rates = {
 	name: string
 	bx_id: number
 	value: number
+}
+
+export type TFCData = {
+	id?: number
+	parent_id: number
+	machine_cost: number
+	delivery: number
+	payment_form: number
+	profit: number
+	rate?: number
+	comment: number
+}
+
+export type TFCDetail = {
+	id?: number
+	name: string
+	quantity: number
+	setup_time: number
+	tools: number
+	other_workshops_works: number
+	other: number
+	machine_time: number
+	locksmiths_works: number
+	outsourcing: number
+	material: number
+	defect_extra: number
+	complexity_extra: number
+	order_id?: number
+}
+
+export type TFCTotal = {
+	setup_time: number
+	tools: number
+	other_workshops_works: number
+	other: number
+	machine_time: number
+	locksmiths_works: number
+	outsourcing: number
+	material: number
+	cost: number
+	details_costs: TFCTotalDetailsCosts[]
+}
+
+export type TFCTotalDetailsCosts = {
+	id: number
+	cost: number
 }
