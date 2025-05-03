@@ -61,17 +61,22 @@ export function CulcTotalData({ details, full_details, products, orders }: CulcT
 		const full_detail_quantity = full_details?.find(full_detail => full_detail.id === detail.id)?.quantity
 		const oneKgDrowing = Number(detail.drowing) / (Number(detail.weight) * Number(full_detail_quantity))
 
-		total_price +=
-			Math.ceil(
-				Number(detail.bending) +
-					Number(detail.choping) +
-					Number(detail.cut_cost) +
-					Number(detail.metal) +
-					Number(detail.painting) +
-					Number(detail.rolling) +
-					Number(oneKgDelivery) * Number(detail.weight) +
-					Number(oneKgDrowing) * Number(detail.weight)
-			) * Number(detail.quantity)
+		total_price += Number(
+			(
+				Number(
+					(
+						Number(detail.bending) +
+						Number(detail.choping) +
+						Number(detail.cut_cost) +
+						Number(detail.metal) +
+						Number(detail.painting) +
+						Number(detail.rolling) +
+						Number(oneKgDelivery) * Number(detail.weight) +
+						Number(oneKgDrowing) * Number(detail.weight)
+					).toFixed(2)
+				) * Number(detail.quantity)
+			).toFixed(2)
+		)
 
 		total_quantity += detail.quantity
 		// total_weight += Number(detail.weight) * Number(detail.quantity)
@@ -98,13 +103,13 @@ export function CulcTotalData({ details, full_details, products, orders }: CulcT
 		total_painting_all += Number(detail.painting) * Number(detail.quantity)
 	})
 	products?.forEach(product => {
-		total_price += Math.ceil(product.totalPrice + oneKgDelivery * Number(product.weight))
+		total_price += Number((product.totalPrice + oneKgDelivery * Number(product.weight)).toFixed(2))
 		total_quantity += product.quantity
 		// total_weight += product.weight ? product.weight * product.quantity : 0
 
 		// Only Products
 		total_prod_quantity += Number(product.quantity)
-		total_prod_price += Math.ceil(product.totalPrice + oneKgDelivery * Number(product.weight) * Number(product.quantity))
+		total_prod_price += Number((Number((product.totalPrice + oneKgDelivery * Number(product.weight)).toFixed(2)) * Number(product.quantity)).toFixed(2))
 		total_prod_painting += product.painting_one_element_price ? Number(product.painting_one_element_price) * Number(product.quantity) : 0
 		total_prod_turning_works += product.turning_works ? Number(product.turning_works) * Number(product.quantity) : 0
 		total_prod_smithy += product.smithy ? Number(product.smithy) * Number(product.quantity) : 0

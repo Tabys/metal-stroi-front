@@ -14,17 +14,22 @@ export function culcCostDetail({ detailsInProduct, detailOutProduct, delivery, e
 	let cost = 0
 	if (oneDetailInProduct) {
 		const oneKgDrowing = Number(oneDetailInProduct.drowing) / (Number(oneDetailInProduct.weight) * Number(full_detail_quantity))
-		cost =
-			Math.ceil(
-				Number(oneDetailInProduct.bending) +
-					Number(oneDetailInProduct.choping) +
-					Number(oneDetailInProduct.cut_cost) +
-					Number(oneDetailInProduct.metal) +
-					Number(oneDetailInProduct.painting) +
-					Number(oneDetailInProduct.rolling) +
-					delivery * Number(oneDetailInProduct.weight) +
-					oneKgDrowing * Number(oneDetailInProduct.weight)
-			) * Number(oneDetailInProduct.quantity)
+		cost = Number(
+			(
+				Number(
+					(
+						Number(oneDetailInProduct.bending) +
+						Number(oneDetailInProduct.choping) +
+						Number(oneDetailInProduct.cut_cost) +
+						Number(oneDetailInProduct.metal) +
+						Number(oneDetailInProduct.painting) +
+						Number(oneDetailInProduct.rolling) +
+						delivery * Number(oneDetailInProduct.weight) +
+						oneKgDrowing * Number(oneDetailInProduct.weight)
+					).toFixed(2)
+				) * Number(oneDetailInProduct.quantity)
+			).toFixed(2)
+		)
 	}
 
 	return cost

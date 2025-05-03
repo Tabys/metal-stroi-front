@@ -10,7 +10,7 @@ export function culcCostProduct({ products, editProducts, delivery }: culcCostPr
 	let cost = 0
 	const oneEditeProduct = editProducts?.find(product => product.id === products.id)
 	if (oneEditeProduct) {
-		cost = Math.ceil(oneEditeProduct.totalPrice + delivery * Number(oneEditeProduct.weight))
+		cost = Number((oneEditeProduct.totalPrice + delivery * Number(oneEditeProduct.weight)).toFixed(2))
 	}
 	return cost
 }

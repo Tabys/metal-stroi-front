@@ -1,9 +1,8 @@
 import Decimal from 'decimal.js'
-import { Rates, WorkshopData, WorkshopProduct } from '../../../../models'
+import { WorkshopData, WorkshopProduct } from '../../../../models'
 
 type workshopProductTotalDataProps = {
 	product: WorkshopProduct
-	rates: Rates[]
 	workshopData?: WorkshopData
 	allMaterialWeight: number
 }

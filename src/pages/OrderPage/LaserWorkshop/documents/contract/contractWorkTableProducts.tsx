@@ -22,9 +22,9 @@ export function ContractWorkTableProduct({ product, total, index, delivery, star
 			<td>{(Number(product.detailsBanding) / product.quantity).toFixed(2)}</td>
 			<td>{(Number(total.prod_painting) / product.quantity).toFixed(2)}</td>
 			{/* <td>{(Number(total.prod_welding) / product.quantity).toFixed(2)}</td> */}
-			<td>{Math.ceil(product.totalPrice + delivery * Number(product.weight)) / Number(product.quantity)}</td>
+			<td>{Number((Number((product.totalPrice + delivery * Number(product.weight)).toFixed(2)) / Number(product.quantity)).toFixed(2))}</td>
 			<td>{product.quantity}</td>
-			<td>{Math.ceil(product.totalPrice + delivery * Number(product.weight))}</td>
+			<td>{(product.totalPrice + delivery * Number(product.weight)).toFixed(2)}</td>
 			<td>{(Number(product.weight) / product.quantity).toFixed(2)}</td>
 		</tr>
 	)

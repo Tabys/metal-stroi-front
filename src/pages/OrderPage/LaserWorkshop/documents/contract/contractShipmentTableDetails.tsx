@@ -10,17 +10,22 @@ type ContractShipmentTableDetailsProps = {
 export function ContractShipmentTableDetails({ detail, index, delivery }: ContractShipmentTableDetailsProps) {
 	const oneKgDrowing = Number(detail.drowing) / (Number(detail.weight) * detail.quantity)
 
-	const total_price =
-		Math.ceil(
-			Number(detail.bending) +
-				Number(detail.choping) +
-				Number(detail.cut_cost) +
-				Number(detail.metal) +
-				Number(detail.painting) +
-				Number(detail.rolling) +
-				delivery * Number(detail.weight) +
-				oneKgDrowing * Number(detail.weight)
-		) * detail.quantity
+	const total_price = Number(
+		(
+			Number(
+				(
+					Number(detail.bending) +
+					Number(detail.choping) +
+					Number(detail.cut_cost) +
+					Number(detail.metal) +
+					Number(detail.painting) +
+					Number(detail.rolling) +
+					delivery * Number(detail.weight) +
+					oneKgDrowing * Number(detail.weight)
+				).toFixed(2)
+			) * detail.quantity
+		).toFixed(2)
+	)
 
 	return (
 		<tr key={detail.id}>

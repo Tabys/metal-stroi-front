@@ -1,13 +1,12 @@
-import { Rates, WorkshopData, WorkshopProduct } from '../../../../models'
+import { WorkshopData, WorkshopProduct } from '../../../../models'
 import { workshopProductTotalData } from './workshopProductTotalData'
 
 type workshopOrderTotalDataProps = {
 	products?: WorkshopProduct[]
-	rates: Rates[]
 	workshopData?: WorkshopData
 }
 
-export function workshopOrderTotalData({ products, rates, workshopData }: workshopOrderTotalDataProps) {
+export function workshopOrderTotalData({ products, workshopData }: workshopOrderTotalDataProps) {
 	let total_work = 0
 	let total_installation = 0
 	let total_painting = 0
@@ -39,7 +38,7 @@ export function workshopOrderTotalData({ products, rates, workshopData }: worksh
 		})
 		total_metal += Number(metal) * Number(product.quantity)
 
-		const total_one_product = workshopProductTotalData({ product, rates, workshopData, allMaterialWeight: total_weight })
+		const total_one_product = workshopProductTotalData({ product, workshopData, allMaterialWeight: total_weight })
 		total_cost += total_one_product.price * Number(product.quantity)
 	})
 

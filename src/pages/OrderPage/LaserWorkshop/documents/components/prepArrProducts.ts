@@ -28,15 +28,20 @@ export function PrepArrProducts({ order, full_details }: PrepArrProductsProps) {
 			const full_detail_quantity = full_details?.find(full_detail => full_detail.id === detail.id)?.quantity
 			const oneKgDrawing = Number(detail.drowing) / (Number(detail.weight) * Number(full_detail_quantity))
 
-			const cost =
-				Math.ceil(
-					Number(detail.bending) +
-						Number(detail.choping) +
-						Number(detail.cut_cost) +
-						Number(detail.metal) +
-						Number(detail.rolling) +
-						oneKgDrawing * Number(detail.weight)
-				) * Number(detail.quantity)
+			const cost = Number(
+				(
+					Number(
+						(
+							Number(detail.bending) +
+							Number(detail.choping) +
+							Number(detail.cut_cost) +
+							Number(detail.metal) +
+							Number(detail.rolling) +
+							oneKgDrawing * Number(detail.weight)
+						).toFixed(2)
+					) * Number(detail.quantity)
+				).toFixed(2)
+			)
 			totalPrice += cost
 			value += (Number(detail.surface) / 1000000) * 2 * detail.quantity
 			detailsWeight += Number(detail.weight)
