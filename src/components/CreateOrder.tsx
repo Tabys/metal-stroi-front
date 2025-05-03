@@ -24,7 +24,6 @@ export function CreateOrder({ onCreate, addItem }: CreateOrderProps) {
 	const onSubmit: SubmitHandler<Order> = async data => {
 		setIsLoading(true)
 		data.implementer = currentUser?.last_name + ' ' + currentUser?.first_name
-		data.implementer = currentUser?.last_name + ' ' + currentUser?.first_name
 		await apiClient
 			.post<Order>('import/', data)
 			.then(result => {

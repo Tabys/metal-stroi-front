@@ -33,7 +33,6 @@ export function MKCMXKWorkshop({ id, rates, user, paintingMods, updateOrders, or
 
 	const total = workshopOrderTotalData({
 		products: order?.workshops_products,
-		rates,
 		workshopData: order?.workshops_data,
 	})
 

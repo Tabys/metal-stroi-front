@@ -19,14 +19,14 @@ type WorkshopProductItemProps = {
 	openAlert: (type: string, massage?: string) => void
 }
 
-export function WorkshopProductItem({ product, rates, workshopData, allMaterialWeight, paintingMods, onCreate, openAlert }: WorkshopProductItemProps) {
+export function WorkshopProductItem({ product, workshopData, allMaterialWeight, paintingMods, onCreate, openAlert }: WorkshopProductItemProps) {
 	const options: any[] = paintingMods.map(paintingMod => {
 		return {
 			value: paintingMod.id,
 			label: <i className={'fi ' + paintingMod.icon}></i>,
 		}
 	})
-	const total = workshopProductTotalData({ product, rates, workshopData, allMaterialWeight })
+	const total = workshopProductTotalData({ product, workshopData, allMaterialWeight })
 
 	const { control, register, handleSubmit } = useForm<WorkshopProduct>()
 

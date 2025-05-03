@@ -107,6 +107,7 @@ export function FormProductItem({
 			.put<Product>('products/quantity/', data)
 			.then(async result => {
 				setError(undefined)
+				data.painting_options = []
 				await onSubmitColor(data)
 			})
 			.catch(async err => {

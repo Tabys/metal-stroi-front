@@ -6,12 +6,10 @@ import Table from 'react-bootstrap/Table'
 import { PaintingTableWorkshops } from './PaintingTableWorkshops'
 import { usePaintingMods } from '../../../../../hooks/paintingMods'
 import { workshopOrderTotalData } from '../../workshopTotalData/workshopOrderTotalData'
-import { useRates } from '../../../../../hooks/useRates'
 
 export function DocPaintingWorkshops() {
 	const { id } = useParams()
 	const { paintingMods } = usePaintingMods()
-	const { rates } = useRates()
 	const { orders } = useOrders(id ? id : '')
 	const linkBX = process.env.REACT_APP_BX24_URL + `crm/deal/details/${id}/`
 
@@ -19,7 +17,6 @@ export function DocPaintingWorkshops() {
 
 	const total = workshopOrderTotalData({
 		products: orders?.workshops_products,
-		rates,
 		workshopData: orders?.workshops_data,
 	})
 

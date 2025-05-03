@@ -9,7 +9,7 @@ type ClientTableProductsProps = {
 }
 
 export function ClientTableProducts({ product, index, startIndex, delivery }: ClientTableProductsProps) {
-	const total_price = Math.ceil(product.totalPrice + delivery * Number(product.weight))
+	const total_price = Number((product.totalPrice + delivery * Number(product.weight)).toFixed(2))
 
 	return (
 		<tr className={index === 0 ? 'borderBold' : ''}>

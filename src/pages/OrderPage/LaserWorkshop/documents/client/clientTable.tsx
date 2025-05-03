@@ -12,17 +12,22 @@ export function ClientTable({ detail, editedDetailsFull, index, delivery }: Clie
 	const full_detail_quantity = editedDetailsFull?.find(full_detail => full_detail.id === detail.id)?.quantity
 	const oneKgDrowing = Number(detail.drowing) / (Number(detail.weight) * Number(full_detail_quantity))
 
-	const total_price =
-		Math.ceil(
-			Number(detail.bending) +
-				Number(detail.choping) +
-				Number(detail.cut_cost) +
-				Number(detail.metal) +
-				Number(detail.painting) +
-				Number(detail.rolling) +
-				delivery * Number(detail.weight) +
-				oneKgDrowing * Number(detail.weight)
-		) * Number(detail.quantity)
+	const total_price = Number(
+		(
+			Number(
+				(
+					Number(detail.bending) +
+					Number(detail.choping) +
+					Number(detail.cut_cost) +
+					Number(detail.metal) +
+					Number(detail.painting) +
+					Number(detail.rolling) +
+					delivery * Number(detail.weight) +
+					oneKgDrowing * Number(detail.weight)
+				).toFixed(2)
+			) * Number(detail.quantity)
+		).toFixed(2)
+	)
 
 	return (
 		<tr>

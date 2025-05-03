@@ -28,11 +28,17 @@ export function SpecProductTable({ product, total, index, delivery }: SpecProduc
 			{total.prod_smithy > 0 ? <td className={styles.center}>{Number(product.smithy).toFixed(2)}</td> : ''}
 			{total.prod_tfc_works > 0 ? <td className={styles.center}>{Number(product.tfc_works).toFixed(2)}</td> : ''}
 			{total.prod_ac_works > 0 ? <td className={styles.center}>{Number(product.ac_works).toFixed(2)}</td> : ''}
-			{total.prod_painting > 0 ? <td className={styles.center}>{Number(product.painting_cost).toFixed(2)}</td> : ''}
+			{total.prod_painting > 0 ? (
+				<td className={styles.center}>{Number(Number(product.painting_one_element_price) * product.quantity).toFixed(2)}</td>
+			) : (
+				''
+			)}
 			{total.prod_turning_works > 0 ? <td className={styles.center}>{Number(product.turning_works).toFixed(2)}</td> : ''}
 
 			{total.prod_design_department > 0 ? <td className={styles.center}>{Number(product.design_department).toFixed(2)}</td> : ''}
-			<td className={styles.center}>{Math.ceil(product.totalPrice + delivery * Number(product.weight)) / Number(product.quantity)}</td>
+			<td className={styles.center}>
+				{Number((Number((product.totalPrice + delivery * Number(product.weight)).toFixed(2)) / Number(product.quantity)).toFixed(2))}
+			</td>
 			<td className={styles.center}>{Number(product.detailsWeight).toFixed(3)}</td>
 		</tr>
 	)
