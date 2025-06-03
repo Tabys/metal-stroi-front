@@ -40,7 +40,7 @@ h3 {
 }
 
 .compony_inf .logo img {
-	max-width: 220px;
+	max-width: 100px;
 }
 
 .order_inf .order_number {
@@ -236,6 +236,10 @@ textarea.metal_comment {
 }
 .metal_comment_wrapper {
 	width: 40%;
+}
+.separator {
+	height: 1px;
+	margin: 5rem 0 0;
 }
 
 @media print {

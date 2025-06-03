@@ -89,6 +89,9 @@ export function DocWorkhop() {
 						</div>
 					</div>
 				</div>
+
+				<div className={styles.separator}></div>
+
 				<Table bordered hover className='narrow_cells'>
 					<thead>
 						<tr>
