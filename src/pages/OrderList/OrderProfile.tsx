@@ -16,7 +16,7 @@ export function OrderProfile({ order, update }: OrderProps) {
 		<>
 			<div className='col-12 col-sm-6 p-6'>
 				<div className='p-2 border bg-light d-flex justify-content-between'>
-					<Link to={`/order/${order.id}`} className='text-start text-decoration-none text-muted'>
+					<Link to={`/order/${order.id}`} className='text-start text-decoration-none text-muted text-truncate w-50'>
 						№{order?.id} "{order?.title}"
 					</Link>
 					<div className='d-flex align-items-center'>

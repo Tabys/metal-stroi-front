@@ -98,7 +98,7 @@ export function FormDetailList({ details, editedDetails, editedDetailsFull, tota
 							<strong>{total.drowing.toFixed(2)}</strong>
 						</td>
 						<td>
-							<strong>{total.price}</strong>
+							<strong>{total.price.toFixed(2)}</strong>
 						</td>
 					</tr>
 				</tbody>

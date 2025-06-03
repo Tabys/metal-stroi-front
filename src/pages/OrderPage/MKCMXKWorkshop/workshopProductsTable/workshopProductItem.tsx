@@ -72,7 +72,7 @@ export function WorkshopProductItem({ product, workshopData, allMaterialWeight, 
 										className='form-control'
 									/>
 								</div>
-								<div className={styles.td}>{total.price}</div>
+								<div className={styles.td}>{total.price.toFixed(2)}</div>
 							</div>
 						</div>
 					</div>

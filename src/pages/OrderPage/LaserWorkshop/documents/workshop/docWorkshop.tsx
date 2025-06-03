@@ -14,7 +14,6 @@ import { prepMetalData } from './prepMetalData'
 import { Alert } from 'react-bootstrap'
 import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import authHeader from '../../../../../components/auth/authHeader'
 import apiClient from '../../../../../components/apiClient'
 
 export function DocWorkhop() {
@@ -45,7 +44,7 @@ export function DocWorkhop() {
 	const { register, handleSubmit } = useForm<Order>()
 
 	const onSubmit: SubmitHandler<Order> = async data => {
-		await apiClient.put<Order>('orders/', { data: data, headers: authHeader() })
+		await apiClient.put<Order>('orders/', data)
 		openAlert()
 	}
 
@@ -107,7 +106,7 @@ export function DocWorkhop() {
 								Кол-во,
 								<br /> шт
 							</th>
-							{orders?.work_types.find(work_type => work_type === 77 || work_type === 81) ? <th>Вид резки</th> : ''}
+							<th>Вид резки</th>
 							{orders?.work_types.find(work_type => work_type === 79) ? <th>Рубка</th> : ''}
 							{orders?.work_types.find(work_type => work_type === 78) ? <th>Гибка</th> : ''}
 							{orders?.work_types.find(work_type => work_type === 80) ? (

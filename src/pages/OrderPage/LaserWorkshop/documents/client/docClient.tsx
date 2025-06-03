@@ -94,7 +94,7 @@ export function DocClient() {
 								<strong>Итого стоимость по заказу</strong>
 							</td>
 							<td>
-								<strong>{total.price}</strong>
+								<strong>{total.price.toFixed(2)}</strong>
 							</td>
 						</tr>
 					</tbody>
@@ -166,7 +166,7 @@ export function DocClient() {
 								<strong>Сумма:</strong>
 							</td>
 							<td colSpan={2} className={styles.center}>
-								<strong>{total.price} руб</strong>
+								<strong>{total.price.toFixed(2)} руб</strong>
 							</td>
 						</tr>
 					</tbody>

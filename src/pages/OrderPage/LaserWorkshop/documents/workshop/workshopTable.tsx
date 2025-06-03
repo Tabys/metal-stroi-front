@@ -23,7 +23,7 @@ export function WorkshopTable({ detail, work_types, index }: WHTableProps) {
 			{work_types?.find(work_type => work_type === 77 || work_type === 81) ? (
 				<td>{detail.cut_type === 'laser' ? 'Лазер' : detail.cut_type === 'plasma' ? 'Плазма' : '-'}</td>
 			) : (
-				''
+				<td>-</td>
 			)}
 			{work_types?.find(work_type => work_type === 79) ? <td>{detail.chop_count ? detail.chop_count : ''}</td> : ''}
 			{work_types?.find(work_type => work_type === 78) ? <td>{detail.bend_count ? detail.bend_count : ''}</td> : ''}

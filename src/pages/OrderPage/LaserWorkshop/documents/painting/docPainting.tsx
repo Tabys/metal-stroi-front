@@ -91,7 +91,7 @@ export function DocPainting() {
 								<PaintingTable key={detail.id} detail={detail} index={index} paintingMods={paintingMods} />
 							))}
 							{products?.map((product, index) =>
-								product.painting_one_element_price ? (
+								product.painting_one_element_price && product.painting_one_element_price > 0 ? (
 									<PaintingTableProducts
 										key={product.id}
 										index={index}

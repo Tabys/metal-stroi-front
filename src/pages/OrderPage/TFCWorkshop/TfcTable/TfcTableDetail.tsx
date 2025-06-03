@@ -14,7 +14,7 @@ type TfcTableDetailProps = {
 }
 
 export function TfcTableDetail({ detail, total, index, onUpdate, openAlert }: TfcTableDetailProps) {
-	const { register, handleSubmit, reset } = useForm<TFCDetail>({
+	const { register, handleSubmit, reset, setValue } = useForm<TFCDetail>({
 		defaultValues: {
 			name: detail.name,
 			quantity: detail.quantity,
@@ -31,20 +31,37 @@ export function TfcTableDetail({ detail, total, index, onUpdate, openAlert }: Tf
 		},
 	})
 
+	const handleNumberInputChange = (field: keyof TFCDetail) => (e: React.ChangeEvent<HTMLInputElement>) => {
+		const value = e.target.value
+		if (value === '') {
+			setValue(field, 0)
+		}
+	}
+
+	const handleWheelPrevent = (e: React.FocusEvent<HTMLInputElement>) => {
+		e.target.addEventListener(
+			'wheel',
+			function (e) {
+				e.preventDefault()
+			},
+			{ passive: false }
+		)
+	}
+
 	useEffect(() => {
 		reset({
-			name: detail.name,
-			quantity: detail.quantity,
-			setup_time: detail.setup_time,
-			tools: detail.tools,
-			other_workshops_works: detail.other_workshops_works,
-			other: detail.other,
-			machine_time: detail.machine_time,
-			locksmiths_works: detail.locksmiths_works,
-			outsourcing: detail.outsourcing,
-			material: detail.material,
-			defect_extra: detail.defect_extra,
-			complexity_extra: detail.complexity_extra,
+			name: detail.name || '',
+			quantity: detail.quantity || 0,
+			setup_time: detail.setup_time || 0,
+			tools: detail.tools || 0,
+			other_workshops_works: detail.other_workshops_works || 0,
+			other: detail.other || 0,
+			machine_time: detail.machine_time || 0,
+			locksmiths_works: detail.locksmiths_works || 0,
+			outsourcing: detail.outsourcing || 0,
+			material: detail.material || 0,
+			defect_extra: detail.defect_extra || 0,
+			complexity_extra: detail.complexity_extra || 0,
 		})
 	}, [detail, reset])
 
@@ -95,15 +112,8 @@ export function TfcTableDetail({ detail, total, index, onUpdate, openAlert }: Tf
 						valueAsNumber: true,
 					})}
 					type='number'
-					onFocus={e =>
-						e.target.addEventListener(
-							'wheel',
-							function (e) {
-								e.preventDefault()
-							},
-							{ passive: false }
-						)
-					}
+					onFocus={handleNumberInputChange('quantity')}
+					onChange={handleWheelPrevent}
 					min={0}
 					className='form-control'
 				/>
@@ -116,15 +126,8 @@ export function TfcTableDetail({ detail, total, index, onUpdate, openAlert }: Tf
 						valueAsNumber: true,
 					})}
 					type='number'
-					onFocus={e =>
-						e.target.addEventListener(
-							'wheel',
-							function (e) {
-								e.preventDefault()
-							},
-							{ passive: false }
-						)
-					}
+					onFocus={handleWheelPrevent}
+					onChange={handleNumberInputChange('setup_time')}
 					min={0}
 					className='form-control'
 				/>
@@ -137,15 +140,8 @@ export function TfcTableDetail({ detail, total, index, onUpdate, openAlert }: Tf
 						valueAsNumber: true,
 					})}
 					type='number'
-					onFocus={e =>
-						e.target.addEventListener(
-							'wheel',
-							function (e) {
-								e.preventDefault()
-							},
-							{ passive: false }
-						)
-					}
+					onFocus={handleNumberInputChange('tools')}
+					onChange={handleWheelPrevent}
 					min={0}
 					className='form-control'
 				/>
@@ -158,15 +154,8 @@ export function TfcTableDetail({ detail, total, index, onUpdate, openAlert }: Tf
 						valueAsNumber: true,
 					})}
 					type='number'
-					onFocus={e =>
-						e.target.addEventListener(
-							'wheel',
-							function (e) {
-								e.preventDefault()
-							},
-							{ passive: false }
-						)
-					}
+					onFocus={handleNumberInputChange('other_workshops_works')}
+					onChange={handleWheelPrevent}
 					min={0}
 					className='form-control'
 				/>
@@ -179,15 +168,8 @@ export function TfcTableDetail({ detail, total, index, onUpdate, openAlert }: Tf
 						valueAsNumber: true,
 					})}
 					type='number'
-					onFocus={e =>
-						e.target.addEventListener(
-							'wheel',
-							function (e) {
-								e.preventDefault()
-							},
-							{ passive: false }
-						)
-					}
+					onFocus={handleNumberInputChange('other')}
+					onChange={handleWheelPrevent}
 					min={0}
 					className='form-control'
 				/>
@@ -200,15 +182,8 @@ export function TfcTableDetail({ detail, total, index, onUpdate, openAlert }: Tf
 						valueAsNumber: true,
 					})}
 					type='number'
-					onFocus={e =>
-						e.target.addEventListener(
-							'wheel',
-							function (e) {
-								e.preventDefault()
-							},
-							{ passive: false }
-						)
-					}
+					onFocus={handleNumberInputChange('machine_time')}
+					onChange={handleWheelPrevent}
 					min={0}
 					className='form-control'
 				/>
@@ -221,15 +196,8 @@ export function TfcTableDetail({ detail, total, index, onUpdate, openAlert }: Tf
 						valueAsNumber: true,
 					})}
 					type='number'
-					onFocus={e =>
-						e.target.addEventListener(
-							'wheel',
-							function (e) {
-								e.preventDefault()
-							},
-							{ passive: false }
-						)
-					}
+					onFocus={handleNumberInputChange('locksmiths_works')}
+					onChange={handleWheelPrevent}
 					min={0}
 					className='form-control'
 				/>
@@ -242,15 +210,8 @@ export function TfcTableDetail({ detail, total, index, onUpdate, openAlert }: Tf
 						valueAsNumber: true,
 					})}
 					type='number'
-					onFocus={e =>
-						e.target.addEventListener(
-							'wheel',
-							function (e) {
-								e.preventDefault()
-							},
-							{ passive: false }
-						)
-					}
+					onFocus={handleNumberInputChange('outsourcing')}
+					onChange={handleWheelPrevent}
 					min={0}
 					className='form-control'
 				/>
@@ -263,15 +224,8 @@ export function TfcTableDetail({ detail, total, index, onUpdate, openAlert }: Tf
 						valueAsNumber: true,
 					})}
 					type='number'
-					onFocus={e =>
-						e.target.addEventListener(
-							'wheel',
-							function (e) {
-								e.preventDefault()
-							},
-							{ passive: false }
-						)
-					}
+					onFocus={handleNumberInputChange('material')}
+					onChange={handleWheelPrevent}
 					min={0}
 					className='form-control'
 				/>
@@ -284,15 +238,8 @@ export function TfcTableDetail({ detail, total, index, onUpdate, openAlert }: Tf
 						valueAsNumber: true,
 					})}
 					type='number'
-					onFocus={e =>
-						e.target.addEventListener(
-							'wheel',
-							function (e) {
-								e.preventDefault()
-							},
-							{ passive: false }
-						)
-					}
+					onFocus={handleNumberInputChange('defect_extra')}
+					onChange={handleWheelPrevent}
 					min={0}
 					className='form-control'
 				/>
@@ -305,15 +252,8 @@ export function TfcTableDetail({ detail, total, index, onUpdate, openAlert }: Tf
 						valueAsNumber: true,
 					})}
 					type='number'
-					onFocus={e =>
-						e.target.addEventListener(
-							'wheel',
-							function (e) {
-								e.preventDefault()
-							},
-							{ passive: false }
-						)
-					}
+					onFocus={handleNumberInputChange('complexity_extra')}
+					onChange={handleWheelPrevent}
 					min={0}
 					className='form-control'
 				/>

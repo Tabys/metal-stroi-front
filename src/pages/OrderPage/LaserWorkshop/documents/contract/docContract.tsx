@@ -83,7 +83,7 @@ export function DocContract() {
 							<tr>
 								<td colSpan={10}>Итого:</td>
 								<td>{total.quantity}</td>
-								<td>{total.price}</td>
+								<td>{total.price.toFixed(2)}</td>
 								<td>{total.weight.toFixed(3)}</td>
 							</tr>
 						</tbody>
@@ -119,7 +119,7 @@ export function DocContract() {
 							<tr>
 								<td colSpan={4}>Итого:</td>
 								<td>{total.quantity}</td>
-								<td>{total.price}</td>
+								<td>{total.price.toFixed(2)}</td>
 							</tr>
 						</tbody>
 					</Table>

@@ -189,7 +189,7 @@ export function DocSpecialization() {
 					)}
 					<div className={styles.total}>
 						<p>
-							Итого: <strong>{total.price}</strong>
+							Итого: <strong>{total.price.toFixed(2)}</strong>
 						</p>
 					</div>
 				</div>
