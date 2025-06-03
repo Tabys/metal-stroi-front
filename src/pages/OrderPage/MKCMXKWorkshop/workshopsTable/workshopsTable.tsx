@@ -34,7 +34,7 @@ export function WorkshopsTable({ order, rates, total, onCreate, openAlert }: Wor
 				openAlert('danger', err.response.data.message)
 			})
 	}
-	console.log(order?.workshops_data)
+
 	const onSubmitRate: SubmitHandler<WorkshopData> = async data => {
 		data.id = order?.workshops_data?.id
 		data.rate = rates.find(rate => rate.bx_id === Number(data.payment_form))?.value

@@ -39,10 +39,11 @@ export function workshopProductTotalData({ product, workshopData, allMaterialWei
 		.div(product.quantity || 1)
 
 	const total_cost = new Decimal(total_work)
+		.mul(material_price === 0 ? new Decimal(workshopData?.consumables || 0).div(100).add(1) : 1)
 		.add(total_installation)
 		.add(total_painting)
 		.add(product.polymer_price || 0)
-		.add(new Decimal(material_price).mul(new Decimal(workshopData?.consumables || 0).div(100).add(1)))
+		.add(material_price === 0 ? 0 : new Decimal(material_price).mul(new Decimal(workshopData?.consumables || 0).div(100).add(1)))
 		.add(additionalPrices)
 		.add(consumables_price)
 		.mul(payment_form)
