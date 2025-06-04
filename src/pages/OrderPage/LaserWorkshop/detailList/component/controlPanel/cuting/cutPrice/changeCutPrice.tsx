@@ -1,7 +1,6 @@
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useUser } from '../../../../../../../../hooks/currentUser'
 import { ChangeCutPriceForm } from '../../../../../../../../models'
-import Tooltip from '../../../../../../../../components/Tooltip'
 import apiClient from '../../../../../../../../components/apiClient'
 
 type ChangeCutPriceProps = {
@@ -32,15 +31,13 @@ export function ChangeCutPrice({ orderId, update, openAlert }: ChangeCutPricePro
 
 	return (
 		<>
-			<Tooltip conditions={true} text='Только лазер(кислород)'>
-				<input
-					{...register('cut_price', {
-						onBlur: handleSubmit(onSubmit),
-						valueAsNumber: true,
-					})}
-					className='form-control delivery'
-				/>
-			</Tooltip>
+			<input
+				{...register('cut_price', {
+					onBlur: handleSubmit(onSubmit),
+					valueAsNumber: true,
+				})}
+				className='form-control delivery'
+			/>
 		</>
 	)
 }
