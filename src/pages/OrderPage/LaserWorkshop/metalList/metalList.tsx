@@ -17,6 +17,7 @@ export function MetalList({ metal, updMetal }: metalListProps) {
 					<div>Ширина</div>
 					<div>Длина</div>
 					<div>Листы</div>
+					<div>Стоимость</div>
 					<div>Актуализировать листы</div>
 				</div>
 

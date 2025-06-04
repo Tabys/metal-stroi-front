@@ -2,6 +2,7 @@ import { Metal } from '../../../../models'
 import { FormMetalDetail } from './formMetalDetail'
 import Alert from 'react-bootstrap/Alert'
 import { useState } from 'react'
+import { useMaterials } from '../../../../hooks/materials'
 
 interface FormProps {
 	metal: Metal[]
@@ -13,6 +14,7 @@ export function FormMetalList({ metal, updMetal }: FormProps) {
 	const [alertShow, setAlertShow] = useState(false)
 	const [alertErrorShow, setAlertErrorShow] = useState(false)
 	const [textErrorAlert, setTextErrorAlert] = useState('')
+	const { materials } = useMaterials()
 
 	const openAlert = () => {
 		setAlertShow(true)
@@ -37,6 +39,7 @@ export function FormMetalList({ metal, updMetal }: FormProps) {
 					openAlert={openAlert}
 					openErrorAlert={openErrorAlert}
 					updMetal={updMetal}
+					materials={materials}
 					setTextErrorAlert={setTextErrorAlert}
 				/>
 			))}

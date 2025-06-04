@@ -1,5 +1,5 @@
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form'
-import { Metal } from '../../../../models'
+import { Material, Metal } from '../../../../models'
 import styles from './style.module.css'
 import { getMetalNameSuffix } from './getMetalNameSuffix'
 import { useEffect } from 'react'
@@ -11,9 +11,10 @@ type FormMetalDetailProps = {
 	openAlert: () => void
 	openErrorAlert: () => void
 	setTextErrorAlert: React.Dispatch<React.SetStateAction<string>>
+	materials: Material[]
 }
 
-export function FormMetalDetail({ metal, updMetal, openAlert, openErrorAlert, setTextErrorAlert }: FormMetalDetailProps) {
+export function FormMetalDetail({ metal, updMetal, openAlert, openErrorAlert, setTextErrorAlert, materials }: FormMetalDetailProps) {
 	const metalName = getMetalNameSuffix(metal.material)
 
 	const methods = useForm<Metal>()
@@ -83,6 +84,8 @@ export function FormMetalDetail({ metal, updMetal, openAlert, openErrorAlert, se
 						className='form-control'
 					/>
 				</div>
+				<div>{Number(materials.find(material => material.table_name === metal.table_number)?.cost) * Number(metal.metal_sheets)}</div>
+
 				<div className={styles.updLists}>
 					<button className='btn btn-primary' onClick={methods.handleSubmit(onSubmitUpdMetalLists)}>
 						<i className='fi fi-sr-refresh'></i>
