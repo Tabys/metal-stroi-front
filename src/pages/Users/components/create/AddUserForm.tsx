@@ -1,9 +1,9 @@
 import { Alert, Form } from 'react-bootstrap'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { User } from '../../../models'
+import { User } from '../../../../models'
 import { useState } from 'react'
 import styles from './style.module.css'
-import apiClient from '../../../components/apiClient'
+import apiClient from '../../../../components/apiClient'
 
 export function AddUserForm() {
 	const [alertShow, setAlertShow] = useState(false)

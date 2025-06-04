@@ -48,7 +48,7 @@ export function Header() {
 								</li>
 								<li>
 									<Link to={`/users/`} onClick={handleClose}>
-										Создать пользователя
+										Управление пользователями
 									</Link>
 								</li>
 								<li>

@@ -3,9 +3,11 @@ import { useEffect, useState } from 'react'
 import apiClient from '../components/apiClient'
 
 type User = {
+	id: number
 	username: string
 	first_name: string
 	last_name: string
+	role_id: string
 }
 
 export function useUsers(id?: string) {
@@ -32,5 +34,5 @@ export function useUsers(id?: string) {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
-	return { users, error, loading }
+	return { users, error, loading, fetchUsers }
 }
