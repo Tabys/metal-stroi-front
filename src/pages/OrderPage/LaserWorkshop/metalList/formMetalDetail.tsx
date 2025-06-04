@@ -4,6 +4,7 @@ import styles from './style.module.css'
 import { getMetalNameSuffix } from './getMetalNameSuffix'
 import { useEffect } from 'react'
 import apiClient from '../../../../components/apiClient'
+import { FaCircleNotch } from 'react-icons/fa6'
 
 type FormMetalDetailProps = {
 	metal: Metal
@@ -25,6 +26,14 @@ export function FormMetalDetail({ metal, updMetal, openAlert, openErrorAlert, se
 	}, [metal])
 
 	const onSubmit: SubmitHandler<Metal> = async data => {
+		data.id = metal.id
+		data.length = metal.length
+		data.material = metal.material
+		data.table_number = metal.table_number
+		data.thickness = metal.thickness
+		data.weight_metal = metal.weight_metal
+		data.width = metal.width
+
 		await apiClient
 			.put<Metal>('metal/', data)
 			.then(result => {
@@ -44,7 +53,29 @@ export function FormMetalDetail({ metal, updMetal, openAlert, openErrorAlert, se
 	}
 
 	const onSubmitUpdMetalLists: SubmitHandler<Metal> = async data => {
+		data.id = metal.id
+		data.length = metal.length
+		data.material = metal.material
+		data.table_number = metal.table_number
+		data.thickness = metal.thickness
+		data.weight_metal = metal.weight_metal
+		data.width = metal.width
+
 		await apiClient.put<Metal>('metal/upd-lists', data)
+		openAlert()
+		updMetal()
+	}
+
+	const onSubmitRoundSheets: SubmitHandler<Metal> = async data => {
+		data.id = metal.id
+		data.length = metal.length
+		data.material = metal.material
+		data.table_number = metal.table_number
+		data.thickness = metal.thickness
+		data.weight_metal = metal.weight_metal
+		data.width = metal.width
+
+		await apiClient.put<Metal>('metal/round-sheets', data)
 		openAlert()
 		updMetal()
 	}
@@ -52,13 +83,6 @@ export function FormMetalDetail({ metal, updMetal, openAlert, openErrorAlert, se
 	return (
 		<FormProvider {...methods}>
 			<form className={styles.row}>
-				<input {...methods.register('id')} type='hidden' defaultValue={metal.id} />
-				<input {...methods.register('length')} type='hidden' defaultValue={metal.length} />
-				<input {...methods.register('material')} type='hidden' defaultValue={metal.material} />
-				<input {...methods.register('table_number')} type='hidden' defaultValue={metal.table_number} />
-				<input {...methods.register('thickness')} type='hidden' defaultValue={metal.thickness} />
-				<input {...methods.register('weight_metal')} type='hidden' defaultValue={metal.weight_metal} />
-				<input {...methods.register('width')} type='hidden' defaultValue={metal.width} />
 				<div>
 					{metal.thickness_title} {metalName} {metal.customer_metal ? 'зак' : ''}
 				</div>
@@ -89,6 +113,11 @@ export function FormMetalDetail({ metal, updMetal, openAlert, openErrorAlert, se
 				<div className={styles.updLists}>
 					<button className='btn btn-primary' onClick={methods.handleSubmit(onSubmitUpdMetalLists)}>
 						<i className='fi fi-sr-refresh'></i>
+					</button>
+				</div>
+				<div className={styles.updLists}>
+					<button className='btn btn-primary' onClick={methods.handleSubmit(onSubmitRoundSheets)}>
+						<FaCircleNotch />
 					</button>
 				</div>
 			</form>

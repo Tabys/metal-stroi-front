@@ -19,6 +19,7 @@ export function MetalList({ metal, updMetal }: metalListProps) {
 					<div>Листы</div>
 					<div>Стоимость</div>
 					<div>Актуализировать листы</div>
+					<div>Округлить листы</div>
 				</div>
 
 				<FormMetalList metal={metal} updMetal={updMetal} />
