@@ -700,6 +700,7 @@ export type WorkshopTotalData = {
 	weight: number
 	metal: number
 	cost: number
+	profit: number
 }
 
 export type Rates = {

@@ -75,6 +75,10 @@ export function WorkshopsTable({ order, rates, total, onCreate, openAlert }: Wor
 						<p>Прибыль,%</p>
 					</div>
 					<div className={styles.small + ' ' + styles.line}>
+						<img src='/images/header-table/profit.png' alt='profit' />
+						<p>Прибыль, руб</p>
+					</div>
+					<div className={styles.small + ' ' + styles.line}>
 						<img src='/images/header-table/install.png' alt='install' />
 						<p>Монтаж</p>
 					</div>
@@ -176,6 +180,7 @@ export function WorkshopsTable({ order, rates, total, onCreate, openAlert }: Wor
 							})}
 						/>
 					</div>
+					<div className={styles.line}>{total.profit}</div>
 					<div className={styles.line}>{total.installation}</div>
 					<div className={styles.line}>
 						<input

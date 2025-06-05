@@ -57,5 +57,6 @@ export function workshopProductTotalData({ product, workshopData, allMaterialWei
 		installation: total_installation.toNumber(),
 		painting: total_painting.toNumber(),
 		price: Math.ceil(total_cost),
+		profit: Math.ceil((total_cost * (workshopData?.profit || 0)) / 100),
 	}
 }

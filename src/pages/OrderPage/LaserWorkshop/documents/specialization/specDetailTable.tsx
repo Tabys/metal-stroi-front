@@ -37,12 +37,16 @@ export function SpecDetailTable({ detail, index, total, delivery, showTable }: S
 			</td>
 			<td className={styles.left}>{detail.name}</td>
 			{Number(total.cuting_plasma) > 0 ? (
-				<td className={showTable === true ? styles.center : styles.hideTable}>{Number(detail.cut_cost).toFixed(2)}</td>
+				<td className={showTable === true ? styles.center : styles.hideTable}>
+					{detail.cut_type === 'plasma' ? Number(detail.cut_cost).toFixed(2) : '-'}
+				</td>
 			) : (
 				''
 			)}
 			{Number(total.cuting_laser) > 0 ? (
-				<td className={showTable === true ? styles.center : styles.hideTable}>{Number(detail.cut_cost).toFixed(2)}</td>
+				<td className={showTable === true ? styles.center : styles.hideTable}>
+					{detail.cut_type === 'laser' ? Number(detail.cut_cost).toFixed(2) : '-'}
+				</td>
 			) : (
 				''
 			)}

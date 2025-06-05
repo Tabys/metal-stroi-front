@@ -15,6 +15,7 @@ export function workshopOrderTotalData({ products, workshopData }: workshopOrder
 	let total_weight = 0
 	let total_metal = 0
 	let total_cost = 0
+	let total_profit = 0
 
 	products?.forEach(product => {
 		product.workshops_materials.forEach(material => {
@@ -40,6 +41,7 @@ export function workshopOrderTotalData({ products, workshopData }: workshopOrder
 
 		const total_one_product = workshopProductTotalData({ product, workshopData, allMaterialWeight: total_weight })
 		total_cost += total_one_product.price * Number(product.quantity)
+		total_profit += total_one_product.profit * Number(product.quantity)
 	})
 
 	return {
@@ -51,5 +53,6 @@ export function workshopOrderTotalData({ products, workshopData }: workshopOrder
 		weight: total_weight,
 		metal: total_metal,
 		cost: total_cost,
+		profit: total_profit,
 	}
 }
