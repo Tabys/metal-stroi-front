@@ -66,7 +66,13 @@ export async function UpdRollings(dataDetail: Detail) {
 				})
 				break
 			case '1.4301':
-			case 'aisi430':
+			case 'aisi304':
+			case 'aisi304_2B':
+			case 'aisi304_BA':
+			case 'aisi304_4N':
+			case 'aisi430_2B':
+			case 'aisi430_BA':
+			case 'aisi430_4N':
 				SERVICES_COST = PRICE?.price_services_rollings?.filter(items => {
 					return items.type_metal === 'Нерж'
 				})

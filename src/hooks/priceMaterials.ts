@@ -36,5 +36,5 @@ export function useMaterialPrices() {
 		item?.price_metal_items?.sort((a, b) => (a.id > b.id ? 1 : -1))
 	})
 
-	return { prices, error, loading, addPrice }
+	return { prices, error, loading, addPrice, refetchPrices: fetchPrices }
 }

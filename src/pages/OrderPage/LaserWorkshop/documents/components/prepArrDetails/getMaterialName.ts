@@ -16,8 +16,26 @@ export function getMaterialName(table: string | undefined) {
 		case '1.4301':
 			material = 'нерж'
 			break
-		case 'aisi430':
+		case 'aisi304':
 			material = 'нерж пищ'
+			break
+		case 'aisi304_2B':
+			material = 'нерж пищ мат'
+			break
+		case 'aisi304_BA':
+			material = 'нерж пищ зерк'
+			break
+		case 'aisi304_4N':
+			material = 'нерж пищ шлиф'
+			break
+		case 'aisi430_2B':
+			material = 'нерж пищ мат'
+			break
+		case 'aisi430_BA':
+			material = 'нерж пищ зерк'
+			break
+		case 'aisi430_4N':
+			material = 'нерж пищ шлиф'
 			break
 		case '09Г2С':
 			material = 'ГС'

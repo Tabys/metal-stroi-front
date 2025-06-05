@@ -755,3 +755,13 @@ export type TFCTotalDetailsCosts = {
 	id: number
 	cost: number
 }
+
+export type PriceMetalItem = {
+	thickness: string
+	table_name: string
+	gas?: string
+	cost: number
+	add_cost?: number
+	title?: string
+	price_metal_category_id: number
+}

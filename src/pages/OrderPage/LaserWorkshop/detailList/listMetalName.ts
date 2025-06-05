@@ -17,10 +17,28 @@ export function listMetalName(material: string | undefined) {
 			listMetal = []
 			break
 		case '1.4301':
-			listMetal = ['мат', 'шлиф', 'в плёнке', 'без плёнки', 'зерк']
+			listMetal = ['в плёнке', 'без плёнки']
 			break
-		case 'aisi430':
-			listMetal = ['мат', 'шлиф', 'в плёнке', 'без плёнки', 'зерк']
+		case 'aisi304':
+			listMetal = ['в плёнке', 'без плёнки']
+			break
+		case 'aisi304_2B':
+			listMetal = ['в плёнке', 'без плёнки']
+			break
+		case 'aisi304_BA':
+			listMetal = ['в плёнке', 'без плёнки']
+			break
+		case 'aisi304_4N':
+			listMetal = ['в плёнке', 'без плёнки']
+			break
+		case 'aisi430_2B':
+			listMetal = ['в плёнке', 'без плёнки']
+			break
+		case 'aisi430_BA':
+			listMetal = ['в плёнке', 'без плёнки']
+			break
+		case 'aisi430_4N':
+			listMetal = ['в плёнке', 'без плёнки']
 			break
 		case 'ОЦ':
 			listMetal = []

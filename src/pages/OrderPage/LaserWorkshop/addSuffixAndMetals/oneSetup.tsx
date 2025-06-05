@@ -132,7 +132,7 @@ export function OneSetup({
 							checked={checkedAzote}
 							className='form-check-input'
 							onChange={handleChangeAzote}
-							disabled={setup?.material === '1.4301' || setup?.material === 'aisi430' ? false : true}
+							disabled={setup?.material === '1.4301'}
 						/>
 					</label>
 					<label className={style.select_label}>
