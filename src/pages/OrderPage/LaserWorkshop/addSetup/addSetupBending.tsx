@@ -1,4 +1,4 @@
-import Form from 'react-bootstrap/Form'
+import { Form, Spinner } from 'react-bootstrap'
 import { useForm, SubmitHandler, Controller } from 'react-hook-form'
 import { AddSetupsBending } from '../../../../models'
 import { useMaterialPrices } from '../../../../hooks/priceMaterials'
@@ -15,6 +15,8 @@ type addSetupBendingProps = {
 }
 
 export function AddSetupBending({ onCreate, onClose, order_id }: addSetupBendingProps) {
+	const [isLoading, setIsLoading] = useState(false)
+
 	const { prices } = useMaterialPrices()
 	const {
 		register,
@@ -34,6 +36,7 @@ export function AddSetupBending({ onCreate, onClose, order_id }: addSetupBending
 	})
 
 	const onSubmit: SubmitHandler<AddSetupsBending> = async data => {
+		setIsLoading(true)
 		const detailsArray = data.detailsNames?.split('\n')
 		const detailsData: any[] = []
 
@@ -64,9 +67,16 @@ export function AddSetupBending({ onCreate, onClose, order_id }: addSetupBending
 			})
 		})
 		data.details = detailsData
-		await apiClient.post<AddSetupsBending>('setup/bending', data)
-		onCreate()
-		onClose()
+		await apiClient
+			.post<AddSetupsBending>('setup/bending', data)
+			.then(() => {
+				setIsLoading(false)
+				onCreate()
+				onClose()
+			})
+			.catch(() => {
+				setIsLoading(false)
+			})
 	}
 
 	return (
@@ -154,8 +164,8 @@ export function AddSetupBending({ onCreate, onClose, order_id }: addSetupBending
 				{errors.detailsNames && <Form.Text className='text-danger'>{errors.detailsNames.message}</Form.Text>}
 			</div>
 
-			<button type='submit' className='btn btn-primary container-fluid'>
-				Создать
+			<button type='submit' className='btn btn-primary container-fluid' disabled={isLoading}>
+				{isLoading ? <Spinner /> : 'Создать'}
 			</button>
 		</form>
 	)

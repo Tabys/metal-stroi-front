@@ -1,4 +1,4 @@
-import Form from 'react-bootstrap/Form'
+import { Form, Spinner } from 'react-bootstrap'
 import { useForm, SubmitHandler, Controller, useFieldArray } from 'react-hook-form'
 import { AddSetupsChoping } from '../../../../models'
 import { useMaterialPrices } from '../../../../hooks/priceMaterials'
@@ -16,6 +16,8 @@ type addSetupChopingProps = {
 }
 
 export function AddSetupChoping({ onCreate, onClose, order_id }: addSetupChopingProps) {
+	const [isLoading, setIsLoading] = useState(false)
+
 	const { prices } = useMaterialPrices()
 	const {
 		register,
@@ -40,6 +42,7 @@ export function AddSetupChoping({ onCreate, onClose, order_id }: addSetupChoping
 	})
 
 	const onSubmit: SubmitHandler<AddSetupsChoping> = async data => {
+		setIsLoading(true)
 		if (data.suffixes) {
 			const jsonList: any[] = []
 			data.suffixes.forEach(suffix => {
@@ -63,9 +66,16 @@ export function AddSetupChoping({ onCreate, onClose, order_id }: addSetupChoping
 			}
 			delete detail.quantity
 		})
-		await apiClient.post<AddSetupsChoping>('setup/choping', data)
-		onCreate()
-		onClose()
+		await apiClient
+			.post<AddSetupsChoping>('setup/choping', data)
+			.then(() => {
+				setIsLoading(false)
+				onCreate()
+				onClose()
+			})
+			.catch(() => {
+				setIsLoading(false)
+			})
 	}
 
 	return (
@@ -260,8 +270,8 @@ export function AddSetupChoping({ onCreate, onClose, order_id }: addSetupChoping
 					<FaRegTrashCan />
 				</button>
 			</section>
-			<button type='submit' className='btn btn-primary container-fluid'>
-				Создать
+			<button type='submit' className='btn btn-primary container-fluid' disabled={isLoading}>
+				{isLoading ? <Spinner /> : 'Создать'}
 			</button>
 		</form>
 	)

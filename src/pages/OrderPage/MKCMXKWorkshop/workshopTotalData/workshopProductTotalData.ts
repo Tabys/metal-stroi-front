@@ -52,11 +52,25 @@ export function workshopProductTotalData({ product, workshopData, allMaterialWei
 		.toDecimalPlaces(3)
 		.toNumber()
 
+	const profit = new Decimal(total_work)
+		.mul(material_price === 0 ? new Decimal(workshopData?.consumables || 0).div(100).add(1) : 1)
+		.add(total_installation)
+		.add(total_painting)
+		.add(product.polymer_price || 0)
+		.add(material_price === 0 ? 0 : new Decimal(material_price).mul(new Decimal(workshopData?.consumables || 0).div(100).add(1)))
+		.add(additionalPrices)
+		.add(consumables_price)
+		.mul(payment_form)
+		.mul(new Decimal(workshopData?.profit || 0).div(100))
+		.add(product.other_workshops || 0)
+		.toDecimalPlaces(3)
+		.toNumber()
+
 	return {
 		work: total_work.toNumber(),
 		installation: total_installation.toNumber(),
 		painting: total_painting.toNumber(),
 		price: Math.ceil(total_cost),
-		profit: Math.ceil((total_cost * (workshopData?.profit || 0)) / 100),
+		profit: Math.ceil(profit),
 	}
 }

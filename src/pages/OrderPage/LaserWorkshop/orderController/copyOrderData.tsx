@@ -1,8 +1,9 @@
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { CopyOrder, UserData } from '../../../../models'
-import { Form } from 'react-bootstrap'
+import { Form, Spinner } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import apiClient from '../../../../components/apiClient'
+import { useState } from 'react'
 
 type CopyOrderDataProps = {
 	orderID?: number
@@ -10,6 +11,8 @@ type CopyOrderDataProps = {
 	onClose: () => void
 }
 export function CopyOrderData({ orderID, user, onClose }: CopyOrderDataProps) {
+	const [isLoading, setIsLoading] = useState(false)
+
 	const navigate = useNavigate()
 	const {
 		register,
@@ -18,10 +21,17 @@ export function CopyOrderData({ orderID, user, onClose }: CopyOrderDataProps) {
 	} = useForm<CopyOrder>()
 
 	const onSubmit: SubmitHandler<CopyOrder> = async data => {
+		setIsLoading(true)
 		data.implementer = user?.last_name + ' ' + user?.first_name
-		await apiClient.post<CopyOrder>('oauth/create/', data)
-		await onClose()
-		await navigate(`/order/${data.id}`)
+		await apiClient
+			.post<CopyOrder>('oauth/create/', data)
+			.then(() => {
+				onClose()
+				navigate(`/order/${data.id}`)
+			})
+			.catch(() => {
+				setIsLoading(false)
+			})
 	}
 
 	return (
@@ -33,8 +43,8 @@ export function CopyOrderData({ orderID, user, onClose }: CopyOrderDataProps) {
 				{errors.id && <Form.Text className='text-danger'>{errors.id.message}</Form.Text>}
 			</div>
 
-			<button type='submit' className='btn btn-primary container-fluid mt-5'>
-				Создать
+			<button type='submit' className='btn btn-primary container-fluid mt-5' disabled={isLoading}>
+				{isLoading ? <Spinner /> : 'Создать'}
 			</button>
 		</form>
 	)

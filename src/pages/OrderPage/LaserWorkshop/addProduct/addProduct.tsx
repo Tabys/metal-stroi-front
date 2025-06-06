@@ -1,7 +1,7 @@
 import { AddProduct, Order } from '../../../../models'
 import styles from './style.module.css'
 import { useForm, SubmitHandler } from 'react-hook-form'
-import { Form } from 'react-bootstrap'
+import { Form, Spinner } from 'react-bootstrap'
 import { DetailList } from './detailList'
 import { useEffect, useState } from 'react'
 import apiClient from '../../../../components/apiClient'
@@ -13,6 +13,8 @@ type AddProductProps = {
 }
 
 export function AddProducts({ onCreate, onClose, order }: AddProductProps) {
+	const [isLoading, setIsLoading] = useState(false)
+
 	const {
 		register,
 		handleSubmit,
@@ -41,12 +43,19 @@ export function AddProducts({ onCreate, onClose, order }: AddProductProps) {
 	}, [arrProduct, order?.products?.length, setValue])
 
 	const onSubmit: SubmitHandler<AddProduct> = async data => {
+		setIsLoading(true)
 		arrProduct.name = data.name
 
-		await apiClient.post<AddProduct>('products/', arrProduct).then(() => {
-			onClose()
-			onCreate()
-		})
+		await apiClient
+			.post<AddProduct>('products/', arrProduct)
+			.then(() => {
+				onClose()
+				onCreate()
+				setIsLoading(false)
+			})
+			.catch(() => {
+				setIsLoading(false)
+			})
 	}
 
 	return (
@@ -68,8 +77,8 @@ export function AddProducts({ onCreate, onClose, order }: AddProductProps) {
 				<DetailList order={order} setArrProduct={setArrProduct} />
 			</div>
 
-			<button type='submit' className='btn btn-primary container-fluid'>
-				Создать
+			<button type='submit' className='btn btn-primary container-fluid' disabled={isLoading}>
+				{isLoading ? <Spinner /> : 'Создать'}
 			</button>
 		</form>
 	)

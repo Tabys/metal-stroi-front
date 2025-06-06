@@ -1,7 +1,8 @@
 import { useForm, SubmitHandler } from 'react-hook-form'
-import { Form } from 'react-bootstrap'
+import { Form, Spinner } from 'react-bootstrap'
 import { Nomenclature } from '../../models'
 import apiClient from '../../components/apiClient'
+import { useState } from 'react'
 
 type AddNomenclatureProps = {
 	onCreate: () => void
@@ -9,6 +10,8 @@ type AddNomenclatureProps = {
 }
 
 export function AddNomenclature({ onCreate, onClose }: AddNomenclatureProps) {
+	const [isLoading, setIsLoading] = useState(false)
+
 	const {
 		register,
 		handleSubmit,
@@ -16,10 +19,17 @@ export function AddNomenclature({ onCreate, onClose }: AddNomenclatureProps) {
 	} = useForm<Nomenclature>()
 
 	const onSubmit: SubmitHandler<Nomenclature> = async data => {
-		await apiClient.post<Nomenclature>('workshops-materials', data).then(() => {
-			onClose()
-			onCreate()
-		})
+		setIsLoading(true)
+		await apiClient
+			.post<Nomenclature>('workshops-materials', data)
+			.then(() => {
+				setIsLoading(false)
+				onClose()
+				onCreate()
+			})
+			.catch(() => {
+				setIsLoading(false)
+			})
 	}
 
 	return (
@@ -61,8 +71,8 @@ export function AddNomenclature({ onCreate, onClose }: AddNomenclatureProps) {
 				{errors.price && <Form.Text className='text-danger'>{errors.price.message}</Form.Text>}
 			</label>
 
-			<button type='submit' className='btn btn-primary container-fluid mt-3'>
-				Создать
+			<button type='submit' className='btn btn-primary container-fluid mt-3' disabled={isLoading}>
+				{isLoading ? <Spinner /> : 'Создать'}
 			</button>
 		</form>
 	)

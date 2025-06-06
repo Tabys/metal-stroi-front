@@ -1,4 +1,4 @@
-import { Alert, Form } from 'react-bootstrap'
+import { Alert, Form, Spinner } from 'react-bootstrap'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { User } from '../../../../models'
 import { useState } from 'react'
@@ -7,6 +7,8 @@ import apiClient from '../../../../components/apiClient'
 
 export function AddUserForm() {
 	const [alertShow, setAlertShow] = useState(false)
+	const [isLoading, setIsLoading] = useState(false)
+
 	const openAlert = () => {
 		setAlertShow(true)
 		setTimeout(() => {
@@ -23,13 +25,16 @@ export function AddUserForm() {
 	} = useForm<User>()
 
 	const onSubmit: SubmitHandler<User> = async data => {
+		setIsLoading(true)
 		await apiClient
 			.post<User>('auth/signup', data)
 			.then(result => {
 				openAlert()
 				reset()
+				setIsLoading(false)
 			})
 			.catch(err => {
+				setIsLoading(false)
 				console.log(err.response)
 				if (err.response.status > 200) {
 					setError('root.serverError', {
@@ -114,8 +119,8 @@ export function AddUserForm() {
 			<Alert className='alert-fixed' show={alertShow} variant='success'>
 				Пользователь создан
 			</Alert>
-			<button type='submit' className='btn btn-primary container-fluid mt-5'>
-				Создать
+			<button type='submit' className='btn btn-primary container-fluid mt-5' disabled={isLoading}>
+				{isLoading ? <Spinner /> : 'Создать'}
 			</button>
 		</form>
 	)

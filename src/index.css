@@ -504,7 +504,7 @@ code {
 	border-radius: 0.375rem !important;
 }
 
-.container-fluid {
+.container-fluid-prices {
 	display: flex;
 	gap: 50px;
 	align-items: flex-start;

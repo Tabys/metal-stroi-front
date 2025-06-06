@@ -30,7 +30,7 @@ export function PricesWrapper() {
 				{prices &&
 					prices.map(category => (
 						<Tab eventKey={category.id} title={category.name} key={category.id}>
-							<div className='container-fluid'>
+							<div className='container-fluid-prices'>
 								<div className='table half'>
 									<div className='row header'>
 										<div className='p-2'>Толщина металла</div>
