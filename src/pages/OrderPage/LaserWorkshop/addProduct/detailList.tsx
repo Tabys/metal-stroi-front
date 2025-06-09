@@ -5,14 +5,15 @@ import { OneDetail } from './oneDetail'
 type DetailListProps = {
 	order: Order
 	setArrProduct: React.Dispatch<React.SetStateAction<AddProduct>>
+	isAllDetails: boolean
 }
 
-export function DetailList({ order, setArrProduct }: DetailListProps) {
+export function DetailList({ order, setArrProduct, isAllDetails }: DetailListProps) {
 	let details: Detail[] = CreateDetailGroupList(order)
 	return (
 		<>
 			{details.map(detail => (
-				<OneDetail key={detail.id} detail={detail} setArrProduct={setArrProduct} />
+				<OneDetail key={detail.id} detail={detail} setArrProduct={setArrProduct} isAllDetails={isAllDetails} />
 			))}
 		</>
 	)

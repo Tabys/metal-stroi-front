@@ -7,9 +7,10 @@ import { AvailableDetail } from './availableDetail'
 type OneDetailProps = {
 	detail: Detail
 	setArrProduct: React.Dispatch<React.SetStateAction<AddProduct>>
+	isAllDetails: boolean
 }
 
-export function OneDetail({ detail, setArrProduct }: OneDetailProps) {
+export function OneDetail({ detail, setArrProduct, isAllDetails }: OneDetailProps) {
 	const [value, setValue] = useState('0')
 	const [availableDetails, setAvailableDetails] = useState(0)
 
@@ -61,6 +62,7 @@ export function OneDetail({ detail, setArrProduct }: OneDetailProps) {
 							value={value}
 							onChange={handleChange}
 							className='form-control'
+							disabled={isAllDetails}
 						/>
 					</div>
 				</div>

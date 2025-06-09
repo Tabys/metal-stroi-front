@@ -1,19 +1,22 @@
-import { AddProduct, Order } from '../../../../models'
+import { AddProduct, AddProductDetail, Detail, Order } from '../../../../models'
 import styles from './style.module.css'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { Form, Spinner } from 'react-bootstrap'
 import { DetailList } from './detailList'
 import { useEffect, useState } from 'react'
 import apiClient from '../../../../components/apiClient'
+import { CreateDetailGroupList } from '../detailList/createDetailGroupList'
 
 type AddProductProps = {
 	onCreate: () => void
 	onClose: () => void
 	order: Order
+	openAlert: (type: string, message?: string) => void
 }
 
-export function AddProducts({ onCreate, onClose, order }: AddProductProps) {
+export function AddProducts({ onCreate, onClose, order, openAlert }: AddProductProps) {
 	const [isLoading, setIsLoading] = useState(false)
+	const [isAllDetails, setIsAllDetails] = useState(false)
 
 	const {
 		register,
@@ -40,11 +43,38 @@ export function AddProducts({ onCreate, onClose, order }: AddProductProps) {
 				setValue('name', 'Изделие ' + nameProdCount)
 			}
 		}
-	}, [arrProduct, order?.products?.length, setValue])
+	}, [arrProduct, order?.products?.length, setValue, isAllDetails])
+
+	const handleChangeIsAllDetails = () => {
+		setIsAllDetails(!isAllDetails)
+		setValue('quantity', 1)
+
+		if (!isAllDetails) {
+			const details: Detail[] = CreateDetailGroupList(order)
+			setArrProduct(prevArrProduct => ({
+				...prevArrProduct,
+				quantity: 1,
+				details: details.map(detail => {
+					return {
+						id: detail.id,
+						name: detail.name,
+						count: 1,
+					} as unknown as AddProductDetail
+				}),
+			}))
+		} else {
+			setArrProduct(prevArrProduct => ({
+				...prevArrProduct,
+				quantity: 1,
+				details: [],
+			}))
+		}
+	}
 
 	const onSubmit: SubmitHandler<AddProduct> = async data => {
 		setIsLoading(true)
 		arrProduct.name = data.name
+		arrProduct.quantity = 1
 
 		await apiClient
 			.post<AddProduct>('products/', arrProduct)
@@ -53,15 +83,35 @@ export function AddProducts({ onCreate, onClose, order }: AddProductProps) {
 				onCreate()
 				setIsLoading(false)
 			})
-			.catch(() => {
+			.catch(err => {
+				openAlert('danger', err.response.data)
+				setIsLoading(false)
+			})
+	}
+
+	const onSubmitBig: SubmitHandler<AddProduct> = async data => {
+		setIsLoading(true)
+		arrProduct.name = data.name
+		arrProduct.quantity = data.quantity
+
+		console.log('onSubmitBig', arrProduct)
+		await apiClient
+			.post<AddProduct>('products/big', arrProduct)
+			.then(() => {
+				onClose()
+				onCreate()
+				setIsLoading(false)
+			})
+			.catch(err => {
+				console.log(err.response)
+				openAlert('danger', err.response.data)
 				setIsLoading(false)
 			})
 	}
 
 	return (
-		<form onSubmit={handleSubmit(onSubmit)}>
+		<form onSubmit={isAllDetails ? handleSubmit(onSubmitBig) : handleSubmit(onSubmit)}>
 			<input type='hidden' {...register('order_id')} defaultValue={order.id} />
-			<input type='hidden' {...register('quantity')} defaultValue='1' />
 			<label htmlFor='name' className='form-label'>
 				Название изделия
 			</label>
@@ -73,8 +123,30 @@ export function AddProducts({ onCreate, onClose, order }: AddProductProps) {
 			/>
 			{errors.name && <Form.Text className='text-danger'>{errors.name.message}</Form.Text>}
 
+			<label htmlFor='name' className='form-label mt-3'>
+				Создание изделия из всех деталей
+				<div className='d-flex align-items-center gap-2'>
+					<label className='d-flex align-items-center gap-2 fw-normal'>
+						Добавить
+						<input type='checkbox' checked={isAllDetails} onChange={handleChangeIsAllDetails} />
+					</label>
+					<label className='d-flex align-items-center gap-2 mx-3 fw-normal'>
+						Количество
+						<div className='w-25'>
+							<input
+								type='number'
+								className='form-control'
+								{...register('quantity', { valueAsNumber: true })}
+								defaultValue={1}
+								disabled={!isAllDetails}
+							/>
+						</div>
+					</label>
+				</div>
+			</label>
+
 			<div className={styles.details}>
-				<DetailList order={order} setArrProduct={setArrProduct} />
+				<DetailList order={order} setArrProduct={setArrProduct} isAllDetails={isAllDetails} />
 			</div>
 
 			<button type='submit' className='btn btn-primary container-fluid' disabled={isLoading}>
