@@ -15,7 +15,9 @@ export function WorkshopTable({ detail, work_types, index }: WHTableProps) {
 	return (
 		<tr>
 			<td className={styles.center}>{index + 1}</td>
-			<td className={styles.left}>{detail.name}</td>
+			<td className={styles.left + ' ' + (detail.free ? styles.free : '')}>
+				{detail.name} {detail.free ? ' (OZON)' : ''}
+			</td>
 			<td className={styles.center}>
 				{detail.thickness} {detail.material} {detail.suffixes} {detail.customers_metal ? 'зак' : ''}
 			</td>

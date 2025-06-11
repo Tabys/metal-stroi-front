@@ -24,7 +24,9 @@ export function CreateDetailGroupList(dataOrder?: Order) {
 		}
 	}
 
-	groupedDetails.sort((a, b) => String(a.thickness).localeCompare(String(b.thickness)) || a.name.localeCompare(b.name))
+	const filteredGroupedDetails = groupedDetails.filter(detail => !detail.free)
 
-	return groupedDetails
+	filteredGroupedDetails.sort((a, b) => String(a.thickness).localeCompare(String(b.thickness)) || a.name.localeCompare(b.name))
+
+	return filteredGroupedDetails
 }

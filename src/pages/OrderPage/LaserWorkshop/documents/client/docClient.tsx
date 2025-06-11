@@ -13,7 +13,8 @@ import { PrepArrProducts } from '../components/prepArrProducts'
 
 export function DocClient() {
 	const { id } = useParams()
-	const { orders } = useOrders(id ? id : '')
+	const { orders } = useOrders({ id: id ? id : '', free: false })
+	console.log(orders)
 	const linkBX = process.env.REACT_APP_BX24_URL + `crm/deal/details/${id}/`
 
 	const arrDetails = orders ? CreateDetailGroupList(orders) : undefined

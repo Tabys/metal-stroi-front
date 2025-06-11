@@ -10,7 +10,7 @@ import { workshopOrderTotalData } from '../../workshopTotalData/workshopOrderTot
 export function DocPaintingWorkshops() {
 	const { id } = useParams()
 	const { paintingMods } = usePaintingMods()
-	const { orders } = useOrders(id ? id : '')
+	const { orders } = useOrders({ id: id ? id : '' })
 	const linkBX = process.env.REACT_APP_BX24_URL + `crm/deal/details/${id}/`
 
 	const products = orders?.workshops_products?.filter(product => product.polymer_price > 0)

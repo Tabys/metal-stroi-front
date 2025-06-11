@@ -2,7 +2,12 @@ import { AxiosError } from 'axios'
 import { PriceServiceCategory, Detail, Setup, PricesServiceRolling } from '../../../../../models'
 import apiClient from '../../../../../components/apiClient'
 
-export async function UpdRollings(dataDetail: Detail) {
+type UpdRollingsProps = {
+	dataDetail: Detail
+	free?: boolean
+}
+
+export async function UpdRollings({ dataDetail, free }: UpdRollingsProps) {
 	async function getPrices() {
 		try {
 			const response = await apiClient.get<PriceServiceCategory[]>('price-services-category')
@@ -87,7 +92,7 @@ export async function UpdRollings(dataDetail: Detail) {
 			rolling_cost = Number(SERVICE_COST?.min_cost)
 		}
 
-		dataDetail.rolling = rolling_cost.toFixed(2)
+		dataDetail.rolling = free ? '0' : rolling_cost.toFixed(2)
 	}
 	return dataDetail
 }

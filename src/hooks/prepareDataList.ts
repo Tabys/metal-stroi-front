@@ -3,7 +3,12 @@ import { useEffect, useState } from 'react'
 import { Order } from '../models'
 import apiClient from '../components/apiClient'
 
-export function useOrders(id: string) {
+type UseOrdersProps = {
+	id: string
+	free?: boolean
+}
+
+export function useOrders({ id, free }: UseOrdersProps) {
 	const [orders, setOrders] = useState<Order>()
 	const [loading, setLoading] = useState(false)
 	const [error, setError] = useState('')
@@ -12,7 +17,12 @@ export function useOrders(id: string) {
 		try {
 			setError('')
 			setLoading(true)
-			const response = await apiClient.get<Order>(`orders/${id}`)
+			const response = await apiClient.get<Order>(`orders/prepDetails`, {
+				params: {
+					id: id,
+					free: free,
+				},
+			})
 			setOrders(response.data)
 			setLoading(false)
 		} catch (e: unknown) {

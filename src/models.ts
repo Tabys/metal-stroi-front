@@ -86,6 +86,7 @@ export type Detail = {
 	l_size?: number
 	w_size?: number
 	order_id?: number
+	free?: boolean
 	product_detail?: ProductsDetails
 	products?: Product[]
 	setups?: Setup[]
@@ -333,6 +334,7 @@ export type DocTableDetail = {
 	surface?: string
 	metal_title?: string[]
 	customers_metal?: boolean
+	free?: boolean
 	product_detail?: ProductsDetails[]
 	products?: Product[]
 }

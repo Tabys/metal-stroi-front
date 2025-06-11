@@ -187,7 +187,9 @@ h3 {
 .doc table td.left {
 	text-align: left;
 }
-
+.doc table td.left.free {
+	font-style: italic;
+}
 .contract table {
 	font-family: 'Times New Roman', Times;
 }

@@ -64,8 +64,8 @@ export async function UpdCutInset(dataDetail: Detail) {
 		}
 	}
 
-	dataDetail.cut_cost = cuting ? cuting.cost : 0
-	dataDetail.inset_cost = cuting?.cut_cost ? cuting?.cut_cost : 0
+	dataDetail.cut_cost = cuting && !dataDetail.free ? cuting.cost : 0
+	dataDetail.inset_cost = cuting?.cut_cost && !dataDetail.free ? cuting?.cut_cost : 0
 
 	return dataDetail
 }

@@ -16,7 +16,7 @@ export function DocOrder() {
 	const [showTable, setShowTable] = useState(true)
 
 	const { id } = useParams()
-	const { orders } = useOrders(id ? id : '')
+	const { orders } = useOrders({ id: id ? id : '' })
 	const linkBX = process.env.REACT_APP_BX24_URL + `crm/deal/details/${id}/`
 	const full = true
 

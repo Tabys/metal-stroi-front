@@ -29,7 +29,7 @@ export function DocPainting() {
 	}
 
 	const { id } = useParams()
-	const { orders } = useOrders(id ? id : '')
+	const { orders } = useOrders({ id: id ? id : '' })
 	const { paintingMods } = usePaintingMods()
 	const linkBX = process.env.REACT_APP_BX24_URL + `crm/deal/details/${id}/`
 
@@ -40,7 +40,7 @@ export function DocPainting() {
 		arrDetails,
 		order: orders,
 	})
-	const filteredDetails = details?.filter(detail => Number(detail.painting) > 0)
+	const filteredDetails = details?.filter(detail => detail.polymer && detail.polymer !== null)
 	const editedDetailsFull: DocTableDetail[] | undefined = PrepArrDetails({
 		arrDetails: CreateDetailGroupList(orders),
 		order: orders,

@@ -114,7 +114,7 @@ export function FormDetailItem({
 	const onSubmitRolling: SubmitHandler<Detail> = async data => {
 		delete data.metal_cost
 		await apiClient
-			.put<Detail>('detail/', await UpdRollings(data))
+			.put<Detail>('detail/', await UpdRollings({ dataDetail: data, free: DetailItem.free }))
 			.then(() => {
 				if (data.rolling_type === 'rolling_cone' && Number(DetailItem.thickness) === 2) {
 					rollAlert()
@@ -320,8 +320,8 @@ export function FormDetailItem({
 				<input {...methods.register('setup_id')} type='hidden' defaultValue={DetailItem.setup_detail.setup_id} />
 				<input {...methods.register('thickness')} type='hidden' defaultValue={DetailItem.thickness} />
 				<div className={styles.line}>{index + 1} </div>
-				<div className={styles.line + ' ' + styles.name}>
-					{DetailItem.name} {DetailItem.custom ? '(' + DetailItem.l_size + 'x' + DetailItem.w_size + ')' : ''}
+				<div className={styles.line + ' ' + styles.name + ' ' + (DetailItem.free ? styles.free : '')}>
+					{DetailItem.name} {DetailItem.custom ? '(' + DetailItem.l_size + 'x' + DetailItem.w_size + ')' : ''} {DetailItem.free ? ' (OZON)' : ''}
 				</div>
 				<div className={styles.line}>
 					{DetailItem.custom ? (
@@ -373,7 +373,7 @@ export function FormDetailItem({
 						}
 						step='0.1'
 						min='0'
-						disabled={DetailItem.cut_type === 'laser' ? true : false}
+						disabled={DetailItem.cut_type === 'laser' || DetailItem.free ? true : false}
 						className='form-control'
 					/>
 				</div>
@@ -397,6 +397,7 @@ export function FormDetailItem({
 						}
 						step='0.1'
 						min='0'
+						disabled={DetailItem.free ? true : false}
 						className='form-control'
 					/>
 				</div>
@@ -447,7 +448,7 @@ export function FormDetailItem({
 						}
 						step='0.1'
 						min='0'
-						disabled={isDisabledBend}
+						disabled={isDisabledBend || DetailItem.free ? true : false}
 						className='form-control'
 					/>
 				</div>
@@ -488,7 +489,7 @@ export function FormDetailItem({
 								{ passive: false }
 							)
 						}
-						disabled={isDisabledChop}
+						disabled={isDisabledChop || DetailItem.free ? true : false}
 						className='form-control'
 					/>
 				</div>
@@ -508,7 +509,7 @@ export function FormDetailItem({
 							onBlur: methods.handleSubmit(onSubmitPrice),
 							valueAsNumber: true,
 						})}
-						// disabled={Number(DetailItem.thickness) > 5 ? true : false}
+						disabled={DetailItem.free ? true : false}
 						defaultValue={DetailItem.rolling === null ? 0 : DetailItem.rolling}
 						tabIndex={7}
 						type='number'
@@ -553,7 +554,7 @@ export function FormDetailItem({
 									onChange(val.map(c => c.value))
 								}}
 								onBlur={methods.handleSubmit(onSubmitOptionPainting)}
-								isDisabled={isDisabledPP}
+								isDisabled={isDisabledPP ? true : false}
 								options={options}
 								isMulti
 								placeholder='Нажми'
@@ -587,6 +588,7 @@ export function FormDetailItem({
 					step='0.1'
 					min='0'
 					className='form-control'
+					disabled={DetailItem.free ? true : false}
 				/>
 				<div className={styles.line + ' ' + styles.red}>
 					<input
@@ -609,6 +611,7 @@ export function FormDetailItem({
 						step='0.1'
 						min='0'
 						className='form-control'
+						disabled={DetailItem.free ? true : false}
 					/>
 				</div>
 
@@ -633,6 +636,7 @@ export function FormDetailItem({
 						step='0.1'
 						min='0'
 						className='form-control'
+						disabled={DetailItem.free ? true : false}
 					/>
 				</div>
 

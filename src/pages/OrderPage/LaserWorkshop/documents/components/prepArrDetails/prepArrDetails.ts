@@ -78,6 +78,7 @@ export function PrepArrDetails({ arrDetails, order, full, productCount }: PrepAr
 					additional_setups: detail.additional_setups,
 					suffixes: suffixes,
 					customers_metal: detail.customers_metal,
+					free: detail.free,
 					painting: detail.polymer_one_element_price,
 					products: detail.products,
 				}

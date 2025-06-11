@@ -16,7 +16,7 @@ import { useState } from 'react'
 export function DocSpecialization() {
 	const [showTable, setShowTable] = useState(false)
 	const { id } = useParams()
-	const { orders } = useOrders(id ? id : '')
+	const { orders } = useOrders({ id: id ? id : '', free: false })
 
 	const arrDetails = orders ? CreateDetailGroupList(orders) : undefined
 	const details: DocTableDetail[] | undefined = PrepArrDetails({

@@ -18,7 +18,9 @@ export function PaintingTable({ detail, index, paintingMods }: PaintingTableProp
 	return (
 		<tr>
 			<td className={styles.center}>{index + 1}</td>
-			<td className={styles.left}>{detail.name}</td>
+			<td className={styles.left + ' ' + (detail.free ? styles.free : '')}>
+				{detail.name} {detail.free ? ' (OZON)' : ''}
+			</td>
 			<td className={styles.center}>{detail.quantity}</td>
 			<td>
 				{detail.polymer} {polymerOptions}

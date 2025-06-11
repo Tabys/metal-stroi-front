@@ -17,7 +17,7 @@ import { getVat } from './getVat'
 
 export function DocContract() {
 	const { id } = useParams()
-	const { orders } = useOrders(id ? id : '')
+	const { orders } = useOrders({ id: id ? id : '' })
 	const { currentUser } = useUser()
 	const vat = getVat(orders)
 

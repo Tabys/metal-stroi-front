@@ -14,7 +14,11 @@ const useOrder = ({ id }: OrderProps) => {
 	const getOrder = useCallback(async (orderId: number) => {
 		try {
 			setIsLoading(true)
-			const response = await apiClient.get<Order>(`orders/${orderId}`)
+			const response = await apiClient.get<Order>(`orders/one`, {
+				params: {
+					id: orderId,
+				},
+			})
 			setOrder(response.data)
 			setIsLoading(false)
 		} catch (e: unknown) {

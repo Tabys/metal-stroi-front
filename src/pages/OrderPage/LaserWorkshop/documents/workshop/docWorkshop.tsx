@@ -27,7 +27,7 @@ export function DocWorkhop() {
 	}
 
 	const { id } = useParams()
-	const { orders } = useOrders(id ? id : '')
+	const { orders } = useOrders({ id: id ? id : '' })
 	const { materials } = useMaterials()
 	const setups = prepMetalData({ setups: orders?.setups, materials })
 

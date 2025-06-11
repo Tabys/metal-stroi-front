@@ -19,6 +19,9 @@
 	display: table-row;
 	transition: 0.1s;
 }
+.detail_list .row .free {
+	font-style: italic;
+}
 .detail_list .row.header {
 	position: sticky;
 	top: 0;
