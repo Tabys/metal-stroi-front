@@ -16,6 +16,8 @@ export type Order = {
 	work_types: number[]
 	comment_painting?: string
 	comment_workshop?: string
+	customers_metal: boolean
+	payment_form?: number
 	cost?: number
 	division: number
 	workshops_data?: WorkshopData
@@ -40,7 +42,6 @@ export type Setup = {
 	order_id?: number
 	suffixes?: JSON[]
 	unique: string
-	customers_metal: boolean
 	azote: boolean
 	custom: boolean
 	details?: Detail[]
@@ -166,7 +167,6 @@ export type AddSuffix = {
 	order_id: number
 	thickness: number
 	material: string
-	customers_metal: boolean
 	azote: boolean
 	metals: {
 		value: string
@@ -250,6 +250,7 @@ export type PriceServiceCategory = {
 	title: string
 	short_title: string
 	price_services_items?: PricesServiceItem[]
+	price_service_laser_oxygen_cuts?: PricesServiceLaserOxygenCut[]
 	price_services_rollings?: PricesServiceRolling[]
 	price_services_paintings?: PricesServicePainting[]
 	price_services_painting_mods?: PaintingMods[]
@@ -265,6 +266,16 @@ export type PricesServiceItem = {
 	quantity_max?: number
 	cost?: number
 	cut_cost?: number
+}
+
+export type PricesServiceLaserOxygenCut = {
+	id: number
+	title: string
+	cost: number
+	metal_thickness_min: number
+	metal_thickness_max: number
+	payment_form: number[]
+	free_metal: boolean
 }
 
 export type PricesServiceRolling = {
@@ -545,7 +556,6 @@ export type FormatedSetupsData = {
 	thickness: number
 	table_number: string
 	metals: string
-	customer_metal: boolean
 	setups: Setup[] | undefined
 }
 

@@ -1,7 +1,12 @@
 import { Order, Detail } from '../../../../models'
 
+type CreateDetailGroupListProps = {
+	dataOrder?: Order
+	free?: boolean
+}
+
 // FOR ORDER PAGE
-export function CreateDetailGroupList(dataOrder?: Order) {
+export function CreateDetailGroupList({ dataOrder, free }: CreateDetailGroupListProps) {
 	// CREATE DETAIL LIST
 	const arrDetails: Detail[] = []
 	const groupedDetails: Detail[] = []
@@ -9,7 +14,7 @@ export function CreateDetailGroupList(dataOrder?: Order) {
 		element.details?.forEach((detail, index) => {
 			detail.material = element.material
 			detail.quantity = detail.setup_detail.count
-			detail.customers_metal = element.customers_metal
+			detail.customers_metal = dataOrder?.customers_metal
 			detail.custom = element.custom
 			arrDetails.push(detail)
 		})
@@ -23,8 +28,8 @@ export function CreateDetailGroupList(dataOrder?: Order) {
 			groupedDetails[index].quantity += arrDetails[i].setup_detail.count
 		}
 	}
-
-	const filteredGroupedDetails = groupedDetails.filter(detail => !detail.free)
+	console.log(free)
+	const filteredGroupedDetails = free ? groupedDetails.filter(detail => !detail.free) : groupedDetails
 
 	filteredGroupedDetails.sort((a, b) => String(a.thickness).localeCompare(String(b.thickness)) || a.name.localeCompare(b.name))
 

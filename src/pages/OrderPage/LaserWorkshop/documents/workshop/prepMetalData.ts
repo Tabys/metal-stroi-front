@@ -3,13 +3,14 @@ import { Material, Setup } from '../../../../../models'
 type prepMetalDataProps = {
 	setups: Setup[] | undefined
 	materials: Material[]
+	customers_metal: boolean
 }
 
 function round50(number: number) {
 	return Math.ceil(number / 50) * 50
 }
 
-export function prepMetalData({ setups, materials }: prepMetalDataProps) {
+export function prepMetalData({ setups, materials, customers_metal }: prepMetalDataProps) {
 	const metalData = setups?.map(setup => {
 		let used_metal = 0
 		let full_metal_length = setup.work_piece?.split(' x ')[0]
@@ -74,7 +75,7 @@ export function prepMetalData({ setups, materials }: prepMetalDataProps) {
 			width: used_metal_width,
 			suffixes: strSuffixes,
 			thickness_title: thickness?.title,
-			customers_metal: setup.customers_metal,
+			customers_metal: customers_metal,
 		}
 	})
 

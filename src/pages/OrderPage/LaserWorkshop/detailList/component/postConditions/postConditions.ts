@@ -83,13 +83,22 @@ export async function postConditions({ order, detail, type }: postConditionsProp
 				cuting = Number(serviceItem?.cost)
 			} else {
 				if (setup?.azote === false) {
-					serviceItem = laser_cut_oxigen?.price_services_items?.find(function (n) {
-						return Number(n.metal_thickness_min) <= Number(detail.thickness) && Number(n.metal_thickness_max) >= Number(detail.thickness)
+					serviceItem = laser_cut_oxigen?.price_service_laser_oxygen_cuts?.find(function (n) {
+						return (
+							Number(n.metal_thickness_min) <= Number(detail.thickness) &&
+							Number(n.metal_thickness_max) >= Number(detail.thickness) &&
+							n.payment_form.includes(Number(order?.payment_form)) &&
+							n.free_metal === order?.customers_metal
+						)
 					})
 					if (filteredCustomer?.min_price_oxigen && filteredCustomer?.min_price_oxigen > 0) {
 						cuting = filteredCustomer?.min_price_oxigen
 					} else {
-						cuting = Number(serviceItem?.cost)
+						cuting = serviceItem?.cost
+							? Number(serviceItem?.cost)
+							: laser_cut_oxigen?.price_service_laser_oxygen_cuts?.find(function (n) {
+									return n.id === 10
+							  })?.cost ?? 0
 					}
 					// console.log('OXYGEN')
 				} else {

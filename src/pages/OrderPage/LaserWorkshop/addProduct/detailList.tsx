@@ -9,7 +9,7 @@ type DetailListProps = {
 }
 
 export function DetailList({ order, setArrProduct, isAllDetails }: DetailListProps) {
-	let details: Detail[] = CreateDetailGroupList(order)
+	let details: Detail[] = CreateDetailGroupList({ dataOrder: order })
 	return (
 		<>
 			{details.map(detail => (

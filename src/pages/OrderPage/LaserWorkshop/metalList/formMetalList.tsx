@@ -6,10 +6,11 @@ import { useMaterials } from '../../../../hooks/materials'
 
 interface FormProps {
 	metal: Metal[]
+	markup: number
 	updMetal: () => void
 }
 
-export function FormMetalList({ metal, updMetal }: FormProps) {
+export function FormMetalList({ metal, markup, updMetal }: FormProps) {
 	metal.sort((a, b) => (a.thickness > b.thickness ? 1 : -1))
 	const [alertShow, setAlertShow] = useState(false)
 	const [alertErrorShow, setAlertErrorShow] = useState(false)
@@ -41,6 +42,7 @@ export function FormMetalList({ metal, updMetal }: FormProps) {
 					updMetal={updMetal}
 					materials={materials}
 					setTextErrorAlert={setTextErrorAlert}
+					markup={markup}
 				/>
 			))}
 			<Alert className='alert-fixed' show={alertShow} variant='success'>

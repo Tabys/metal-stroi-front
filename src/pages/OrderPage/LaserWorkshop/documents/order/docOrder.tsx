@@ -20,7 +20,7 @@ export function DocOrder() {
 	const linkBX = process.env.REACT_APP_BX24_URL + `crm/deal/details/${id}/`
 	const full = true
 
-	const arrDetails = orders ? CreateDetailGroupList(orders) : undefined
+	const arrDetails = orders ? CreateDetailGroupList({ dataOrder: orders, free: true }) : undefined
 	const details: DocTableDetail[] | undefined = PrepArrDetails({
 		arrDetails,
 		order: orders,

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { AddSuffix, FormatedSetupsData, MetalType } from '../../../../models'
+import { AddSuffix, FormatedSetupsData, MetalType, Order } from '../../../../models'
 import { OneSetup } from './oneSetup'
 import Select from 'react-select'
 import style from './style.module.css'
@@ -12,25 +12,13 @@ type SetupListProp = {
 	arrSuffix: AddSuffix[]
 	dubleDetails: number[]
 	metals: MetalType[] | null
+	order: Order
 }
 
-export function SetupList({ dubleDetails, metals, data, setArrSuffix, arrSuffix }: SetupListProp) {
-	const [checked, setChecked] = useState(false)
+export function SetupList({ dubleDetails, metals, data, setArrSuffix, arrSuffix, order }: SetupListProp) {
 	const [checkedAzote, setCheckedAzote] = useState(false)
 	const [valueSuffixSelect, setSuffixValueSelect] = useState<any>()
 	const [valueMetalSelect, setValueMetalSelect] = useState<any>()
-
-	const handleChange = () => {
-		setChecked(!checked)
-		setArrSuffix(prevArrSetup => {
-			let updatedSetupsList = prevArrSetup
-			data?.setups?.forEach(setup => {
-				const objIndex = updatedSetupsList.findIndex(obj => obj.id === Number(setup.id))
-				updatedSetupsList[objIndex].customers_metal = !checked
-			})
-			return updatedSetupsList
-		})
-	}
 
 	const handleChangeAzote = () => {
 		setCheckedAzote(!checkedAzote)
@@ -80,16 +68,12 @@ export function SetupList({ dubleDetails, metals, data, setArrSuffix, arrSuffix 
 		<div className={style.setups_group}>
 			<div className={style.group_thickness}>
 				<h2>
-					S{data?.thickness} ({data?.metals}) {data?.customer_metal ? '- металл заказчика' : ''}
+					S{data?.thickness} ({data?.metals}) {order?.customers_metal ? '- металл заказчика' : ''}
 				</h2>
 				<div className={style.controllers}>
 					<label className={style.label}>
 						<span className={style.span}>Азот:</span>{' '}
 						<input type='checkbox' name='azote' onChange={handleChangeAzote} className='form-check-input' disabled={data?.metals === '1.4301'} />
-					</label>
-					<label className={style.label}>
-						<span className={style.span}>Металл заказчика:</span>{' '}
-						<input type='checkbox' name='customers_metal' onChange={handleChange} className='form-check-input' />
 					</label>
 					<label className={style.label}>
 						<span className={style.span}>Общий вид металла:</span>
@@ -131,7 +115,6 @@ export function SetupList({ dubleDetails, metals, data, setArrSuffix, arrSuffix 
 						arrSuffix={arrSuffix}
 						setArrSuffix={setArrSuffix}
 						dubleDetails={dubleDetails}
-						allChecked={checked}
 						allCheckedAzote={checkedAzote}
 						allValueMetalSelect={valueMetalSelect}
 						allValueSuffixSelect={valueSuffixSelect}

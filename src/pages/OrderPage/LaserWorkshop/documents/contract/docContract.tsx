@@ -21,13 +21,13 @@ export function DocContract() {
 	const { currentUser } = useUser()
 	const vat = getVat(orders)
 
-	const arrDetails = orders ? CreateDetailGroupList(orders) : undefined
+	const arrDetails = orders ? CreateDetailGroupList({ dataOrder: orders }) : undefined
 	const details: DocTableDetail[] | undefined = PrepArrDetails({
 		arrDetails,
 		order: orders,
 	})
 	const editedDetailsFull: DocTableDetail[] | undefined = PrepArrDetails({
-		arrDetails: CreateDetailGroupList(orders),
+		arrDetails: CreateDetailGroupList({ dataOrder: orders }),
 		order: orders,
 		full: true,
 	})

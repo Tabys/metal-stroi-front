@@ -34,13 +34,13 @@ export function EmptySetup() {
 
 export function LaserWorkshop({ id, order, user, paintingMods, updateOrders }: LaserWorkshopProps) {
 	const editedDetailsFull: DocTableDetail[] | undefined = PrepArrDetails({
-		arrDetails: CreateDetailGroupList(order),
+		arrDetails: CreateDetailGroupList({ dataOrder: order }),
 		order: order,
 		full: true,
 	})
 
 	const editedDetails: DocTableDetail[] | undefined = PrepArrDetails({
-		arrDetails: CreateDetailGroupList(order),
+		arrDetails: CreateDetailGroupList({ dataOrder: order }),
 		order: order,
 	})
 
@@ -88,7 +88,7 @@ export function LaserWorkshop({ id, order, user, paintingMods, updateOrders }: L
 				updData={updateOrders}
 			/>
 
-			{order.metals ? <MetalList metal={order.metals} updMetal={updateOrders} /> : ''}
+			{order.metals ? <MetalList order={order} updMetal={updateOrders} /> : ''}
 
 			{/* FIXED INTERFACE ELEMENTS */}
 			<div className='fixed-element'>

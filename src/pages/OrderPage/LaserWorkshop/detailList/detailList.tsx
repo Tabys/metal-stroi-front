@@ -123,7 +123,7 @@ export function DetailList({ dataOrder, editedDetails, editedDetailsFull, painti
 					editedDetailsFull={editedDetailsFull}
 					total={total}
 					totalOnlyDetail={totalOnlyDetail}
-					details={CreateDetailGroupList(dataOrder)}
+					details={CreateDetailGroupList({ dataOrder: dataOrder })}
 					orderData={dataOrder}
 					paintingMods={paintingMods}
 				/>

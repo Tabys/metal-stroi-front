@@ -29,11 +29,11 @@ export function DocWorkhop() {
 	const { id } = useParams()
 	const { orders } = useOrders({ id: id ? id : '' })
 	const { materials } = useMaterials()
-	const setups = prepMetalData({ setups: orders?.setups, materials })
+	const setups = prepMetalData({ setups: orders?.setups, materials, customers_metal: orders?.customers_metal ?? false })
 
 	orders?.metals?.sort((a, b) => (a.thickness > b.thickness ? 1 : -1))
 
-	const arrDetails = orders ? CreateDetailGroupList(orders) : undefined
+	const arrDetails = orders ? CreateDetailGroupList({ dataOrder: orders }) : undefined
 	const details: DocTableDetail[] | undefined = PrepArrDetails({
 		arrDetails,
 		order: orders,

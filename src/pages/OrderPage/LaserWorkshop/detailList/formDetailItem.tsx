@@ -100,7 +100,7 @@ export function FormDetailItem({
 	const onSubmitCutInset: SubmitHandler<Detail> = async data => {
 		delete data.metal_cost
 		await apiClient
-			.put<Detail>('detail/', await UpdCutInset(data))
+			.put<Detail>('detail/', await UpdCutInset({ order: orderData, detail: data }))
 			.then(() => {
 				methods.setValue('cut_cost', data.cut_cost)
 				methods.setValue('inset_cost', data.inset_cost)

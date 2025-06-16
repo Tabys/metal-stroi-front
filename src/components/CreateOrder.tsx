@@ -62,6 +62,12 @@ export function CreateOrder({ onCreate, addItem }: CreateOrderProps) {
 			/>
 			{errors.id && <Form.Text className='text-danger'>{errors.id.message}</Form.Text>}
 			{errors.root?.serverError.type === 400 && <Form.Text className='text-danger'>{errors?.root?.serverError.message}</Form.Text>}
+
+			<label htmlFor='customers_metal' className='form-label'>
+				Металл заказчика
+			</label>
+			<input {...register('customers_metal')} className='form-check-input' type='checkbox' />
+
 			<button type='submit' className='btn btn-primary container-fluid mt-5' disabled={isLoading}>
 				{isLoading ? <Spinner animation='border' /> : 'Добавить'}
 			</button>

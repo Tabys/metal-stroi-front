@@ -1,13 +1,13 @@
-import { Metal } from '../../../../models'
+import { Order } from '../../../../models'
 import { FormMetalList } from './formMetalList'
 import styles from './style.module.css'
 
 type metalListProps = {
-	metal: Metal[]
+	order: Order
 	updMetal: () => void
 }
 
-export function MetalList({ metal, updMetal }: metalListProps) {
+export function MetalList({ order, updMetal }: metalListProps) {
 	return (
 		<div className={styles.wrapper_table + ' ' + styles.metal_table}>
 			<h2>Металл</h2>
@@ -22,7 +22,7 @@ export function MetalList({ metal, updMetal }: metalListProps) {
 					<div>Округлить листы</div>
 				</div>
 
-				<FormMetalList metal={metal} updMetal={updMetal} />
+				<FormMetalList metal={order.metals ?? []} markup={order.markup} updMetal={updMetal} />
 			</div>
 		</div>
 	)

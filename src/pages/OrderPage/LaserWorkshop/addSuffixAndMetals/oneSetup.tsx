@@ -11,35 +11,20 @@ type OneSetupProps = {
 	arrSuffix: AddSuffix[]
 	allValueMetalSelect: any
 	allValueSuffixSelect: any
-	allChecked: boolean
 	allCheckedAzote: boolean
 	dubleDetails: number[]
 	metals: MetalType[] | null
 	setArrSuffix: React.Dispatch<React.SetStateAction<AddSuffix[]>>
 }
 
-export function OneSetup({
-	dubleDetails,
-	allValueSuffixSelect,
-	allValueMetalSelect,
-	allChecked,
-	allCheckedAzote,
-	metals,
-	setup,
-	arrSuffix,
-	setArrSuffix,
-}: OneSetupProps) {
+export function OneSetup({ dubleDetails, allValueSuffixSelect, allValueMetalSelect, allCheckedAzote, metals, setup, arrSuffix, setArrSuffix }: OneSetupProps) {
 	const standartValue = arrSuffix.find(item => {
 		return item.id === Number(setup.id)
 	})
 	const [valueSuffixSelect, setValueSuffixSelect] = useState<any>(standartValue?.suffixes)
 	const [valueMetalSelect, setValueMetalSelect] = useState<any>()
-	const [checked, setChecked] = useState<boolean>(setup.customers_metal)
 	const [checkedAzote, setCheckedAzote] = useState<boolean>(setup.azote)
 
-	useEffect(() => {
-		setChecked(allChecked)
-	}, [allChecked])
 	useEffect(() => {
 		setValueMetalSelect(allValueMetalSelect)
 	}, [allValueMetalSelect])
@@ -52,7 +37,6 @@ export function OneSetup({
 
 	useEffect(() => {
 		setValueSuffixSelect(standartValue?.suffixes)
-		setChecked(setup.customers_metal)
 		setCheckedAzote(setup.azote)
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
@@ -79,16 +63,6 @@ export function OneSetup({
 			let updatedSetupsList = prevArrSetup
 			const objIndex = updatedSetupsList.findIndex(obj => obj.id === Number(setup.id))
 			updatedSetupsList[objIndex].metals = value
-			return updatedSetupsList
-		})
-	}
-
-	const handleChangeCustomersMetal = () => {
-		setChecked(!checked)
-		setArrSuffix(prevArrSetup => {
-			let updatedSetupsList = prevArrSetup
-			const objIndex = updatedSetupsList.findIndex(obj => obj.id === Number(setup.id))
-			updatedSetupsList[objIndex].customers_metal = !checked
 			return updatedSetupsList
 		})
 	}
@@ -133,16 +107,6 @@ export function OneSetup({
 							className='form-check-input'
 							onChange={handleChangeAzote}
 							disabled={setup?.material === '1.4301'}
-						/>
-					</label>
-					<label className={style.select_label}>
-						Металл заказчика:{' '}
-						<input
-							type='checkbox'
-							name={'customers_metal' + setup.id}
-							checked={checked}
-							className='form-check-input'
-							onChange={handleChangeCustomersMetal}
 						/>
 					</label>
 

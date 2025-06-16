@@ -13,9 +13,10 @@ type FormMetalDetailProps = {
 	openErrorAlert: () => void
 	setTextErrorAlert: React.Dispatch<React.SetStateAction<string>>
 	materials: Material[]
+	markup: number
 }
 
-export function FormMetalDetail({ metal, updMetal, openAlert, openErrorAlert, setTextErrorAlert, materials }: FormMetalDetailProps) {
+export function FormMetalDetail({ metal, updMetal, openAlert, openErrorAlert, setTextErrorAlert, materials, markup }: FormMetalDetailProps) {
 	const metalName = getMetalNameSuffix(metal.material)
 
 	const methods = useForm<Metal>()
@@ -108,7 +109,13 @@ export function FormMetalDetail({ metal, updMetal, openAlert, openErrorAlert, se
 						className='form-control'
 					/>
 				</div>
-				<div>{Number(materials.find(material => material.table_name === metal.table_number)?.cost) * Number(metal.metal_sheets)}</div>
+				<div>
+					{!metal.customer_metal
+						? Number(materials.find(material => material.table_name === metal.table_number)?.cost) *
+						  Number(metal.metal_sheets) *
+						  (1 + Number(markup) / 100)
+						: 0}
+				</div>
 
 				<div className={styles.updLists}>
 					<button className='btn btn-primary' onClick={methods.handleSubmit(onSubmitUpdMetalLists)}>

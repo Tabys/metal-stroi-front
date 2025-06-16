@@ -41,13 +41,12 @@ export function AddSuffixesAndMetals({ onCreate, onClose, order }: AddSuffixAndM
 				thickness: metal.thickness,
 				table_number: metal.table_number,
 				metals: metal.material,
-				customer_metal: metal.customer_metal,
 				setups: [],
 			})
 		})
 		formatedDataSetups.forEach(item => {
 			const setups = order.setups?.filter(setup => {
-				return setup.table_number === item.table_number && setup.customers_metal === item.customer_metal
+				return setup.table_number === item.table_number
 			})
 			item.setups = setups
 		})
@@ -60,7 +59,6 @@ export function AddSuffixesAndMetals({ onCreate, onClose, order }: AddSuffixAndM
 				thickness: Number(setup?.work_piece?.split(' x ')[2]),
 				table_number: setup?.table_number ? setup?.table_number : '',
 				material: setup?.material ? setup?.material : '',
-				customers_metal: setup.customers_metal,
 				metals: null,
 				azote: setup.azote,
 				suffixes: setup.suffixes,
@@ -82,7 +80,15 @@ export function AddSuffixesAndMetals({ onCreate, onClose, order }: AddSuffixAndM
 		<form onSubmit={handleSubmit(onSubmit)}>
 			<div className={style.suffix_form}>
 				{dataSetups.map(data => (
-					<SetupList key={data.id} metals={metals} data={data} setArrSuffix={setArrSuffix} arrSuffix={arrSuffix} dubleDetails={arrDubleDetails} />
+					<SetupList
+						key={data.id}
+						metals={metals}
+						data={data}
+						order={order}
+						setArrSuffix={setArrSuffix}
+						arrSuffix={arrSuffix}
+						dubleDetails={arrDubleDetails}
+					/>
 				))}
 			</div>
 			<button type='submit' className='btn btn-primary container-fluid'>

@@ -18,14 +18,14 @@ export function DocSpecialization() {
 	const { id } = useParams()
 	const { orders } = useOrders({ id: id ? id : '', free: false })
 
-	const arrDetails = orders ? CreateDetailGroupList(orders) : undefined
+	const arrDetails = orders ? CreateDetailGroupList({ dataOrder: orders, free: true }) : undefined
 	const details: DocTableDetail[] | undefined = PrepArrDetails({
 		arrDetails,
 		order: orders,
 	})
 
 	const editedDetailsFull: DocTableDetail[] | undefined = PrepArrDetails({
-		arrDetails: CreateDetailGroupList(orders),
+		arrDetails: CreateDetailGroupList({ dataOrder: orders, free: true }),
 		order: orders,
 		full: true,
 	})

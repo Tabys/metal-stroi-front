@@ -56,7 +56,7 @@ export function FormOrderController({ orderData, updated }: formOCProps) {
 
 	const onSubmitDelivery: SubmitHandler<OrderController> = async data => {
 		if (data.delivery !== 0) {
-			const arrDetails = orderData ? CreateDetailGroupList(orderData) : undefined
+			const arrDetails = orderData ? CreateDetailGroupList({ dataOrder: orderData }) : undefined
 			const details: DocTableDetail[] | undefined = PrepArrDetails({
 				arrDetails,
 				order: orderData,

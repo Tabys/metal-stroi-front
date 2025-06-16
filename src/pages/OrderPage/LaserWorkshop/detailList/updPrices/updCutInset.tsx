@@ -1,8 +1,13 @@
 import { AxiosError } from 'axios'
-import { PriceServiceCategory, Detail, Setup, PricesServiceItem } from '../../../../../models'
+import { PriceServiceCategory, Detail, Setup, PricesServiceItem, Order } from '../../../../../models'
 import apiClient from '../../../../../components/apiClient'
 
-export async function UpdCutInset(dataDetail: Detail) {
+type UpdCutInsetProps = {
+	order: Order
+	detail: Detail
+}
+
+export async function UpdCutInset({ order, detail }: UpdCutInsetProps) {
 	// console.log(dataDetail)
 	async function getPrices() {
 		try {
@@ -16,7 +21,7 @@ export async function UpdCutInset(dataDetail: Detail) {
 
 	async function getSetup() {
 		try {
-			const response = await apiClient.get<Setup>(`setup/${dataDetail.setup_id}`)
+			const response = await apiClient.get<Setup>(`setup/${detail.setup_id}`)
 			return response.data
 		} catch (e: unknown) {
 			const error = e as AxiosError
@@ -29,7 +34,7 @@ export async function UpdCutInset(dataDetail: Detail) {
 	const PRICES = await getPrices()
 
 	// SETUPS DATA
-	const THICKNESS = dataDetail.thickness
+	const THICKNESS = detail.thickness
 
 	// FIND SERVICE TYPE
 	const PLASM_CUT = PRICES?.find(function (priceArray) {
@@ -46,14 +51,19 @@ export async function UpdCutInset(dataDetail: Detail) {
 		id: 0,
 	}
 
-	if (dataDetail.cut_type === 'plasma') {
+	if (detail.cut_type === 'plasma') {
 		cuting = PLASM_CUT?.price_services_items?.find(function (n) {
 			return Number(n.metal_thickness_min) <= Number(THICKNESS) && Number(n.metal_thickness_max) >= Number(THICKNESS)
 		})
 	} else {
 		if (SETUP?.azote === false) {
-			cuting = LASER_CUT_OXIGEN?.price_services_items?.find(function (n) {
-				return Number(n.metal_thickness_min) <= Number(THICKNESS) && Number(n.metal_thickness_max) >= Number(THICKNESS)
+			cuting = LASER_CUT_OXIGEN?.price_service_laser_oxygen_cuts?.find(function (n) {
+				return (
+					Number(n.metal_thickness_min) <= Number(THICKNESS) &&
+					Number(n.metal_thickness_max) >= Number(THICKNESS) &&
+					n.payment_form.includes(Number(order?.payment_form)) &&
+					n.free_metal === order?.customers_metal
+				)
 			})
 			// console.log('OXYGEN')
 		} else {
@@ -64,8 +74,8 @@ export async function UpdCutInset(dataDetail: Detail) {
 		}
 	}
 
-	dataDetail.cut_cost = cuting && !dataDetail.free ? cuting.cost : 0
-	dataDetail.inset_cost = cuting?.cut_cost && !dataDetail.free ? cuting?.cut_cost : 0
+	detail.cut_cost = cuting && !detail.free ? cuting.cost : 0
+	detail.inset_cost = cuting?.cut_cost && !detail.free ? cuting?.cut_cost : 0
 
-	return dataDetail
+	return detail
 }

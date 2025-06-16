@@ -50,7 +50,7 @@ export function AddProducts({ onCreate, onClose, order, openAlert }: AddProductP
 		setValue('quantity', 1)
 
 		if (!isAllDetails) {
-			const details: Detail[] = CreateDetailGroupList(order)
+			const details: Detail[] = CreateDetailGroupList({ dataOrder: order })
 			setArrProduct(prevArrProduct => ({
 				...prevArrProduct,
 				quantity: 1,

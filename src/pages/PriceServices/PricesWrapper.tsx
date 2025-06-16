@@ -7,6 +7,7 @@ import { useState } from 'react'
 import { PircesRolling } from './PricesRolling'
 import { PircesPainting } from './PricePainitng'
 import { PircesPaintingMods } from './PricePaintingMods'
+import { PircesLaserOxygenCut } from './PriceLaserOxygenCut'
 
 export function PricesWrapper() {
 	const { prices } = useServicePrices()
@@ -23,7 +24,7 @@ export function PricesWrapper() {
 		1: ['Толщина металла (мм)', 'Длинна металла', 'Количество гибов', 'Цена'],
 		2: ['Толщина металла (мм)', 'Количество рубов', 'Цена'],
 		3: ['Толщина металла (мм)', 'Цена'],
-		4: ['Толщина металла (мм)', 'Цена'],
+		4: ['Название', 'Цена'],
 		5: ['Толщина металла (мм)', 'Цена за 1 м.п.', 'Цена за 1 врез'],
 		6: ['Тип металл', 'Толщина металла (мм)', 'Цена', 'Мин. цена'],
 		7: ['Тип металл', 'Толщина металла (мм)', 'Цена', 'Мин. цена'],
@@ -46,6 +47,11 @@ export function PricesWrapper() {
 								</div>
 								{category.price_services_items
 									? category.price_services_items?.map(price => <PircesItems price={price} key={price.id} update={openAlert} />)
+									: ''}
+								{category.price_service_laser_oxygen_cuts
+									? category.price_service_laser_oxygen_cuts?.map(price => (
+											<PircesLaserOxygenCut price={price} key={price.id} update={openAlert} />
+									  ))
 									: ''}
 								{category.price_services_rollings
 									? category.price_services_rollings?.map(price => <PircesRolling price={price} key={price.id} update={openAlert} />)
