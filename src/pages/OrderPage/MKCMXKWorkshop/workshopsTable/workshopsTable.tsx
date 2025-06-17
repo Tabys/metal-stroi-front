@@ -87,6 +87,10 @@ export function WorkshopsTable({ order, rates, total, onCreate, openAlert }: Wor
 						<p>Расходники, %</p>
 					</div>
 					<div className={styles.small + ' ' + styles.line}>
+						<img src='/images/header-table/grinder.png' alt='grinder' />
+						<p>Расходники, руб</p>
+					</div>
+					<div className={styles.small + ' ' + styles.line}>
 						<img src='/images/header-table/painting.png' alt='painting' />
 						<p>Покраска</p>
 					</div>
@@ -194,6 +198,7 @@ export function WorkshopsTable({ order, rates, total, onCreate, openAlert }: Wor
 							})}
 						/>
 					</div>
+					<div className={styles.line}>{total.consumables}</div>
 					<div className={styles.line}>{total.painting}</div>
 					<div className={styles.line}>{total.polymer}</div>
 					<div className={styles.line}>{total.tmc}</div>

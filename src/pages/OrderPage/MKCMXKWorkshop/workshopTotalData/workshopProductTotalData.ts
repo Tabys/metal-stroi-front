@@ -66,11 +66,18 @@ export function workshopProductTotalData({ product, workshopData, allMaterialWei
 		.toDecimalPlaces(3)
 		.toNumber()
 
+	const consumables = new Decimal(
+		material_price === 0
+			? new Decimal(total_work).mul(new Decimal(workshopData?.consumables || 0).div(100)).toNumber()
+			: new Decimal(material_price).mul(new Decimal(workshopData?.consumables || 0).div(100)).toNumber()
+	)
+
 	return {
 		work: total_work.toNumber(),
 		installation: total_installation.toNumber(),
 		painting: total_painting.toNumber(),
 		price: Math.ceil(total_cost),
 		profit: Math.ceil(profit),
+		consumables: consumables.toNumber(),
 	}
 }
