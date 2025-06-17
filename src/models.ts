@@ -531,6 +531,7 @@ export type Nomenclature = {
 	name: string
 	weight: number
 	price: number
+	bx_id: number
 }
 
 export type UpdBX24 = {
@@ -608,6 +609,7 @@ export type WorkshopData = {
 	delivery: number
 	profit: number
 	comment: string
+	metal_application?: number
 	consumables: number
 	tariff_welding: number
 	tariff_painting: number
@@ -640,6 +642,7 @@ export type WorkshopMaterialType = {
 	weight: number
 	price: number
 	quantity: number
+	bx_id: number
 	workshops_product_material: WorkshopProductMaterial
 }
 
@@ -777,4 +780,8 @@ export type PriceMetalItem = {
 	add_cost?: number
 	title?: string
 	price_metal_category_id: number
+}
+
+export type RequestMetalType = {
+	order_id: number
 }

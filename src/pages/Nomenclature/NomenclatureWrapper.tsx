@@ -28,6 +28,7 @@ export function NomenclatureWrapper() {
 							<div className='p-2'>Наименование позиции</div>
 							<div className='p-2'>Вес за единицу, кг</div>
 							<div className='p-2'>Цена за единицу</div>
+							<div className='p-2'>ID в BX24</div>
 						</div>
 						{workshopMaterial.map(nomenclature => (
 							<PricesItemsWorkshopMaterial nomenclature={nomenclature} key={nomenclature.id} update={openAlert} />

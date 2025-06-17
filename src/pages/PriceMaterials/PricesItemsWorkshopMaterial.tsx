@@ -35,6 +35,14 @@ export function PricesItemsWorkshopMaterial({ nomenclature, update }: PricesProp
 					className='form-control'
 				/>
 			</div>
+			<div className='p-2'>
+				<input
+					type='number'
+					defaultValue={nomenclature.bx_id}
+					{...register('bx_id', { onBlur: handleSubmit(onUpdate), valueAsNumber: true })}
+					className='form-control'
+				/>
+			</div>
 		</form>
 	)
 }

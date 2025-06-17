@@ -71,6 +71,17 @@ export function AddNomenclature({ onCreate, onClose }: AddNomenclatureProps) {
 				{errors.price && <Form.Text className='text-danger'>{errors.price.message}</Form.Text>}
 			</label>
 
+			<label htmlFor='bx_id' className='form-label mt-3 w-100'>
+				ID в BX24
+				<input
+					{...register('bx_id', { required: 'Это поле обязательное', valueAsNumber: true })}
+					className={errors.bx_id ? 'form-control is-invalid' : 'form-control'}
+					id='bx_id'
+					type='number'
+				/>
+				{errors.bx_id && <Form.Text className='text-danger'>{errors.bx_id.message}</Form.Text>}
+			</label>
+
 			<button type='submit' className='btn btn-primary container-fluid mt-3' disabled={isLoading}>
 				{isLoading ? <Spinner /> : 'Создать'}
 			</button>

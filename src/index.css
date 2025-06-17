@@ -143,10 +143,16 @@ code {
 }
 
 .bottom-fixed-element .list-group-item {
-	padding: 5px 10px;
+	padding: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.bottom-fixed-element .list-group-item a,
+.bottom-fixed-element .list-group-item form {
+	padding: 2px 7px;
 }
 .bottom-fixed-element .list-group-item:last-child {
-	padding: 0 5px;
 	font-size: 19px;
 }
 
@@ -202,7 +208,12 @@ code {
 	width: 20px;
 	height: 20px;
 }
-
+.request-metal-btn {
+	border: none;
+	background-color: initial;
+	color: #343a40;
+	font-weight: 700;
+}
 .custom-btn {
 	border: none;
 	background-color: initial;

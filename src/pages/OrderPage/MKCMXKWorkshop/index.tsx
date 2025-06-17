@@ -14,6 +14,8 @@ import { Link } from 'react-router-dom'
 import { FaFileLines } from 'react-icons/fa6'
 import { SendPDFForm } from '../../../components/sendPDF'
 import { WorkshopCommentField } from './workshopCommentField/workshopCommentField'
+import { RequestMetal } from './ApplicationMetal/RequestMetal'
+import { UpdateReqMetal } from './ApplicationMetal/UpdateReqMetal'
 
 type MKCMXKWorkshopProps = {
 	id?: string
@@ -98,6 +100,13 @@ export function MKCMXKWorkshop({ id, rates, user, paintingMods, updateOrders, or
 							<Link relative='path' to={`doc-painting-wh`}>
 								<FaFileLines /> Полимерка
 							</Link>
+						</ListGroup.Item>
+						<ListGroup.Item variant='light'>
+							{order?.workshops_data?.metal_application ? (
+								<UpdateReqMetal order_id={Number(id)} update={updateOrders} />
+							) : (
+								<RequestMetal order_id={Number(id)} update={updateOrders} />
+							)}
 						</ListGroup.Item>
 						<ListGroup.Item variant='light'>
 							<SendPDFForm orderId={Number(id)} total={total.cost} api={'pdf-workshops'} order={order} update={updateOrders} />
