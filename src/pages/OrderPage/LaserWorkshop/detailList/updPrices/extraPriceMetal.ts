@@ -1,8 +1,6 @@
-import { Order } from '../../../../../models'
-
-export function extraPrice(orderData: Order) {
+export function extraPrice(markup: number) {
 	let extraPriceMetal: number = 0
-	switch (orderData.markup) {
+	switch (markup) {
 		case 2:
 			extraPriceMetal = 0
 			break

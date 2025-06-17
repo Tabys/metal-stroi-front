@@ -42,7 +42,7 @@ export function FormDetailList({ details, editedDetails, editedDetailsFull, tota
 			setServiceAlertShow(false)
 		}, 2000)
 	}
-	console.log(details)
+
 	return (
 		<>
 			{details.map((item, index) => (

@@ -7,6 +7,7 @@ import { CulcPaintingCost } from './CulcPaintingCost'
 import { culcCostProduct } from './culcCostProduct'
 import Select from 'react-select'
 import apiClient from '../../../../components/apiClient'
+import InputMask from 'react-input-mask'
 
 type FormProductItemProps = {
 	orderData: Order
@@ -50,6 +51,7 @@ export function FormProductItem({
 		setProductCost(culcCostProduct({ products: productItem, editProducts: editedProducts, delivery }))
 		setIsDisabledPP(Number(productItem.painting_price) !== 0 ? false : true)
 		methods.setValue('painting_options', productItem.painting_options)
+		methods.setValue('painting_color', productItem.painting_color)
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [orderData])
 
@@ -218,13 +220,22 @@ export function FormProductItem({
 					/>
 				</div>
 				<div className={styles.line + ' ' + styles.red}>
-					<input
-						{...methods.register('painting_color', {
-							onBlur: methods.handleSubmit(onSubmitColor),
-						})}
-						defaultValue={productItem.painting_color === '' ? '' : productItem.painting_color}
-						type='text'
-						className='form-control'
+					<Controller
+						name='painting_color'
+						control={methods.control}
+						render={({ field }) => (
+							<InputMask
+								{...field}
+								mask='9999'
+								maskChar='_'
+								onBlur={(e: React.FocusEvent<HTMLInputElement>) => {
+									field.onBlur()
+									methods.handleSubmit(onSubmitColor)()
+								}}
+								className='form-control'
+								tabIndex={5}
+							/>
+						)}
 					/>
 				</div>
 				<div className={styles.line + ' ' + styles.red}>
@@ -242,7 +253,7 @@ export function FormProductItem({
 									onChange(val.map(c => c.value))
 								}}
 								onBlur={methods.handleSubmit(onSubmitOptionPainting)}
-								isDisabled={isDisabledPP}
+								isDisabled={isDisabledPP || productItem.painting_color === null || !productItem.painting_color}
 								options={options}
 								isMulti
 								placeholder='Нажми'
@@ -276,6 +287,7 @@ export function FormProductItem({
 						defaultValue={productItem.painting_one_element_price === null ? 0 : productItem.painting_one_element_price}
 						type='number'
 						className='form-control'
+						disabled={true}
 					/>
 				</div>
 

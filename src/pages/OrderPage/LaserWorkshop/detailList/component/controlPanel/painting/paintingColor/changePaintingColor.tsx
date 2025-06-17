@@ -1,5 +1,6 @@
-import { SubmitHandler, useForm } from 'react-hook-form'
+import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import apiClient from '../../../../../../../../components/apiClient'
+import InputMask from 'react-input-mask'
 
 type ChangePaintingColorProps = {
 	orderId: number
@@ -14,7 +15,7 @@ type ChangePaintingColorForm = {
 }
 
 export function ChangePaintingColor({ orderId, apiUrl = 'detail/set-all-pp-colors', update, openAlert }: ChangePaintingColorProps) {
-	const { handleSubmit, register } = useForm<ChangePaintingColorForm>()
+	const { handleSubmit, control } = useForm<ChangePaintingColorForm>()
 
 	const onSubmit: SubmitHandler<ChangePaintingColorForm> = async data => {
 		data.id = orderId
@@ -33,12 +34,22 @@ export function ChangePaintingColor({ orderId, apiUrl = 'detail/set-all-pp-color
 
 	return (
 		<>
-			<input
-				{...register('painting_color', {
-					onBlur: handleSubmit(onSubmit),
-					valueAsNumber: true,
-				})}
-				className='form-control delivery'
+			<Controller
+				name='painting_color'
+				control={control}
+				render={({ field }) => (
+					<InputMask
+						{...field}
+						mask='9999'
+						maskChar='_'
+						onBlur={(e: React.FocusEvent<HTMLInputElement>) => {
+							field.onBlur()
+							handleSubmit(onSubmit)()
+						}}
+						className='form-control'
+						tabIndex={5}
+					/>
+				)}
 			/>
 		</>
 	)

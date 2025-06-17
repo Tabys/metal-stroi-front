@@ -5,6 +5,7 @@ import { getMetalNameSuffix } from './getMetalNameSuffix'
 import { useEffect } from 'react'
 import apiClient from '../../../../components/apiClient'
 import { FaCircleNotch } from 'react-icons/fa6'
+import { extraPrice } from '../detailList/updPrices/extraPriceMetal'
 
 type FormMetalDetailProps = {
 	metal: Metal
@@ -112,8 +113,9 @@ export function FormMetalDetail({ metal, updMetal, openAlert, openErrorAlert, se
 				<div>
 					{!metal.customer_metal
 						? Number(materials.find(material => material.table_name === metal.table_number)?.cost) *
-						  Number(metal.metal_sheets) *
-						  (1 + Number(markup) / 100)
+								Number(metal.metal_sheets) *
+								(1 + Number(markup) / 100) +
+						  extraPrice(markup)
 						: 0}
 				</div>
 

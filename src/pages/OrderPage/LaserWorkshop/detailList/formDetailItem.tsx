@@ -12,6 +12,7 @@ import { postConditions } from './component/postConditions/postConditions'
 import { culcMetalPriceOneDetail } from './component/culcMetalPriceOneDetail/culcMetalPriceOneDetail'
 import { culcCostDetail } from './component/culcCostDetails/culcCostDetails'
 import apiClient from '../../../../components/apiClient'
+import InputMask from 'react-input-mask'
 
 type FormDetailItemProps = {
 	orderData: Order
@@ -62,6 +63,7 @@ export function FormDetailItem({
 		methods.setValue('polymer_options', DetailItem.polymer_options)
 		setIsDisabledPP(DetailItem.polymer_price !== 0 ? false : true)
 		methods.setValue('rolling_type', DetailItem.rolling_type)
+		methods.setValue('polymer', DetailItem.polymer || DetailItem.polymer !== null ? DetailItem.polymer : '')
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [orderData])
 
@@ -529,14 +531,22 @@ export function FormDetailItem({
 				</div>
 
 				<div className={styles.line + ' ' + styles.red}>
-					<input
-						{...methods.register('polymer', {
-							onBlur: methods.handleSubmit(onSubmitPainting),
-						})}
-						defaultValue={DetailItem.polymer === null ? '' : DetailItem.polymer}
-						tabIndex={5}
-						type='text'
-						className='form-control'
+					<Controller
+						name='polymer'
+						control={methods.control}
+						render={({ field }) => (
+							<InputMask
+								{...field}
+								mask='9999'
+								maskChar='_'
+								onBlur={(e: React.FocusEvent<HTMLInputElement>) => {
+									field.onBlur()
+									methods.handleSubmit(onSubmitPainting)()
+								}}
+								className='form-control'
+								tabIndex={5}
+							/>
+						)}
 					/>
 				</div>
 				<div className={styles.line + ' ' + styles.red}>
@@ -554,7 +564,7 @@ export function FormDetailItem({
 									onChange(val.map(c => c.value))
 								}}
 								onBlur={methods.handleSubmit(onSubmitOptionPainting)}
-								isDisabled={isDisabledPP ? true : false}
+								isDisabled={isDisabledPP || DetailItem.polymer === null || !DetailItem.polymer ? true : false}
 								options={options}
 								isMulti
 								placeholder='Нажми'
@@ -599,6 +609,7 @@ export function FormDetailItem({
 						defaultValue={DetailItem.polymer_one_element_price === null ? 0 : DetailItem.polymer_one_element_price}
 						tabIndex={6}
 						type='number'
+						disabled={true}
 						onFocus={e =>
 							e.target.addEventListener(
 								'wheel',
@@ -611,7 +622,6 @@ export function FormDetailItem({
 						step='0.1'
 						min='0'
 						className='form-control'
-						disabled={DetailItem.free ? true : false}
 					/>
 				</div>
 

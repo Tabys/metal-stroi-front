@@ -1,5 +1,6 @@
 import { SubmitHandler, useForm } from 'react-hook-form'
 import apiClient from '../../../../../../../../components/apiClient'
+import Tooltip from '../../../../../../../../components/Tooltip'
 
 type ChgAllPPOneElemPriceProps = {
 	orderId: number
@@ -33,13 +34,15 @@ export function ChgAllPPOneElemPrice({ orderId, apiUrl = 'detail/set-all-pp-pric
 
 	return (
 		<form>
-			<input
-				{...register('polymer_one_element_price', {
-					onBlur: handleSubmit(onSubmit),
-					valueAsNumber: true,
-				})}
-				className='form-control delivery'
-			/>
+			<Tooltip conditions={true} text='Наценка в %'>
+				<input
+					{...register('polymer_one_element_price', {
+						onBlur: handleSubmit(onSubmit),
+						valueAsNumber: true,
+					})}
+					className='form-control delivery'
+				/>
+			</Tooltip>
 		</form>
 	)
 }

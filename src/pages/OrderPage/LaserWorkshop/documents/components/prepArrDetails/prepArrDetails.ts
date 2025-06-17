@@ -46,7 +46,6 @@ export function PrepArrDetails({ arrDetails, order, full, productCount }: PrepAr
 								Number(metal?.weight_metal)
 						  ).toFixed(2)
 						: '0'
-
 				return {
 					id: detail.id,
 					thickness: detail.thickness,

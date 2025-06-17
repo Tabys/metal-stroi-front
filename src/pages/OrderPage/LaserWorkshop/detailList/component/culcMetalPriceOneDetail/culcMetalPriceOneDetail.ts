@@ -7,7 +7,7 @@ type culcMetalPriceOneDetailProps = {
 }
 
 export function culcMetalPriceOneDetail({ order, detail }: culcMetalPriceOneDetailProps) {
-	const extraPriceMetal = extraPrice(order)
+	const extraPriceMetal = extraPrice(order.markup)
 
 	const metal = order?.metals?.find(function (items) {
 		return String(items.table_number) === String(detail.table_number)
