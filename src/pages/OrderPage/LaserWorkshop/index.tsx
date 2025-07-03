@@ -19,6 +19,7 @@ import { UpdBX24Data } from './updBX24Data/updBX24Data'
 import { Link } from 'react-router-dom'
 import { FaFileLines } from 'react-icons/fa6'
 import { SendPDFForm } from '../../../components/sendPDF'
+import { useRates } from '../../../hooks/useRates'
 
 type LaserWorkshopProps = {
 	id?: string
@@ -33,6 +34,7 @@ export function EmptySetup() {
 }
 
 export function LaserWorkshop({ id, order, user, paintingMods, updateOrders }: LaserWorkshopProps) {
+	const { rates } = useRates()
 	const editedDetailsFull: DocTableDetail[] | undefined = PrepArrDetails({
 		arrDetails: CreateDetailGroupList({ dataOrder: order }),
 		order: order,
@@ -61,7 +63,10 @@ export function LaserWorkshop({ id, order, user, paintingMods, updateOrders }: L
 							<TransformDate orderDate={order?.date_create} />
 						</strong>
 					</div>
-					<div>
+					<div className='alert alert-primary p-2 mb-0' role='alert'>
+						Форма оплаты: <strong>{rates.find(rate => rate.bx_id === order?.payment_form)?.name}</strong>
+					</div>
+					<div className='mx-2'>
 						<UpdBX24Data user={user} order={order} onUpd={updateOrders} />
 					</div>
 				</div>

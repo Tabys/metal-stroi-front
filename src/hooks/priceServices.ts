@@ -33,8 +33,19 @@ export function useServicePrices() {
 	// SORT
 	prices.sort((a, b) => (a.id > b.id ? 1 : -1))
 	prices.forEach(item => {
+		item?.price_service_laser_oxygen_cuts?.sort((a, b) => (a.id > b.id ? 1 : -1))
 		item?.price_services_items?.sort((a, b) => (a.id > b.id ? 1 : -1))
-		item?.price_services_rollings?.sort((a, b) => (a.id > b.id ? 1 : -1))
+		item?.price_services_rollings?.sort((a, b) => {
+			if (a.type_metal && b.type_metal) {
+				if (a.type_metal < b.type_metal) return -1
+				if (a.type_metal > b.type_metal) return 1
+			}
+
+			if (a.metal_thickness && b.metal_thickness) {
+				return Number(a.metal_thickness) - Number(b.metal_thickness)
+			}
+			return 0
+		})
 		item?.price_services_paintings?.sort((a, b) => (a.id > b.id ? 1 : -1))
 	})
 

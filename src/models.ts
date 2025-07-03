@@ -184,6 +184,8 @@ export type Metal = {
 	weight_metal: number
 	length: number
 	width: number
+	setup_width: number
+	setup_length: number
 	thickness_title?: string
 	comment?: string
 	customer_metal: boolean
@@ -569,6 +571,7 @@ export type OrderController = {
 	customer: string
 	cut_price?: number
 	user_role?: string
+	customers_metal?: boolean
 }
 
 export type PaintingMods = {
@@ -784,4 +787,13 @@ export type PriceMetalItem = {
 
 export type RequestMetalType = {
 	order_id: number
+}
+
+export type WorkPiece = {
+	id: number
+	material: string
+	thickness_min: number
+	thickness_max: number
+	work_piece: string
+	surface: number
 }

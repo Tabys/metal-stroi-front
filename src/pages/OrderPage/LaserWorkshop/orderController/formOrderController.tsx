@@ -43,6 +43,7 @@ export function FormOrderController({ orderData, updated }: formOCProps) {
 	}
 
 	const [alertShow, setAlertShow] = useState(false)
+	const [customersMetal, setCustomersMetal] = useState(orderData.customers_metal)
 	const [options, setOptions] = useState(defaultOptions)
 
 	const openAlert = () => {
@@ -87,9 +88,17 @@ export function FormOrderController({ orderData, updated }: formOCProps) {
 
 	const onSubmit: SubmitHandler<OrderController> = async data => {
 		// console.log(data)
-		await apiClient.put<OrderController>('orders/', data)
-		updated()
-		openAlert()
+		await apiClient.put<OrderController>('orders/', data).then(() => {
+			updated()
+			openAlert()
+		})
+	}
+
+	const onSubmitCustomersMetal: SubmitHandler<OrderController> = async data => {
+		await apiClient.put<OrderController>('orders/customers-metal', data).then(result => {
+			updated()
+			openAlert()
+		})
 	}
 
 	// const detailsId: number[] = []
@@ -107,6 +116,24 @@ export function FormOrderController({ orderData, updated }: formOCProps) {
 						<input type='hidden' {...methods.register('id')} defaultValue={orderData.id} />
 						<input type='hidden' {...methods.register('customer')} defaultValue={orderData.customer} />
 
+						<Form.Group className='group'>
+							<Form.Label>
+								<Tooltip conditions={true} text='Металл заказчик'>
+									<img src='/images/header-table/free-icon-metal-9920910-min.png' alt='customers_metal' />
+								</Tooltip>
+							</Form.Label>
+							<Form.Check
+								type='checkbox'
+								{...methods.register('customers_metal', {
+									onChange: e => {
+										setCustomersMetal(e.target.checked)
+										methods.handleSubmit(onSubmitCustomersMetal)()
+									},
+								})}
+								defaultChecked={customersMetal}
+								className='form-control customers_metal'
+							/>
+						</Form.Group>
 						<Form.Group className='group'>
 							<Form.Label>
 								<Tooltip conditions={true} text='Доставка'>

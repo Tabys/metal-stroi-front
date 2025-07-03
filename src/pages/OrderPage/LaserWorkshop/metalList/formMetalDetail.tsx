@@ -1,5 +1,5 @@
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form'
-import { Material, Metal } from '../../../../models'
+import { Material, Metal, WorkPiece } from '../../../../models'
 import styles from './style.module.css'
 import { getMetalNameSuffix } from './getMetalNameSuffix'
 import { useEffect } from 'react'
@@ -8,6 +8,7 @@ import { FaCircleNotch } from 'react-icons/fa6'
 import { extraPrice } from '../detailList/updPrices/extraPriceMetal'
 
 type FormMetalDetailProps = {
+	workPiece: WorkPiece[]
 	metal: Metal
 	updMetal: () => void
 	openAlert: () => void
@@ -17,7 +18,7 @@ type FormMetalDetailProps = {
 	markup: number
 }
 
-export function FormMetalDetail({ metal, updMetal, openAlert, openErrorAlert, setTextErrorAlert, materials, markup }: FormMetalDetailProps) {
+export function FormMetalDetail({ workPiece, metal, updMetal, openAlert, openErrorAlert, setTextErrorAlert, materials, markup }: FormMetalDetailProps) {
 	const metalName = getMetalNameSuffix(metal.material)
 
 	const methods = useForm<Metal>()
@@ -82,6 +83,11 @@ export function FormMetalDetail({ metal, updMetal, openAlert, openErrorAlert, se
 		updMetal()
 	}
 
+	const rate = workPiece.find(
+		item =>
+			item.material === metal.material && Number(metal.thickness) >= Number(item.thickness_min) && Number(metal.thickness) <= Number(item.thickness_max)
+	)
+
 	return (
 		<FormProvider {...methods}>
 			<form className={styles.row}>
@@ -112,10 +118,14 @@ export function FormMetalDetail({ metal, updMetal, openAlert, openErrorAlert, se
 				</div>
 				<div>
 					{!metal.customer_metal
-						? Number(materials.find(material => material.table_name === metal.table_number)?.cost) *
-								Number(metal.metal_sheets) *
-								(1 + Number(markup) / 100) +
-						  extraPrice(markup)
+						? (
+								(((Number(materials.find(material => material.table_name === metal.table_number)?.cost) *
+									(metal.setup_width * metal.setup_length)) /
+									Number(rate?.surface ?? 1)) *
+									(1 + Number(markup) / 100) +
+									extraPrice(markup)) *
+								Number(metal.metal_sheets)
+						  ).toFixed(2)
 						: 0}
 				</div>
 

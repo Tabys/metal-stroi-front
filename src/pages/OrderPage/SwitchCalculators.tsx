@@ -23,7 +23,7 @@ export function SwitchCalculators({ id, order, updateOrders, paintingMods, user 
 			return user?.roles === 'ROLE_USER_WORKSHOPS' || user?.roles === 'ROLE_USER_TFC' ? (
 				<p>У вас нет доступа к калькулятору этого цеха</p>
 			) : order?.setups?.length ? (
-				<LaserWorkshop id={id} order={order} updateOrders={updateOrders} paintingMods={paintingMods} />
+				<LaserWorkshop id={id} order={order} user={user} updateOrders={updateOrders} paintingMods={paintingMods} />
 			) : (
 				// <pre>{JSON.stringify(order, null, 2)}</pre>
 				<>

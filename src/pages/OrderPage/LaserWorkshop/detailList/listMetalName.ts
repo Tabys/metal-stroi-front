@@ -2,13 +2,19 @@ export function listMetalName(material: string | undefined) {
 	let listMetal: string[] = []
 	switch (material) {
 		case 'St37':
-			listMetal = ['Hardox', 'Magstrong']
+			listMetal = []
 			break
 		case 'St37HK':
-			listMetal = ['Hardox', 'Magstrong']
+			listMetal = []
 			break
 		case 'St37RIF':
-			listMetal = ['Hardox', 'Magstrong']
+			listMetal = []
+			break
+		case 'Hardox':
+			listMetal = []
+			break
+		case 'Magstrong':
+			listMetal = []
 			break
 		case '09Г2С':
 			listMetal = []
@@ -17,12 +23,6 @@ export function listMetalName(material: string | undefined) {
 			listMetal = []
 			break
 		case '1.4301':
-			listMetal = ['в плёнке', 'без плёнки']
-			break
-		case 'aisi304':
-			listMetal = ['в плёнке', 'без плёнки']
-			break
-		case 'aisi304_2B':
 			listMetal = ['в плёнке', 'без плёнки']
 			break
 		case 'aisi304_BA':

@@ -14,12 +14,6 @@ export function getMetalNameSuffix(metal: string) {
 			metalName = 'ал'
 			break
 		case '1.4301':
-			metalName = 'нерж'
-			break
-		case 'aisi304':
-			metalName = 'нерж пищ'
-			break
-		case 'aisi304_2B':
 			metalName = 'нерж пищ мат'
 			break
 		case 'aisi304_BA':
@@ -29,19 +23,22 @@ export function getMetalNameSuffix(metal: string) {
 			metalName = 'нерж пищ шлиф'
 			break
 		case 'aisi430_2B':
-			metalName = 'нерж пищ мат'
+			metalName = 'нерж тех мат'
 			break
 		case 'aisi430_BA':
-			metalName = 'нерж пищ зерк'
+			metalName = 'нерж тех зерк'
 			break
 		case 'aisi430_4N':
-			metalName = 'нерж пищ шлиф'
+			metalName = 'нерж тех шлиф'
 			break
 		case '09Г2С':
 			metalName = 'ГС'
 			break
 		case 'ОЦ':
 			metalName = 'ОЦ'
+			break
+		default:
+			metalName = metal
 			break
 	}
 

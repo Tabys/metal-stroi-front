@@ -6,6 +6,7 @@ import { DetailList } from './detailList'
 import { useEffect, useState } from 'react'
 import apiClient from '../../../../components/apiClient'
 import { CreateDetailGroupList } from '../detailList/createDetailGroupList'
+import { AvailableDetail } from './availableDetail'
 
 type AddProductProps = {
 	onCreate: () => void
@@ -54,13 +55,18 @@ export function AddProducts({ onCreate, onClose, order, openAlert }: AddProductP
 			setArrProduct(prevArrProduct => ({
 				...prevArrProduct,
 				quantity: 1,
-				details: details.map(detail => {
-					return {
-						id: detail.id,
-						name: detail.name,
-						count: 1,
-					} as unknown as AddProductDetail
-				}),
+				details: details
+					.map(detail => {
+						const count = AvailableDetail(detail)
+						return count > 0
+							? ({
+									id: detail.id,
+									name: detail.name,
+									count: count,
+							  } as unknown as AddProductDetail)
+							: null
+					})
+					.filter((detail): detail is AddProductDetail => detail !== null),
 			}))
 		} else {
 			setArrProduct(prevArrProduct => ({
@@ -84,7 +90,7 @@ export function AddProducts({ onCreate, onClose, order, openAlert }: AddProductP
 				setIsLoading(false)
 			})
 			.catch(err => {
-				openAlert('danger', err.response.data)
+				openAlert('danger', err.response.data.message)
 				setIsLoading(false)
 			})
 	}
@@ -94,7 +100,6 @@ export function AddProducts({ onCreate, onClose, order, openAlert }: AddProductP
 		arrProduct.name = data.name
 		arrProduct.quantity = data.quantity
 
-		console.log('onSubmitBig', arrProduct)
 		await apiClient
 			.post<AddProduct>('products/big', arrProduct)
 			.then(() => {
@@ -104,7 +109,7 @@ export function AddProducts({ onCreate, onClose, order, openAlert }: AddProductP
 			})
 			.catch(err => {
 				console.log(err.response)
-				openAlert('danger', err.response.data)
+				openAlert('danger', err.response.data.message)
 				setIsLoading(false)
 			})
 	}

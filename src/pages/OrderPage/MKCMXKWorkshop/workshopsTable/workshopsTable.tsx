@@ -20,8 +20,8 @@ export function WorkshopsTable({ order, rates, total, onCreate, openAlert }: Wor
 			openAlert('danger', 'Прибыль не может быть меньше 15%')
 			return
 		}
-		if (data.consumables < 20) {
-			openAlert('danger', 'Расходники не могут быть меньше 20%')
+		if (data.consumables < 5) {
+			openAlert('danger', 'Расходники не могут быть меньше 5%')
 			return
 		}
 		await apiClient
@@ -79,16 +79,16 @@ export function WorkshopsTable({ order, rates, total, onCreate, openAlert }: Wor
 						<p>Прибыль, руб</p>
 					</div>
 					<div className={styles.small + ' ' + styles.line}>
-						<img src='/images/header-table/install.png' alt='install' />
-						<p>Монтаж</p>
-					</div>
-					<div className={styles.small + ' ' + styles.line}>
 						<img src='/images/header-table/grinder.png' alt='grinder' />
 						<p>Расходники, %</p>
 					</div>
 					<div className={styles.small + ' ' + styles.line}>
 						<img src='/images/header-table/grinder.png' alt='grinder' />
 						<p>Расходники, руб</p>
+					</div>
+					<div className={styles.small + ' ' + styles.line}>
+						<img src='/images/header-table/install.png' alt='install' />
+						<p>Монтаж</p>
 					</div>
 					<div className={styles.small + ' ' + styles.line}>
 						<img src='/images/header-table/painting.png' alt='painting' />
@@ -185,20 +185,20 @@ export function WorkshopsTable({ order, rates, total, onCreate, openAlert }: Wor
 						/>
 					</div>
 					<div className={styles.line}>{total.profit}</div>
-					<div className={styles.line}>{total.installation}</div>
 					<div className={styles.line}>
 						<input
 							className='form-control'
 							defaultValue={order?.workshops_data?.consumables ? order?.workshops_data.consumables : 0}
 							type='number'
-							min={20}
+							min={5}
 							{...register('consumables', {
 								onBlur: handleSubmit(onSubmit),
 								valueAsNumber: true,
 							})}
 						/>
 					</div>
-					<div className={styles.line}>{total.consumables}</div>
+					<div className={styles.line}>{Math.ceil(total.consumables)}</div>
+					<div className={styles.line}>{total.installation}</div>
 					<div className={styles.line}>{total.painting}</div>
 					<div className={styles.line}>{total.polymer}</div>
 					<div className={styles.line}>{total.tmc}</div>

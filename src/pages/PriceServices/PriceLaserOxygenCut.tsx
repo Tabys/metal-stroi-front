@@ -11,7 +11,7 @@ export function PircesLaserOxygenCut({ price, update }: PricesProps) {
 	const { register, handleSubmit } = useForm<PricesServiceLaserOxygenCut>()
 
 	const onUpdate: SubmitHandler<PricesServiceLaserOxygenCut> = async data => {
-		await apiClient.put<PricesServiceLaserOxygenCut>('price-services-laser-oxygen-cut', data)
+		await apiClient.put<PricesServiceLaserOxygenCut>('price-service-laser-oxygen-cut', data)
 		update()
 	}
 

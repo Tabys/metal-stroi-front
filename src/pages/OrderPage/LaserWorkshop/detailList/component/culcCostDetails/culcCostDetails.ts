@@ -8,8 +8,8 @@ type culcCostDetailProp = {
 }
 
 export function culcCostDetail({ detailsInProduct, detailOutProduct, delivery, editedDetailsFull }: culcCostDetailProp) {
-	const oneDetailInProduct = detailsInProduct?.find(detail => detail.id === detailOutProduct.id)
-	const full_detail_quantity = editedDetailsFull?.find(full_detail => full_detail.id === detailOutProduct.id)?.quantity
+	const oneDetailInProduct = detailsInProduct?.find(detail => detail.id === detailOutProduct.id && detail.free === false)
+	const full_detail_quantity = editedDetailsFull?.find(full_detail => full_detail.id === detailOutProduct.id && full_detail.free === false)?.quantity
 
 	let cost = 0
 	if (oneDetailInProduct) {

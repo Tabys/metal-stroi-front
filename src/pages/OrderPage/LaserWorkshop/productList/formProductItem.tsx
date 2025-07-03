@@ -115,7 +115,7 @@ export function FormProductItem({
 			.catch(async err => {
 				console.log(err.response)
 				if ((err.response.status = 400)) {
-					await setError(err.response.data)
+					await setError(err.response.data.message)
 					await updProduct()
 				}
 			})

@@ -28,7 +28,6 @@ export function CreateDetailGroupList({ dataOrder, free }: CreateDetailGroupList
 			groupedDetails[index].quantity += arrDetails[i].setup_detail.count
 		}
 	}
-	console.log(free)
 	const filteredGroupedDetails = free ? groupedDetails.filter(detail => !detail.free) : groupedDetails
 
 	filteredGroupedDetails.sort((a, b) => String(a.thickness).localeCompare(String(b.thickness)) || a.name.localeCompare(b.name))

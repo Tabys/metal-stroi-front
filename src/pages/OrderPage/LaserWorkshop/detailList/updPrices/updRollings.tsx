@@ -53,6 +53,8 @@ export async function UpdRollings({ dataDetail, free }: UpdRollingsProps) {
 			case 'St37':
 			case 'St37HK':
 			case 'St37RIF':
+			case 'Hardox':
+			case 'Magstrong':
 			case '09Г2С':
 			case 'ОЦ':
 				SERVICES_COST = PRICE?.price_services_rollings?.filter(items => {
@@ -71,8 +73,6 @@ export async function UpdRollings({ dataDetail, free }: UpdRollingsProps) {
 				})
 				break
 			case '1.4301':
-			case 'aisi304':
-			case 'aisi304_2B':
 			case 'aisi304_BA':
 			case 'aisi304_4N':
 			case 'aisi430_2B':

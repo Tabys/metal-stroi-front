@@ -9,6 +9,7 @@ export function CulcTotalData({ details, full_details, products, orders }: CulcT
 	let total_price = 0
 	let total_quantity = 0
 	let total_weight = 0
+	let total_weight_without_free = 0
 	let total_chop = 0
 	let total_bend = 0
 	let total_choping = 0
@@ -30,6 +31,8 @@ export function CulcTotalData({ details, full_details, products, orders }: CulcT
 	let total_choping_all = 0
 	let total_rolling_all = 0
 	let total_painting_all = 0
+	let total_cuting_laser_all = 0
+	let total_cuting_plasma_all = 0
 
 	// Only Products
 	let total_prod_painting = 0
@@ -45,21 +48,25 @@ export function CulcTotalData({ details, full_details, products, orders }: CulcT
 
 	details?.forEach(detail => {
 		total_weight += Number(detail.weight) * Number(detail.quantity)
+		total_weight_without_free += detail.free ? 0 : Number(detail.weight) * Number(detail.quantity)
 	})
+
 	products?.forEach(product => {
 		total_weight += Number(product.weight)
+		total_weight_without_free += Number(product.weight)
 	})
+
 	// Delivery
 	let deliveryCost: number | null = null
 	let oneKgDelivery: number = 0
 	if (orders?.delivery! && orders?.delivery > 0) {
 		deliveryCost = orders?.delivery + orders?.pallets * 500
-		oneKgDelivery = Number(deliveryCost) / Number(total_weight)
+		oneKgDelivery = Number(deliveryCost) / Number(total_weight_without_free)
 	}
 
 	details?.forEach(detail => {
 		const full_detail_quantity = full_details?.find(full_detail => full_detail.id === detail.id)?.quantity
-		const oneKgDrowing = Number(detail.drowing) / (Number(detail.weight) * Number(full_detail_quantity))
+		const oneKgDrowing = detail.free ? 0 : Number(detail.drowing) / (Number(detail.weight) * Number(full_detail_quantity))
 
 		total_price += Number(
 			(
@@ -71,8 +78,8 @@ export function CulcTotalData({ details, full_details, products, orders }: CulcT
 						Number(detail.metal) +
 						Number(detail.painting) +
 						Number(detail.rolling) +
-						Number(oneKgDelivery) * Number(detail.weight) +
-						Number(oneKgDrowing) * Number(detail.weight)
+						(detail.free ? 0 : Number(oneKgDelivery) * Number(detail.weight)) +
+						(detail.free ? 0 : Number(oneKgDrowing) * Number(detail.weight))
 					).toFixed(2)
 				) * Number(detail.quantity)
 			).toFixed(2)
@@ -101,6 +108,8 @@ export function CulcTotalData({ details, full_details, products, orders }: CulcT
 		total_choping_all += Number(detail.choping) * Number(detail.quantity)
 		total_rolling_all += Number(detail.rolling) * Number(detail.quantity)
 		total_painting_all += Number(detail.painting) * Number(detail.quantity)
+		total_cuting_laser_all += detail.cut_type === 'laser' ? Number(detail.cut_cost) * Number(detail.quantity) : 0
+		total_cuting_plasma_all += detail.cut_type === 'plasma' ? Number(detail.cut_cost) * Number(detail.quantity) : 0
 	})
 	products?.forEach(product => {
 		total_price += Number((product.totalPrice + oneKgDelivery * Number(product.weight)).toFixed(2))
@@ -145,6 +154,8 @@ export function CulcTotalData({ details, full_details, products, orders }: CulcT
 		choping_all: total_choping_all,
 		rolling_all: total_rolling_all,
 		painting_all: total_painting_all,
+		cuting_laser_all: total_cuting_laser_all,
+		cuting_plasma_all: total_cuting_plasma_all,
 
 		prod_painting: total_prod_painting,
 		prod_turning_works: total_prod_turning_works,

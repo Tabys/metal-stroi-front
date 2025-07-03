@@ -97,33 +97,33 @@ export function DocSpecialization() {
 								<td></td>
 								<td></td>
 								{Number(total.cuting_plasma) > 0 ? (
-									<td className={showTable === true ? styles.center : styles.hideTable}>{total.cuting_plasma.toFixed(2)}</td>
+									<td className={showTable === true ? styles.center : styles.hideTable}>{total.cuting_plasma_all.toFixed(2)}</td>
 								) : (
 									''
 								)}
 								{Number(total.cuting_laser) > 0 ? (
-									<td className={showTable === true ? styles.center : styles.hideTable}>{total.cuting_laser.toFixed(2)}</td>
+									<td className={showTable === true ? styles.center : styles.hideTable}>{total.cuting_laser_all.toFixed(2)}</td>
 								) : (
 									''
 								)}
 								{Number(total.choping) > 0 ? (
-									<td className={showTable === true ? styles.center : styles.hideTable}>{total.choping.toFixed(2)}</td>
+									<td className={showTable === true ? styles.center : styles.hideTable}>{total.choping_all.toFixed(2)}</td>
 								) : (
 									''
 								)}
 								{Number(total.bending) > 0 ? (
-									<td className={showTable === true ? styles.center : styles.hideTable}>{total.bending.toFixed(2)}</td>
+									<td className={showTable === true ? styles.center : styles.hideTable}>{total.bending_all.toFixed(2)}</td>
 								) : (
 									''
 								)}
 								{Number(total.painting) > 0 ? (
-									<td className={showTable === true ? styles.center : styles.hideTable}>{total.painting.toFixed(2)}</td>
+									<td className={showTable === true ? styles.center : styles.hideTable}>{total.painting_all.toFixed(2)}</td>
 								) : (
 									''
 								)}
 
 								{Number(total.rolling) > 0 ? (
-									<td className={showTable === true ? styles.center : styles.hideTable}>{total.rolling.toFixed(2)}</td>
+									<td className={showTable === true ? styles.center : styles.hideTable}>{total.rolling_all.toFixed(2)}</td>
 								) : (
 									''
 								)}
@@ -133,7 +133,7 @@ export function DocSpecialization() {
 								) : (
 									''
 								)}
-								<td className={showTable === true ? styles.center : styles.hideTable}>{total.metal.toFixed(2)}</td>
+								<td className={showTable === true ? styles.center : styles.hideTable}>{total.metal_all.toFixed(2)}</td>
 								<td></td>
 								<td className={styles.center}>{total.quantity - total.prod_quantity}</td>
 								<td></td>

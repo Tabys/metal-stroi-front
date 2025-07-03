@@ -13,6 +13,7 @@ import { culcMetalPriceOneDetail } from './component/culcMetalPriceOneDetail/cul
 import { culcCostDetail } from './component/culcCostDetails/culcCostDetails'
 import apiClient from '../../../../components/apiClient'
 import InputMask from 'react-input-mask'
+import { renameMetal } from './renameMetal'
 
 type FormDetailItemProps = {
 	orderData: Order
@@ -352,7 +353,7 @@ export function FormDetailItem({
 				</div>
 
 				<div className={styles.line + ' ' + styles.brown}>{DetailItem.thickness}</div>
-				<div className={styles.line + ' ' + styles.brown}>{DetailItem.material}</div>
+				<div className={styles.line + ' ' + styles.brown}>{renameMetal(DetailItem.material)}</div>
 				<div className={styles.line + ' ' + styles.brown}>{metalPriceOneDetail}</div>
 
 				<FormRadio name='cut_type' defaultValue={DetailItem.cut_type} data={DetailItem} onSubmit={methods.handleSubmit(onSubmitCutInset)} />
@@ -609,7 +610,6 @@ export function FormDetailItem({
 						defaultValue={DetailItem.polymer_one_element_price === null ? 0 : DetailItem.polymer_one_element_price}
 						tabIndex={6}
 						type='number'
-						disabled={true}
 						onFocus={e =>
 							e.target.addEventListener(
 								'wheel',

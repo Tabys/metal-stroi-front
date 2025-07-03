@@ -17,6 +17,8 @@ export function FormSelectRoll({ detailData, selected, name, disabled, onSubmit 
 		case 'St37':
 		case 'St37HK':
 		case 'St37RIF':
+		case 'Hardox':
+		case 'Magstrong':
 		case '09Г2С':
 			arrOptions = ['', 'rolling_roll', 'rolling_cone']
 			arrOptionsText = ['', 'Прокат', 'Конус']
@@ -24,8 +26,6 @@ export function FormSelectRoll({ detailData, selected, name, disabled, onSubmit 
 		case 'AlMg3':
 		case 'ОЦ':
 		case '1.4301':
-		case 'aisi304':
-		case 'aisi304_2B':
 		case 'aisi304_BA':
 		case 'aisi304_4N':
 		case 'aisi430_2B':

@@ -31,6 +31,7 @@ export function PricesWrapper() {
 		8: ['Серия RAL', 'Цена'],
 		9: ['Опция ПП', 'Стоимость', 'ед.изм.'],
 	}
+
 	return (
 		<>
 			<Tabs defaultActiveKey='1' transition={false} id='noanim-tab-example' className='mb-3'>

@@ -41,7 +41,7 @@
 	display: table-cell;
 	border: 1px solid #ccc;
 	padding: 5px;
-	width: calc(100% / 12);
+	width: calc(100% / 15);
 }
 .workshops_list .row .line.radio {
 	text-align: center;

@@ -1,6 +1,7 @@
 import { Order } from '../../../../models'
 import { FormMetalList } from './formMetalList'
 import styles from './style.module.css'
+import { useWorkPiece } from '../../../../hooks/useWorkPiece'
 
 type metalListProps = {
 	order: Order
@@ -8,6 +9,8 @@ type metalListProps = {
 }
 
 export function MetalList({ order, updMetal }: metalListProps) {
+	const { workPiece } = useWorkPiece()
+
 	return (
 		<div className={styles.wrapper_table + ' ' + styles.metal_table}>
 			<h2>Металл</h2>
@@ -22,7 +25,7 @@ export function MetalList({ order, updMetal }: metalListProps) {
 					<div>Округлить листы</div>
 				</div>
 
-				<FormMetalList metal={order.metals ?? []} markup={order.markup} updMetal={updMetal} />
+				<FormMetalList workPiece={workPiece} metal={order.metals ?? []} markup={order.markup} updMetal={updMetal} />
 			</div>
 		</div>
 	)

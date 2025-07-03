@@ -19,10 +19,15 @@ export function FormCreateNewThickness({ categoryId, openAlert, refetchPrices }:
 	} = useForm<PriceMetalItem>()
 
 	const onSubmit: SubmitHandler<PriceMetalItem> = async data => {
+		data.title = data.thickness
+		const match = data.thickness.match(/^\d+(\.\d+)?/)
+
+		if (match) {
+			data.thickness = match[0]
+		}
+
 		data.gas = 'oxygen'
 		data.add_cost = 0
-		data.title = data.thickness
-
 		await apiClient
 			.post<PriceMetalItem>('price-metal-item', data)
 			.then(result => {
@@ -51,10 +56,9 @@ export function FormCreateNewThickness({ categoryId, openAlert, refetchPrices }:
 					<input
 						{...register('thickness', {
 							required: 'Это поле обязательное',
-							valueAsNumber: true,
 						})}
 						className={errors.thickness ? 'form-control is-invalid' : 'form-control'}
-						type='number'
+						type='text'
 					/>
 					{errors.thickness && <Form.Text className='text-danger'>{errors.thickness.message}</Form.Text>}
 				</div>

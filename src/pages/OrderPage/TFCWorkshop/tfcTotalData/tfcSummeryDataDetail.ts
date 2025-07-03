@@ -8,7 +8,6 @@ type tfcSummeryDataDetailProps = {
 }
 
 export function tfcSummeryDataDetail({ detail, tfcData, total }: tfcSummeryDataDetailProps) {
-	console.log(tfcData)
 	const setting_up = new Decimal(detail?.setup_time || 0)
 		.mul(new Decimal(tfcData?.machine_cost || 0).div(2))
 		.div(60)
