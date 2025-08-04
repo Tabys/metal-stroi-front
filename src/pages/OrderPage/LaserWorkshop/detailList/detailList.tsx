@@ -1,13 +1,13 @@
-import { DocTableDetail, Order, PaintingMods, TotalData } from '../../../../models'
+import { DocTableDetail, Order, PaintingMods, TotalData, Detail } from '../../../../models'
 import styles from './style.module.css'
 import { FormDetailList } from './formDetailList'
-import { CreateDetailGroupList } from './createDetailGroupList'
 import { ControlPanel } from './component/controlPanel/controlPanel'
 import Tooltip from '../../../../components/Tooltip'
 import { PPHint } from './component/ppHint/ppHint'
 
 type detailListProps = {
 	dataOrder: Order
+	detailGroupList: Detail[]
 	editedDetails?: DocTableDetail[]
 	editedDetailsFull?: DocTableDetail[]
 	paintingMods: PaintingMods[]
@@ -16,7 +16,7 @@ type detailListProps = {
 	updated: () => void
 }
 
-export function DetailList({ dataOrder, editedDetails, editedDetailsFull, paintingMods, total, totalOnlyDetail, updated }: detailListProps) {
+export function DetailList({ dataOrder, detailGroupList, editedDetails, editedDetailsFull, paintingMods, total, totalOnlyDetail, updated }: detailListProps) {
 	return (
 		<div className={styles.wrapper_table}>
 			<div className={styles.detail_list + ' ' + styles.border_bold}>
@@ -123,7 +123,7 @@ export function DetailList({ dataOrder, editedDetails, editedDetailsFull, painti
 					editedDetailsFull={editedDetailsFull}
 					total={total}
 					totalOnlyDetail={totalOnlyDetail}
-					details={CreateDetailGroupList({ dataOrder: dataOrder })}
+					details={detailGroupList}
 					orderData={dataOrder}
 					paintingMods={paintingMods}
 				/>

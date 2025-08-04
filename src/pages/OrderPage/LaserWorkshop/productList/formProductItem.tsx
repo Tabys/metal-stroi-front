@@ -104,6 +104,19 @@ export function FormProductItem({
 			})
 	}
 
+	const onSubmitOneElementPrice: SubmitHandler<Product> = async data => {
+		data.painting_base_price = data.painting_one_element_price
+		await apiClient
+			.put<Product>('products/upd-pp-one-elem-price', data)
+			.then(async result => {
+				updProduct()
+				updData()
+			})
+			.catch(async err => {
+				console.log(err.response)
+			})
+	}
+
 	const onSubmitQuantity: SubmitHandler<Product> = async data => {
 		await apiClient
 			.put<Product>('products/quantity/', data)
@@ -281,13 +294,12 @@ export function FormProductItem({
 				<div className={styles.line + ' ' + styles.red}>
 					<input
 						{...methods.register('painting_one_element_price', {
-							onBlur: methods.handleSubmit(onSubmitPainting),
+							onBlur: methods.handleSubmit(onSubmitOneElementPrice),
 							valueAsNumber: true,
 						})}
 						defaultValue={productItem.painting_one_element_price === null ? 0 : productItem.painting_one_element_price}
 						type='number'
 						className='form-control'
-						disabled={true}
 					/>
 				</div>
 

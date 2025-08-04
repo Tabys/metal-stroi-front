@@ -35,6 +35,7 @@ export type Setup = {
 	material?: string
 	work_piece?: string
 	min_work_piece?: string
+	real_thickness?: number
 	program_runs?: string
 	table_number?: string
 	metal_cost?: number

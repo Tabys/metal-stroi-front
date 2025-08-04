@@ -1,4 +1,5 @@
 import { ListGroup } from 'react-bootstrap'
+import { useMemo } from 'react'
 import { AddDetailSetupModal } from '../../../components/modal/AddDetailSetupModal'
 import { AddProductModal } from '../../../components/modal/AddProductModal'
 import { AddSuffixModal } from '../../../components/modal/AddSuffixAndMetalsModal'
@@ -6,7 +7,7 @@ import { CopyOrderModal } from '../../../components/modal/CopyOrderModal'
 import { DelSetupModal } from '../../../components/modal/DelSetupModal'
 import { UploadSetupModal } from '../../../components/modal/UploadSetupModal'
 import { TransformDate } from '../../../components/TransformDate'
-import { DocTableDetail, Order, PaintingMods, UserData } from '../../../models'
+import { Order, PaintingMods, UserData } from '../../../models'
 import { CreateDetailGroupList } from './detailList/createDetailGroupList'
 import { DetailList } from './detailList/detailList'
 import { CulcTotalData } from './documents/components/culcTotalData'
@@ -35,20 +36,52 @@ export function EmptySetup() {
 
 export function LaserWorkshop({ id, order, user, paintingMods, updateOrders }: LaserWorkshopProps) {
 	const { rates } = useRates()
-	const editedDetailsFull: DocTableDetail[] | undefined = PrepArrDetails({
-		arrDetails: CreateDetailGroupList({ dataOrder: order }),
-		order: order,
-		full: true,
-	})
 
-	const editedDetails: DocTableDetail[] | undefined = PrepArrDetails({
-		arrDetails: CreateDetailGroupList({ dataOrder: order }),
-		order: order,
-	})
+	// Мемоизируем создание группированного списка деталей
+	const detailGroupList = useMemo(() => {
+		return CreateDetailGroupList({ dataOrder: order })
+	}, [order])
 
-	const products = PrepArrProducts({ order, full_details: editedDetailsFull })
-	const total = CulcTotalData({ details: editedDetails, full_details: editedDetailsFull, products, orders: order })
-	const totalOnlyDetail = CulcTotalData({ details: editedDetailsFull, products, orders: order })
+	// Мемоизируем обработку деталей (полная версия)
+	const editedDetailsFull = useMemo(() => {
+		return PrepArrDetails({
+			arrDetails: detailGroupList,
+			order: order,
+			full: true,
+		})
+	}, [detailGroupList, order])
+
+	// Мемоизируем обработку деталей (доступная версия)
+	const editedDetails = useMemo(() => {
+		return PrepArrDetails({
+			arrDetails: detailGroupList,
+			order: order,
+		})
+	}, [detailGroupList, order])
+
+	// Мемоизируем обработку продуктов
+	const products = useMemo(() => {
+		return PrepArrProducts({ order, full_details: editedDetailsFull })
+	}, [order, editedDetailsFull])
+
+	// Мемоизируем расчет общих данных
+	const total = useMemo(() => {
+		return CulcTotalData({
+			details: editedDetails,
+			full_details: editedDetailsFull,
+			products,
+			orders: order,
+		})
+	}, [editedDetails, editedDetailsFull, products, order])
+
+	// Мемоизируем расчет данных только по деталям
+	const totalOnlyDetail = useMemo(() => {
+		return CulcTotalData({
+			details: editedDetailsFull,
+			products,
+			orders: order,
+		})
+	}, [editedDetailsFull, products, order])
 
 	return (
 		<>
@@ -76,6 +109,7 @@ export function LaserWorkshop({ id, order, user, paintingMods, updateOrders }: L
 
 			<DetailList
 				dataOrder={order}
+				detailGroupList={detailGroupList}
 				editedDetails={editedDetails}
 				editedDetailsFull={editedDetailsFull}
 				paintingMods={paintingMods}

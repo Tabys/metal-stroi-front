@@ -1,5 +1,5 @@
 import { useForm, SubmitHandler, FormProvider, Controller } from 'react-hook-form'
-import { Detail, DocTableDetail, Order, PaintingMods } from '../../../../models'
+import { Detail, DocTableDetail, Metal, Order, PaintingMods } from '../../../../models'
 import styles from './style.module.css'
 import { UpdCutInset } from './updPrices/updCutInset'
 import { FormRadio } from './formElements/formRadio'
@@ -299,7 +299,14 @@ export function FormDetailItem({
 			.then(async number => {
 				await methods.handleSubmit(onSubmitBend)()
 				await methods.handleSubmit(onSubmitChop)()
-				updDetail()
+				await apiClient
+					.put<Metal>('metal/re-calc-lists', {
+						order_id: orderData.id,
+					})
+					.then(() => {
+						updDetail()
+						updData()
+					})
 			})
 			.catch(err => {
 				console.log(err)

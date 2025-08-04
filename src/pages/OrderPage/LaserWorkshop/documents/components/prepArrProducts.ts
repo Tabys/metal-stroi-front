@@ -1,5 +1,4 @@
 import { Order, DocTableDetail } from '../../../../../models'
-import { PrepArrDetails } from './prepArrDetails/prepArrDetails'
 
 type PrepArrProductsProps = {
 	order?: Order
@@ -8,8 +7,6 @@ type PrepArrProductsProps = {
 
 export function PrepArrProducts({ order, full_details }: PrepArrProductsProps) {
 	const prepArrProducts = order?.products?.map(product => {
-		const arrDetails = product.details
-		const productCount = product.quantity
 		let value = 0
 		let totalPrice = 0
 		let metal = 0
@@ -18,37 +15,38 @@ export function PrepArrProducts({ order, full_details }: PrepArrProductsProps) {
 		let detailsChoping = 0
 		let detailsBanding = 0
 
-		const details = PrepArrDetails({
-			arrDetails,
-			order,
-			productCount,
-		})
+		// Используем уже готовые данные full_details вместо повторного вызова PrepArrDetails
+		product.details?.forEach(productDetail => {
+			const fullDetail = full_details?.find(fd => fd.id === productDetail.id)
+			if (!fullDetail) return
 
-		details?.forEach(detail => {
-			const full_detail_quantity = full_details?.find(full_detail => full_detail.id === detail.id)?.quantity
-			const oneKgDrawing = Number(detail.drowing) / (Number(detail.weight) * Number(full_detail_quantity))
+			const detailQuantity = Number(productDetail.product_detail?.count) * product.quantity
+			const full_detail_quantity = fullDetail.quantity
+
+			const oneKgDrawing = Number(fullDetail.drowing) / (Number(fullDetail.weight) * Number(full_detail_quantity))
 
 			const cost = Number(
 				(
 					Number(
 						(
-							Number(detail.bending) +
-							Number(detail.choping) +
-							Number(detail.cut_cost) +
-							Number(detail.metal) +
-							Number(detail.rolling) +
-							oneKgDrawing * Number(detail.weight)
+							Number(fullDetail.bending) +
+							Number(fullDetail.choping) +
+							Number(fullDetail.cut_cost) +
+							Number(fullDetail.metal) +
+							Number(fullDetail.rolling) +
+							oneKgDrawing * Number(fullDetail.weight)
 						).toFixed(2)
-					) * Number(detail.quantity)
+					) * detailQuantity
 				).toFixed(2)
 			)
+
 			totalPrice += cost
-			value += (Number(detail.surface) / 1000000) * 2 * detail.quantity
-			detailsWeight += Number(detail.weight)
-			detailsCutCost += Number(detail.cut_cost)
-			detailsChoping += Number(detail.choping)
-			detailsBanding += Number(detail.bending)
-			metal += Number(detail.metal) * Number(detail.quantity)
+			value += (Number(fullDetail.surface) / 1000000) * 2 * detailQuantity
+			detailsWeight += Number(fullDetail.weight) * Number(productDetail.product_detail?.count)
+			detailsCutCost += Number(fullDetail.cut_cost)
+			detailsChoping += Number(fullDetail.choping)
+			detailsBanding += Number(fullDetail.bending)
+			metal += Number(fullDetail.metal) * detailQuantity
 		})
 
 		totalPrice +=

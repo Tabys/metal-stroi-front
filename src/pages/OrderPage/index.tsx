@@ -9,7 +9,7 @@ export function OrderPage() {
 	const { order, updateOrders } = useOrder({ id })
 	const { paintingMods } = usePaintingMods()
 	const { currentUser } = useUser()
-
+	console.log(order)
 	return (
 		<>
 			<div className='container-flued px-5 mb-5 main-page'>

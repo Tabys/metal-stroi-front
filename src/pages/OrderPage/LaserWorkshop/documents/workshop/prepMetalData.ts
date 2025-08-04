@@ -20,15 +20,13 @@ export function prepMetalData({ setups, materials, customers_metal }: prepMetalD
 		let used_metal_width = 0
 
 		if (setup.custom) {
-			let detail_metal_lengt = 0
-			let detail_metal_width = 0
+			let square = 0
 
 			setup.details?.forEach(detail => {
-				detail_metal_lengt += Number(detail.l_size) * Number(detail.setup_detail.count)
-				detail_metal_width += Number(detail.w_size) * Number(detail.setup_detail.count)
+				square += Number(detail.l_size) * Number(detail.w_size) * Number(detail.setup_detail.count)
 			})
 
-			used_metal = ((detail_metal_lengt * detail_metal_width) / (Number(full_metal_length) * Number(full_metal_width))) * Number(setup.program_runs)
+			used_metal = (square / (Number(full_metal_length) * Number(full_metal_width))) * Number(setup.program_runs)
 			used_metal_length = Number(full_metal_length)
 			used_metal_width = Number(full_metal_width)
 		} else {
@@ -49,7 +47,7 @@ export function prepMetalData({ setups, materials, customers_metal }: prepMetalD
 			} else {
 				used_metal_width = rounded_used_metal_width
 			}
-
+			console.log(used_metal_length, used_metal_width, full_metal_length, full_metal_width)
 			used_metal = ((used_metal_length * used_metal_width) / (Number(full_metal_length) * Number(full_metal_width))) * Number(setup.program_runs)
 		}
 

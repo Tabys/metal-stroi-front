@@ -14,7 +14,7 @@ export function getOptionsMetals({ metals, setup }: getOptionsMetalsProps) {
 
 	metals?.forEach(metal => {
 		let availebleMetals = metal.price_metal_items?.filter(item => {
-			const thickness = setup?.work_piece?.split('x')[2]
+			const thickness = setup?.real_thickness
 			return Number(item.thickness) === Number(thickness)
 		})
 

@@ -1,7 +1,7 @@
 import { Detail, DocTableDetail, Order, PaintingMods, TotalData } from '../../../../models'
 import { FormDetailItem } from './formDetailItem'
 import Alert from 'react-bootstrap/Alert'
-import { useState } from 'react'
+import { useState, memo } from 'react'
 import styles from './style.module.css'
 
 interface FormProps {
@@ -15,7 +15,16 @@ interface FormProps {
 	updData: () => void
 }
 
-export function FormDetailList({ details, editedDetails, editedDetailsFull, total, totalOnlyDetail, orderData, paintingMods, updData }: FormProps) {
+export const FormDetailList = memo(function FormDetailList({
+	details,
+	editedDetails,
+	editedDetailsFull,
+	total,
+	totalOnlyDetail,
+	orderData,
+	paintingMods,
+	updData,
+}: FormProps) {
 	const [alertShow, setAlertShow] = useState(false)
 	const [rollAlertShow, setRollAlertShow] = useState(false)
 	const [serviceAlertShow, setServiceAlertShow] = useState(false)
@@ -115,4 +124,4 @@ export function FormDetailList({ details, editedDetails, editedDetailsFull, tota
 			</Alert>
 		</>
 	)
-}
+})
