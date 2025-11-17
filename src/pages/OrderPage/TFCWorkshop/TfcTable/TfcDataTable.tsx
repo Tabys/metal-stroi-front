@@ -125,8 +125,7 @@ export function TfcDataTable({ rates, tfcData, onUpdate, openAlert }: TfcDataTab
 				</div>
 				<div className={styles.line}>
 					<div className={styles.profit}>
-						{tfcData?.profit}
-						<UpdProfit tfcId={tfcData?.id} update={onUpdate} openAlert={openAlert} />
+						<UpdProfit profit={Number(tfcData?.profit)} tfcId={tfcData?.id} update={onUpdate} openAlert={openAlert} />
 					</div>
 				</div>
 			</div>
