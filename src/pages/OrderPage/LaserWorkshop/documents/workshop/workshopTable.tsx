@@ -11,7 +11,7 @@ type WHTableProps = {
 export function WorkshopTable({ detail, work_types, index }: WHTableProps) {
 	// const total_price = ((Number(detail.bending) + Number(detail.choping) + Number(detail.cut_cost) + Number(detail.metal)) * detail.quantity).toFixed(1)
 	const dataProducts = findDataInProducts({ detail })
-
+	console.log(dataProducts)
 	return (
 		<tr>
 			<td className={styles.center}>{index + 1}</td>
@@ -30,6 +30,11 @@ export function WorkshopTable({ detail, work_types, index }: WHTableProps) {
 			{work_types?.find(work_type => work_type === 79) ? <td>{detail.chop_count ? detail.chop_count : ''}</td> : ''}
 			{work_types?.find(work_type => work_type === 78) ? <td>{detail.bend_count ? detail.bend_count : ''}</td> : ''}
 			{work_types?.find(work_type => work_type === 80) ? <td className={styles.center}>{detail.rolling ? '✓' : ''}</td> : ''}
+			{work_types?.find(work_type => work_type === 83 || work_type === 88) ? (
+				<td className={styles.center}>{dataProducts.mk_works > 0 || dataProducts.sm_works > 0 ? '✓' : ''}</td>
+			) : (
+				''
+			)}
 			{work_types?.find(work_type => work_type === 82) ? (
 				<td className={styles.center}>{dataProducts.painting > 0 || Number(detail.polymer_price) > 0 ? '✓' : ''}</td>
 			) : (

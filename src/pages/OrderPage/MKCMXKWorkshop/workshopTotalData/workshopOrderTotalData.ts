@@ -45,7 +45,7 @@ export function workshopOrderTotalData({ products, workshopData }: workshopOrder
 		total_profit += total_one_product.profit * Number(product.quantity)
 		total_consumables += total_one_product.consumables * Number(product.quantity)
 	})
-
+	console.log(total_profit)
 	return {
 		work: total_work,
 		installation: total_installation,

@@ -60,9 +60,7 @@ export function workshopProductTotalData({ product, workshopData, allMaterialWei
 		.add(material_price === 0 ? 0 : new Decimal(material_price).mul(new Decimal(workshopData?.consumables || 0).div(100).add(1)))
 		.add(additionalPrices)
 		.add(consumables_price)
-		.mul(payment_form)
 		.mul(new Decimal(workshopData?.profit || 0).div(100))
-		.add(product.other_workshops || 0)
 		.toDecimalPlaces(3)
 		.toNumber()
 

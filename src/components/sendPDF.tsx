@@ -38,9 +38,10 @@ export function SendPDFForm({ orderId, order, total, api, update }: SendPdfProps
 		}, 1500)
 	}
 
-	const { register, handleSubmit, setError } = useForm<SendPDF>()
+	const { handleSubmit, setError } = useForm<SendPDF>()
 
 	const onSubmit: SubmitHandler<SendPDF> = async data => {
+		data.id = orderId
 		data.cost = total
 		setIsLoading(true)
 		await apiClient
@@ -66,7 +67,6 @@ export function SendPDFForm({ orderId, order, total, api, update }: SendPdfProps
 	return (
 		<>
 			<form onSubmit={handleSubmit(onSubmit)}>
-				<input {...register('id')} type='hidden' defaultValue={orderId} />
 				<Tooltip conditions={true} text='Отправить в Битрикс'>
 					<button type='submit' className={`custom-btn ${Number(total) === Number(order.cost) ? 'btn-green' : 'btn-red'}`} disabled={isLoading}>
 						{isLoading ? <Spinner animation='border' size='sm' /> : <MdIosShare />}

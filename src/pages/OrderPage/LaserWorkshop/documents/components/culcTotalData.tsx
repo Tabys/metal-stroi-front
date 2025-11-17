@@ -126,7 +126,7 @@ export function CulcTotalData({ details, full_details, products, orders }: CulcT
 		total_prod_mk_works += product.mk_works ? Number(product.mk_works) * Number(product.quantity) : 0
 		total_prod_tfc_works += product.tfc_works ? Number(product.tfc_works) * Number(product.quantity) : 0
 		total_prod_ac_works += product.ac_works ? Number(product.ac_works) * Number(product.quantity) : 0
-		total_prod_design_department += product.design_department ? Number(product.design_department) * Number(product.quantity) : 0
+		total_prod_design_department += product.design_department ? Number(product.design_department) : 0
 	})
 
 	const total_data = {

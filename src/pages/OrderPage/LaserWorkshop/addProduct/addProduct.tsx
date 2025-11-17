@@ -154,7 +154,7 @@ export function AddProducts({ onCreate, onClose, order, openAlert }: AddProductP
 				<DetailList order={order} setArrProduct={setArrProduct} isAllDetails={isAllDetails} />
 			</div>
 
-			<button type='submit' className='btn btn-primary container-fluid' disabled={isLoading}>
+			<button type='submit' className='btn btn-primary container-fluid' disabled={isLoading || arrProduct.details.length === 0}>
 				{isLoading ? <Spinner /> : 'Создать'}
 			</button>
 		</form>

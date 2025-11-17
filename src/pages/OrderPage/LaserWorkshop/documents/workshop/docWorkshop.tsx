@@ -148,6 +148,7 @@ export function DocWorkhop() {
 							{orders?.work_types.find(work_type => work_type === 79) ? <td>{total.chop}</td> : ''}
 							{orders?.work_types.find(work_type => work_type === 78) ? <td>{total.bend}</td> : ''}
 							{orders?.work_types.find(work_type => work_type === 80) ? <td></td> : ''}
+							{orders?.work_types.find(work_type => work_type === 83 || work_type === 88) ? <td></td> : ''}
 							{orders?.work_types.find(work_type => work_type === 82) ? <td></td> : ''}
 							{orders?.work_types.find(work_type => work_type === 87) ? <td></td> : ''}
 							{orders?.work_types.find(work_type => work_type === 89) ? <td></td> : ''}

@@ -5,16 +5,16 @@ export function getMaterialName(table: string | undefined) {
 			material = ''
 			break
 		case 'St37HK':
-			material = ''
+			material = 'х/к'
 			break
 		case 'St37RIF':
-			material = ''
+			material = 'риф'
 			break
 		case 'Hardox':
-			material = ''
+			material = 'хард'
 			break
 		case 'Magstrong':
-			material = ''
+			material = 'маг'
 			break
 		case 'AlMg3':
 			material = 'ал'

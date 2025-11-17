@@ -11,6 +11,8 @@ type WorkshopProductsTableProps = {
 }
 
 export function WorkshopProductsTable({ order, rates, paintingMods, allMaterialWeight, onCreate, openAlert }: WorkshopProductsTableProps) {
+	order?.workshops_products?.sort((a, b) => (a.id > b.id ? 1 : -1))
+
 	return (
 		<>
 			{order?.workshops_products?.map(product => (
