@@ -6,6 +6,7 @@ import { useEffect } from 'react'
 import apiClient from '../../../../components/apiClient'
 import { FaCircleNotch } from 'react-icons/fa6'
 import { extraPrice } from '../detailList/updPrices/extraPriceMetal'
+import { useUser } from '../../../../hooks/currentUser'
 
 type FormMetalDetailProps = {
 	workPiece: WorkPiece[]
@@ -20,6 +21,7 @@ type FormMetalDetailProps = {
 
 export function FormMetalDetail({ workPiece, metal, updMetal, openAlert, openErrorAlert, setTextErrorAlert, materials, markup }: FormMetalDetailProps) {
 	const metalName = getMetalNameSuffix(metal.material)
+	const { currentUser } = useUser()
 
 	const methods = useForm<Metal>()
 
@@ -38,7 +40,12 @@ export function FormMetalDetail({ workPiece, metal, updMetal, openAlert, openErr
 		data.width = metal.width
 
 		await apiClient
-			.put<Metal>('metal/', data)
+			.put<Metal>('metal/', data, {
+				headers: {
+					'X-User-Name': currentUser?.username || '',
+					'X-User-Role': currentUser?.roles || '',
+				},
+			})
 			.then(result => {
 				openAlert()
 			})
