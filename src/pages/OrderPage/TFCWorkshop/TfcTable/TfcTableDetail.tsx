@@ -96,7 +96,7 @@ export function TfcTableDetail({ detail, total, index, onUpdate, openAlert }: Tf
 			<div className={styles.line}>
 				<p>{index + 1}</p>
 			</div>
-			<div className={styles.line}>
+			<div className={styles.line + ' ' + styles.name}>
 				<input
 					{...register('name', {
 						onBlur: handleSubmit(onSubmit),

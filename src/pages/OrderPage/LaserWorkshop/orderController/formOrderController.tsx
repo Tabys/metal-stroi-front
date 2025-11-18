@@ -118,8 +118,8 @@ export function FormOrderController({ orderData, updated }: formOCProps) {
 
 						<Form.Group className='group'>
 							<Form.Label>
-								<Tooltip conditions={true} text='Металл заказчик'>
-									<img src='/images/header-table/free-icon-metal-9920910-min.png' alt='customers_metal' />
+								<Tooltip conditions={true} text='Металл заказчика'>
+									<img src='/images/header-table/hand-over.png' alt='customers_metal' />
 								</Tooltip>
 							</Form.Label>
 							<Form.Check

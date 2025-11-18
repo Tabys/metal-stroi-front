@@ -56,6 +56,11 @@ export function Header() {
 										Заказчики-исключения
 									</Link>
 								</li>
+								<li>
+									<Link to={`/static-data/`} onClick={handleClose}>
+										Статические данные
+									</Link>
+								</li>
 							</>
 						) : (
 							<></>

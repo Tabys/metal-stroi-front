@@ -798,3 +798,16 @@ export type WorkPiece = {
 	work_piece: string
 	surface: number
 }
+
+export type StaticData = {
+	id: number
+	category: string
+	columns: JSON
+}
+
+export interface ClientStaticData {
+	adress: string
+	phone: string
+	email: string
+	storage_conditions: string
+}

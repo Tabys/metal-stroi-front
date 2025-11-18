@@ -3,16 +3,20 @@ import { useOrders } from '../../../../../hooks/prepareDataList'
 import { CreateDetailGroupList } from '../../../LaserWorkshop/detailList/createDetailGroupList'
 import { PrepArrDetails } from '../components/prepArrDetails/prepArrDetails'
 import { ClientTable } from './clientTable'
-import { DocTableDetail } from '../../../../../models'
+import { DocTableDetail, ClientStaticData } from '../../../../../models'
 import styles from '../style.module.css'
 import Table from 'react-bootstrap/Table'
 import { TransformDate } from '../../../../../components/TransformDate'
 import { CulcTotalData } from '../components/culcTotalData'
 import { ClientTableProducts } from './clientTableProducts'
 import { PrepArrProducts } from '../components/prepArrProducts'
+import { useStaticData } from '../../../../../hooks/useStaicData'
 
 export function DocClient() {
 	const { id } = useParams()
+	const { staticData } = useStaticData()
+	const staticDataClient = staticData.find(item => item.category === 'blanc_client')?.columns as unknown as ClientStaticData
+
 	const { orders } = useOrders({ id: id ? id : '', free: false })
 	const linkBX = process.env.REACT_APP_BX24_URL + `crm/deal/details/${id}/`
 
@@ -43,25 +47,41 @@ export function DocClient() {
 							</div>
 							<div className={styles.contact_inf}>
 								<p>
-									ул. Эмилии Алексеевой, 94,
-									<br /> тел. 33-33-10, <br />
-									email: ms-klient@list.ru
+									ул. {staticDataClient?.adress},
+									<br /> тел. {staticDataClient?.phone}, <br />
+									email: {staticDataClient?.email}
 								</p>
 							</div>
 						</div>
-						<div className={styles.order_inf}>
+						<div className={styles.order_inf_wrapper}>
 							<a href={linkBX} target='_blank' rel='noreferrer' className={styles.order_number}>
 								№ {String(String(orders?.order_number).split('_')[0]).split('_')[0]}
 							</a>
-							<p>
-								<strong>Дата приема заказа:</strong> <TransformDate orderDate={orders?.date_create} />
-							</p>
-							<p>
-								<strong>Заказчик:</strong> {orders?.customer}
-							</p>
-							<p>
-								<strong>Срок изготовления заказа:</strong> {orders?.production_time} рабочих дней
-							</p>
+							<div className={styles.order_inf}>
+								<p>
+									<strong>Дата приема заказа:</strong> <TransformDate orderDate={orders?.date_create} />
+								</p>
+								<p>
+									<strong>Заказчик:</strong> {orders?.customer}
+								</p>
+								<p>
+									<strong>Срок изготовления заказа:</strong> {orders?.production_time} рабочих дней
+								</p>
+							</div>
+							<div className={styles.order_inf}>
+								<p>
+									<strong>
+										{[
+											orders?.work_types.find(work_type => work_type === 84 || work_type === 14) ? 'ТФЦ' : null,
+											orders?.work_types.find(work_type => work_type === 82) ? 'ПП' : null,
+											orders?.work_types.find(work_type => work_type === 83 || work_type === 21) ? 'МК' : null,
+											orders?.work_types.find(work_type => work_type === 85 || work_type === 19) ? 'АЦ' : null,
+										]
+											.filter(Boolean)
+											.join(', ')}
+									</strong>
+								</p>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -178,10 +198,7 @@ export function DocClient() {
 								<i>Акт приема-передачи изделий</i>
 							</strong>
 						</p>
-						<p>
-							Давальческий металл хранится в течение 10 дней после забора заказа. По истечении срока хранения, мы не несём ответственность за
-							сохранность качества металла.
-						</p>
+						<p>{staticDataClient?.storage_conditions}.</p>
 						<p>
 							Я, <span></span> заказанные изделия получил в полном объеме, в установленный срок, к качеству претензий не имею.
 						</p>

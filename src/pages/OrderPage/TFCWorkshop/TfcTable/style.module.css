@@ -63,6 +63,13 @@
 	border: 1px solid #ccc;
 	padding: 5px;
 }
+.detail_list .row .line.name {
+	width: 30%;
+}
+.detail_list .row .line.name input:not([type='radio']):not([type='checkbox']) {
+	width: 100%;
+	max-width: 100%;
+}
 .detail_list .row .line.radio {
 	text-align: center;
 }
@@ -101,9 +108,6 @@
 }
 .detail_list .row .line.colSpan_8 {
 	grid-column: span 8;
-}
-.detail_list .row .line.name {
-	width: 20%;
 }
 .detail_list .row .line .profit {
 	display: flex;

@@ -17,6 +17,7 @@ import { GroupMainDocs } from './pages/OrderPage/LaserWorkshop/documents/groupMa
 import { TariffsAndRates } from './pages/Tariffs'
 import { DocPaintingWorkshops } from './pages/OrderPage/MKCMXKWorkshop/documents/painting/DocPainitngWorkshops'
 import { Nomenclature } from './pages/Nomenclature'
+import { StaticData } from './pages/StaticData'
 
 function App() {
 	const { currentUser } = useUser()
@@ -48,6 +49,7 @@ function App() {
 								<Route path='/exemption-customers/' element={<ExemptionCustomers />} />
 								<Route path='/tariffs-rates/' element={<TariffsAndRates />} />
 								<Route path='/users' element={<UsersPage />} />
+								<Route path='/static-data/' element={<StaticData />} />
 							</>
 						) : (
 							''
