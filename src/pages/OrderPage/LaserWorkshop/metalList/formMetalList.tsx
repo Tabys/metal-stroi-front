@@ -3,6 +3,7 @@ import { FormMetalDetail } from './formMetalDetail'
 import Alert from 'react-bootstrap/Alert'
 import { useState } from 'react'
 import { useMaterials } from '../../../../hooks/materials'
+import { StainlessSteelCost } from './stainlessSteelCost'
 
 interface FormProps {
 	workPiece: WorkPiece[]
@@ -47,6 +48,9 @@ export function FormMetalList({ workPiece, metal, markup, updMetal }: FormProps)
 					markup={markup}
 				/>
 			))}
+
+			<StainlessSteelCost metals={metal} markup={markup} materials={materials} workPiece={workPiece} />
+
 			<Alert className='alert-fixed' show={alertShow} variant='success'>
 				Изменения сохранены
 			</Alert>
