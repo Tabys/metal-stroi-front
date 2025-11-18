@@ -38,7 +38,13 @@ export function PricesItems({ price, update, refetchPrices, currentUser, workPie
 			<div className='p-2'>{price.table_name}</div>
 			<div className='p-2'>{workPiece?.work_piece}</div>
 			<div className='p-2'>
-				<input type='number' defaultValue={price.cost} {...register('cost', { onBlur: handleSubmit(onUpdate) })} className='form-control' />
+				<input
+					type='number'
+					defaultValue={price.cost}
+					{...register('cost', { onBlur: handleSubmit(onUpdate) })}
+					className='form-control'
+					disabled={currentUser?.['roles'] !== 'ROLE_ADMIN' && currentUser?.['roles'] !== 'ROLE_MODERATOR' ? true : false}
+				/>
 			</div>
 			{currentUser?.['roles'] === 'ROLE_ADMIN' && (
 				<div className='p-2'>

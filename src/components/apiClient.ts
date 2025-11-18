@@ -46,6 +46,12 @@ apiClient.interceptors.request.use(
 		if (token) {
 			config.headers['x-access-token'] = token
 		}
+
+		const user = JSON.parse(localStorage.getItem('user') || 'null')
+		if (user?.roles) {
+			config.headers['x-user-roles'] = user.roles
+		}
+
 		return config
 	},
 	error => Promise.reject(error)

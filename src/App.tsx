@@ -41,24 +41,20 @@ function App() {
 						<Route path='/order/:id/doc-painting-wh' element={<DocPaintingWorkshops />} />
 						<Route path='/order/:id/doc-specialization' element={<DocSpecialization />} />
 						{/* <Route path='/order/:id/doc-contract' element={<DocContract />} /> */}
+
+						<Route path='/price-services/' element={<PriceServices />} />
+						<Route path='/price-materials/' element={<PriceMaterials />} />
+						<Route path='/tariffs-rates/' element={<TariffsAndRates />} />
+						<Route path='/nomenclature' element={<Nomenclature />} />
+
 						{currentUser?.['roles'] !== 'ROLE_USER' &&
 						currentUser?.['roles'] !== 'ROLE_USER_TFC' &&
 						currentUser?.['roles'] !== 'ROLE_USER_WORKSHOPS' ? (
 							<>
-								<Route path='/price-services/' element={<PriceServices />} />
-								<Route path='/price-materials/' element={<PriceMaterials />} />
 								<Route path='/exemption-customers/' element={<ExemptionCustomers />} />
-								<Route path='/tariffs-rates/' element={<TariffsAndRates />} />
+
 								<Route path='/users' element={<UsersPage />} />
 								<Route path='/static-data/' element={<StaticData />} />
-							</>
-						) : (
-							''
-						)}
-
-						{currentUser?.['roles'] !== 'ROLE_USER' && currentUser?.['roles'] !== 'ROLE_USER_TFC' ? (
-							<>
-								<Route path='/nomenclature' element={<Nomenclature />} />
 							</>
 						) : (
 							''

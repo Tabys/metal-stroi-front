@@ -5,10 +5,10 @@ import { useState } from 'react'
 import { PricesItemsWorkshopMaterial } from '../PriceMaterials/PricesItemsWorkshopMaterial'
 import { AddNomenclatureModal } from '../../components/modal/AddNomenclatureModal'
 import { useWorkshopMaterials } from '../../hooks/useWorkshopMaterials'
-
+import { useUser } from '../../hooks/currentUser'
 export function NomenclatureWrapper() {
 	const { workshopMaterial, updateWorkshopMaterial } = useWorkshopMaterials()
-
+	const { currentUser } = useUser()
 	const [alertShow, setAlertShow] = useState(false)
 
 	const openAlert = () => {
@@ -37,6 +37,7 @@ export function NomenclatureWrapper() {
 								key={nomenclature.id}
 								update={openAlert}
 								updateWorkshopMaterial={updateWorkshopMaterial}
+								currentUser={currentUser}
 							/>
 						))}
 					</div>

@@ -2,12 +2,15 @@ import { useState } from 'react'
 import { PriceRatesItem } from '../../models'
 import { Alert } from 'react-bootstrap'
 import { TariffsAndRatesItem } from './TariffsAndRatesItem'
+import { useUser } from '../../hooks/currentUser'
 
 type TariffsAndRatesTableProps = {
 	ratesItems: PriceRatesItem[]
 }
 
 export function TariffsAndRatesTable({ ratesItems }: TariffsAndRatesTableProps) {
+	const { currentUser } = useUser()
+
 	const [alertShow, setAlertShow] = useState({
 		action: false,
 		type: 'success',
@@ -37,7 +40,7 @@ export function TariffsAndRatesTable({ ratesItems }: TariffsAndRatesTableProps) 
 					<div className='p-2'>Тариф</div>
 				</div>
 				{ratesItems.map((item, index) => (
-					<TariffsAndRatesItem item={item} key={item.id || index} openAlert={openAlert} />
+					<TariffsAndRatesItem item={item} key={item.id || index} openAlert={openAlert} currentUser={currentUser} />
 				))}
 
 				<Alert className='alert-fixed' show={alertShow.action} variant={alertShow.type}>

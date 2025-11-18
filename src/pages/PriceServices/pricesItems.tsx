@@ -1,13 +1,14 @@
 import { useForm, SubmitHandler } from 'react-hook-form'
-import { PricesServiceItem } from '../../models'
+import { PricesServiceItem, UserData } from '../../models'
 import apiClient from '../../components/apiClient'
 
 type PricesProps = {
 	price: PricesServiceItem
 	update: () => void
+	currentUser?: UserData
 }
 
-export function PircesItems({ price, update }: PricesProps) {
+export function PircesItems({ price, update, currentUser }: PricesProps) {
 	const { register, handleSubmit } = useForm<PricesServiceItem>()
 
 	const onUpdate: SubmitHandler<PricesServiceItem> = async data => {
@@ -40,7 +41,13 @@ export function PircesItems({ price, update }: PricesProps) {
 				''
 			)}
 			<div className={price.cost ? 'p-2' : 'p-2 d-none'}>
-				<input type='number' defaultValue={price.cost} {...register('cost', { onBlur: handleSubmit(onUpdate) })} className='form-control' />
+				<input
+					type='number'
+					defaultValue={price.cost}
+					{...register('cost', { onBlur: handleSubmit(onUpdate) })}
+					className='form-control'
+					disabled={currentUser?.roles !== 'ROLE_ADMIN' ? true : false}
+				/>
 			</div>
 			<div className={price.cut_cost === null || Number(price.cut_cost) === 0 ? 'p-2 d-none' : 'p-2'}>
 				<input
@@ -50,6 +57,7 @@ export function PircesItems({ price, update }: PricesProps) {
 						onBlur: handleSubmit(onUpdate),
 					})}
 					className='form-control'
+					disabled={currentUser?.roles !== 'ROLE_ADMIN' ? true : false}
 				/>
 			</div>
 		</form>

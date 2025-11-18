@@ -8,10 +8,12 @@ import { PircesRolling } from './PricesRolling'
 import { PircesPainting } from './PricePainitng'
 import { PircesPaintingMods } from './PricePaintingMods'
 import { PircesLaserOxygenCut } from './PriceLaserOxygenCut'
+import { useUser } from '../../hooks/currentUser'
 
 export function PricesWrapper() {
 	const { prices } = useServicePrices()
 	const [alertShow, setAlertShow] = useState(false)
+	const { currentUser } = useUser()
 
 	const openAlert = () => {
 		setAlertShow(true)
@@ -47,22 +49,28 @@ export function PricesWrapper() {
 									))}
 								</div>
 								{category.price_services_items
-									? category.price_services_items?.map(price => <PircesItems price={price} key={price.id} update={openAlert} />)
+									? category.price_services_items?.map(price => (
+											<PircesItems price={price} key={price.id} update={openAlert} currentUser={currentUser} />
+									  ))
 									: ''}
 								{category.price_service_laser_oxygen_cuts
 									? category.price_service_laser_oxygen_cuts?.map(price => (
-											<PircesLaserOxygenCut price={price} key={price.id} update={openAlert} />
+											<PircesLaserOxygenCut price={price} key={price.id} update={openAlert} currentUser={currentUser} />
 									  ))
 									: ''}
 								{category.price_services_rollings
-									? category.price_services_rollings?.map(price => <PircesRolling price={price} key={price.id} update={openAlert} />)
+									? category.price_services_rollings?.map(price => (
+											<PircesRolling price={price} key={price.id} update={openAlert} currentUser={currentUser} />
+									  ))
 									: ''}
 								{category.price_services_paintings
-									? category.price_services_paintings?.map(price => <PircesPainting price={price} key={price.id} update={openAlert} />)
+									? category.price_services_paintings?.map(price => (
+											<PircesPainting price={price} key={price.id} update={openAlert} currentUser={currentUser} />
+									  ))
 									: ''}
 								{category.price_services_painting_mods
 									? category.price_services_painting_mods?.map(price => (
-											<PircesPaintingMods price={price} key={price.id} update={openAlert} />
+											<PircesPaintingMods price={price} key={price.id} update={openAlert} currentUser={currentUser} />
 									  ))
 									: ''}
 							</div>

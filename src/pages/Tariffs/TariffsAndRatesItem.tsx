@@ -1,13 +1,14 @@
 import { SubmitHandler, useForm } from 'react-hook-form'
 import apiClient from '../../components/apiClient'
-import { PriceRatesItem } from '../../models'
+import { PriceRatesItem, UserData } from '../../models'
 
 type TariffsAndRatesItemProps = {
 	item: PriceRatesItem
 	openAlert: (type: string, massage?: string) => void
+	currentUser?: UserData
 }
 
-export function TariffsAndRatesItem({ item, openAlert }: TariffsAndRatesItemProps) {
+export function TariffsAndRatesItem({ item, openAlert, currentUser }: TariffsAndRatesItemProps) {
 	const { register, handleSubmit } = useForm<PriceRatesItem>()
 
 	const onUpdate: SubmitHandler<PriceRatesItem> = async data => {
@@ -26,7 +27,13 @@ export function TariffsAndRatesItem({ item, openAlert }: TariffsAndRatesItemProp
 		<form className='row'>
 			<div className='p-2'>{item.name}</div>
 			<div className='p-2'>
-				<input type='number' defaultValue={item.value} {...register('value', { onBlur: handleSubmit(onUpdate) })} className='form-control' />
+				<input
+					type='number'
+					defaultValue={item.value}
+					{...register('value', { onBlur: handleSubmit(onUpdate) })}
+					className='form-control'
+					disabled={currentUser?.roles !== 'ROLE_ADMIN' ? true : false}
+				/>
 			</div>
 		</form>
 	)

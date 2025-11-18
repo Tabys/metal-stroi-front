@@ -32,21 +32,6 @@ export function Header() {
 						currentUser?.['roles'] !== 'ROLE_USER_WORKSHOPS' ? (
 							<>
 								<li>
-									<Link to={`/price-services/`} onClick={handleClose}>
-										Цены услуг
-									</Link>
-								</li>
-								<li>
-									<Link to={`/price-materials/`} onClick={handleClose}>
-										Цены материалов
-									</Link>
-								</li>
-								<li>
-									<Link to={`/tariffs-rates/`} onClick={handleClose}>
-										Тарифы и ставки
-									</Link>
-								</li>
-								<li>
 									<Link to={`/users/`} onClick={handleClose}>
 										Управление пользователями
 									</Link>
@@ -65,17 +50,27 @@ export function Header() {
 						) : (
 							<></>
 						)}
-						{currentUser?.['roles'] !== 'ROLE_USER' && currentUser?.['roles'] !== 'ROLE_USER_TFC' ? (
-							<>
-								<li>
-									<Link to={`/nomenclature/`} onClick={handleClose}>
-										Номенклатура
-									</Link>
-								</li>
-							</>
-						) : (
-							<></>
-						)}
+
+						<li>
+							<Link to={`/price-services/`} onClick={handleClose}>
+								Цены услуг
+							</Link>
+						</li>
+						<li>
+							<Link to={`/price-materials/`} onClick={handleClose}>
+								Цены материалов
+							</Link>
+						</li>
+						<li>
+							<Link to={`/tariffs-rates/`} onClick={handleClose}>
+								Тарифы и ставки
+							</Link>
+						</li>
+						<li>
+							<Link to={`/nomenclature/`} onClick={handleClose}>
+								Номенклатура
+							</Link>
+						</li>
 						<li>
 							<a href={`/`} onClick={logOut}>
 								Выйти
