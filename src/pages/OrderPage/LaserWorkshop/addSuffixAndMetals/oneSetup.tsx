@@ -89,6 +89,9 @@ export function OneSetup({ dubleDetails, allValueSuffixSelect, allValueMetalSele
 				<p>
 					Мин. заготовка: <strong>{setup.min_work_piece}</strong>
 				</p>
+				<p>
+					Кол-во прогонов программы: <strong>{setup.program_runs}</strong>
+				</p>
 			</div>
 			<div className={style.group}>
 				<div className={style.details}>
