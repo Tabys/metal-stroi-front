@@ -13,11 +13,12 @@ import { DocPainting } from './pages/OrderPage/LaserWorkshop/documents/painting/
 import { DocSpecialization } from './pages/OrderPage/LaserWorkshop/documents/specialization/docSpecialization'
 import { ExemptionCustomers } from './pages/ExemptionCustomers'
 import { ScrollTop } from './components/ScrollTop'
-import { GroupMainDocs } from './pages/OrderPage/LaserWorkshop/documents/groupMainDocs'
 import { TariffsAndRates } from './pages/Tariffs'
 import { DocPaintingWorkshops } from './pages/OrderPage/MKCMXKWorkshop/documents/painting/DocPainitngWorkshops'
 import { Nomenclature } from './pages/Nomenclature'
 import { StaticData } from './pages/StaticData'
+import { DocWorkhop } from './pages/OrderPage/LaserWorkshop/documents/workshop/docWorkshop'
+import { DocClient } from './pages/OrderPage/LaserWorkshop/documents/client/docClient'
 
 function App() {
 	const { currentUser } = useUser()
@@ -32,9 +33,9 @@ function App() {
 					<Routes>
 						<Route path='/' element={<OrdersPage />} />
 						<Route path='/order/:id' element={<OrderPage />} />
-						<Route path='/order/:id/group-docs' element={<GroupMainDocs />} />
-						{/* <Route path='/order/:id/doc-client' element={<DocClient />} />
-						<Route path='/order/:id/doc-workshop' element={<DocWorkhop />} /> */}
+						{/* <Route path='/order/:id/group-docs' element={<GroupMainDocs />} /> */}
+						<Route path='/order/:id/doc-client' element={<DocClient />} />
+						<Route path='/order/:id/doc-workshop' element={<DocWorkhop />} />
 						{/* <Route path='/order/:id/doc-order' element={<DocOrder />} /> */}
 						<Route path='/order/:id/doc-painting' element={<DocPainting />} />
 						<Route path='/order/:id/doc-painting-wh' element={<DocPaintingWorkshops />} />

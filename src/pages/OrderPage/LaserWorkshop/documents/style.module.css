@@ -46,7 +46,7 @@ h3 {
 	display: flex;
 	flex-wrap: wrap;
 }
-.order_inf {
+.order_inf_wrapper .order_inf {
 	width: 50%;
 }
 .order_inf_wrapper .order_number {
@@ -63,6 +63,9 @@ h3 {
 
 .order_inf .order_number:hover {
 	color: #0d6efd;
+}
+.order_inf .order_number {
+	text-align: center;
 }
 .order_inf button {
 	font-size: 12px;

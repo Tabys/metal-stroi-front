@@ -142,21 +142,21 @@ export function LaserWorkshop({ id, order, user, paintingMods, updateOrders }: L
 			<div className='bottom-fixed-element'>
 				<div className='px-5'>
 					<ListGroup horizontal>
-						<ListGroup.Item variant='light'>
+						{/* <ListGroup.Item variant='light'>
 							<Link relative='path' to={`group-docs`}>
 								<FaFileLines /> Клиенту/В цех
 							</Link>
+						</ListGroup.Item> */}
+						<ListGroup.Item variant='light'>
+							<Link relative='path' to={`doc-client`}>
+								<FaFileLines /> Клиенту
+							</Link>
 						</ListGroup.Item>
-						{/* <ListGroup.Item variant='light'>
-										<Link relative='path' to={`doc-client`}>
-											<FaFileLines /> Клиенту
-										</Link>
-									</ListGroup.Item>
-									<ListGroup.Item variant='light'>
-										<Link relative='path' to={`doc-workshop`}>
-											<FaFileLines /> В цех
-										</Link>
-									</ListGroup.Item> */}
+						<ListGroup.Item variant='light'>
+							<Link relative='path' to={`doc-workshop`}>
+								<FaFileLines /> В цех
+							</Link>
+						</ListGroup.Item>
 						{/* <ListGroup.Item variant='light'>
 										<Link relative='path' to={`doc-order`}>
 											<FaFileLines /> Заказ
