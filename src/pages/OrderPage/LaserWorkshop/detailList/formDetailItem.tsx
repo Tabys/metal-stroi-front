@@ -176,6 +176,7 @@ export function FormDetailItem({
 
 	const onSubmitPrice: SubmitHandler<Detail> = async data => {
 		delete data.metal_cost
+		// console.log(data)
 		await apiClient
 			.put<Detail>('detail/', data)
 			.then(number => {
@@ -331,7 +332,33 @@ export function FormDetailItem({
 				<input {...methods.register('thickness')} type='hidden' defaultValue={DetailItem.thickness} />
 				<div className={styles.line}>{index + 1} </div>
 				<div className={styles.line + ' ' + styles.name + ' ' + (DetailItem.free ? styles.free : '')}>
-					{DetailItem.name} {DetailItem.custom ? '(' + DetailItem.l_size + 'x' + DetailItem.w_size + ')' : ''} {DetailItem.free ? ' (OZON)' : ''}
+					{DetailItem.custom ? (
+						<div className={styles.custom_name}>
+							<input
+								{...methods.register('name', {
+									onBlur: methods.handleSubmit(onSubmitPrice),
+								})}
+								defaultValue={DetailItem.name}
+								type='text'
+								onFocus={e =>
+									e.target.addEventListener(
+										'wheel',
+										function (e) {
+											e.preventDefault()
+										},
+										{ passive: false }
+									)
+								}
+								className='form-control'
+							/>
+							<span className={styles.size}>
+								({DetailItem.l_size}x{DetailItem.w_size})
+							</span>
+						</div>
+					) : (
+						DetailItem.name
+					)}{' '}
+					{DetailItem.free ? ' (OZON)' : ''}
 				</div>
 				<div className={styles.line}>
 					{DetailItem.custom ? (

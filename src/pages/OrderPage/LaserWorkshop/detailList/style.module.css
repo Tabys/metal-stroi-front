@@ -47,6 +47,15 @@
 	border: 1px solid #ccc;
 	padding: 5px;
 }
+.detail_list .row .line .custom_name {
+	display: flex;
+	align-items: center;
+	gap: 5px;
+}
+.detail_list .row .line .custom_name input:not([type='radio']):not([type='checkbox']) {
+	width: 100%;
+	max-width: 100%;
+}
 .detail_list .row .line.radio {
 	text-align: center;
 }
