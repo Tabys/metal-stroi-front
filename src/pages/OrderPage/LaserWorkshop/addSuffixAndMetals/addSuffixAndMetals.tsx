@@ -6,6 +6,7 @@ import { SetupList } from './SetupList'
 import style from './style.module.css'
 import { dubleDetails } from './findDublDetails'
 import apiClient from '../../../../components/apiClient'
+import { Form, Spinner } from 'react-bootstrap'
 
 type AddSuffixAndMetalsProps = {
 	onCreate: () => void
@@ -14,11 +15,15 @@ type AddSuffixAndMetalsProps = {
 }
 
 export function AddSuffixesAndMetals({ onCreate, onClose, order }: AddSuffixAndMetalsProps) {
-	const { handleSubmit } = useForm<AddSuffix>()
+	const {
+		handleSubmit,
+		setError,
+		formState: { errors },
+	} = useForm<AddSuffix>()
 	const [arrDubleDetails, setArrDubleDetails] = useState<number[]>([])
 	const [dataSetups, setDataSetups] = useState<FormatedSetupsData[]>([])
 	const [arrSuffix, setArrSuffix] = useState<AddSuffix[]>([])
-
+	const [isLoading, setIsLoading] = useState(false)
 	const [metals, setMetals] = useState<MetalType[] | null>(null)
 
 	async function getOrder() {
@@ -70,11 +75,24 @@ export function AddSuffixesAndMetals({ onCreate, onClose, order }: AddSuffixAndM
 	dataSetups?.sort((a, b) => (a.thickness > b.thickness ? 1 : -1))
 
 	const onSubmit: SubmitHandler<AddSuffix> = async data => {
-		await apiClient.put<AddSuffix>('setup/suffixes', arrSuffix)
-		onClose()
-		setTimeout(() => {
-			onCreate()
-		}, 300)
+		setIsLoading(true)
+		await apiClient
+			.put<AddSuffix>('setup/suffixes', arrSuffix)
+			.then(() => {
+				onClose()
+				onCreate()
+				setIsLoading(false)
+			})
+			.catch(error => {
+				console.log(error.response)
+				setIsLoading(false)
+				if (error.response.status > 200) {
+					setError('root.serverError', {
+						type: error.response.status,
+						message: error.response.data.message,
+					})
+				}
+			})
 	}
 	return (
 		<form onSubmit={handleSubmit(onSubmit)}>
@@ -91,9 +109,10 @@ export function AddSuffixesAndMetals({ onCreate, onClose, order }: AddSuffixAndM
 					/>
 				))}
 			</div>
-			<button type='submit' className='btn btn-primary container-fluid'>
-				Сохранить
+			<button type='submit' className='btn btn-primary container-fluid' disabled={isLoading}>
+				{isLoading ? <Spinner /> : 'Сохранить'}
 			</button>
+			{errors.root?.serverError.type === 400 && <Form.Text className='text-danger'>{errors?.root?.serverError.message}</Form.Text>}
 		</form>
 	)
 }

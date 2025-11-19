@@ -17,6 +17,7 @@ export function CopyOrderData({ orderID, user, onClose }: CopyOrderDataProps) {
 	const {
 		register,
 		handleSubmit,
+		setError,
 		formState: { errors },
 	} = useForm<CopyOrder>()
 
@@ -29,7 +30,14 @@ export function CopyOrderData({ orderID, user, onClose }: CopyOrderDataProps) {
 				onClose()
 				navigate(`/order/${data.id}`)
 			})
-			.catch(() => {
+			.catch(error => {
+				console.log(error.response)
+				if (error.response.status > 200) {
+					setError('root.serverError', {
+						type: error.response.status,
+						message: error.response.data.message,
+					})
+				}
 				setIsLoading(false)
 			})
 	}
@@ -41,6 +49,7 @@ export function CopyOrderData({ orderID, user, onClose }: CopyOrderDataProps) {
 				<label className='form-label'>ID нового смарт-процесса</label>
 				<input {...register('id', { required: 'Это поле обязательное' })} className={errors.id ? 'form-control is-invalid' : 'form-control'} />
 				{errors.id && <Form.Text className='text-danger'>{errors.id.message}</Form.Text>}
+				{errors.root?.serverError.type === 400 && <Form.Text className='text-danger'>{errors?.root?.serverError.message}</Form.Text>}
 			</div>
 
 			<button type='submit' className='btn btn-primary container-fluid mt-5' disabled={isLoading}>

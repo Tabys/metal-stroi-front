@@ -69,9 +69,9 @@ export function AddSetupChoping({ onCreate, onClose, order_id }: addSetupChoping
 		await apiClient
 			.post<AddSetupsChoping>('setup/choping', data)
 			.then(() => {
-				setIsLoading(false)
 				onCreate()
 				onClose()
+				setIsLoading(false)
 			})
 			.catch(() => {
 				setIsLoading(false)

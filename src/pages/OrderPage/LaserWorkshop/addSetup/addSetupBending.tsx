@@ -70,9 +70,9 @@ export function AddSetupBending({ onCreate, onClose, order_id }: addSetupBending
 		await apiClient
 			.post<AddSetupsBending>('setup/bending', data)
 			.then(() => {
-				setIsLoading(false)
 				onCreate()
 				onClose()
+				setIsLoading(false)
 			})
 			.catch(() => {
 				setIsLoading(false)
