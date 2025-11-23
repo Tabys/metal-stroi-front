@@ -47,7 +47,7 @@ export function AddTfcDetails({ onCreate, openAlert, order_id, count }: TFCDetai
 			{fields.map((field, index) => (
 				<div key={field.id} className={styles.row}>
 					<div className={styles.line}>{count + index + 1}</div>
-					<div className={styles.line}>
+					<div className={styles.line + ' ' + styles.name}>
 						<input
 							{...register(`details.${index}.name`, { required: true })}
 							type='text'
@@ -59,7 +59,10 @@ export function AddTfcDetails({ onCreate, openAlert, order_id, count }: TFCDetai
 					</div>
 
 					<div className={styles.line + ' ' + styles.orange}>
-						<input {...register(`details.${index}.setup_time`, { valueAsNumber: true })} type='number' min={0} className='form-control' />
+						<input {...register(`details.${index}.milling_setup_time`, { valueAsNumber: true })} type='number' min={0} className='form-control' />
+					</div>
+					<div className={styles.line + ' ' + styles.orange}>
+						<input {...register(`details.${index}.turning_setup_time`, { valueAsNumber: true })} type='number' min={0} className='form-control' />
 					</div>
 					<div className={styles.line + ' ' + styles.orange}>
 						<input {...register(`details.${index}.tools`, { valueAsNumber: true })} type='number' min={0} className='form-control' />
@@ -77,15 +80,24 @@ export function AddTfcDetails({ onCreate, openAlert, order_id, count }: TFCDetai
 					</div>
 
 					<div className={styles.line + ' ' + styles.yellow}>
-						<input {...register(`details.${index}.machine_time`, { valueAsNumber: true })} type='number' min={0} className='form-control' />
+						<input {...register(`details.${index}.milling_time`, { valueAsNumber: true })} type='number' min={0} className='form-control' />
 					</div>
 					<div className={styles.line + ' ' + styles.yellow}>
-						<input {...register(`details.${index}.locksmiths_works`, { valueAsNumber: true })} type='number' min={0} className='form-control' />
+						<input {...register(`details.${index}.turning_time`, { valueAsNumber: true })} type='number' min={0} className='form-control' />
 					</div>
 					<div className={styles.line + ' ' + styles.yellow}>
+						<input {...register(`details.${index}.universal_time`, { valueAsNumber: true })} type='number' min={0} className='form-control' />
+					</div>
+					<div className={styles.line + ' ' + styles.yellow}>
+						<input {...register(`details.${index}.erosion_time`, { valueAsNumber: true })} type='number' min={0} className='form-control' />
+					</div>
+					<div className={styles.line + ' ' + styles.yellow}>
+						<input {...register(`details.${index}.grinding_time`, { valueAsNumber: true })} type='number' min={0} className='form-control' />
+					</div>
+					<div className={styles.line + ' ' + styles.purple}>
 						<input {...register(`details.${index}.outsourcing`, { valueAsNumber: true })} type='number' min={0} className='form-control' />
 					</div>
-					<div className={styles.line + ' ' + styles.yellow}>
+					<div className={styles.line + ' ' + styles.purple}>
 						<input {...register(`details.${index}.material`, { valueAsNumber: true })} type='number' min={0} className='form-control' />
 					</div>
 
@@ -112,12 +124,16 @@ export function AddTfcDetails({ onCreate, openAlert, order_id, count }: TFCDetai
 						append({
 							name: '',
 							quantity: 1,
-							setup_time: 0,
+							milling_setup_time: 0,
+							turning_setup_time: 0,
 							tools: 0,
 							other_workshops_works: 0,
 							other: 0,
-							machine_time: 0,
-							locksmiths_works: 0,
+							milling_time: 0,
+							turning_time: 0,
+							universal_time: 0,
+							erosion_time: 0,
+							grinding_time: 0,
 							outsourcing: 0,
 							material: 0,
 							defect_extra: 0,

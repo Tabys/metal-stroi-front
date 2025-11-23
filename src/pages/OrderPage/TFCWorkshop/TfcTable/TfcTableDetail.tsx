@@ -18,12 +18,16 @@ export function TfcTableDetail({ detail, total, index, onUpdate, openAlert }: Tf
 		defaultValues: {
 			name: detail.name,
 			quantity: detail.quantity,
-			setup_time: detail.setup_time,
+			milling_setup_time: detail.milling_setup_time,
+			turning_setup_time: detail.turning_setup_time,
 			tools: detail.tools,
 			other_workshops_works: detail.other_workshops_works,
 			other: detail.other,
-			machine_time: detail.machine_time,
-			locksmiths_works: detail.locksmiths_works,
+			milling_time: detail.milling_time,
+			turning_time: detail.turning_time,
+			universal_time: detail.universal_time,
+			erosion_time: detail.erosion_time,
+			grinding_time: detail.grinding_time,
 			outsourcing: detail.outsourcing,
 			material: detail.material,
 			defect_extra: detail.defect_extra,
@@ -52,12 +56,16 @@ export function TfcTableDetail({ detail, total, index, onUpdate, openAlert }: Tf
 		reset({
 			name: detail.name || '',
 			quantity: detail.quantity || 0,
-			setup_time: detail.setup_time || 0,
+			milling_setup_time: detail.milling_setup_time || 0,
+			turning_setup_time: detail.turning_setup_time || 0,
 			tools: detail.tools || 0,
 			other_workshops_works: detail.other_workshops_works || 0,
 			other: detail.other || 0,
-			machine_time: detail.machine_time || 0,
-			locksmiths_works: detail.locksmiths_works || 0,
+			milling_time: detail.milling_time || 0,
+			turning_time: detail.turning_time || 0,
+			universal_time: detail.universal_time || 0,
+			erosion_time: detail.erosion_time || 0,
+			grinding_time: detail.grinding_time || 0,
 			outsourcing: detail.outsourcing || 0,
 			material: detail.material || 0,
 			defect_extra: detail.defect_extra || 0,
@@ -121,13 +129,27 @@ export function TfcTableDetail({ detail, total, index, onUpdate, openAlert }: Tf
 
 			<div className={styles.line + ' ' + styles.orange}>
 				<input
-					{...register('setup_time', {
+					{...register('milling_setup_time', {
 						onBlur: handleSubmit(onSubmit),
 						valueAsNumber: true,
 					})}
 					type='number'
 					onFocus={handleWheelPrevent}
-					onChange={handleNumberInputChange('setup_time')}
+					onChange={handleNumberInputChange('milling_setup_time')}
+					min={0}
+					className='form-control'
+				/>
+			</div>
+
+			<div className={styles.line + ' ' + styles.orange}>
+				<input
+					{...register('turning_setup_time', {
+						onBlur: handleSubmit(onSubmit),
+						valueAsNumber: true,
+					})}
+					type='number'
+					onFocus={handleWheelPrevent}
+					onChange={handleNumberInputChange('turning_setup_time')}
 					min={0}
 					className='form-control'
 				/>
@@ -177,12 +199,12 @@ export function TfcTableDetail({ detail, total, index, onUpdate, openAlert }: Tf
 
 			<div className={styles.line + ' ' + styles.yellow}>
 				<input
-					{...register('machine_time', {
+					{...register('milling_time', {
 						onBlur: handleSubmit(onSubmit),
 						valueAsNumber: true,
 					})}
 					type='number'
-					onFocus={handleNumberInputChange('machine_time')}
+					onFocus={handleNumberInputChange('milling_time')}
 					onChange={handleWheelPrevent}
 					min={0}
 					className='form-control'
@@ -191,12 +213,12 @@ export function TfcTableDetail({ detail, total, index, onUpdate, openAlert }: Tf
 
 			<div className={styles.line + ' ' + styles.yellow}>
 				<input
-					{...register('locksmiths_works', {
+					{...register('turning_time', {
 						onBlur: handleSubmit(onSubmit),
 						valueAsNumber: true,
 					})}
 					type='number'
-					onFocus={handleNumberInputChange('locksmiths_works')}
+					onFocus={handleNumberInputChange('turning_time')}
 					onChange={handleWheelPrevent}
 					min={0}
 					className='form-control'
@@ -204,6 +226,48 @@ export function TfcTableDetail({ detail, total, index, onUpdate, openAlert }: Tf
 			</div>
 
 			<div className={styles.line + ' ' + styles.yellow}>
+				<input
+					{...register('universal_time', {
+						onBlur: handleSubmit(onSubmit),
+						valueAsNumber: true,
+					})}
+					type='number'
+					onFocus={handleNumberInputChange('universal_time')}
+					onChange={handleWheelPrevent}
+					min={0}
+					className='form-control'
+				/>
+			</div>
+
+			<div className={styles.line + ' ' + styles.yellow}>
+				<input
+					{...register('erosion_time', {
+						onBlur: handleSubmit(onSubmit),
+						valueAsNumber: true,
+					})}
+					type='number'
+					onFocus={handleNumberInputChange('erosion_time')}
+					onChange={handleWheelPrevent}
+					min={0}
+					className='form-control'
+				/>
+			</div>
+
+			<div className={styles.line + ' ' + styles.yellow}>
+				<input
+					{...register('grinding_time', {
+						onBlur: handleSubmit(onSubmit),
+						valueAsNumber: true,
+					})}
+					type='number'
+					onFocus={handleNumberInputChange('grinding_time')}
+					onChange={handleWheelPrevent}
+					min={0}
+					className='form-control'
+				/>
+			</div>
+
+			<div className={styles.line + ' ' + styles.purple}>
 				<input
 					{...register('outsourcing', {
 						onBlur: handleSubmit(onSubmit),
@@ -217,7 +281,7 @@ export function TfcTableDetail({ detail, total, index, onUpdate, openAlert }: Tf
 				/>
 			</div>
 
-			<div className={styles.line + ' ' + styles.yellow}>
+			<div className={styles.line + ' ' + styles.purple}>
 				<input
 					{...register('material', {
 						onBlur: handleSubmit(onSubmit),
@@ -259,7 +323,7 @@ export function TfcTableDetail({ detail, total, index, onUpdate, openAlert }: Tf
 				/>
 			</div>
 
-			<div className={styles.line + ' ' + styles.blue}>{total.details_costs.find(item => item.id === detail.id)?.cost}</div>
+			<div className={styles.line + ' ' + styles.blue}>{total.details_costs.find(item => item.id === detail.id)?.cost.toFixed(3)}</div>
 
 			<div className={styles.line}>
 				<button type='submit' onClick={handleSubmit(onSubmitDel)} className='btn btn-link'>

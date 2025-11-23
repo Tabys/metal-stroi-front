@@ -28,12 +28,16 @@ export function TfcTable({ order, total, onUpdate, openAlert }: TfcTableProps) {
 						<p>Количество деталей, шт</p>
 					</div>
 					<div className={styles.small + ' ' + styles.line}>
-						<img src='/images/header-table/equipment.png' alt='install' />
-						<p>Время наладки, мин</p>
+						<img src='/images/header-table/milling.png' alt='install' />
+						<p>Наладка фрезера, мин</p>
+					</div>
+					<div className={styles.small + ' ' + styles.line}>
+						<img src='/images/header-table/turning.png' alt='install' />
+						<p>Наладка токарного, мин</p>
 					</div>
 					<div className={styles.small + ' ' + styles.line}>
 						<img src='/images/header-table/milling-machine.png' alt='machine' />
-						<p>Инструмент+оснастка, руб</p>
+						<p>Инструмент + оснастка, руб</p>
 					</div>
 					<div className={styles.small + ' ' + styles.line}>
 						<img src='/images/header-table/help.png' alt='delivery' />
@@ -44,12 +48,24 @@ export function TfcTable({ order, total, onUpdate, openAlert }: TfcTableProps) {
 						<p>Прочее, руб</p>
 					</div>
 					<div className={styles.small + ' ' + styles.line}>
-						<img src='/images/header-table/lathe-machin.png' alt='machine' />
-						<p>Машинное время, мин</p>
+						<img src='/images/header-table/milling_time.png' alt='machine' />
+						<p>Фрезер ЧПУ, мин</p>
+					</div>
+					<div className={styles.small + ' ' + styles.line}>
+						<img src='/images/header-table/turning_time.png' alt='machine' />
+						<p>Токарный ЧПУ, мин</p>
 					</div>
 					<div className={styles.small + ' ' + styles.line}>
 						<img src='/images/header-table/grinder.png' alt='grinder' />
-						<p>Слесарка, руб</p>
+						<p>Универсальные работы, мин</p>
+					</div>
+					<div className={styles.small + ' ' + styles.line}>
+						<img src='/images/header-table/erosion_time.png' alt='grinder' />
+						<p>Эрозия, мин</p>
+					</div>
+					<div className={styles.small + ' ' + styles.line}>
+						<img src='/images/header-table/grinding_time.png' alt='grinder' />
+						<p>Шлифовка, мин</p>
 					</div>
 					<div className={styles.small + ' ' + styles.line}>
 						<img src='/images/header-table/outsourcing.png' alt='outsourcing' />

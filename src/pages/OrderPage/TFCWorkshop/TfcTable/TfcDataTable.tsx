@@ -33,6 +33,11 @@ export function TfcDataTable({ rates, tfcData, onUpdate, openAlert }: TfcDataTab
 			})
 			.catch(err => {
 				openAlert('danger', err.response.data.message)
+				setValue('milling_works_cost', Number(tfcData?.milling_works_cost))
+				setValue('turning_works_cost', Number(tfcData?.turning_works_cost))
+				setValue('universal_works_cost', Number(tfcData?.universal_works_cost))
+				setValue('erosion_works_cost', Number(tfcData?.erosion_works_cost))
+				setValue('grinding_works_cost', Number(tfcData?.grinding_works_cost))
 			})
 	}
 
@@ -60,11 +65,23 @@ export function TfcDataTable({ rates, tfcData, onUpdate, openAlert }: TfcDataTab
 				</div>
 				<div className={styles.small + ' ' + styles.line}>
 					<img src='/images/header-table/ruble-min.png' alt='ruble' />
-					<p>Стоимость машиночаса</p>
+					<p>Тариф фрезер ЧПУ</p>
 				</div>
 				<div className={styles.small + ' ' + styles.line}>
 					<img src='/images/header-table/ruble-min.png' alt='ruble' />
-					<p>Стоимость часа наладки</p>
+					<p>Тариф токарный ЧПУ</p>
+				</div>
+				<div className={styles.small + ' ' + styles.line}>
+					<img src='/images/header-table/ruble-min.png' alt='ruble' />
+					<p>Тариф универсальные работы</p>
+				</div>
+				<div className={styles.small + ' ' + styles.line}>
+					<img src='/images/header-table/ruble-min.png' alt='ruble' />
+					<p>Тариф эрозия</p>
+				</div>
+				<div className={styles.small + ' ' + styles.line}>
+					<img src='/images/header-table/ruble-min.png' alt='ruble' />
+					<p>Тариф шлифовка</p>
 				</div>
 				<div className={styles.small + ' ' + styles.line}>
 					<img src='/images/header-table/package-min.png' alt='delivery' />
@@ -103,15 +120,58 @@ export function TfcDataTable({ rates, tfcData, onUpdate, openAlert }: TfcDataTab
 				<div className={styles.line}>
 					<input
 						className='form-control'
-						defaultValue={tfcData?.machine_cost ? tfcData?.machine_cost : 0}
+						defaultValue={tfcData?.milling_works_cost ? tfcData?.milling_works_cost : 0}
 						type='number'
-						{...register('machine_cost', {
+						{...register('milling_works_cost', {
 							onBlur: handleSubmit(onSubmit),
 							valueAsNumber: true,
 						})}
 					/>
 				</div>
-				<div className={styles.line}>{tfcData?.machine_cost ? tfcData?.machine_cost / 2 : 0}</div>
+				<div className={styles.line}>
+					<input
+						className='form-control'
+						defaultValue={tfcData?.turning_works_cost ? tfcData?.turning_works_cost : 0}
+						type='number'
+						{...register('turning_works_cost', {
+							onBlur: handleSubmit(onSubmit),
+							valueAsNumber: true,
+						})}
+					/>
+				</div>
+				<div className={styles.line}>
+					<input
+						className='form-control'
+						defaultValue={tfcData?.universal_works_cost ? tfcData?.universal_works_cost : 0}
+						type='number'
+						{...register('universal_works_cost', {
+							onBlur: handleSubmit(onSubmit),
+							valueAsNumber: true,
+						})}
+					/>
+				</div>
+				<div className={styles.line}>
+					<input
+						className='form-control'
+						defaultValue={tfcData?.erosion_works_cost ? tfcData?.erosion_works_cost : 0}
+						type='number'
+						{...register('erosion_works_cost', {
+							onBlur: handleSubmit(onSubmit),
+							valueAsNumber: true,
+						})}
+					/>
+				</div>
+				<div className={styles.line}>
+					<input
+						className='form-control'
+						defaultValue={tfcData?.grinding_works_cost ? tfcData?.grinding_works_cost : 0}
+						type='number'
+						{...register('grinding_works_cost', {
+							onBlur: handleSubmit(onSubmit),
+							valueAsNumber: true,
+						})}
+					/>
+				</div>
 				<div className={styles.line}>
 					<input
 						className='form-control'

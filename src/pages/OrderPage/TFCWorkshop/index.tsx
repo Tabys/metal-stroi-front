@@ -70,7 +70,7 @@ export function TFCWorkshop({ id, rates, user, updateOrders, order }: TFCWorksho
 
 			<TfcCommentField tfcData={order?.tfc_data} openAlert={openAlert} />
 
-			<TfcSummaryTable details={order?.tfc_details} tfcData={order?.tfc_data} total={total} />
+			<TfcSummaryTable details={order?.tfc_details} tfcData={order?.tfc_data} total={total} rates={rates} />
 
 			<div className='fixed-element'>
 				<CopyOrderModal order={order} user={user} />

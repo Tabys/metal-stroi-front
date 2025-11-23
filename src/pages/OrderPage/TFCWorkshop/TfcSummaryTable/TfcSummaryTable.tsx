@@ -1,4 +1,4 @@
-import { TFCData, TFCDetail, TFCTotal } from '../../../../models'
+import { Rates, TFCData, TFCDetail, TFCTotal } from '../../../../models'
 import styles from './style.module.css'
 import { TfcSummeryDetail } from './TfcSummeryDetail'
 import { tfcSummeryTotalData } from '../tfcTotalData/tfcSummeryTotalData'
@@ -7,10 +7,13 @@ type TfcSummaryTableProps = {
 	details?: TFCDetail[]
 	tfcData?: TFCData
 	total: TFCTotal
+	rates: Rates[]
 }
 
-export function TfcSummaryTable({ details, tfcData, total }: TfcSummaryTableProps) {
+export function TfcSummaryTable({ details, tfcData, total, rates }: TfcSummaryTableProps) {
 	const totalData = tfcSummeryTotalData({ details, tfcData, total })
+	const rate = rates.find(rate => rate.bx_id === tfcData?.payment_form)
+	console.log(rate)
 
 	return (
 		<table className={styles.summary_table}>
@@ -26,17 +29,17 @@ export function TfcSummaryTable({ details, tfcData, total }: TfcSummaryTableProp
 				<tr>
 					<th>Себестоимость</th>
 					<th>Прибыль</th>
-					<th>Общая стоимость</th>
+					<th>Общая стоимость {rate ? `(${rate.abbreviations})` : '(АГ)'}</th>
 					<th>Себестоимость за 1 шт</th>
-					<th>Общая себестоимость</th>
+					<th>Общая себестоимость </th>
 					<th>Прибыль</th>
-					<th>Общая стоимость</th>
+					<th>Общая стоимость {rate ? `(${rate.abbreviations})` : '(АГ)'}</th>
 				</tr>
 			</thead>
 
 			<tbody>
-				{details?.map(detail => (
-					<TfcSummeryDetail key={detail.id} detail={detail} tfcData={tfcData} total={total} />
+				{details?.map((detail, index) => (
+					<TfcSummeryDetail key={detail.id} detail={detail} tfcData={tfcData} total={total} index={index} />
 				))}
 			</tbody>
 
@@ -44,15 +47,15 @@ export function TfcSummaryTable({ details, tfcData, total }: TfcSummaryTableProp
 				<tr>
 					<td></td>
 					<td></td>
-					<td>{totalData.setting_up}</td>
-					<td>{totalData.machine_cost}</td>
+					<td>{Number(totalData.setup_cost).toFixed(3)}</td>
+					<td>{Number(totalData.machine_time_cost).toFixed(3)}</td>
 					<td>{totalData.one_prime_cost}</td>
 					<td>{totalData.one_profit}</td>
 					<td>{totalData.one_cost}</td>
 					<td>-</td>
 					<td>{totalData.all_prime_cost}</td>
 					<td>{totalData.all_profit}</td>
-					<td>{totalData.all_cost}</td>
+					<td>{Math.ceil(totalData.all_cost)}</td>
 				</tr>
 			</tfoot>
 		</table>

@@ -728,12 +728,17 @@ export type Rates = {
 	name: string
 	bx_id: number
 	value: number
+	abbreviations: string
 }
 
 export type TFCData = {
 	id?: number
 	parent_id: number
-	machine_cost: number
+	milling_works_cost: number
+	turning_works_cost: number
+	universal_works_cost: number
+	erosion_works_cost: number
+	grinding_works_cost: number
 	delivery: number
 	payment_form: number
 	profit: number
@@ -745,12 +750,16 @@ export type TFCDetail = {
 	id?: number
 	name: string
 	quantity: number
-	setup_time: number
+	milling_setup_time: number
+	turning_setup_time: number
 	tools: number
 	other_workshops_works: number
 	other: number
-	machine_time: number
-	locksmiths_works: number
+	milling_time: number
+	turning_time: number
+	universal_time: number
+	erosion_time: number
+	grinding_time: number
 	outsourcing: number
 	material: number
 	defect_extra: number
@@ -759,12 +768,16 @@ export type TFCDetail = {
 }
 
 export type TFCTotal = {
-	setup_time: number
+	milling_setup_time: number
+	turning_setup_time: number
 	tools: number
 	other_workshops_works: number
 	other: number
-	machine_time: number
-	locksmiths_works: number
+	milling_time: number
+	turning_time: number
+	universal_time: number
+	erosion_time: number
+	grinding_time: number
 	outsourcing: number
 	material: number
 	cost: number

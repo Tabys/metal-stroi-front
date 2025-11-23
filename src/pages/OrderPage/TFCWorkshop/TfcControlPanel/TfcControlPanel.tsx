@@ -18,28 +18,59 @@ export function TfcControlPanel({ orderData, update, openAlert }: TfcControlPane
 				<div className={styles.line}></div>
 
 				<div className={styles.line + ' ' + styles.orange}>
-					<UniversalReset update={update} orderId={orderData.id} APIObject='tfc-details' openAlert={openAlert} condition={{ setup_time: 0 }} />
+					<UniversalReset
+						update={update}
+						orderId={orderData.id}
+						APIObject='tfc-details'
+						openAlert={openAlert}
+						condition={{ milling_setup_time: 0 }}
+					/>
+				</div>
+				<div className={styles.line + ' ' + styles.orange}>
+					<UniversalReset
+						update={update}
+						orderId={orderData.id}
+						APIObject='tfc-details'
+						openAlert={openAlert}
+						condition={{ turning_setup_time: 0 }}
+					/>
 				</div>
 				<div className={styles.line + ' ' + styles.orange}>
 					<UniversalReset update={update} orderId={orderData.id} APIObject='tfc-details' openAlert={openAlert} condition={{ tools: 0 }} />
 				</div>
 				<div className={styles.line + ' ' + styles.orange}>
-					<UniversalReset update={update} orderId={orderData.id} APIObject='tfc-details' openAlert={openAlert} condition={{ delivery: 0 }} />
+					<UniversalReset
+						update={update}
+						orderId={orderData.id}
+						APIObject='tfc-details'
+						openAlert={openAlert}
+						condition={{ other_workshops_works: 0 }}
+					/>
 				</div>
 				<div className={styles.line + ' ' + styles.orange}>
 					<UniversalReset update={update} orderId={orderData.id} APIObject='tfc-details' openAlert={openAlert} condition={{ other: 0 }} />
 				</div>
 
 				<div className={styles.line + ' ' + styles.yellow}>
-					<UniversalReset update={update} orderId={orderData.id} APIObject='tfc-details' openAlert={openAlert} condition={{ machine_time: 0 }} />
+					<UniversalReset update={update} orderId={orderData.id} APIObject='tfc-details' openAlert={openAlert} condition={{ milling_time: 0 }} />
 				</div>
 				<div className={styles.line + ' ' + styles.yellow}>
-					<UniversalReset update={update} orderId={orderData.id} APIObject='tfc-details' openAlert={openAlert} condition={{ locksmiths_works: 0 }} />
+					<UniversalReset update={update} orderId={orderData.id} APIObject='tfc-details' openAlert={openAlert} condition={{ turning_time: 0 }} />
 				</div>
 				<div className={styles.line + ' ' + styles.yellow}>
+					<UniversalReset update={update} orderId={orderData.id} APIObject='tfc-details' openAlert={openAlert} condition={{ universal_time: 0 }} />
+				</div>
+				<div className={styles.line + ' ' + styles.yellow}>
+					<UniversalReset update={update} orderId={orderData.id} APIObject='tfc-details' openAlert={openAlert} condition={{ erosion_time: 0 }} />
+				</div>
+				<div className={styles.line + ' ' + styles.yellow}>
+					<UniversalReset update={update} orderId={orderData.id} APIObject='tfc-details' openAlert={openAlert} condition={{ grinding_time: 0 }} />
+				</div>
+
+				<div className={styles.line + ' ' + styles.purple}>
 					<UniversalReset update={update} orderId={orderData.id} APIObject='tfc-details' openAlert={openAlert} condition={{ outsourcing: 0 }} />
 				</div>
-				<div className={styles.line + ' ' + styles.yellow}>
+				<div className={styles.line + ' ' + styles.purple}>
 					<UniversalReset update={update} orderId={orderData.id} APIObject='tfc-details' openAlert={openAlert} condition={{ material: 0 }} />
 				</div>
 
