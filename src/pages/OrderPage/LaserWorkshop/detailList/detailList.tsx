@@ -4,6 +4,7 @@ import { FormDetailList } from './formDetailList'
 import { ControlPanel } from './component/controlPanel/controlPanel'
 import Tooltip from '../../../../components/Tooltip'
 import { PPHint } from './component/ppHint/ppHint'
+import { PPOnePrice } from './component/ppOnePrice/ppOnePrice'
 
 type detailListProps = {
 	dataOrder: Order
@@ -102,6 +103,7 @@ export function DetailList({ dataOrder, detailGroupList, editedDetails, editedDe
 					<div className={styles.line + ' ' + styles.small}>
 						<img src='/images/header-table/ruble-min.png' alt='pp-price' />
 						<p>Цена за деталь</p>
+						<PPOnePrice detail={detailGroupList[0]} onUpdate={updated} />
 					</div>
 
 					<div className={styles.line + ' ' + styles.small}>

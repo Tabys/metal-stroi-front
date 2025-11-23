@@ -9,10 +9,17 @@ type PaintingTableProps = {
 
 export function PaintingTable({ detail, index, paintingMods }: PaintingTableProps) {
 	const volume = (Number(detail.surface) / 1000000) * 2
-	let polymerOptions = ''
+
+	let regularOptions: string[] = []
+	let singleSideOption: string | null = null
+
 	detail?.polymer_options?.forEach(option => {
 		const paintingMod = paintingMods.find(mod => mod.id === Number(option))
-		polymerOptions += paintingMod?.name + ' '
+		if (paintingMod?.name === 'С одной стороны') {
+			singleSideOption = paintingMod.name
+		} else if (paintingMod?.name) {
+			regularOptions.push(paintingMod.name)
+		}
 	})
 
 	return (
@@ -23,7 +30,9 @@ export function PaintingTable({ detail, index, paintingMods }: PaintingTableProp
 			</td>
 			<td className={styles.center}>{detail.quantity}</td>
 			<td>
-				{detail.polymer} {polymerOptions}
+				{detail.polymer} {regularOptions.join(' ')}
+				{regularOptions.length > 0 && ' '}
+				{singleSideOption && <strong>{singleSideOption}</strong>}
 			</td>
 			<td>{volume.toFixed(3)}</td>
 			<td>{(Number(detail.painting) * Number(detail.quantity)).toFixed(3)}</td>
