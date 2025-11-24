@@ -17,7 +17,7 @@ export function StainlessSteelCost({ metals, markup, materials, workPiece }: Sta
 			metal.material === 'aisi430_BA' ||
 			metal.material === 'aisi430_4N'
 	)
-	console.log(stainlessSteelMetals)
+
 	const cost = stainlessSteelMetals.reduce((acc, metal) => {
 		const rate = workPiece.find(
 			item =>

@@ -47,7 +47,7 @@ export function prepMetalData({ setups, materials, customers_metal }: prepMetalD
 			} else {
 				used_metal_width = rounded_used_metal_width
 			}
-			console.log(used_metal_length, used_metal_width, full_metal_length, full_metal_width)
+			// console.log(used_metal_length, used_metal_width, full_metal_length, full_metal_width)
 			used_metal = ((used_metal_length * used_metal_width) / (Number(full_metal_length) * Number(full_metal_width))) * Number(setup.program_runs)
 		}
 

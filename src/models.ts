@@ -698,6 +698,11 @@ export type PriceRatesItem = {
 	name: string
 	value: number
 }
+export type PriceTariffsItem = {
+	id?: number
+	name: string
+	value: number
+}
 
 export type ChangeSummeryMaterialType = {
 	workshops_material_id?: number

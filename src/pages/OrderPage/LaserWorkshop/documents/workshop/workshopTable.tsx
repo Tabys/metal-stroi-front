@@ -11,7 +11,7 @@ type WHTableProps = {
 export function WorkshopTable({ detail, work_types, index }: WHTableProps) {
 	// const total_price = ((Number(detail.bending) + Number(detail.choping) + Number(detail.cut_cost) + Number(detail.metal)) * detail.quantity).toFixed(1)
 	const dataProducts = findDataInProducts({ detail })
-	console.log(dataProducts)
+
 	return (
 		<tr>
 			<td className={styles.center}>{index + 1}</td>

@@ -178,7 +178,7 @@ export function LaserWorkshop({ id, order, user, paintingMods, updateOrders }: L
 										</Link>
 									</ListGroup.Item> */}
 						<ListGroup.Item variant='light'>
-							<SendPDFForm orderId={Number(id)} total={total.price} api={'pdf'} order={order} update={updateOrders} />
+							<SendPDFForm orderId={Number(id)} total={total.price} painting={total.painting} api={'pdf'} order={order} update={updateOrders} />
 						</ListGroup.Item>
 					</ListGroup>
 				</div>

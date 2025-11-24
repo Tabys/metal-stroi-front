@@ -1,5 +1,5 @@
 import { useForm, SubmitHandler } from 'react-hook-form'
-import { Order, SendPDF } from '../models'
+import { Order, PriceTariffsItem, SendPDF } from '../models'
 import { MdIosShare } from 'react-icons/md'
 import Tooltip from '../components/Tooltip'
 import Alert from 'react-bootstrap/Alert'
@@ -12,10 +12,11 @@ type SendPdfProps = {
 	api: string
 	order: Order
 	total: number
+	painting?: number
 	update: () => void
 }
 
-export function SendPDFForm({ orderId, order, total, api, update }: SendPdfProps) {
+export function SendPDFForm({ orderId, order, total, painting, api, update }: SendPdfProps) {
 	const [isLoading, setIsLoading] = useState(false)
 	const [alertShow, setAlertShow] = useState({
 		action: false,
@@ -41,13 +42,31 @@ export function SendPDFForm({ orderId, order, total, api, update }: SendPdfProps
 	const { handleSubmit, setError } = useForm<SendPDF>()
 
 	const onSubmit: SubmitHandler<SendPDF> = async data => {
+		setIsLoading(true)
+		let minPP = 0
 		data.id = orderId
 		data.cost = total
-		setIsLoading(true)
+
+		if (painting) {
+			const tariffs = await apiClient.get<PriceTariffsItem[]>('price-rates-item', {
+				params: {
+					category: 'tariff',
+				},
+			})
+			const tariffPP = tariffs.data.find(tariff => tariff.name === 'Минимальная стоимость полимерки')
+			if (Number(tariffPP?.value!) > Number(painting) && Number(painting) !== 0) {
+				minPP = 1
+			}
+		}
+
 		await apiClient
 			.post<SendPDF>(api, data)
 			.then(result => {
-				openAlert('success', 'Документы и информация отправлены в BX24')
+				if (minPP === 1) {
+					openAlert('warning', 'Документы и информация отправлены в BX24, но стоимость полимерки меньше минимальной стоимости')
+				} else {
+					openAlert('success', 'Документы и информация отправлены в BX24')
+				}
 				update()
 			})
 			.catch(err => {

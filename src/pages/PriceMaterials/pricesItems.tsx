@@ -30,7 +30,7 @@ export function PricesItems({ price, update, refetchPrices, currentUser, workPie
 	const workPiece = workPieces.find(
 		piece => piece.material === material && Number(piece.thickness_min) <= Number(price.thickness) && Number(piece.thickness_max) >= Number(price.thickness)
 	)
-	console.log(price)
+
 	return (
 		<form className='row'>
 			<input type='hidden' defaultValue={price.id} {...register('id')} />
