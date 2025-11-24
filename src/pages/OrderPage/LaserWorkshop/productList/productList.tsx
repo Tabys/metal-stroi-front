@@ -34,16 +34,8 @@ export function ProductList({ dataOrder, editedProducts, paintingMods, total, de
 									<p>Детали, входящие в изделие</p>
 								</td>
 								<td className={styles.small}>
-									<img src='/images/header-table/sm_works.png' alt='quantity' />
-									<p>Работы СМ</p>
-								</td>
-								<td className={styles.small}>
 									<img src='/images/header-table/mk_works.png' alt='quantity' />
 									<p>Работы МК</p>
-								</td>
-								<td className={styles.small}>
-									<img src='/images/header-table/smith.png' alt='quantity' />
-									<p>Работы Кузни</p>
 								</td>
 								<td className={styles.small}>
 									<img src='/images/header-table/tfc_works.png' alt='quantity' />

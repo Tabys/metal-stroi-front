@@ -49,9 +49,7 @@ export function FormProductList({ products, editedProducts, total, orderData, pa
 						<td colSpan={4} className={styles.text_right}>
 							Итого:
 						</td>
-						<td className={styles.text_right}>{total.prod_sm_works}</td>
 						<td className={styles.text_right}>{total.prod_mk_works}</td>
-						<td className={styles.text_right}>{total.prod_smithy}</td>
 						<td className={styles.text_right}>{total.prod_tfc_works}</td>
 						<td className={styles.text_right}>{total.prod_ac_works}</td>
 						<td className={styles.text_right}>{total.prod_turning_works}</td>

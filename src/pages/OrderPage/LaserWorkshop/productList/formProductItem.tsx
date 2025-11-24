@@ -168,33 +168,11 @@ export function FormProductItem({
 				</div>
 				<div className={styles.line + ' ' + styles.yellow}>
 					<input
-						{...methods.register('sm_works', {
-							onBlur: methods.handleSubmit(onSubmit),
-							valueAsNumber: true,
-						})}
-						defaultValue={productItem.sm_works === null ? 0 : productItem.sm_works}
-						type='number'
-						className='form-control'
-					/>
-				</div>
-				<div className={styles.line + ' ' + styles.yellow}>
-					<input
 						{...methods.register('mk_works', {
 							onBlur: methods.handleSubmit(onSubmit),
 							valueAsNumber: true,
 						})}
 						defaultValue={productItem.mk_works === null ? 0 : productItem.mk_works}
-						type='number'
-						className='form-control'
-					/>
-				</div>
-				<div className={styles.line + ' ' + styles.yellow}>
-					<input
-						{...methods.register('smithy', {
-							onBlur: methods.handleSubmit(onSubmit),
-							valueAsNumber: true,
-						})}
-						defaultValue={productItem.smithy === null ? 0 : productItem.smithy}
 						type='number'
 						className='form-control'
 					/>

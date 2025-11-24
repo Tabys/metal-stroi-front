@@ -121,16 +121,8 @@ export function DocWorkhop() {
 								) : (
 									''
 								)}
-								{orders?.work_types.find(work_type => work_type === 83 || work_type === 88) ? (
-									<th>
-										{orders?.work_types.find(work_type => work_type === 83) ? 'МК' : ''}{' '}
-										{orders?.work_types.find(work_type => work_type === 88) ? 'СМ' : ''}
-									</th>
-								) : (
-									''
-								)}
+								{orders?.work_types.find(work_type => work_type === 538) ? <th>Сварка/Сборка</th> : ''}
 								{orders?.work_types.find(work_type => work_type === 82) ? <th>Полим.</th> : ''}
-								{orders?.work_types.find(work_type => work_type === 87) ? <th>Кузня</th> : ''}
 								{orders?.work_types.find(work_type => work_type === 89) ? <th>Токарка</th> : ''}
 							</tr>
 						</thead>
@@ -152,9 +144,8 @@ export function DocWorkhop() {
 								{orders?.work_types.find(work_type => work_type === 79) ? <td>{total.chop}</td> : ''}
 								{orders?.work_types.find(work_type => work_type === 78) ? <td>{total.bend}</td> : ''}
 								{orders?.work_types.find(work_type => work_type === 80) ? <td></td> : ''}
-								{orders?.work_types.find(work_type => work_type === 83 || work_type === 88) ? <td></td> : ''}
+								{orders?.work_types.find(work_type => work_type === 538) ? <td></td> : ''}
 								{orders?.work_types.find(work_type => work_type === 82) ? <td></td> : ''}
-								{orders?.work_types.find(work_type => work_type === 87) ? <td></td> : ''}
 								{orders?.work_types.find(work_type => work_type === 89) ? <td></td> : ''}
 							</tr>
 						</tbody>
@@ -238,17 +229,12 @@ export function DocWorkhop() {
 							{orders?.work_types.find(
 								work_type =>
 									work_type === 82 ||
-									work_type === 88 ||
 									work_type === 84 ||
-									work_type === 87 ||
 									work_type === 85 ||
 									work_type === 89 ||
-									work_type === 83 ||
-									work_type === 21 ||
+									work_type === 538 ||
 									work_type === 19 ||
-									work_type === 15 ||
-									work_type === 14 ||
-									work_type === 22
+									work_type === 14
 							) ? (
 								<>
 									<p>
@@ -265,16 +251,9 @@ export function DocWorkhop() {
 							) : (
 								''
 							)}
-							{orders?.work_types.find(work_type => work_type === 83 || work_type === 21) ? (
+							{orders?.work_types.find(work_type => work_type === 538) ? (
 								<p>
 									<span>Цех металлоконструкций:</span>
-								</p>
-							) : (
-								''
-							)}
-							{orders?.work_types.find(work_type => work_type === 88 || work_type === 15) ? (
-								<p>
-									<span>Цех сельхозмашиностроения:</span>
 								</p>
 							) : (
 								''
@@ -282,13 +261,6 @@ export function DocWorkhop() {
 							{orders?.work_types.find(work_type => work_type === 84 || work_type === 14) ? (
 								<p>
 									<span>Токарно-фрезерный цех:</span>
-								</p>
-							) : (
-								''
-							)}
-							{orders?.work_types.find(work_type => work_type === 87 || work_type === 22) ? (
-								<p>
-									<span>Цех художественной ковки:</span>
 								</p>
 							) : (
 								''

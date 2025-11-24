@@ -43,13 +43,7 @@ export function ControlPanelProducts({ orderData, paintingMods, update }: Contro
 				<div className={styles.line}></div>
 				<div className={styles.line}></div>
 				<div className={styles.line + ' ' + styles.yellow}>
-					<UniversalReset update={update} orderId={orderData.id} openAlert={openAlert} condition={{ sm_works: 0 }} APIObject='products' />
-				</div>
-				<div className={styles.line + ' ' + styles.yellow}>
 					<UniversalReset update={update} orderId={orderData.id} openAlert={openAlert} condition={{ mk_works: 0 }} APIObject='products' />
-				</div>
-				<div className={styles.line + ' ' + styles.yellow}>
-					<UniversalReset update={update} orderId={orderData.id} openAlert={openAlert} condition={{ smithy: 0 }} APIObject='products' />
 				</div>
 				<div className={styles.line + ' ' + styles.yellow}>
 					<UniversalReset update={update} orderId={orderData.id} openAlert={openAlert} condition={{ tfc_works: 0 }} APIObject='products' />

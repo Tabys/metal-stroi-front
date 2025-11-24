@@ -30,17 +30,12 @@ export function WorkshopTable({ detail, work_types, index }: WHTableProps) {
 			{work_types?.find(work_type => work_type === 79) ? <td>{detail.chop_count ? detail.chop_count : ''}</td> : ''}
 			{work_types?.find(work_type => work_type === 78) ? <td>{detail.bend_count ? detail.bend_count : ''}</td> : ''}
 			{work_types?.find(work_type => work_type === 80) ? <td className={styles.center}>{detail.rolling ? '✓' : ''}</td> : ''}
-			{work_types?.find(work_type => work_type === 83 || work_type === 88) ? (
-				<td className={styles.center}>{dataProducts.mk_works > 0 || dataProducts.sm_works > 0 ? '✓' : ''}</td>
-			) : (
-				''
-			)}
+			{work_types?.find(work_type => work_type === 538) ? <td className={styles.center}>{dataProducts.mk_works > 0 ? '✓' : ''}</td> : ''}
 			{work_types?.find(work_type => work_type === 82) ? (
 				<td className={styles.center}>{dataProducts.painting > 0 || Number(detail.polymer_price) > 0 ? '✓' : ''}</td>
 			) : (
 				''
 			)}
-			{work_types?.find(work_type => work_type === 87) ? <td className={styles.center}>{dataProducts.smithy > 0 ? '✓' : ''}</td> : ''}
 			{work_types?.find(work_type => work_type === 89) ? <td className={styles.center}>{dataProducts.turning_works > 0 ? '✓' : ''}</td> : ''}
 		</tr>
 	)
