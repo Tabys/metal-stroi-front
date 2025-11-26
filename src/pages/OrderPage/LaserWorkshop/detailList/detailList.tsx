@@ -1,4 +1,4 @@
-import { DocTableDetail, Order, PaintingMods, TotalData, Detail } from '../../../../models'
+import { DocTableDetail, Order, PaintingMods, TotalData, Detail, MetalType } from '../../../../models'
 import styles from './style.module.css'
 import { FormDetailList } from './formDetailList'
 import { ControlPanel } from './component/controlPanel/controlPanel'
@@ -15,9 +15,20 @@ type detailListProps = {
 	total: TotalData
 	totalOnlyDetail: TotalData
 	updated: () => void
+	metals: MetalType[]
 }
 
-export function DetailList({ dataOrder, detailGroupList, editedDetails, editedDetailsFull, paintingMods, total, totalOnlyDetail, updated }: detailListProps) {
+export function DetailList({
+	dataOrder,
+	detailGroupList,
+	editedDetails,
+	editedDetailsFull,
+	paintingMods,
+	total,
+	totalOnlyDetail,
+	updated,
+	metals,
+}: detailListProps) {
 	return (
 		<div className={styles.wrapper_table}>
 			<div className={styles.detail_list + ' ' + styles.border_bold}>
@@ -128,6 +139,7 @@ export function DetailList({ dataOrder, detailGroupList, editedDetails, editedDe
 					details={detailGroupList}
 					orderData={dataOrder}
 					paintingMods={paintingMods}
+					metals={metals}
 				/>
 			</div>
 		</div>

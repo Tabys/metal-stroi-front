@@ -1,11 +1,11 @@
-import { Metal } from '../../../../../models'
-import { getMetalNameSuffix } from '../../metalList/getMetalNameSuffix'
+import { Metal, MetalType } from '../../../../../models'
 
 type NeededMetalProps = {
 	metals: Metal
+	metalPrices: MetalType[]
 }
-export function MetalTable({ metals }: NeededMetalProps) {
-	const metalName = getMetalNameSuffix(metals.material)
+export function MetalTable({ metals, metalPrices }: NeededMetalProps) {
+	const metalName = metalPrices.find(metalType => metalType.abbreviation === metals.material)?.short_name_for_metal || metals.material
 	return (
 		<tr>
 			<td>

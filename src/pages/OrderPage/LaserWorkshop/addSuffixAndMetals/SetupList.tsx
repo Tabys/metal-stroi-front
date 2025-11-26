@@ -4,7 +4,6 @@ import { OneSetup } from './oneSetup'
 import Select from 'react-select'
 import style from './style.module.css'
 import { getOptionsMetals } from './optionsMetals'
-import { listMetalName } from '../detailList/listMetalName'
 
 type SetupListProp = {
 	data: FormatedSetupsData | undefined
@@ -58,7 +57,7 @@ export function SetupList({ dubleDetails, metals, data, setArrSuffix, arrSuffix,
 
 	const optionsMetals: any = getOptionsMetals({ metals: metals, setup: data?.setups?.[0] })
 
-	const arrOptions = listMetalName(data?.setups?.[0].material)
+	const arrOptions = metals?.find(metal => metal.abbreviation === data?.setups?.[0].material)?.options || []
 	const options = arrOptions.map(value => {
 		return { value: value, label: value }
 	})

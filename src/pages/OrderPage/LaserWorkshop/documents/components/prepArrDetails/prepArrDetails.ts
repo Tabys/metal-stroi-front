@@ -1,7 +1,6 @@
-import { Detail, Order } from '../../../../../../models'
+import { Detail, MetalType, Order } from '../../../../../../models'
 import { AvailableDetail } from '../../../../LaserWorkshop/addProduct/availableDetail'
 import { getExtraPriceMetal } from './getExtraPriceMetal'
-import { getMaterialName } from './getMaterialName'
 import { getSuffixes } from './getSuffixes'
 
 type PrepArrDetailsProp = {
@@ -9,9 +8,10 @@ type PrepArrDetailsProp = {
 	order: Order | undefined
 	full?: boolean
 	productCount?: number
+	metals: MetalType[]
 }
 
-export function PrepArrDetails({ arrDetails, order, full, productCount }: PrepArrDetailsProp) {
+export function PrepArrDetails({ arrDetails, order, full, productCount, metals }: PrepArrDetailsProp) {
 	const prepArrDetails = arrDetails
 		? arrDetails.map((detail, index) => {
 				const availableDetail = productCount
@@ -32,7 +32,7 @@ export function PrepArrDetails({ arrDetails, order, full, productCount }: PrepAr
 						cut_cost = Number(detail.length) * Number(detail.cut_cost) + Number(detail.inset_cost) * Number(detail.cut_count)
 					}
 				}
-				const material = getMaterialName(detail.material)
+				const material = metals.find(metal => metal.abbreviation === detail.material)?.short_name_for_metal || ''
 				const extraPriceMetal = getExtraPriceMetal(order)
 				const suffixes = getSuffixes({ order: order, detail: detail })
 				const metal_cost =

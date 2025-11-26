@@ -1,5 +1,5 @@
 import { useFormContext } from 'react-hook-form'
-import { Detail } from '../../../../../models'
+import { Detail, MetalType } from '../../../../../models'
 
 type SelectProps = {
 	detailData: Detail
@@ -7,44 +7,24 @@ type SelectProps = {
 	name: string
 	disabled?: boolean
 	onSubmit: () => void
+	metals: MetalType[]
 }
 
-export function FormSelectRoll({ detailData, selected, name, disabled, onSubmit }: SelectProps) {
+export function FormSelectRoll({ detailData, selected, name, disabled, onSubmit, metals }: SelectProps) {
 	const { register, setValue } = useFormContext()
-	let arrOptions: string[] = []
-	let arrOptionsText: string[] = []
-	switch (detailData.material) {
-		case 'St37':
-		case 'St37HK':
-		case 'St37RIF':
-		case 'Hardox':
-		case 'Magstrong':
-		case '09Г2С':
-			arrOptions = ['', 'rolling_roll', 'rolling_cone']
-			arrOptionsText = ['', 'Прокат', 'Конус']
-			break
-		case 'AlMg3':
-		case 'ОЦ':
-		case '1.4301':
-		case 'aisi304_BA':
-		case 'aisi304_4N':
-		case 'aisi430_2B':
-		case 'aisi430_BA':
-		case 'aisi430_4N':
-			arrOptions = ['', 'rolling_roll']
-			arrOptionsText = ['', 'Прокат']
-			break
-	}
+	const metal = metals.find(metal => metal.abbreviation === detailData.material)
+	const arrOptions = metal?.rolling || []
+	const arrOptionsText = metal?.rolling?.length === 3 ? ['', 'Прокат', 'Конус'] : ['', 'Прокат']
 
 	const options = arrOptions.map((value, index) => {
 		let text: string = ''
 		if (arrOptionsText) {
 			text = arrOptionsText[index]
 		} else {
-			text = value
+			text = String(value)
 		}
 		return (
-			<option key={index} value={value}>
+			<option key={index} value={String(value)}>
 				{text}
 			</option>
 		)

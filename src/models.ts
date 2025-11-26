@@ -221,6 +221,23 @@ export type MetalType = {
 	price_metal_items?: PriceMetalItems[]
 	density?: number
 	sort?: number
+	metal_type?: string
+	options?: JSON[]
+	rolling?: JSON[]
+	short_name?: string
+	short_name_for_metal?: string
+}
+
+export type AddMetalType = {
+	name: string
+	abbreviation: string
+	density: number
+	sort?: number
+	metal_type: string
+	options: string[]
+	rolling: JSON[]
+	short_name: string
+	short_name_for_metal: string
 }
 
 export type PriceMetalItems = {

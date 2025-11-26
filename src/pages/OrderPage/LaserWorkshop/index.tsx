@@ -21,6 +21,7 @@ import { Link } from 'react-router-dom'
 import { FaFileLines } from 'react-icons/fa6'
 import { SendPDFForm } from '../../../components/sendPDF'
 import { useRates } from '../../../hooks/useRates'
+import { useMaterialPrices } from '../../../hooks/priceMaterials'
 
 type LaserWorkshopProps = {
 	id?: string
@@ -36,6 +37,7 @@ export function EmptySetup() {
 
 export function LaserWorkshop({ id, order, user, paintingMods, updateOrders }: LaserWorkshopProps) {
 	const { rates } = useRates()
+	const { prices } = useMaterialPrices()
 
 	// Мемоизируем создание группированного списка деталей
 	const detailGroupList = useMemo(() => {
@@ -48,16 +50,18 @@ export function LaserWorkshop({ id, order, user, paintingMods, updateOrders }: L
 			arrDetails: detailGroupList,
 			order: order,
 			full: true,
+			metals: prices,
 		})
-	}, [detailGroupList, order])
+	}, [detailGroupList, order, prices])
 
 	// Мемоизируем обработку деталей (доступная версия)
 	const editedDetails = useMemo(() => {
 		return PrepArrDetails({
 			arrDetails: detailGroupList,
 			order: order,
+			metals: prices,
 		})
-	}, [detailGroupList, order])
+	}, [detailGroupList, order, prices])
 
 	// Мемоизируем обработку продуктов
 	const products = useMemo(() => {
@@ -104,7 +108,7 @@ export function LaserWorkshop({ id, order, user, paintingMods, updateOrders }: L
 					</div>
 				</div>
 
-				<FormOrderController orderData={order} updated={updateOrders} />
+				<FormOrderController orderData={order} metals={prices} updated={updateOrders} />
 			</div>
 
 			<DetailList
@@ -116,6 +120,7 @@ export function LaserWorkshop({ id, order, user, paintingMods, updateOrders }: L
 				total={total}
 				totalOnlyDetail={totalOnlyDetail}
 				updated={updateOrders}
+				metals={prices}
 			/>
 
 			<ProductList
@@ -127,7 +132,7 @@ export function LaserWorkshop({ id, order, user, paintingMods, updateOrders }: L
 				updData={updateOrders}
 			/>
 
-			{order.metals ? <MetalList order={order} updMetal={updateOrders} /> : ''}
+			{order.metals ? <MetalList order={order} updMetal={updateOrders} metals={prices} /> : ''}
 
 			{/* FIXED INTERFACE ELEMENTS */}
 			<div className='fixed-element'>

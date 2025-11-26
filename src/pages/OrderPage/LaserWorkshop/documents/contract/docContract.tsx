@@ -14,22 +14,26 @@ import { ContractShipmentTableDetails } from './contractShipmentTableDetails'
 import { ContractShipmentTableProducts } from './contractShipmentTableProducts'
 import { useUser } from '../../../../../hooks/currentUser'
 import { getVat } from './getVat'
+import { useMaterialPrices } from '../../../../../hooks/priceMaterials'
 
 export function DocContract() {
 	const { id } = useParams()
 	const { orders } = useOrders({ id: id ? id : '' })
 	const { currentUser } = useUser()
 	const vat = getVat(orders)
+	const { prices } = useMaterialPrices()
 
 	const arrDetails = orders ? CreateDetailGroupList({ dataOrder: orders }) : undefined
 	const details: DocTableDetail[] | undefined = PrepArrDetails({
 		arrDetails,
 		order: orders,
+		metals: prices,
 	})
 	const editedDetailsFull: DocTableDetail[] | undefined = PrepArrDetails({
 		arrDetails: CreateDetailGroupList({ dataOrder: orders }),
 		order: orders,
 		full: true,
+		metals: prices,
 	})
 	const products = PrepArrProducts({ order: orders, full_details: editedDetailsFull })
 	const total = CulcTotalData({ details, products, orders })

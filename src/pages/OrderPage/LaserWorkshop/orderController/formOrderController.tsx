@@ -1,4 +1,4 @@
-import { DocTableDetail, Order, OrderController } from '../../../../models'
+import { DocTableDetail, MetalType, Order, OrderController } from '../../../../models'
 import { useForm, SubmitHandler, FormProvider, Controller } from 'react-hook-form'
 import Form from 'react-bootstrap/Form'
 import CreatableSelect from 'react-select/creatable'
@@ -13,9 +13,10 @@ import apiClient from '../../../../components/apiClient'
 type formOCProps = {
 	orderData: Order
 	updated: () => void
+	metals: MetalType[]
 }
 
-export function FormOrderController({ orderData, updated }: formOCProps) {
+export function FormOrderController({ orderData, metals, updated }: formOCProps) {
 	const defaultOptions = [
 		{ value: 2, label: '2' },
 		{ value: 3, label: '3' },
@@ -62,6 +63,7 @@ export function FormOrderController({ orderData, updated }: formOCProps) {
 				arrDetails,
 				order: orderData,
 				full: true,
+				metals: metals,
 			})
 			const total = CulcTotalData({ details })
 			if (total.weight > 300) {

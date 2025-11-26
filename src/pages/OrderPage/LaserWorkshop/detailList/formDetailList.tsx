@@ -1,4 +1,4 @@
-import { Detail, DocTableDetail, Order, PaintingMods, TotalData } from '../../../../models'
+import { Detail, DocTableDetail, MetalType, Order, PaintingMods, TotalData } from '../../../../models'
 import { FormDetailItem } from './formDetailItem'
 import Alert from 'react-bootstrap/Alert'
 import { useState, memo } from 'react'
@@ -13,6 +13,7 @@ interface FormProps {
 	totalOnlyDetail: TotalData
 	paintingMods: PaintingMods[]
 	updData: () => void
+	metals: MetalType[]
 }
 
 export const FormDetailList = memo(function FormDetailList({
@@ -24,6 +25,7 @@ export const FormDetailList = memo(function FormDetailList({
 	orderData,
 	paintingMods,
 	updData,
+	metals,
 }: FormProps) {
 	const [alertShow, setAlertShow] = useState(false)
 	const [rollAlertShow, setRollAlertShow] = useState(false)
@@ -68,6 +70,7 @@ export const FormDetailList = memo(function FormDetailList({
 					paintingMods={paintingMods}
 					index={index}
 					key={item.id}
+					metals={metals}
 				/>
 			))}
 			<table className={styles.table_total}>

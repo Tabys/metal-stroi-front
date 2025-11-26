@@ -3,7 +3,6 @@ import { useForm, SubmitHandler, Controller } from 'react-hook-form'
 import { AddSetupsBending } from '../../../../models'
 import { useMaterialPrices } from '../../../../hooks/priceMaterials'
 import { useState } from 'react'
-import { listMetalName } from '../detailList/listMetalName'
 import Select from 'react-select'
 import style from './style.module.css'
 import apiClient from '../../../../components/apiClient'
@@ -27,13 +26,15 @@ export function AddSetupBending({ onCreate, onClose, order_id }: addSetupBending
 
 	const [material, setMaterial] = useState<string>('St37')
 
-	const arrOptions: any[] = listMetalName(material)
+	const arrOptions: any[] = prices.find(price => price.abbreviation === material)?.options || []
+
 	let avalibleMetals = prices.find(price => price.abbreviation === material)
 	let groupAvalibleMetal = avalibleMetals?.price_metal_items?.filter((obj, idx, arr) => idx === arr.findIndex(t => t.title === obj.title))
 
 	const options = arrOptions.map(value => {
 		return { value: value, label: value }
 	})
+	console.log(options)
 
 	const onSubmit: SubmitHandler<AddSetupsBending> = async data => {
 		setIsLoading(true)

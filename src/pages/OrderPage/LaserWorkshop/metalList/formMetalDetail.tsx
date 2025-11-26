@@ -1,7 +1,6 @@
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form'
-import { Material, Metal, WorkPiece } from '../../../../models'
+import { Material, Metal, MetalType, WorkPiece } from '../../../../models'
 import styles from './style.module.css'
-import { getMetalNameSuffix } from './getMetalNameSuffix'
 import { useEffect } from 'react'
 import apiClient from '../../../../components/apiClient'
 import { FaCircleNotch } from 'react-icons/fa6'
@@ -17,10 +16,11 @@ type FormMetalDetailProps = {
 	setTextErrorAlert: React.Dispatch<React.SetStateAction<string>>
 	materials: Material[]
 	markup: number
+	metals: MetalType[]
 }
 
-export function FormMetalDetail({ workPiece, metal, updMetal, openAlert, openErrorAlert, setTextErrorAlert, materials, markup }: FormMetalDetailProps) {
-	const metalName = getMetalNameSuffix(metal.material)
+export function FormMetalDetail({ workPiece, metal, updMetal, openAlert, openErrorAlert, setTextErrorAlert, materials, markup, metals }: FormMetalDetailProps) {
+	const metalName = metals.find(metalType => metalType.abbreviation === metal.material)?.short_name || metal.material
 	const { currentUser } = useUser()
 
 	const methods = useForm<Metal>()

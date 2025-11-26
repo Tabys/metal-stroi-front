@@ -1,13 +1,14 @@
 import { AxiosError } from 'axios'
-import { PriceServiceCategory, Detail, Setup, PricesServiceRolling } from '../../../../../models'
+import { PriceServiceCategory, Detail, Setup, PricesServiceRolling, MetalType } from '../../../../../models'
 import apiClient from '../../../../../components/apiClient'
 
 type UpdRollingsProps = {
 	dataDetail: Detail
 	free?: boolean
+	metals: MetalType[]
 }
 
-export async function UpdRollings({ dataDetail, free }: UpdRollingsProps) {
+export async function UpdRollings({ dataDetail, free, metals }: UpdRollingsProps) {
 	async function getPrices() {
 		try {
 			const response = await apiClient.get<PriceServiceCategory[]>('price-services-category')
@@ -49,43 +50,12 @@ export async function UpdRollings({ dataDetail, free }: UpdRollingsProps) {
 			return Number(items.id) === Number(dataDetail.id)
 		})
 
-		switch (MATERIAL_NAME) {
-			case 'St37':
-			case 'St37HK':
-			case 'St37RIF':
-			case 'Hardox':
-			case 'Magstrong':
-			case '09Г2С':
-			case 'ОЦ':
-				SERVICES_COST = PRICE?.price_services_rollings?.filter(items => {
-					return items.type_metal === 'Черный'
-				})
-				SERVICE_COST = SERVICES_COST?.find(items => {
-					return items.metal_thickness === THICKNESS
-				})
-				break
-			case 'AlMg3':
-				SERVICES_COST = PRICE?.price_services_rollings?.filter(items => {
-					return items.type_metal === 'Алюм'
-				})
-				SERVICE_COST = SERVICES_COST?.find(items => {
-					return items.metal_thickness === THICKNESS
-				})
-				break
-			case '1.4301':
-			case 'aisi304_BA':
-			case 'aisi304_4N':
-			case 'aisi430_2B':
-			case 'aisi430_BA':
-			case 'aisi430_4N':
-				SERVICES_COST = PRICE?.price_services_rollings?.filter(items => {
-					return items.type_metal === 'Нерж'
-				})
-				SERVICE_COST = SERVICES_COST?.find(items => {
-					return items.metal_thickness === THICKNESS
-				})
-				break
-		}
+		SERVICES_COST = PRICE?.price_services_rollings?.filter(items => {
+			return items.type_metal === metals.find(metal => metal.abbreviation === MATERIAL_NAME)?.metal_type
+		})
+		SERVICE_COST = SERVICES_COST?.find(items => {
+			return items.metal_thickness === THICKNESS
+		})
 
 		let rolling_cost = (Number(detail?.serface) / 1000000) * Number(SERVICE_COST?.cost)
 		if (rolling_cost < Number(SERVICE_COST?.min_cost)) {

@@ -1,5 +1,5 @@
 import { useForm, SubmitHandler, FormProvider, Controller } from 'react-hook-form'
-import { Detail, DocTableDetail, Metal, Order, PaintingMods } from '../../../../models'
+import { Detail, DocTableDetail, Metal, MetalType, Order, PaintingMods } from '../../../../models'
 import styles from './style.module.css'
 import { UpdCutInset } from './updPrices/updCutInset'
 import { FormRadio } from './formElements/formRadio'
@@ -13,7 +13,6 @@ import { culcMetalPriceOneDetail } from './component/culcMetalPriceOneDetail/cul
 import { culcCostDetail } from './component/culcCostDetails/culcCostDetails'
 import apiClient from '../../../../components/apiClient'
 import InputMask from 'react-input-mask'
-import { renameMetal } from './renameMetal'
 
 type FormDetailItemProps = {
 	orderData: Order
@@ -27,6 +26,7 @@ type FormDetailItemProps = {
 	updData: () => void
 	rollAlert: () => void
 	serviceAlert: (min_price: number | undefined) => void
+	metals: MetalType[]
 }
 
 export function FormDetailItem({
@@ -41,6 +41,7 @@ export function FormDetailItem({
 	serviceAlert,
 	updDetail,
 	updData,
+	metals,
 }: FormDetailItemProps) {
 	const methods = useForm<Detail>()
 
@@ -117,7 +118,7 @@ export function FormDetailItem({
 	const onSubmitRolling: SubmitHandler<Detail> = async data => {
 		delete data.metal_cost
 		await apiClient
-			.put<Detail>('detail/', await UpdRollings({ dataDetail: data, free: DetailItem.free }))
+			.put<Detail>('detail/', await UpdRollings({ dataDetail: data, free: DetailItem.free, metals }))
 			.then(() => {
 				if (data.rolling_type === 'rolling_cone' && Number(DetailItem.thickness) === 2) {
 					rollAlert()
@@ -387,7 +388,9 @@ export function FormDetailItem({
 				</div>
 
 				<div className={styles.line + ' ' + styles.brown}>{DetailItem.thickness}</div>
-				<div className={styles.line + ' ' + styles.brown}>{renameMetal(DetailItem.material)}</div>
+				<div className={styles.line + ' ' + styles.brown}>
+					{metals.find(metal => metal.abbreviation === DetailItem.material)?.short_name || DetailItem.material}
+				</div>
 				<div className={styles.line + ' ' + styles.brown}>{metalPriceOneDetail}</div>
 
 				<FormRadio name='cut_type' defaultValue={DetailItem.cut_type} data={DetailItem} onSubmit={methods.handleSubmit(onSubmitCutInset)} />
@@ -538,6 +541,7 @@ export function FormDetailItem({
 						name='rolling_type'
 						disabled={Number(DetailItem.thickness) > 5 ? true : false}
 						onSubmit={methods.handleSubmit(onSubmitRolling)}
+						metals={metals}
 					/>
 				</div>
 				<div className={styles.line + ' ' + styles.blue}>

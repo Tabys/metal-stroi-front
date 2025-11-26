@@ -1,12 +1,12 @@
-import { WorkshopMetal } from '../../../../../models'
-import { getMetalNameSuffix } from '../../metalList/getMetalNameSuffix'
+import { MetalType, WorkshopMetal } from '../../../../../models'
 import styles from '../style.module.css'
 
 type NeededMetalProps = {
 	metals: WorkshopMetal
+	metalPrices: MetalType[]
 }
-export function MetalTable({ metals }: NeededMetalProps) {
-	const material = getMetalNameSuffix(metals.material ? metals.material : '')
+export function MetalTable({ metals, metalPrices }: NeededMetalProps) {
+	const material = metalPrices.find(metalType => metalType.abbreviation === metals.material)?.short_name || metals.material
 	return (
 		<tr>
 			<td className={styles.center}>{metals.customers_metal ? 'зак' : 'наш'}</td>

@@ -17,6 +17,7 @@ import { useState } from 'react'
 import { Alert } from 'react-bootstrap'
 import authHeader from '../../../../../components/auth/authHeader'
 import apiClient from '../../../../../components/apiClient'
+import { useMaterialPrices } from '../../../../../hooks/priceMaterials'
 
 export function DocPainting() {
 	const [alertShow, setAlertShow] = useState(false)
@@ -32,6 +33,7 @@ export function DocPainting() {
 	const { orders } = useOrders({ id: id ? id : '' })
 	const { paintingMods } = usePaintingMods()
 	const linkBX = process.env.REACT_APP_BX24_URL + `crm/deal/details/${id}/`
+	const { prices } = useMaterialPrices()
 
 	const { register, handleSubmit } = useForm<Order>()
 
@@ -39,12 +41,14 @@ export function DocPainting() {
 	const details: DocTableDetail[] | undefined = PrepArrDetails({
 		arrDetails,
 		order: orders,
+		metals: prices,
 	})
 	const filteredDetails = details?.filter(detail => detail.polymer && detail.polymer !== null)
 	const editedDetailsFull: DocTableDetail[] | undefined = PrepArrDetails({
 		arrDetails: CreateDetailGroupList({ dataOrder: orders }),
 		order: orders,
 		full: true,
+		metals: prices,
 	})
 	const products = PrepArrProducts({ order: orders, full_details: editedDetailsFull })
 	const productIndex = culcProductIndex(details)

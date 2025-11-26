@@ -12,22 +12,26 @@ import { PrepArrProducts } from '../components/prepArrProducts'
 import { SpecProductTable } from './specProductTable'
 import { CulcColSpan } from './culcColSpan'
 import { useState } from 'react'
+import { useMaterialPrices } from '../../../../../hooks/priceMaterials'
 
 export function DocSpecialization() {
 	const [showTable, setShowTable] = useState(false)
 	const { id } = useParams()
 	const { orders } = useOrders({ id: id ? id : '', free: false })
+	const { prices } = useMaterialPrices()
 
 	const arrDetails = orders ? CreateDetailGroupList({ dataOrder: orders, free: true }) : undefined
 	const details: DocTableDetail[] | undefined = PrepArrDetails({
 		arrDetails,
 		order: orders,
+		metals: prices,
 	})
 
 	const editedDetailsFull: DocTableDetail[] | undefined = PrepArrDetails({
 		arrDetails: CreateDetailGroupList({ dataOrder: orders, free: true }),
 		order: orders,
 		full: true,
+		metals: prices,
 	})
 
 	const products = PrepArrProducts({ order: orders, full_details: editedDetailsFull })

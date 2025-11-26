@@ -3,7 +3,6 @@ import { useForm, SubmitHandler, Controller, useFieldArray } from 'react-hook-fo
 import { AddSetupsChoping } from '../../../../models'
 import { useMaterialPrices } from '../../../../hooks/priceMaterials'
 import { useState } from 'react'
-import { listMetalName } from '../detailList/listMetalName'
 import Select from 'react-select'
 import style from './style.module.css'
 import { FaMinus, FaPlus, FaRegTrashCan } from 'react-icons/fa6'
@@ -33,7 +32,7 @@ export function AddSetupChoping({ onCreate, onClose, order_id }: addSetupChoping
 
 	const [material, setMaterial] = useState<string>('St37')
 
-	const arrOptions: any[] = listMetalName(material)
+	const arrOptions: any[] = prices.find(price => price.abbreviation === material)?.options || []
 	let avalibleMetals = prices.find(price => price.abbreviation === material)
 	let groupAvalibleMetal = avalibleMetals?.price_metal_items?.filter((obj, idx, arr) => idx === arr.findIndex(t => t.title === obj.title))
 

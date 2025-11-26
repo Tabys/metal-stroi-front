@@ -5,7 +5,7 @@ import apiClient from '../../components/apiClient'
 
 type FormCreateNewThicknessProps = {
 	categoryId: number
-	openAlert: () => void
+	openAlert: (type: string, message?: string) => void
 	refetchPrices: () => void
 }
 
@@ -31,12 +31,12 @@ export function FormCreateNewThickness({ categoryId, openAlert, refetchPrices }:
 		await apiClient
 			.post<PriceMetalItem>('price-metal-item', data)
 			.then(result => {
-				openAlert()
+				openAlert('success', 'Изменения сохранены')
 				reset()
 				refetchPrices()
 			})
 			.catch(err => {
-				console.log(err.response)
+				openAlert('danger', err.response.data.message)
 				if (err.response.status > 200) {
 					setError('root.serverError', {
 						type: err.response.status,

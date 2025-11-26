@@ -11,9 +11,11 @@ import { TransformDate } from '../../../../../components/TransformDate'
 import { CulcTotalData } from '../components/culcTotalData'
 import { MetalTable } from './metalTable'
 import { useState } from 'react'
+import { useMaterialPrices } from '../../../../../hooks/priceMaterials'
 
 export function DocOrder() {
 	const [showTable, setShowTable] = useState(true)
+	const { prices } = useMaterialPrices()
 
 	const { id } = useParams()
 	const { orders } = useOrders({ id: id ? id : '' })
@@ -25,6 +27,7 @@ export function DocOrder() {
 		arrDetails,
 		order: orders,
 		full,
+		metals: prices,
 	})
 	const total = CulcTotalData({ details })
 
@@ -120,7 +123,7 @@ export function DocOrder() {
 						</thead>
 						<tbody>
 							{orders?.metals?.map((metal, index) => (
-								<MetalTable key={index} metals={metal} />
+								<MetalTable key={index} metals={metal} metalPrices={prices} />
 							))}
 						</tbody>
 					</Table>

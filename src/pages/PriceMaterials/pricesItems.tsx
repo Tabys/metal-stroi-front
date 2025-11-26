@@ -5,7 +5,7 @@ import { FaRegTrashCan } from 'react-icons/fa6'
 
 type PricesProps = {
 	price: PriceMetalItems
-	update: () => void
+	update: (type: string, message?: string) => void
 	refetchPrices: () => void
 	currentUser: UserData
 	workPieces: WorkPiece[]
@@ -17,12 +17,12 @@ export function PricesItems({ price, update, refetchPrices, currentUser, workPie
 
 	const onUpdate: SubmitHandler<PriceMetalItems> = async data => {
 		await apiClient.put<PriceMetalItems>('price-metal-item', data)
-		update()
+		update('success', 'Изменения сохранены')
 	}
 
 	const onDelete = async (id: number) => {
 		await apiClient.delete<PriceMetalItems>(`price-metal-item/${id}`).then(() => {
-			update()
+			update('success', 'Изменения сохранены')
 			refetchPrices()
 		})
 	}

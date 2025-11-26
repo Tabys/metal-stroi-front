@@ -15,6 +15,7 @@ import { Alert } from 'react-bootstrap'
 import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import apiClient from '../../../../../components/apiClient'
+import { useMaterialPrices } from '../../../../../hooks/priceMaterials'
 
 export function DocWorkhop() {
 	const [alertShow, setAlertShow] = useState(false)
@@ -29,6 +30,7 @@ export function DocWorkhop() {
 	const { id } = useParams()
 	const { orders } = useOrders({ id: id ? id : '' })
 	const { materials } = useMaterials()
+	const { prices } = useMaterialPrices()
 	const setups = prepMetalData({ setups: orders?.setups, materials, customers_metal: orders?.customers_metal ?? false })
 
 	orders?.metals?.sort((a, b) => (a.thickness > b.thickness ? 1 : -1))
@@ -38,6 +40,7 @@ export function DocWorkhop() {
 		arrDetails,
 		order: orders,
 		full: true,
+		metals: prices,
 	})
 	const total = CulcTotalData({ details })
 
@@ -170,7 +173,7 @@ export function DocWorkhop() {
 						</thead>
 						<tbody>
 							{setups?.map((metal, index) => (
-								<MetalTable key={index} metals={metal} />
+								<MetalTable key={index} metals={metal} metalPrices={prices} />
 							))}
 						</tbody>
 					</Table>

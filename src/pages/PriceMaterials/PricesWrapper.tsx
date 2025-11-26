@@ -7,18 +7,31 @@ import { useState } from 'react'
 import { FormCreateNewThickness } from './FormCreateNewThickness'
 import { useUser } from '../../hooks/currentUser'
 import { useWorkPiece } from '../../hooks/useWorkPiece'
+import { AddMaterials } from './addMaterials'
 
 export function PricesWrapper() {
 	const { currentUser } = useUser()
 	const { prices, refetchPrices } = useMaterialPrices()
 	const { workPiece } = useWorkPiece()
-	const [alertShow, setAlertShow] = useState(false)
+	const [alertShow, setAlertShow] = useState({
+		action: false,
+		type: 'success',
+		message: 'Изменения сохранены',
+	})
 
-	const openAlert = () => {
-		setAlertShow(true)
+	const openAlert = (type: string, message?: string) => {
+		setAlertShow({
+			action: true,
+			type: type,
+			message: message ?? 'Изменения сохранены',
+		})
 		setTimeout(() => {
-			setAlertShow(false)
-		}, 1000)
+			setAlertShow({
+				action: false,
+				type: 'type',
+				message: message ?? 'Изменения сохранены',
+			})
+		}, 1500)
 	}
 
 	prices.sort((a, b) => (Number(a.sort) > Number(b.sort) ? 1 : -1))
@@ -62,9 +75,12 @@ export function PricesWrapper() {
 							</div>
 						</Tab>
 					))}
+				<Tab eventKey='add-material' title='+' key='add-material'>
+					<AddMaterials refetchPrices={refetchPrices} openAlert={openAlert} pricesCategories={prices} />
+				</Tab>
 			</Tabs>
-			<Alert className='alert-fixed' show={alertShow} variant='success'>
-				Изменения сохранены
+			<Alert className='alert-fixed' show={alertShow.action} variant={alertShow.type}>
+				{alertShow.message}
 			</Alert>
 		</>
 	)

@@ -1,4 +1,4 @@
-import { Metal, WorkPiece } from '../../../../models'
+import { Metal, MetalType, WorkPiece } from '../../../../models'
 import { FormMetalDetail } from './formMetalDetail'
 import Alert from 'react-bootstrap/Alert'
 import { useState } from 'react'
@@ -10,9 +10,10 @@ interface FormProps {
 	metal: Metal[]
 	markup: number
 	updMetal: () => void
+	metals: MetalType[]
 }
 
-export function FormMetalList({ workPiece, metal, markup, updMetal }: FormProps) {
+export function FormMetalList({ workPiece, metal, markup, updMetal, metals }: FormProps) {
 	metal.sort((a, b) => (a.thickness > b.thickness ? 1 : -1))
 	const [alertShow, setAlertShow] = useState(false)
 	const [alertErrorShow, setAlertErrorShow] = useState(false)
@@ -46,6 +47,7 @@ export function FormMetalList({ workPiece, metal, markup, updMetal }: FormProps)
 					materials={materials}
 					setTextErrorAlert={setTextErrorAlert}
 					markup={markup}
+					metals={metals}
 				/>
 			))}
 

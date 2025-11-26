@@ -1,6 +1,5 @@
 import { AddSuffix, MetalType, Setup } from '../../../../models'
 import Select from 'react-select'
-import { listMetalName } from '../detailList/listMetalName'
 import { useEffect, useState } from 'react'
 import { OneDetail } from './oneDetail'
 import style from './style.module.css'
@@ -41,7 +40,7 @@ export function OneSetup({ dubleDetails, allValueSuffixSelect, allValueMetalSele
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
-	const arrOptions = listMetalName(setup.material)
+	const arrOptions = metals?.find(metal => metal.abbreviation === setup.material)?.options || []
 	const options = arrOptions.map(value => {
 		return { value: value, label: value }
 	})

@@ -11,11 +11,13 @@ import { CulcTotalData } from '../components/culcTotalData'
 import { ClientTableProducts } from './clientTableProducts'
 import { PrepArrProducts } from '../components/prepArrProducts'
 import { useStaticData } from '../../../../../hooks/useStaicData'
+import { useMaterialPrices } from '../../../../../hooks/priceMaterials'
 
 export function DocClient() {
 	const { id } = useParams()
 	const { staticData } = useStaticData()
 	const staticDataClient = staticData.find(item => item.category === 'blanc_client')?.columns as unknown as ClientStaticData
+	const { prices } = useMaterialPrices()
 
 	const { orders } = useOrders({ id: id ? id : '', free: false })
 	const linkBX = process.env.REACT_APP_BX24_URL + `crm/deal/details/${id}/`
@@ -24,11 +26,13 @@ export function DocClient() {
 	const details: DocTableDetail[] | undefined = PrepArrDetails({
 		arrDetails,
 		order: orders,
+		metals: prices,
 	})
 	const editedDetailsFull: DocTableDetail[] | undefined = PrepArrDetails({
 		arrDetails: CreateDetailGroupList({ dataOrder: orders, free: true }),
 		order: orders,
 		full: true,
+		metals: prices,
 	})
 	const products = PrepArrProducts({ order: orders, full_details: editedDetailsFull })
 	const total = CulcTotalData({ details, full_details: editedDetailsFull, products, orders })
