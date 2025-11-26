@@ -1,19 +1,27 @@
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { PricesServiceItem, UserData } from '../../models'
 import apiClient from '../../components/apiClient'
+import { FaRegTrashCan } from 'react-icons/fa6'
 
 type PricesProps = {
 	price: PricesServiceItem
 	update: () => void
 	currentUser?: UserData
+	refetchPrices: () => void
 }
 
-export function PircesItems({ price, update, currentUser }: PricesProps) {
+export function PircesItems({ price, update, currentUser, refetchPrices }: PricesProps) {
 	const { register, handleSubmit } = useForm<PricesServiceItem>()
 
 	const onUpdate: SubmitHandler<PricesServiceItem> = async data => {
 		await apiClient.put<PricesServiceItem>('price-services-item', data)
 		update()
+	}
+
+	const onDelete: SubmitHandler<PricesServiceItem> = async data => {
+		await apiClient.delete<PricesServiceItem>('price-services-item', { data: { id: price.id } })
+		update()
+		refetchPrices()
 	}
 
 	return (
@@ -60,6 +68,17 @@ export function PircesItems({ price, update, currentUser }: PricesProps) {
 					disabled={currentUser?.roles !== 'ROLE_ADMIN' ? true : false}
 				/>
 			</div>
+			{currentUser?.roles === 'ROLE_ADMIN' && (
+				<div className='p-2'>
+					{price.added ? (
+						<button type='button' className='btn' onClick={handleSubmit(onDelete)}>
+							<FaRegTrashCan />
+						</button>
+					) : (
+						''
+					)}
+				</div>
+			)}
 		</form>
 	)
 }

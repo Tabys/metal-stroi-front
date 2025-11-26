@@ -9,9 +9,10 @@ import { PircesPainting } from './PricePainitng'
 import { PircesPaintingMods } from './PricePaintingMods'
 import { PircesLaserOxygenCut } from './PriceLaserOxygenCut'
 import { useUser } from '../../hooks/currentUser'
+import { AddBendingModal } from '../../components/modal/AddBendingModal'
 
 export function PricesWrapper() {
-	const { prices } = useServicePrices()
+	const { prices, refetchPrices } = useServicePrices()
 	const [alertShow, setAlertShow] = useState(false)
 	const { currentUser } = useUser()
 
@@ -23,7 +24,7 @@ export function PricesWrapper() {
 	}
 
 	const header: any = {
-		1: ['Толщина металла (мм)', 'Длинна металла', 'Количество гибов', 'Цена'],
+		1: ['Толщина металла (мм)', 'Длинна металла', 'Количество гибов', 'Цена', ''],
 		2: ['Толщина металла (мм)', 'Количество рубов', 'Цена'],
 		3: ['Толщина металла (мм)', 'Цена'],
 		4: ['Название', 'Цена'],
@@ -41,6 +42,9 @@ export function PricesWrapper() {
 					prices.map(category => (
 						<Tab eventKey={category.id} title={category.title} key={category.id}>
 							<div className='table'>
+								{currentUser?.['roles'] === 'ROLE_ADMIN' && category.id === 1 && (
+									<AddBendingModal onAdd={openAlert} categoryId={category.id} refetchPrices={refetchPrices} />
+								)}
 								<div className='row header'>
 									{header[category.id].map((title: any, index: number) => (
 										<div className='p-2' key={index}>
@@ -50,7 +54,13 @@ export function PricesWrapper() {
 								</div>
 								{category.price_services_items
 									? category.price_services_items?.map(price => (
-											<PircesItems price={price} key={price.id} update={openAlert} currentUser={currentUser} />
+											<PircesItems
+												price={price}
+												key={price.id}
+												update={openAlert}
+												currentUser={currentUser}
+												refetchPrices={refetchPrices}
+											/>
 									  ))
 									: ''}
 								{category.price_service_laser_oxygen_cuts

@@ -269,6 +269,7 @@ export type PricesServiceItem = {
 	quantity_max?: number
 	cost?: number
 	cut_cost?: number
+	added?: boolean
 }
 
 export type PricesServiceLaserOxygenCut = {
@@ -828,4 +829,10 @@ export interface ClientStaticData {
 	phone: string
 	email: string
 	storage_conditions: string
+}
+
+export type Bending = {
+	metal_thickness_min: number
+	metal_thickness_max: number
+	price_services_category_id: number
 }
