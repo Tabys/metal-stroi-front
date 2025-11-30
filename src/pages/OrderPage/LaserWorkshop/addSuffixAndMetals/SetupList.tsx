@@ -72,7 +72,7 @@ export function SetupList({ dubleDetails, metals, data, setArrSuffix, arrSuffix,
 				<div className={style.controllers}>
 					<label className={style.label}>
 						<span className={style.span}>Азот:</span>{' '}
-						<input type='checkbox' name='azote' onChange={handleChangeAzote} className='form-check-input' disabled={data?.metals === '1.4301'} />
+						<input type='checkbox' name='azote' onChange={handleChangeAzote} className='form-check-input' />
 					</label>
 					<label className={style.label}>
 						<span className={style.span}>Общий вид металла:</span>

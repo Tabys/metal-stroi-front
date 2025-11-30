@@ -9,11 +9,12 @@ type TfcTableDetailProps = {
 	detail: TFCDetail
 	total: TFCTotal
 	index: number
+	kits?: number
 	onUpdate: () => void
 	openAlert: (type: string, massage?: string) => void
 }
 
-export function TfcTableDetail({ detail, total, index, onUpdate, openAlert }: TfcTableDetailProps) {
+export function TfcTableDetail({ detail, total, index, kits, onUpdate, openAlert }: TfcTableDetailProps) {
 	const { register, handleSubmit, reset, setValue } = useForm<TFCDetail>({
 		defaultValues: {
 			name: detail.name,
@@ -124,6 +125,7 @@ export function TfcTableDetail({ detail, total, index, onUpdate, openAlert }: Tf
 					onChange={handleWheelPrevent}
 					min={0}
 					className='form-control'
+					disabled={kits ? (kits > 1 ? true : false) : false}
 				/>
 			</div>
 

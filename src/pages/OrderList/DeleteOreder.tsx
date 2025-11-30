@@ -2,7 +2,6 @@ import CloseButton from 'react-bootstrap/CloseButton'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { Order } from '../../models'
 import Tooltip from '../../components/Tooltip'
-import authHeader from '../../components/auth/authHeader'
 import apiClient from '../../components/apiClient'
 
 type DeleteOrderProps = {
@@ -11,17 +10,14 @@ type DeleteOrderProps = {
 }
 
 export function DeleteOrder({ order, update }: DeleteOrderProps) {
-	const config = {
-		data: {
-			id: order.id,
-		},
-		headers: authHeader(),
-	}
-
 	const { handleSubmit } = useForm<Order>()
 
 	const onSubmit: SubmitHandler<Order> = async () => {
-		await apiClient.delete<Order>('orders/', config)
+		await apiClient.delete<Order>('orders/', {
+			data: {
+				id: order.id,
+			},
+		})
 		await update()
 	}
 

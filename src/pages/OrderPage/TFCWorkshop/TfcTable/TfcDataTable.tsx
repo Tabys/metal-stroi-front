@@ -14,6 +14,7 @@ type TfcDataTableProps = {
 
 export function TfcDataTable({ rates, tfcData, onUpdate, openAlert }: TfcDataTableProps) {
 	const { control, register, setValue, handleSubmit } = useForm<TFCData>()
+	console.log(tfcData)
 
 	useEffect(() => {
 		setValue('payment_form', Number(tfcData?.payment_form))
@@ -64,23 +65,23 @@ export function TfcDataTable({ rates, tfcData, onUpdate, openAlert }: TfcDataTab
 					<p>Форма оплаты</p>
 				</div>
 				<div className={styles.small + ' ' + styles.line}>
-					<img src='/images/header-table/ruble-min.png' alt='ruble' />
+					<img src='/images/header-table/ruble-min.png' alt='milling' />
 					<p>Тариф фрезер ЧПУ</p>
 				</div>
 				<div className={styles.small + ' ' + styles.line}>
-					<img src='/images/header-table/ruble-min.png' alt='ruble' />
+					<img src='/images/header-table/ruble-min.png' alt='turning' />
 					<p>Тариф токарный ЧПУ</p>
 				</div>
 				<div className={styles.small + ' ' + styles.line}>
-					<img src='/images/header-table/ruble-min.png' alt='ruble' />
+					<img src='/images/header-table/ruble-min.png' alt='universal' />
 					<p>Тариф универсальные работы</p>
 				</div>
 				<div className={styles.small + ' ' + styles.line}>
-					<img src='/images/header-table/ruble-min.png' alt='ruble' />
+					<img src='/images/header-table/ruble-min.png' alt='erosion' />
 					<p>Тариф эрозия</p>
 				</div>
 				<div className={styles.small + ' ' + styles.line}>
-					<img src='/images/header-table/ruble-min.png' alt='ruble' />
+					<img src='/images/header-table/ruble-min.png' alt='grinding' />
 					<p>Тариф шлифовка</p>
 				</div>
 				<div className={styles.small + ' ' + styles.line}>
@@ -88,8 +89,12 @@ export function TfcDataTable({ rates, tfcData, onUpdate, openAlert }: TfcDataTab
 					<p>Доставка, руб</p>
 				</div>
 				<div className={styles.small + ' ' + styles.line}>
-					<img src='/images/header-table/profit.png' alt='delivery' />
+					<img src='/images/header-table/profit.png' alt='profit' />
 					<p>Ставка прибыли</p>
+				</div>
+				<div className={styles.small + ' ' + styles.line}>
+					<img src='/images/header-table/numbers-min.png' alt='kits' />
+					<p>Комплекты</p>
 				</div>
 			</div>
 
@@ -187,6 +192,17 @@ export function TfcDataTable({ rates, tfcData, onUpdate, openAlert }: TfcDataTab
 					<div className={styles.profit}>
 						<UpdProfit profit={Number(tfcData?.profit)} tfcId={tfcData?.id} update={onUpdate} openAlert={openAlert} />
 					</div>
+				</div>
+				<div className={styles.line}>
+					<input
+						className='form-control'
+						defaultValue={tfcData?.kits ? tfcData?.kits : 0}
+						type='number'
+						{...register('kits', {
+							onBlur: handleSubmit(onSubmit),
+							valueAsNumber: true,
+						})}
+					/>
 				</div>
 			</div>
 		</div>

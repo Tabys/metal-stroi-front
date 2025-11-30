@@ -23,7 +23,7 @@ export function tfcTotalData({ details, tfcData }: tfcTotalDataProps) {
 	let total_details_costs: TFCTotalDetailsCosts[] = []
 
 	details?.forEach(detail => {
-		total_material += Number(detail.material) * Number(detail.quantity)
+		total_material += Number(detail.material) * Number(detail.quantity) * Number(tfcData?.kits || 1)
 	})
 
 	details?.forEach(detail => {
@@ -32,12 +32,12 @@ export function tfcTotalData({ details, tfcData }: tfcTotalDataProps) {
 		total_tools += Number(detail.tools)
 		total_other_workshops_works += Number(detail.other_workshops_works)
 		total_other += Number(detail.other)
-		total_milling_time += Number(detail.milling_time) * Number(detail.quantity)
-		total_turning_time += Number(detail.turning_time) * Number(detail.quantity)
-		total_universal_time += Number(detail.universal_time) * Number(detail.quantity)
-		total_erosion_time += Number(detail.erosion_time) * Number(detail.quantity)
-		total_grinding_time += Number(detail.grinding_time) * Number(detail.quantity)
-		total_outsourcing += Number(detail.outsourcing) * Number(detail.quantity)
+		total_milling_time += Number(detail.milling_time) * Number(detail.quantity) * Number(tfcData?.kits || 1)
+		total_turning_time += Number(detail.turning_time) * Number(detail.quantity) * Number(tfcData?.kits || 1)
+		total_universal_time += Number(detail.universal_time) * Number(detail.quantity) * Number(tfcData?.kits || 1)
+		total_erosion_time += Number(detail.erosion_time) * Number(detail.quantity) * Number(tfcData?.kits || 1)
+		total_grinding_time += Number(detail.grinding_time) * Number(detail.quantity) * Number(tfcData?.kits || 1)
+		total_outsourcing += Number(detail.outsourcing) * Number(detail.quantity) * Number(tfcData?.kits || 1)
 
 		// Расчет стоимости наладки (milling + turning)
 		const setup_cost = new Decimal(detail.milling_setup_time || 0)
@@ -53,6 +53,7 @@ export function tfcTotalData({ details, tfcData }: tfcTotalDataProps) {
 			.add(detail.tools || 0)
 			.add(detail.other || 0)
 			.div(detail.quantity || 1)
+			.div(tfcData?.kits || 1)
 
 		// Расчет стоимости машинного времени
 		const machine_time_cost = new Decimal(detail.milling_time || 0)
@@ -85,9 +86,13 @@ export function tfcTotalData({ details, tfcData }: tfcTotalDataProps) {
 			.add(delivery_per_material)
 			.mul(new Decimal(tfcData?.rate || 0).div(100).add(1))
 			.add(new Decimal(detail.other_workshops_works || 0).div(detail.quantity || 1))
+			.div(tfcData?.kits || 1)
 			.toNumber()
 
-		total_cost += new Decimal(total_one_detail_cost).mul(detail.quantity || 1).toNumber()
+		total_cost += new Decimal(total_one_detail_cost)
+			.mul(detail.quantity || 1)
+			.div(tfcData?.kits || 1)
+			.toNumber()
 
 		total_details_costs.push({
 			id: Number(detail.id),

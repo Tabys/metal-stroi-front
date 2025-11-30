@@ -8,15 +8,7 @@ type StainlessSteelCostProps = {
 	workPiece: WorkPiece[]
 }
 export function StainlessSteelCost({ metals, markup, materials, workPiece }: StainlessSteelCostProps) {
-	const stainlessSteelMetals = metals.filter(
-		metal =>
-			metal.material === '1.4301' ||
-			metal.material === 'aisi304_BA' ||
-			metal.material === 'aisi304_4N' ||
-			metal.material === 'aisi430_2B' ||
-			metal.material === 'aisi430_BA' ||
-			metal.material === 'aisi430_4N'
-	)
+	const stainlessSteelMetals = metals.filter(metal => metal.metal_type === 'Нерж')
 
 	const cost = stainlessSteelMetals.reduce((acc, metal) => {
 		const rate = workPiece.find(

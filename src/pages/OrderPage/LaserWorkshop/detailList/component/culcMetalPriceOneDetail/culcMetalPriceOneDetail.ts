@@ -10,8 +10,10 @@ export function culcMetalPriceOneDetail({ order, detail }: culcMetalPriceOneDeta
 	const extraPriceMetal = extraPrice(order.markup)
 
 	const metal = order?.metals?.find(function (items) {
+		console.log(items.table_number + ' -- ' + detail.table_number)
 		return String(items.table_number) === String(detail.table_number)
 	})
+
 	const metal_cost =
 		Number(detail.metal_cost) !== 0
 			? (

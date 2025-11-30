@@ -15,7 +15,6 @@ import { CulcTotalData } from '../components/culcTotalData'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useState } from 'react'
 import { Alert } from 'react-bootstrap'
-import authHeader from '../../../../../components/auth/authHeader'
 import apiClient from '../../../../../components/apiClient'
 import { useMaterialPrices } from '../../../../../hooks/priceMaterials'
 
@@ -56,7 +55,7 @@ export function DocPainting() {
 	const total = CulcTotalData({ details, products, orders })
 
 	const onSubmit: SubmitHandler<Order> = async data => {
-		await apiClient.put<Order>('orders/', { data: data, headers: authHeader() })
+		await apiClient.put<Order>('orders/', data)
 		openAlert()
 	}
 

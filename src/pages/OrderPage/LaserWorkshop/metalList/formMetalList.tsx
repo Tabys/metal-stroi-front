@@ -33,7 +33,6 @@ export function FormMetalList({ workPiece, metal, markup, updMetal, metals }: Fo
 			setAlertErrorShow(false)
 		}, 1000)
 	}
-
 	return (
 		<>
 			{metal.map((item, index) => (
@@ -52,7 +51,6 @@ export function FormMetalList({ workPiece, metal, markup, updMetal, metals }: Fo
 			))}
 
 			<StainlessSteelCost metals={metal} markup={markup} materials={materials} workPiece={workPiece} />
-
 			<Alert className='alert-fixed' show={alertShow} variant='success'>
 				Изменения сохранены
 			</Alert>

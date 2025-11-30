@@ -108,7 +108,7 @@ export function OneSetup({ dubleDetails, allValueSuffixSelect, allValueMetalSele
 							checked={checkedAzote}
 							className='form-check-input'
 							onChange={handleChangeAzote}
-							disabled={setup?.material === '1.4301'}
+							// disabled={setup?.material === '1.4301'}
 						/>
 					</label>
 

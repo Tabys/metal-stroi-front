@@ -93,7 +93,15 @@ export function TfcTable({ order, total, onUpdate, openAlert }: TfcTableProps) {
 				{order && <TfcControlPanel orderData={order} update={onUpdate} openAlert={openAlert} />}
 
 				{order?.tfc_details?.map((detail, index) => (
-					<TfcTableDetail detail={detail} total={total} key={detail.id} index={index} onUpdate={onUpdate} openAlert={openAlert} />
+					<TfcTableDetail
+						detail={detail}
+						total={total}
+						key={detail.id}
+						kits={order?.tfc_data?.kits}
+						index={index}
+						onUpdate={onUpdate}
+						openAlert={openAlert}
+					/>
 				))}
 
 				<AddTfcDetails

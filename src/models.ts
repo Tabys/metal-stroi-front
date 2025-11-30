@@ -190,6 +190,7 @@ export type Metal = {
 	thickness_title?: string
 	comment?: string
 	customer_metal: boolean
+	metal_type?: string
 }
 
 export type Upload = {
@@ -767,6 +768,7 @@ export type TFCData = {
 	profit: number
 	rate?: number
 	comment: number
+	kits: number
 }
 
 export type TFCDetail = {
