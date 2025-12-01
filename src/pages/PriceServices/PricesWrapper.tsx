@@ -10,6 +10,9 @@ import { PircesPaintingMods } from './PricePaintingMods'
 import { PircesLaserOxygenCut } from './PriceLaserOxygenCut'
 import { useUser } from '../../hooks/currentUser'
 import { AddBendingModal } from '../../components/modal/AddBendingModal'
+import { AddPPModModal } from '../../components/modal/AddPPModModal'
+import { PircesPaintingArea } from './PricePaintingArea'
+import { AddPPAreaModal } from '../../components/modal/AddPPAreaModal'
 
 export function PricesWrapper() {
 	const { prices, refetchPrices } = useServicePrices()
@@ -32,9 +35,10 @@ export function PricesWrapper() {
 		6: ['Тип металл', 'Толщина металла (мм)', 'Цена', 'Мин. цена'],
 		7: ['Тип металл', 'Толщина металла (мм)', 'Цена', 'Мин. цена'],
 		8: ['Серия RAL', 'Цена'],
-		9: ['Опция ПП', 'Стоимость', 'ед.изм.'],
+		9: ['Площадь, м2', 'Тариф, руб/м²', ''],
+		10: ['Опция ПП', 'Иконка', 'Стоимость', ''],
 	}
-
+	console.log(prices)
 	return (
 		<>
 			<Tabs defaultActiveKey='1' transition={false} id='noanim-tab-example' className='mb-3'>
@@ -44,6 +48,12 @@ export function PricesWrapper() {
 							<div className='table'>
 								{currentUser?.['roles'] === 'ROLE_ADMIN' && category.id === 1 && (
 									<AddBendingModal onAdd={openAlert} categoryId={category.id} refetchPrices={refetchPrices} />
+								)}
+								{currentUser?.['roles'] === 'ROLE_ADMIN' && category.id === 9 && (
+									<AddPPAreaModal onAdd={openAlert} categoryId={category.id} refetchPrices={refetchPrices} />
+								)}
+								{currentUser?.['roles'] === 'ROLE_ADMIN' && category.id === 10 && (
+									<AddPPModModal onAdd={openAlert} categoryId={category.id} refetchPrices={refetchPrices} />
 								)}
 								<div className='row header'>
 									{header[category.id].map((title: any, index: number) => (
@@ -78,9 +88,28 @@ export function PricesWrapper() {
 											<PircesPainting price={price} key={price.id} update={openAlert} currentUser={currentUser} />
 									  ))
 									: ''}
+								{category.price_services_painting_areas
+									? category.price_services_painting_areas
+											?.sort((a, b) => Number(a.area) - Number(b.area))
+											.map(price => (
+												<PircesPaintingArea
+													price={price}
+													key={price.id}
+													update={openAlert}
+													currentUser={currentUser}
+													refetchPrices={refetchPrices}
+												/>
+											))
+									: ''}
 								{category.price_services_painting_mods
 									? category.price_services_painting_mods?.map(price => (
-											<PircesPaintingMods price={price} key={price.id} update={openAlert} currentUser={currentUser} />
+											<PircesPaintingMods
+												price={price}
+												key={price.id}
+												update={openAlert}
+												currentUser={currentUser}
+												refetchPrices={refetchPrices}
+											/>
 									  ))
 									: ''}
 							</div>

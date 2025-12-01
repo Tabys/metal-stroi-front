@@ -275,6 +275,7 @@ export type PriceServiceCategory = {
 	price_services_rollings?: PricesServiceRolling[]
 	price_services_paintings?: PricesServicePainting[]
 	price_services_painting_mods?: PaintingMods[]
+	price_services_painting_areas?: PricesServicePaintingArea[]
 }
 
 export type PricesServiceItem = {
@@ -313,6 +314,11 @@ export type PricesServicePainting = {
 	cost: number
 }
 
+export type PricesServicePaintingArea = {
+	id: number
+	area: number
+	cost: number
+}
 export type NeededMetal = {
 	material?: string
 	thickness?: string
@@ -600,6 +606,7 @@ export type PaintingMods = {
 	cost: number
 	type: string
 	icon: string
+	added?: boolean
 }
 
 export type ChangeCutPriceForm = {
@@ -853,5 +860,20 @@ export interface ClientStaticData {
 export type Bending = {
 	metal_thickness_min: number
 	metal_thickness_max: number
+	price_services_category_id: number
+}
+
+export type PPMod = {
+	name: string
+	icon: string
+	cost: number
+	price_services_category_id: number
+	added?: boolean
+	type?: string
+}
+
+export type PPArea = {
+	area: number
+	cost: number
 	price_services_category_id: number
 }
